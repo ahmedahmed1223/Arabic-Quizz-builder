@@ -441,12 +441,63 @@ body{position:relative;transition:background .4s}
 #view-categories{min-height:100vh;padding:calc(var(--header-h) + 28px) 24px 80px;display:flex;flex-direction:column;align-items:center}
 .categories-pres-title{font-size:clamp(1.1rem,3.5vw,2rem);font-weight:900;color:var(--text-primary);margin-bottom:8px;text-align:center}
 .cats-turn-banner{font-size:clamp(1rem,2.5vw,1.4rem);font-weight:800;margin-bottom:28px;text-align:center}
-.categories-pres-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:15px;width:100%;max-width:980px}
-.cat-pres-btn{background:var(--bg-card);border:2px solid var(--border);border-radius:18px;padding:26px 14px;text-align:center;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
-.cat-pres-btn:not(.depleted):hover{transform:translateY(-4px);box-shadow:0 14px 40px rgba(0,0,0,.4)}
-.cat-pres-btn.depleted{opacity:.38;cursor:default;filter:grayscale(.8)}
-.cat-pres-icon{font-size:2.1rem;margin-bottom:9px}
-.cat-pres-name{font-size:.93rem;font-weight:800;margin-bottom:4px}
+.categories-pres-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(clamp(160px,18vw,220px),1fr));
+  gap:clamp(10px,2vw,20px);
+  width:100%;max-width:1200px;
+}
+.cat-pres-btn{
+  background:var(--bg-card);border:3px solid var(--border);
+  border-radius:clamp(14px,2vw,24px);
+  padding:clamp(20px,3vh,36px) clamp(12px,2vw,20px);
+  text-align:center;cursor:pointer;transition:all .25s;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:clamp(120px,16vh,180px);
+}
+.cat-pres-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 60%);
+  pointer-events:none;
+}
+.cat-pres-btn:not(.depleted):hover{
+  transform:translateY(-5px) scale(1.02);
+  box-shadow:0 16px 48px rgba(0,0,0,.45);
+}
+.cat-pres-btn:not(.depleted):active{transform:scale(.97)}
+.cat-pres-btn.depleted{opacity:.35;cursor:default;filter:grayscale(.9)}
+.cat-pres-icon{
+  font-size:clamp(2rem,5vw,3.5rem);
+  margin-bottom:clamp(8px,1.5vh,14px);
+  line-height:1;
+  filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));
+}
+.cat-pres-name{
+  font-size:clamp(.88rem,1.8vw,1.15rem);
+  font-weight:900;margin-bottom:5px;
+  line-height:1.3;word-break:break-word;
+}
+.cat-pres-count{
+  font-size:clamp(.72rem,1.4vw,.9rem);
+  font-weight:700;
+  background:rgba(0,0,0,.2);border-radius:20px;
+  padding:2px 10px;margin-top:4px;
+}
+/* Categories view sizing */
+#view-categories{
+  min-height:100vh;
+  padding:calc(var(--header-h) + clamp(16px,2vh,28px)) clamp(12px,3vw,32px) clamp(60px,8vh,90px);
+  display:flex;flex-direction:column;align-items:center;
+}
+.categories-pres-title{
+  font-size:clamp(1rem,2.8vw,1.8rem);font-weight:900;
+  color:var(--text-primary);margin-bottom:6px;text-align:center;
+}
+.cats-turn-banner{
+  font-size:clamp(.95rem,2.2vw,1.35rem);font-weight:800;
+  margin-bottom:clamp(16px,3vh,28px);text-align:center;
+}
 .cat-pres-count{font-size:.78rem;color:var(--text-secondary)}
 
 /* ── QUESTION SLIDE ── */
@@ -678,14 +729,34 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 
 @media(min-width:1400px){
-  .option-btn{font-size:1.08rem;padding:18px 22px}
-  .cat-pres-icon{font-size:2.8rem}
-  .cat-pres-name{font-size:1.05rem}
+  /* Question slide */
+  .question-slide-wrapper{max-width:1000px}
+  .question-box{padding:32px 36px}
+  .option-btn{padding:18px 22px}
+  .opt-btn-letter{min-width:54px;font-size:.9rem}
+  .opt-btn-content{padding:16px 20px}
+  .opt-btn-image{max-height:220px}
+  /* Score controls */
   .score-row{padding:18px 28px}
   .scoreboard-title{font-size:clamp(2rem,4vw,3.5rem)}
   .teams-slide-title{font-size:clamp(1.8rem,4vw,3rem)}
   .score-team-btn{padding:9px 18px;font-size:.9rem}
-  .score-team-btn .btn-team-name{max-width:120px}
+  /* Lifelines */
+  .lifeline-btn{min-width:80px;padding:12px 18px}
+  .lifeline-btn .ll-icon{font-size:1.6rem}
+  /* Timer */
+  .timer-ring-wrapper{width:96px;height:96px}
+  .timer-ring{width:96px;height:96px}
+  .timer-number{font-size:1.5rem}
+}
+@media(min-width:1800px){
+  .question-slide-wrapper{max-width:1200px}
+  .question-box{padding:38px 42px;border-radius:28px}
+  .options-grid{gap:16px}
+  .opt-btn-letter{min-width:62px;font-size:1rem}
+  .opt-btn-content{padding:20px 24px}
+  .score-team-btn{padding:11px 22px;font-size:1rem}
+  .lifeline-btn{padding:14px 20px}
 }
 
 @media(max-height:500px) and (orientation:landscape){
@@ -1160,6 +1231,186 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   .opt-btn-image{max-height:200px}
 }
 
+
+/* ── GLOBAL MUSIC WIDGET ── */
+.global-music-widget{
+  position:fixed;bottom:clamp(56px,8vh,72px);left:16px;z-index:190;
+  display:flex;align-items:center;gap:6px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:50px;
+  padding:6px 10px;transition:all .3s;
+}
+.global-music-widget:hover .gm-vol-wrap{
+  max-width:120px;opacity:1;
+}
+.gm-toggle{
+  width:32px;height:32px;border-radius:50%;
+  background:none;border:none;cursor:pointer;
+  font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s;
+}
+.gm-toggle:hover{transform:scale(1.15)}
+.gm-toggle.playing{animation:note-bounce .6s ease-in-out infinite alternate}
+.gm-vol-wrap{
+  display:flex;align-items:center;gap:5px;
+  max-width:0;overflow:hidden;opacity:0;
+  transition:max-width .3s,opacity .3s;
+}
+.global-music-widget:hover .gm-vol-wrap,
+.global-music-widget.expanded .gm-vol-wrap{
+  max-width:130px;opacity:1;
+}
+.gm-vol-wrap input[type=range]{
+  width:80px;height:3px;accent-color:var(--accent2);cursor:pointer;
+}
+.gm-vol-wrap span{
+  font-size:.7rem;color:var(--text-muted);min-width:28px;
+}
+@media(max-width:480px){
+  .global-music-widget{bottom:52px;left:10px;padding:5px 8px}
+  .gm-toggle{width:28px;height:28px;font-size:1rem}
+}
+
+
+/* ── TRANSITION COUNTDOWN ── */
+.transition-countdown{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 14px;border-radius:10px;
+  background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.3);
+  color:var(--accent1);font-size:.85rem;font-weight:700;
+  animation:float-up .3s ease;
+}
+
+
+/* ══ BIG CLOCK VIEW ══ */
+#view-bigclock{
+  position:fixed;inset:0;z-index:4000;
+  background:var(--bg-deep);
+  display:flex;align-items:center;justify-content:center;
+}
+.bigclock-overlay{width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at center,rgba(245,200,66,.06) 0%,transparent 70%)}
+.bigclock-content{
+  display:flex;flex-direction:column;align-items:center;
+  gap:clamp(12px,2vh,24px);padding:20px;text-align:center;width:100%;
+}
+.bigclock-cat{
+  font-size:clamp(.9rem,2vw,1.2rem);font-weight:700;
+  color:var(--text-secondary);letter-spacing:.08em;
+}
+.bigclock-question{
+  font-size:clamp(1.3rem,4vw,2.8rem);font-weight:800;
+  color:var(--text-primary);max-width:min(800px,90vw);
+  line-height:1.3;
+}
+.bigclock-ring-wrap{
+  position:relative;
+  width:clamp(200px,40vmin,360px);
+  height:clamp(200px,40vmin,360px);
+}
+.bigclock-ring-svg{
+  width:100%;height:100%;
+  transform:rotate(-90deg);
+}
+.bc-ring-bg{fill:none;stroke:var(--bg-surface);stroke-width:12}
+.bc-ring-fill{
+  fill:none;stroke-width:12;stroke-linecap:round;
+  stroke-dasharray:848;stroke-dashoffset:0;
+  stroke:var(--success);
+  transition:stroke-dashoffset 1s linear,stroke .5s;
+}
+.bigclock-number{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(3.5rem,12vmin,7rem);
+  font-weight:900;color:var(--text-primary);
+  font-variant-numeric:tabular-nums;
+}
+.bigclock-team{
+  font-size:clamp(1rem,3vw,1.8rem);font-weight:800;
+  padding:8px 24px;border-radius:30px;
+  background:var(--bg-card);border:2px solid var(--border);
+}
+.bigclock-back-btn{
+  background:none;border:1px solid var(--border);
+  border-radius:8px;padding:8px 18px;
+  color:var(--text-muted);font-family:'Cairo',sans-serif;
+  font-size:.82rem;cursor:pointer;transition:all .2s;
+  position:fixed;top:16px;right:16px;
+}
+.bigclock-back-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+.bigclock-warn .bc-ring-fill{stroke:var(--danger)}
+.bigclock-warn .bigclock-number{
+  color:var(--danger);
+  animation:timer-warn .5s ease-in-out infinite;
+}
+
+/* ══ TEAM STATS VIEW ══ */
+#view-teamstats{min-height:100vh;display:flex;flex-direction:column}
+.teamstats-wrapper{
+  flex:1;padding:calc(var(--header-h)+24px) clamp(12px,3vw,32px) 80px;
+  display:flex;flex-direction:column;align-items:center;
+}
+.teamstats-title{
+  font-size:clamp(1.4rem,4vw,2.5rem);font-weight:900;
+  color:var(--accent1);text-shadow:var(--glow1);
+  margin-bottom:28px;text-align:center;
+}
+.teamstats-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;width:100%;max-width:1100px;
+}
+.teamstat-card{
+  background:var(--bg-card);border:2px solid var(--border);
+  border-radius:20px;overflow:hidden;
+  animation:card-enter .5s ease both;
+}
+.teamstat-header{
+  padding:16px 20px;display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);
+}
+.teamstat-avatar{
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;font-weight:900;color:#1a1000;
+  flex-shrink:0;
+}
+.teamstat-name{font-size:1rem;font-weight:800}
+.teamstat-score{font-size:1.8rem;font-weight:900;margin-right:auto}
+.teamstat-body{padding:14px 20px;display:flex;flex-direction:column;gap:10px}
+.stat-row{display:flex;justify-content:space-between;align-items:center}
+.stat-label{font-size:.8rem;color:var(--text-muted)}
+.stat-value{font-size:.92rem;font-weight:700;color:var(--text-primary)}
+.stat-bar-row{display:flex;flex-direction:column;gap:4px}
+.stat-bar-label{display:flex;justify-content:space-between;font-size:.76rem;color:var(--text-muted)}
+.stat-bar-track{height:6px;background:var(--bg-surface);border-radius:3px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:3px;transition:width .8s ease}
+
+/* ══ SCREEN TRANSITION ANIMATION ══ */
+@keyframes view-enter{
+  from{opacity:0;transform:scale(.97) translateY(12px)}
+  to{opacity:1;transform:none}
+}
+.view-animate-enter{animation:view-enter .35s cubic-bezier(.25,.46,.45,.94) both}
+
+/* ══ SHUFFLE BADGE on category ══ */
+.cat-pres-btn .shuffle-badge{
+  position:absolute;top:8px;left:8px;
+  background:rgba(167,139,250,.2);border:1px solid rgba(167,139,250,.4);
+  border-radius:12px;padding:2px 7px;font-size:.68rem;color:#a78bfa;
+  font-weight:700;
+}
+
+/* ══ BACKUP HISTORY ITEM ══ */
+.backup-hist-item{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg-panel);border:1px solid var(--border);
+  border-radius:8px;padding:7px 12px;font-size:.78rem;
+}
+.backup-hist-icon{font-size:1rem;flex-shrink:0}
+.backup-hist-name{flex:1;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.backup-hist-time{color:var(--text-muted);flex-shrink:0}
+
 </style>
 </head>
 <body>
@@ -1186,6 +1437,18 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 <div id="toast-container"></div>
 <canvas id="confetti-canvas"></canvas>
+<!-- Global Music Widget (shows on all presentation screens) -->
+<div id="global-music-widget" class="global-music-widget" style="display:none">
+  <button class="gm-toggle" id="gm-toggle-btn" onclick="toggleMusic()" title="تشغيل / إيقاف الموسيقى">
+    <span id="gm-icon">🔇</span>
+  </button>
+  <div class="gm-vol-wrap" id="gm-vol-wrap">
+    <input type="range" min="0" max="100" id="gm-vol-slider" value="40"
+      oninput="updateMusicVol(+this.value)" title="مستوى الصوت">
+    <span id="gm-vol-label">40%</span>
+  </div>
+</div>
+
 <div class="fs-hint" id="fs-hint">اضغط Esc للخروج من ملء الشاشة</div>
 
 <div id="app">
@@ -1388,6 +1651,22 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
               <span class="text-sm text-muted">يتيح التراجع عن الاختيار</span>
             </div>
           </div>
+          <div class="form-group">
+            <label class="form-label">الانتقال بعد السؤال</label>
+            <select id="s-auto-transition" class="form-select" onchange="updateSetting('autoTransition',this.value==='auto');updateSetting('autoTransitionDelay',+document.getElementById('s-transition-delay').value)">
+              <option value="auto">🔄 تلقائي — ينتقل فوراً للأقسام</option>
+              <option value="manual">✋ يدوي — ينتظر الضغط على "الأقسام"</option>
+            </select>
+          </div>
+          <div class="form-group" id="transition-delay-wrap">
+            <label class="form-label">تأخير الانتقال التلقائي (ثانية)</label>
+            <div class="number-stepper">
+              <button onclick="stepValue('s-transition-delay',-1)">−</button>
+              <input type="number" id="s-transition-delay" value="0" min="0" max="10" oninput="updateSetting('autoTransitionDelay',+this.value)">
+              <button onclick="stepValue('s-transition-delay',1)">+</button>
+            </div>
+            <div class="text-sm text-muted mt-3">0 = فوري | 1-10 ثانية تأخير</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1451,9 +1730,98 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           <button class="btn btn-primary" onclick="exportData()">📤 تصدير JSON</button>
           <button class="btn btn-accent" onclick="document.getElementById('import-json-input').click()">📥 استيراد JSON</button>
           <button class="btn btn-danger" onclick="clearAllData()">🗑️ مسح الكل</button>
-          <button class="btn btn-ghost" onclick="clearGameProgress();toast('تم مسح التقدم المحفوظ','info')">↺ مسح التقدم المحفوظ</button>
+          <button class="btn btn-ghost" onclick="clearGameProgress();toast('تم مسح التقدم المحفوظ','info')">↺ مسح التقدم</button>
         </div>
         <input type="file" id="import-json-input" accept=".json" class="hidden" onchange="importJSON(event)">
+      </div>
+
+      <!-- AUTO-BACKUP CARD -->
+      <div class="card">
+        <div class="card-header"><div class="card-title"><div class="icon icon-green">🔒</div> النسخ الاحتياطي التلقائي</div></div>
+        <div class="alert alert-info">💾 يُنزَّل الملف تلقائياً بصيغة JSON في مجلد التنزيلات. اسم الملف يتضمن اسم المسابقة والتاريخ.</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">تكرار النسخ الاحتياطي</label>
+            <select id="s-backup-interval" class="form-select" onchange="setBackupInterval(this)">
+              <option value="0">معطّل</option>
+              <option value="15">كل 15 دقيقة</option>
+              <option value="30">كل 30 دقيقة</option>
+              <option value="60">كل ساعة</option>
+              <option value="120">كل ساعتين</option>
+              <option value="custom">مخصص...</option>
+            </select>
+          </div>
+          <div class="form-group" id="backup-custom-wrap" style="display:none">
+            <label class="form-label">كل كم دقيقة</label>
+            <div class="number-stepper">
+              <button onclick="stepValue('s-backup-custom',-5)">−</button>
+              <input type="number" id="s-backup-custom" value="60" min="5" max="480"
+                oninput="applyCustomBackupInterval(+this.value)">
+              <button onclick="stepValue('s-backup-custom',5)">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-row" style="margin-top:8px">
+          <div class="form-group">
+            <label class="form-label">تسمية ملف النسخة</label>
+            <select id="s-backup-name" class="form-select" onchange="updateSetting('backupNameFormat',this.value)">
+              <option value="date">اسم + تاريخ + وقت</option>
+              <option value="seq">اسم + تسلسل رقمي</option>
+              <option value="simple">اسم المسابقة فقط</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">محتوى النسخة</label>
+            <select id="s-backup-content" class="form-select" onchange="updateSetting('backupContent',this.value)">
+              <option value="full">كامل (أسئلة + فرق + إعدادات)</option>
+              <option value="questions">الأسئلة فقط</option>
+              <option value="progress">التقدم والنتائج فقط</option>
+            </select>
+          </div>
+        </div>
+        <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:12px">
+          <button class="btn btn-success btn-sm" onclick="doBackupNow(false)">💾 نسخ الآن</button>
+          <button class="btn btn-ghost btn-sm" onclick="doBackupNow(false,true)">📋 نسخ مختصرة</button>
+          <span class="text-sm text-muted" id="backup-status" style="flex:1">لم يتم أي نسخ بعد</span>
+        </div>
+        <div id="backup-history-wrap" style="margin-top:12px;display:none">
+          <div class="form-label" style="margin-bottom:6px">📂 آخر 3 نسخ</div>
+          <div id="backup-history-list" style="display:flex;flex-direction:column;gap:5px"></div>
+        </div>
+      </div>
+
+      <!-- QUESTION BANK / SHUFFLE CARD -->
+      <div class="card">
+        <div class="card-header"><div class="card-title"><div class="icon icon-purple">🔀</div> بنك الأسئلة والخلط</div></div>
+        <div class="alert alert-warning">🎲 عند التفعيل، تُختار أسئلة عشوائياً من كل قسم في كل جلسة</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">خلط ترتيب الأسئلة</label>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+              <input type="checkbox" id="s-shuffle-questions" style="width:18px;height:18px;accent-color:var(--accent1)"
+                onchange="updateSetting('shuffleQuestions',this.checked)">
+              <span class="text-sm text-muted">يغيّر ترتيب الأسئلة عشوائياً في كل جلسة</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">خلط خيارات الإجابة</label>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+              <input type="checkbox" id="s-shuffle-options" style="width:18px;height:18px;accent-color:var(--accent1)"
+                onchange="updateSetting('shuffleOptions',this.checked)">
+              <span class="text-sm text-muted">يُرتّب الخيارات أ-ب-ج-د بشكل عشوائي</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">عدد الأسئلة من كل قسم (0 = الكل)</label>
+          <div class="number-stepper">
+            <button onclick="stepValue('s-bank-size',-1)">−</button>
+            <input type="number" id="s-bank-size" value="0" min="0" max="50"
+              oninput="updateSetting('bankSize',+this.value)">
+            <button onclick="stepValue('s-bank-size',1)">+</button>
+          </div>
+          <div class="text-sm text-muted mt-3">مثال: 5 = يعرض 5 أسئلة عشوائية من كل قسم في كل جلسة</div>
+        </div>
       </div>
     </div>
 
@@ -1550,6 +1918,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <div class="pres-header-logo">❓ السؤال</div>
     <div class="pres-header-actions">
       <button class="btn btn-ghost btn-sm" onclick="skipQuestion()">تخطي ⏭</button>
+      <button class="btn btn-ghost btn-sm" onclick="enterBigClock()" title="عرض العداد الكبير">⏱️</button>
       <button class="btn btn-ghost btn-sm" onclick="goBackFromQuestion()">← الأقسام</button>
       <button class="btn btn-ghost btn-sm" onclick="goToAdmin()" style="opacity:.6">⚙️</button>
     </div>
@@ -1622,6 +1991,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <div class="pres-header-logo">🏆 النتائج</div>
     <div class="pres-header-actions">
       <button class="btn btn-ghost btn-sm" onclick="showView('categories')">← المسابقة</button>
+      <button class="btn btn-accent btn-sm" onclick="showTeamStats()">📊 الإحصاءات</button>
       <button class="btn btn-purple btn-sm" onclick="showView('credits')">🌟 الشكر</button>
       <button class="btn btn-ghost btn-sm" onclick="goToAdmin()">⚙️ التحكم</button>
     </div>
@@ -1665,6 +2035,41 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 </div>
 
 </div><!-- #app -->
+
+
+<!-- ═══ PRES: BIG CLOCK ═══ -->
+<div id="view-bigclock" class="hidden">
+  <div class="bigclock-overlay">
+    <div class="bigclock-content">
+      <div class="bigclock-cat" id="bc-cat-label"></div>
+      <div class="bigclock-question" id="bc-question-text"></div>
+      <div class="bigclock-ring-wrap">
+        <svg class="bigclock-ring-svg" viewBox="0 0 300 300">
+          <circle class="bc-ring-bg" cx="150" cy="150" r="135"/>
+          <circle class="bc-ring-fill" id="bc-ring-fill" cx="150" cy="150" r="135"/>
+        </svg>
+        <div class="bigclock-number" id="bc-number">30</div>
+      </div>
+      <div class="bigclock-team" id="bc-team-label"></div>
+      <button class="bigclock-back-btn" onclick="exitBigClock()">← رجوع للسؤال</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRES: TEAM STATS ═══ -->
+<div id="view-teamstats" class="hidden">
+  <div class="pres-header-bar">
+    <div class="pres-header-logo">📊 إحصاءات الفرق</div>
+    <div class="pres-header-actions">
+      <button class="btn btn-ghost btn-sm" onclick="showView('scores')">🏆 النتائج</button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()">⚙️</button>
+    </div>
+  </div>
+  <div class="teamstats-wrapper">
+    <div class="teamstats-title">📊 الإحصاءات التفصيلية</div>
+    <div id="teamstats-grid" class="teamstats-grid"></div>
+  </div>
+</div>
 
 <!-- ══════════════ MODALS ══════════════ -->
 
@@ -2027,6 +2432,15 @@ let state={
     customMusicData:null,customCorrectData:null,customWrongData:null,
     progressiveReveal:false,confirmAnswer:false,
     fontScale:100,
+    autoTransition:true,
+    autoTransitionDelay:0,
+    backupInterval:0,
+    backupNameFormat:'date',
+    backupContent:'full',
+    shuffleQuestions:false,
+    shuffleOptions:false,
+    bankSize:0,
+    viewTransitions:true,
   },
   categories:[],teams:[],credits:[],
   currentCatId:null,currentQIndex:0,currentTeamIndex:0,
@@ -2034,6 +2448,7 @@ let state={
   timerInterval:null,timeLeft:0,timerTotal:0,answered:false,
   teamLifelines:{},
   editingCatId:null,editingQId:null,editingTeamId:null,editingCreditId:null,
+  sessionStats:{},  // {teamId:{correct,wrong,skipped,totalTime}}
   modalMembers:[],
   musicPlaying:false,
   // حالة جديدة
@@ -2141,7 +2556,7 @@ function renderThemeGrid(){
 // ════════════════════════════════════════════════════════
 //  VIEWS
 // ════════════════════════════════════════════════════════
-const ALL_VIEWS=['login','admin','intro','teams','categories','question','scores','credits'];
+const ALL_VIEWS=['login','admin','intro','teams','categories','question','scores','credits','bigclock','teamstats'];
 
 // Smart admin navigation with confirmation during active game
 function goToAdmin(){
@@ -2167,9 +2582,16 @@ function goToAdmin(){
 
 function showView(name){
   ALL_VIEWS.forEach(v=>document.getElementById('view-'+v).classList.add('hidden'));
-  document.getElementById('view-'+name).classList.remove('hidden');
+  const el=document.getElementById('view-'+name);
+  el.classList.remove('hidden');
+  if(state.settings.viewTransitions!==false){
+    el.classList.remove('view-animate-enter');
+    void el.offsetWidth; // reflow
+    el.classList.add('view-animate-enter');
+  }
   const presViews=['intro','teams','categories','question','scores','credits'];
-  document.getElementById('score-ticker').classList.toggle('hidden',!presViews.includes(name)||!state.teams.length);
+  const allPresViews=['intro','teams','categories','question','scores','credits','bigclock','teamstats'];
+  document.getElementById('score-ticker').classList.toggle('hidden',!allPresViews.includes(name)||!state.teams.length);
   // Stop all sounds when leaving question view
   if(name!=='question'){
     if(window._qAudioEl){try{window._qAudioEl.pause()}catch(e){}}
@@ -2237,7 +2659,25 @@ function renderAdmin(){
   document.getElementById('s-tense-sec').value=s.tenseSeconds||10;
   // إعدادات جديدة
   document.getElementById('s-progressive-reveal').checked=!!s.progressiveReveal;
+  const sqEl=document.getElementById('s-shuffle-questions');if(sqEl)sqEl.checked=!!s.shuffleQuestions;
+  const soEl=document.getElementById('s-shuffle-options');if(soEl)soEl.checked=!!s.shuffleOptions;
+  const sbEl=document.getElementById('s-bank-size');if(sbEl)sbEl.value=s.bankSize||0;
+  const snEl=document.getElementById('s-backup-name');if(snEl)snEl.value=s.backupNameFormat||'date';
+  const scEl=document.getElementById('s-backup-content');if(scEl)scEl.value=s.backupContent||'full';
   document.getElementById('s-confirm-answer').checked=!!s.confirmAnswer;
+  const autoTr=s.autoTransition!==false;
+  document.getElementById('s-auto-transition').value=autoTr?'auto':'manual';
+  document.getElementById('s-transition-delay').value=s.autoTransitionDelay||0;
+  const bi=s.backupInterval||0;
+  const biSel=document.getElementById('s-backup-interval');
+  if(biSel){
+    const opts=['0','15','30','60','120'];
+    biSel.value=opts.includes(String(bi))?String(bi):'custom';
+    const cw=document.getElementById('backup-custom-wrap');
+    if(cw)cw.style.display=biSel.value==='custom'?'block':'none';
+    if(biSel.value==='custom'){const ci=document.getElementById('s-backup-custom');if(ci)ci.value=bi;}
+  }
+  updateBackupStatus();
   const fs=s.fontScale||100;
   document.getElementById('s-font-scale').value=fs;
   document.getElementById('font-scale-display').textContent=fs+'%';
@@ -2258,6 +2698,8 @@ function renderAdmin(){
   applyTheme(s.theme||'space');
   populateColorSwatches('color-swatches','cat-color-input',CAT_COLORS);
   populateColorSwatches('team-color-swatches','team-color-input',TEAM_COLORS);
+  restoreBackupInterval();
+  initSessionStats();
 }
 function renderStatsGrid(){
   const tq=state.categories.reduce((a,c)=>a+c.questions.length,0);
@@ -2286,9 +2728,10 @@ function updateMusicVol(val){
   ];
   els.forEach(([id,txt])=>{const e=document.getElementById(id);if(e)e.textContent=txt;});
   // Sync sliders bidirectionally
-  ['s-music-vol','pres-vol-slider'].forEach(id=>{
+  ['s-music-vol','pres-vol-slider','gm-vol-slider'].forEach(id=>{
     const el=document.getElementById(id);if(el&&+el.value!==val)el.value=val;
   });
+  syncGlobalMusicWidget();
 }
 function updateSetting(key,val){
   state.settings[key]=val;saveState();
@@ -2707,10 +3150,16 @@ function renderCatsSlide(){
     const used=state.usedQuestions[cat.id]||new Set();
     const rem=cat.questions.length-used.size;
     const dep=rem===0;
+    const bankSize=state.settings.bankSize||0;
+    const showCount=bankSize>0&&!dep?Math.min(bankSize,rem):rem;
+    const shuffleBadge=state.settings.shuffleQuestions&&!dep?'<div class="shuffle-badge">🔀 عشوائي</div>':'';
     return `<div class="cat-pres-btn ${dep?'depleted':''}" style="border-color:${dep?'var(--border)':cat.color+'55'}" onclick="${dep?'':` selectCatAndStart('${cat.id}')`}">
+      ${shuffleBadge}
       <div class="cat-pres-icon">${dep?'✅':cat.icon||'📂'}</div>
       <div class="cat-pres-name" style="color:${dep?'var(--text-muted)':cat.color}">${cat.name}</div>
-      <div class="cat-pres-count" style="${!dep?'color:'+cat.color+';font-weight:800':''}">${dep?'اكتمل':rem+' / '+cat.questions.length}</div>
+      <div class="cat-pres-count" style="${!dep?'color:'+cat.color+';font-weight:800':''}">
+        ${dep?'اكتمل':showCount+(bankSize>0&&rem>bankSize?' من '+cat.questions.length:' / '+cat.questions.length)}
+      </div>
     </div>`;
   }).join('');
 }
@@ -2757,6 +3206,7 @@ function newCompetition(){
   state.usedQuestions={};state.currentTeamIndex=0;state.fullCatQueue=[];state.fullCatQueuePos=0;
   state.categories.forEach(c=>state.usedQuestions[c.id]=new Set());
   state.teamLifelines={};
+  initSessionStats();
   state.teams.forEach(t=>{
     state.teamLifelines[t.id]={
       fifty:state.settings.llFifty??1,
@@ -2912,7 +3362,14 @@ function selectCatAndStart(catId){
   if(!state.usedQuestions[catId])state.usedQuestions[catId]=new Set();
   const cat=state.categories.find(c=>c.id===catId);
   const used=state.usedQuestions[catId];
-  const avail=cat.questions.map((_,i)=>i).filter(i=>!used.has(i));
+  let avail=cat.questions.map((_,i)=>i).filter(i=>!used.has(i));
+  // Apply bank size limit
+  const bankSize=state.settings.bankSize||0;
+  if(bankSize>0&&avail.length>bankSize){
+    avail=shuffleArray(avail).slice(0,bankSize);
+  }
+  // Shuffle questions if enabled
+  if(state.settings.shuffleQuestions) avail=shuffleArray(avail);
   if(!avail.length){toast('انتهت أسئلة هذا القسم','info');return}
   if(state.settings.compMode==='full_cat'){
     const nT=state.teams.length||1;
@@ -3042,8 +3499,19 @@ function loadQuestion(catId,qIdx,teamIdx){
   else tl.style.display='none';
   // Options - support progressive reveal
   const hiddenCls=state.settings.progressiveReveal?'hidden-option':'';
+  // Shuffle options if enabled (store mapping for correct answer)
+  let optOrder=[0,1,2,3];
+  if(state.settings.shuffleOptions){
+    optOrder=shuffleArray([0,1,2,3].filter(i=>q.options[i]||((q.optionImages||[])[i])));
+    // pad remaining
+    [0,1,2,3].forEach(i=>{if(!optOrder.includes(i))optOrder.push(i)});
+    state._shuffledOptOrder=optOrder; // store for answer check
+  }else{
+    state._shuffledOptOrder=null;
+  }
   const optImgs=q.optionImages||[];
-  document.getElementById('q-options-grid').innerHTML=q.options.map((opt,i)=>{
+  document.getElementById('q-options-grid').innerHTML=optOrder.map((origIdx,displayPos)=>{
+    const i=origIdx; const opt=q.options[i];
     const hasText=!!opt;
     const hasImg=!!optImgs[i];
     if(!hasText&&!hasImg)return '';
@@ -3180,10 +3648,11 @@ function buildScoreBtns(){
 // ════════════════════════════════════════════════════════
 //  GAMEPLAY
 // ════════════════════════════════════════════════════════
-function handleOptionClick(idx){
+function handleOptionClick(displayIdx){
+  // Translate display index to original question option index
+  const idx=state._shuffledOptOrder?state._shuffledOptOrder[displayIdx]:displayIdx;
   if(state.answered)return;
-  // If option is still hidden (progressive reveal), reveal all first
-  const btn=document.getElementById(`opt-btn-${idx}`);
+  const btn=document.getElementById(`opt-btn-${displayIdx}`);
   if(btn&&btn.classList.contains('hidden-option')){
     revealAllOptions();
     setTimeout(()=>handleOptionClick(idx),state.totalOptionsToReveal*120+50);
@@ -3273,15 +3742,18 @@ function selectOption(idx){
   const teamIdx=state.settings.compMode==='full_cat'
     ?(state.fullCatQueue[state.fullCatQueuePos]?.teamIdx??state.currentTeamIndex)
     :state.currentTeamIndex;
+  const timeUsed=(state.timerTotal||30)-Math.max(0,state.timeLeft);
+  const team=state.teams[teamIdx];
   if(isCorrect){
     playSound('correct');launchConfetti();
     const pts=q.difficulty==='hard'?(state.settings.hardPoints||2):1;
     toast(`✅ إجابة صحيحة! ${pts>1?'✦ '+pts+' نقطة':''}`,'success');
-    const team=state.teams[teamIdx];
-    if(team){team.score=(team.score||0)+pts;recordScoreHistory(team.id,pts);saveState();saveGameProgress();floatScore(team,'+'+pts)}
+    if(team){team.score=(team.score||0)+pts;recordScoreHistory(team.id,pts);saveState();saveGameProgress();floatScore(team,'+'+pts);}
+    recordAnswer(teamIdx<state.teams.length?team?.id:null,true,timeUsed);
   }else{
     playSound('wrong');
     toast(`❌ خاطئة! الصحيحة: ${q.options[q.correct]}`,'danger');
+    recordAnswer(team?.id,false,timeUsed);
   }
   state.usedQuestions[state.currentCatId].add(state.currentQIndex);
   updateTicker();
@@ -3339,19 +3811,71 @@ function nextQuestion(){
   saveGameProgress();
   stopEffectSound();
   document.getElementById('q-explanation-box').classList.add('hidden');
+  document.getElementById('answer-confirm-panel').classList.add('hidden');
+  document.getElementById('reveal-options-bar').style.display='none';
   if(state.settings.compMode==='full_cat'){
     state.fullCatQueuePos++;
     if(state.fullCatQueuePos<state.fullCatQueue.length)loadQuestionFromQueue();
     else{document.getElementById('fullcat-progress-wrap').classList.add('hidden');advanceTeamAndGoBack()}
   }else{
     state.currentTeamIndex=(state.currentTeamIndex+1)%Math.max(state.teams.length,1);
+    transitionToCategories();
+  }
+}
+
+function transitionToCategories(){
+  const auto=state.settings.autoTransition!==false;
+  const delay=+(state.settings.autoTransitionDelay||0);
+  if(!auto){
+    // Show "go to categories" button overlay
+    showTransitionPrompt();
+    return;
+  }
+  if(delay>0){
+    showTransitionCountdown(delay);
+  }else{
     showView('categories');
+  }
+}
+
+let _transitionTimer=null;
+function showTransitionCountdown(secs){
+  clearTimeout(_transitionTimer);
+  // Show a countdown badge in the question slide footer
+  const footer=document.querySelector('.question-slide-footer');
+  if(!footer){showView('categories');return;}
+  const badge=document.createElement('div');
+  badge.id='transition-countdown';
+  badge.className='transition-countdown';
+  badge.innerHTML=`<span>الانتقال للأقسام خلال <strong id="cd-num">${secs}</strong>ث</span><button onclick="cancelTransition()" class="btn btn-ghost btn-sm" style="padding:4px 10px;font-size:.78rem">✕ إلغاء</button>`;
+  footer.appendChild(badge);
+  let left=secs;
+  _transitionTimer=setInterval(()=>{
+    left--;
+    const el=document.getElementById('cd-num');
+    if(el) el.textContent=left;
+    if(left<=0){cancelTransition(true);}
+  },1000);
+}
+function cancelTransition(proceed=false){
+  clearInterval(_transitionTimer);_transitionTimer=null;
+  const badge=document.getElementById('transition-countdown');
+  if(badge) badge.remove();
+  if(proceed) showView('categories');
+}
+function showTransitionPrompt(){
+  // In manual mode, update the "next" button text and show a "go to categories" button
+  const nextBtn=document.querySelector('.footer-action-btns .btn-primary');
+  if(nextBtn){
+    nextBtn.textContent='📂 الأقسام';
+    nextBtn.onclick=()=>showView('categories');
   }
 }
 
 function advanceTeamAndGoBack(){
   state.currentTeamIndex=(state.currentTeamIndex+1)%Math.max(state.teams.length,1);
-  state.fullCatQueue=[];state.fullCatQueuePos=0;showView('categories');
+  state.fullCatQueue=[];state.fullCatQueuePos=0;
+  transitionToCategories();
 }
 
 function goBackFromQuestion(){
@@ -3421,7 +3945,10 @@ function startTimer(seconds){
   state.timerInterval=setInterval(()=>{
     if(_timerPaused)return;
     state.timeLeft--;
-    updateTimerDisplay(state.timeLeft,state.timerTotal);  // ← use stored total
+    updateTimerDisplay(state.timeLeft,state.timerTotal);
+    // Sync big clock if visible
+    if(!document.getElementById('view-bigclock').classList.contains('hidden'))
+      updateBigClockDisplay();  // ← use stored total
     // Switch to tense music near the end
     const tenseAt=state.settings.tenseSeconds||10;
     if(state.timeLeft===tenseAt&&state.musicPlaying&&!state.answered
@@ -3844,9 +4371,22 @@ function updateMusicBtn(){
   const btn=document.getElementById('music-toggle-btn');
   const icon=document.getElementById('music-icon');
   const lbl=document.getElementById('music-label');
-  if(!btn)return;
-  if(state.musicPlaying){btn.classList.add('playing');icon.textContent='🎵';lbl.textContent='موسيقى'}
-  else{btn.classList.remove('playing');icon.textContent='🔇';lbl.textContent='موسيقى'}
+  if(btn){
+    if(state.musicPlaying){btn.classList.add('playing');if(icon)icon.textContent='🎵';if(lbl)lbl.textContent='موسيقى'}
+    else{btn.classList.remove('playing');if(icon)icon.textContent='🔇';if(lbl)lbl.textContent='موسيقى'}
+  }
+  syncGlobalMusicWidget();
+}
+function syncGlobalMusicWidget(){
+  const gBtn=document.getElementById('gm-toggle-btn');
+  const gIcon=document.getElementById('gm-icon');
+  const gSlider=document.getElementById('gm-vol-slider');
+  const gLabel=document.getElementById('gm-vol-label');
+  const vol=state.settings.musicVol||40;
+  if(gIcon) gIcon.textContent=state.musicPlaying?'🎵':'🔇';
+  if(gBtn) gBtn.classList.toggle('playing',state.musicPlaying);
+  if(gSlider&&+gSlider.value!==vol) gSlider.value=vol;
+  if(gLabel) gLabel.textContent=vol+'%';
 }
 
 // ════════════════════════════════════════════════════════
@@ -3949,6 +4489,11 @@ function toast(msg,type='info'){
 //  HELPERS
 // ════════════════════════════════════════════════════════
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function shuffleArray(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
 function populateColorSwatches(cId,iId,colors){
   const el=document.getElementById(cId);if(!el)return;
   el.innerHTML=colors.map(c=>`<div onclick="document.getElementById('${iId}').value='${c}'" style="width:20px;height:20px;border-radius:50%;background:${c};cursor:pointer;transition:transform .15s" onmouseover="this.style.transform='scale(1.3)'" onmouseout="this.style.transform=''"></div>`).join('');
@@ -4001,6 +4546,255 @@ document.addEventListener('fullscreenchange',()=>{
   setTimeout(()=>{const c=document.getElementById('confetti-canvas');c.width=innerWidth;c.height=innerHeight},100);
 });
 
+
+
+// ════════════════════════════════════════════════════════
+//  BIG CLOCK MODE
+// ════════════════════════════════════════════════════════
+const BC_CIRC = 848; // 2*π*135
+function enterBigClock(){
+  if(!state.timerInterval&&!state.answered){toast('لا يوجد عداد نشط','info');return;}
+  const cat=state.categories.find(c=>c.id===state.currentCatId);
+  const q=cat?cat.questions[state.currentQIndex]:null;
+  // Set question text
+  const qEl=document.getElementById('bc-question-text');
+  if(qEl)qEl.textContent=q?q.text:'';
+  // Set cat label
+  const cEl=document.getElementById('bc-cat-label');
+  if(cEl)cEl.textContent=cat?(cat.icon||'📂')+' '+cat.name:'';
+  // Set team label
+  const teamIdx=state.settings.compMode==='full_cat'
+    ?(state.fullCatQueue[state.fullCatQueuePos]?.teamIdx??state.currentTeamIndex)
+    :state.currentTeamIndex;
+  const team=state.teams[teamIdx];
+  const tEl=document.getElementById('bc-team-label');
+  if(tEl){tEl.textContent=team?'🎯 '+team.name:'';tEl.style.borderColor=team?team.color:'var(--border)';}
+  // Sync ring
+  updateBigClockDisplay();
+  showView('bigclock');
+}
+
+function exitBigClock(){showView('question');}
+
+function updateBigClockDisplay(){
+  const total=state.timerTotal||1;
+  const left=Math.max(0,state.timeLeft);
+  const pct=left/total;
+  const offset=BC_CIRC*(1-pct);
+  const fill=document.getElementById('bc-ring-fill');
+  const num=document.getElementById('bc-number');
+  if(fill)fill.style.strokeDashoffset=offset;
+  if(fill){
+    if(pct>0.5)fill.style.stroke='var(--success)';
+    else if(pct>0.25)fill.style.stroke='var(--accent1)';
+    else fill.style.stroke='var(--danger)';
+  }
+  if(num)num.textContent=left;
+  const wrap=document.querySelector('.bigclock-ring-wrap');
+  if(wrap)wrap.classList.toggle('bigclock-warn',pct<=0.2);
+}
+
+// Patch the timer tick to also update big clock
+const _origTimerTick=null; // will hook via interval
+
+// ════════════════════════════════════════════════════════
+//  TEAM STATS VIEW
+// ════════════════════════════════════════════════════════
+function initSessionStats(){
+  state.sessionStats={};
+  state.teams.forEach(t=>{
+    state.sessionStats[t.id]={correct:0,wrong:0,skipped:0,totalTime:0,answers:[]};
+  });
+}
+
+function recordAnswer(teamId,isCorrect,timeUsed){
+  if(!state.sessionStats[teamId])
+    state.sessionStats[teamId]={correct:0,wrong:0,skipped:0,totalTime:0,answers:[]};
+  const s=state.sessionStats[teamId];
+  if(isCorrect)s.correct++;else s.wrong++;
+  s.totalTime+=timeUsed||0;
+  s.answers.push({catId:state.currentCatId,qIdx:state.currentQIndex,correct:isCorrect,time:timeUsed||0});
+}
+
+function showTeamStats(){
+  renderTeamStats();showView('teamstats');
+}
+
+function renderTeamStats(){
+  const grid=document.getElementById('teamstats-grid');if(!grid)return;
+  if(!state.teams.length){grid.innerHTML='<div class="empty-state"><div class="empty-icon">👥</div><p>لا توجد فرق</p></div>';return;}
+  const sorted=[...state.teams].sort((a,b)=>(b.score||0)-(a.score||0));
+  const medals=['🥇','🥈','🥉'];
+  grid.innerHTML=sorted.map((t,rank)=>{
+    const s=state.sessionStats[t.id]||{correct:0,wrong:0,skipped:0,totalTime:0};
+    const total=(s.correct||0)+(s.wrong||0);
+    const pct=total>0?Math.round(s.correct/total*100):0;
+    const avgTime=total>0?Math.round((s.totalTime||0)/total):0;
+    const cats=new Set((s.answers||[]).map(a=>a.catId));
+    return `
+    <div class="teamstat-card" style="animation-delay:${rank*.1}s;border-color:${t.color}44">
+      <div class="teamstat-header" style="background:${t.color}14">
+        <div class="teamstat-avatar" style="background:${t.color}">${t.name[0]}</div>
+        <div>
+          <div class="teamstat-name" style="color:${t.color}">${medals[rank]||rank+1} ${t.name}</div>
+          <div class="text-sm text-muted">${t.members.length} عضو</div>
+        </div>
+        <div class="teamstat-score" style="color:${t.color}">${t.score||0}<span style="font-size:.7rem;color:var(--text-muted)"> ن</span></div>
+      </div>
+      <div class="teamstat-body">
+        <div class="stat-row">
+          <span class="stat-label">✅ إجابات صحيحة</span>
+          <span class="stat-value" style="color:var(--success)">${s.correct||0}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">❌ إجابات خاطئة</span>
+          <span class="stat-value" style="color:var(--danger)">${s.wrong||0}</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">⏱ متوسط وقت الإجابة</span>
+          <span class="stat-value">${avgTime} ث</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">📂 أقسام لُعبت</span>
+          <span class="stat-value">${cats.size}</span>
+        </div>
+        <div class="stat-bar-row">
+          <div class="stat-bar-label">
+            <span>نسبة الإجابات الصحيحة</span>
+            <span style="color:${pct>=70?'var(--success)':pct>=40?'var(--accent1)':'var(--danger)'}">${pct}%</span>
+          </div>
+          <div class="stat-bar-track">
+            <div class="stat-bar-fill" style="width:${pct}%;background:${pct>=70?'var(--success)':pct>=40?'var(--accent1)':'var(--danger)'}"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════
+//  ENHANCED BACKUP
+// ════════════════════════════════════════════════════════
+let _backupTimer=null;
+let _lastBackupTime=null;
+let _backupSeqNum=0;
+let _backupHistory=[];
+
+function setBackupInterval(selOrVal){
+  clearInterval(_backupTimer);_backupTimer=null;
+  const sel=typeof selOrVal==='object'?selOrVal:document.getElementById('s-backup-interval');
+  const customWrap=document.getElementById('backup-custom-wrap');
+  let minutes=0;
+  if(sel&&sel.value==='custom'){
+    if(customWrap)customWrap.style.display='block';
+    const ci=document.getElementById('s-backup-custom');
+    if(ci)minutes=+ci.value||60;else return;
+  }else{
+    if(customWrap)customWrap.style.display='none';
+    minutes=sel?+sel.value:+(selOrVal)||0;
+  }
+  state.settings.backupInterval=minutes;saveState();
+  if(minutes>0){
+    _backupTimer=setInterval(()=>doBackupNow(true),minutes*60*1000);
+    toast('⏱ نسخ احتياطي كل '+minutes+' دقيقة','success');
+  }else{
+    toast('النسخ الاحتياطي التلقائي معطّل','info');
+  }
+  updateBackupStatus();
+}
+
+function applyCustomBackupInterval(val){
+  state.settings.backupInterval=val;
+  clearInterval(_backupTimer);_backupTimer=null;
+  if(val>0)_backupTimer=setInterval(()=>doBackupNow(true),val*60*1000);
+  saveState();updateBackupStatus();
+}
+
+function doBackupNow(auto=false,compact=false){
+  const content=compact?'progress':(state.settings.backupContent||'full');
+  let exportObj={backupDate:new Date().toISOString(),backupType:auto?'auto':'manual',version:'4'};
+  const cleanSettings={...state.settings,customMusicData:null,customCorrectData:null,customWrongData:null};
+  if(content==='full'||content==='questions'){
+    exportObj.settings=cleanSettings;
+    exportObj.categories=state.categories;
+    exportObj.teams=state.teams;
+    exportObj.credits=state.credits;
+  }
+  if(content==='full'||content==='progress'){
+    exportObj.sessionStats=state.sessionStats;
+    if(content==='progress'){exportObj.teams=state.teams.map(t=>({id:t.id,name:t.name,score:t.score}));}
+  }
+  const json=JSON.stringify(exportObj,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  // Generate filename
+  const safeName=(state.settings.name||'quiz').replace(/[^\w\u0600-\u06FF]/g,'_').slice(0,25);
+  const fmt=state.settings.backupNameFormat||'date';
+  let fname='';
+  if(fmt==='date'){
+    const d=new Date();
+    const ds=d.toISOString().slice(0,16).replace('T','_').replace(':','-');
+    fname='backup_'+safeName+'_'+ds+'.json';
+  }else if(fmt==='seq'){
+    _backupSeqNum++;
+    fname='backup_'+safeName+'_'+String(_backupSeqNum).padStart(3,'0')+'.json';
+  }else{
+    fname=safeName+'.json';
+  }
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);a.download=fname;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+  _lastBackupTime=new Date();
+  // Store in history
+  _backupHistory.unshift({name:fname,time:_lastBackupTime,size:Math.round(blob.size/1024)});
+  if(_backupHistory.length>3)_backupHistory.pop();
+  updateBackupStatus();
+  if(!auto)toast('✅ نسخة احتياطية: '+fname+' ('+Math.round(blob.size/1024)+'KB)','success');
+}
+
+function updateBackupStatus(){
+  const el=document.getElementById('backup-status');if(!el)return;
+  const interval=state.settings.backupInterval||0;
+  if(interval===0&&!_lastBackupTime){el.textContent='لم يتم أي نسخ بعد';renderBackupHistory();return;}
+  if(_lastBackupTime){
+    const mins=Math.round((Date.now()-_lastBackupTime)/60000);
+    const timeStr=mins===0?'الآن':mins<60?'منذ '+mins+' دقيقة':'منذ '+Math.round(mins/60)+' ساعة';
+    el.textContent='آخر نسخة: '+timeStr+(interval>0?' | كل '+interval+' دقيقة':'');
+  }else if(interval>0){
+    el.textContent='التالية خلال '+interval+' دقيقة';
+  }
+  renderBackupHistory();
+}
+
+function renderBackupHistory(){
+  const wrap=document.getElementById('backup-history-wrap');
+  const list=document.getElementById('backup-history-list');
+  if(!wrap||!list)return;
+  if(!_backupHistory.length){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  list.innerHTML=_backupHistory.map(h=>`
+    <div class="backup-hist-item">
+      <span class="backup-hist-icon">📄</span>
+      <span class="backup-hist-name" title="${h.name}">${h.name}</span>
+      <span class="backup-hist-time">${h.size}KB</span>
+    </div>`).join('');
+}
+
+function restoreBackupInterval(){
+  const interval=state.settings.backupInterval||0;
+  if(interval>0)_backupTimer=setInterval(()=>doBackupNow(true),interval*60*1000);
+  const sel=document.getElementById('s-backup-interval');
+  if(sel){
+    const opts=['0','15','30','60','120'];
+    sel.value=opts.includes(String(interval))?String(interval):(interval>0?'custom':'0');
+    const cw=document.getElementById('backup-custom-wrap');
+    if(cw)cw.style.display=sel.value==='custom'?'block':'none';
+    if(sel.value==='custom'){const ci=document.getElementById('s-backup-custom');if(ci)ci.value=interval;}
+  }
+  updateBackupStatus();
+}
+
+
 // ════════════════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════════════════
@@ -4016,6 +4810,8 @@ window.addEventListener('load',()=>{
   },1600);
   populateColorSwatches('color-swatches','cat-color-input',CAT_COLORS);
   populateColorSwatches('team-color-swatches','team-color-input',TEAM_COLORS);
+  restoreBackupInterval();
+  initSessionStats();
   // Fullscreen change event - update hint
   document.addEventListener('fullscreenchange',()=>{
     if(!document.fullscreenElement){const h=document.getElementById('fs-hint');if(h)h.classList.remove('show')}
