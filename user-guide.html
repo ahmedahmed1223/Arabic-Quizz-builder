@@ -285,6 +285,8 @@ kbd{
     <a class="nav-pill" href="#lifelines">أطواق النجاة</a>
     <a class="nav-pill" href="#sound">الصوت</a>
     <a class="nav-pill" href="#shortcuts">الاختصارات</a>
+    <a class="nav-pill" href="#music-widget">الموسيقى</a>
+    <a class="nav-pill" href="#backup">النسخ الاحتياطي</a>
     <a class="nav-pill" href="#tips">نصائح</a>
     <a class="nav-pill" href="#troubleshoot">مشاكل شائعة</a>
   </nav>
@@ -310,6 +312,9 @@ kbd{
     <a class="toc-item" href="#sound">🔊 الصوت</a>
     <a class="toc-item" href="#shortcuts">⌨️ اختصارات لوحة المفاتيح</a>
     <a class="toc-item" href="#import">📥 الاستيراد والتصدير</a>
+    <a class="toc-item" href="#music-widget">🎵 التحكم بالموسيقى</a>
+    <a class="toc-item" href="#transition">🔄 الانتقال بعد السؤال</a>
+    <a class="toc-item" href="#backup">💾 النسخ الاحتياطي</a>
     <a class="toc-item" href="#tips">💡 نصائح للمقدم</a>
     <a class="toc-item" href="#troubleshoot">🔧 مشاكل شائعة</a>
   </div>
@@ -321,12 +326,13 @@ kbd{
 <!-- HERO -->
 <section id="overview">
   <div class="hero">
-    <div class="hero-badge">📖 دليل المستخدم الكامل — الإصدار الرابع</div>
+    <div class="hero-badge">📖 دليل المستخدم الكامل </div>
     <h1>منصة المسابقات التفاعلية</h1>
     <p>منصة احترافية متكاملة لإعداد وتقديم مسابقات تفاعلية تعليمية وترفيهية، تعمل كاملاً في المتصفح دون الحاجة لاتصال بالإنترنت أثناء العرض.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="num">4</div><div class="lbl">أنواع أسئلة</div></div>
       <div class="hero-stat"><div class="num">2</div><div class="lbl">نمطا مسابقة</div></div>
+      <div class="hero-stat"><div class="num">💾</div><div class="lbl">نسخ احتياطي تلقائي</div></div>
       <div class="hero-stat"><div class="num">3</div><div class="lbl">أطواق نجاة</div></div>
       <div class="hero-stat"><div class="num">4</div><div class="lbl">ثيمات بصرية</div></div>
     </div>
@@ -807,6 +813,80 @@ kbd{
   </div>
 </section>
 
+
+<!-- ═══ MUSIC WIDGET ═══ -->
+<section class="section" id="music-widget">
+  <div class="section-header">
+    <div class="section-icon icon-blue">🎵</div>
+    <div><div class="section-title">التحكم بالموسيقى أثناء العرض</div><div class="section-sub">زر الموسيقى متاح في جميع الشاشات</div></div>
+  </div>
+  <div class="callout tip"><span class="callout-icon">🎵</span><span>يظهر <strong>شريط الموسيقى العائم</strong> في أسفل يسار الشاشة على جميع شاشات العرض (الفرق، الأقسام، السؤال، النتائج، الشكر). انقر عليه للتشغيل/الإيقاف، ومرّر الفأرة فوقه لإظهار شريط الصوت.</span></div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">🎵</div>
+      <div class="step-body">
+        <div class="step-title">زر التشغيل</div>
+        <div class="step-desc">انقر على الأيقونة 🔇/🎵 في أسفل يسار الشاشة في أي وقت لتشغيل أو إيقاف الموسيقى.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">🔊</div>
+      <div class="step-body">
+        <div class="step-title">ضبط مستوى الصوت</div>
+        <div class="step-desc">مرّر الفأرة فوق الزر لظهور شريط الصوت. أي تغيير يُطبَّق فورياً على الموسيقى الجارية ويتزامن مع لوحة التحكم.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TRANSITION ═══ -->
+<section class="section" id="transition">
+  <div class="section-header">
+    <div class="section-icon icon-gold">🔄</div>
+    <div><div class="section-title">الانتقال بعد السؤال</div><div class="section-sub">تلقائي أو يدوي</div></div>
+  </div>
+  <div class="cards-grid">
+    <div class="card" style="border-color:rgba(0,230,118,.3)">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">الانتقال التلقائي (افتراضي)</div>
+      <p>بعد الإجابة، ينتقل البرنامج فوراً لشاشة الأقسام. يمكن ضبط تأخير من 0 إلى 10 ثواني قبل الانتقال.</p>
+    </div>
+    <div class="card" style="border-color:rgba(245,200,66,.3)">
+      <div class="card-icon">✋</div>
+      <div class="card-title">الانتقال اليدوي</div>
+      <p>يبقى في شاشة السؤال حتى يضغط المقدم زر "📂 الأقسام" يدوياً. مفيد للشرح والتعليق قبل الانتقال.</p>
+    </div>
+  </div>
+  <div class="callout info" style="margin-top:16px"><span class="callout-icon">⚙️</span><span>يُضبط من <strong>لوحة التحكم → المظهر → الانتقال بعد السؤال</strong>.</span></div>
+</section>
+
+<!-- ═══ BACKUP ═══ -->
+<section class="section" id="backup">
+  <div class="section-header">
+    <div class="section-icon icon-green">💾</div>
+    <div><div class="section-title">النسخ الاحتياطي التلقائي</div><div class="section-sub">حماية بياناتك تلقائياً</div></div>
+  </div>
+  <div class="callout tip"><span class="callout-icon">✅</span><span>يتم تنزيل الملف تلقائياً كـ JSON في مجلد التنزيلات الافتراضي للمتصفح. اسم الملف يتضمن اسم المسابقة والتاريخ والوقت.</span></div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>الخيار</th><th>التكرار</th><th>الاستخدام الموصى</th></tr></thead>
+      <tbody>
+        <tr><td><strong>معطّل</strong></td><td>—</td><td>مسابقات قصيرة أو بيانات بسيطة</td></tr>
+        <tr><td><strong>كل 15 دقيقة</strong></td><td>15 د</td><td>مسابقات طويلة ومهمة</td></tr>
+        <tr><td><strong>كل 30 دقيقة</strong></td><td>30 د</td><td>الاستخدام العادي</td></tr>
+        <tr><td><strong>كل ساعة</strong></td><td>60 د</td><td>الجلسات اليومية</td></tr>
+        <tr><td><strong>مخصص</strong></td><td>5-480 د</td><td>حسب الحاجة</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:16px">
+    <button class="callout tip" style="cursor:default;width:100%;text-align:right;display:flex;align-items:flex-start;gap:12px">
+      <span style="font-size:1.1rem">💡</span>
+      <span>لنسخ فوري انقر <strong>"💾 نسخ احتياطي الآن"</strong> في تبويب الاستيراد. الملف الناتج يمكن استعادته لاحقاً بزر "📥 استيراد JSON".</span>
+    </button>
+  </div>
+</section>
+
 <!-- ═══ TIPS ═══ -->
 <section class="section" id="tips">
   <div class="section-header">
@@ -913,6 +993,21 @@ kbd{
           <td><strong>استيراد Excel لا يعمل</strong></td>
           <td>ترتيب الأعمدة خاطئ أو صفحة غير محددة</td>
           <td>تأكد من الترتيب الصحيح للأعمدة وأن البيانات في الورقة الأولى</td>
+        </tr>
+        <tr>
+          <td><strong>الانتقال التلقائي لا يعمل</strong></td>
+          <td>الوضع مضبوط على "يدوي"</td>
+          <td>تحقق من إعداد "الانتقال بعد السؤال" في تبويب المظهر</td>
+        </tr>
+        <tr>
+          <td><strong>النسخ الاحتياطي لا يتنزّل</strong></td>
+          <td>المتصفح يحجب التنزيلات التلقائية</td>
+          <td>اسمح للمتصفح بتنزيل ملفات متعددة من هذا الموقع</td>
+        </tr>
+        <tr>
+          <td><strong>صورة الخيار لا تظهر</strong></td>
+          <td>حجم الصورة أكبر من 3MB</td>
+          <td>ضغّط الصورة وأعد رفعها</td>
         </tr>
       </tbody>
     </table>
