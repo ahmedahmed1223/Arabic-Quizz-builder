@@ -395,7 +395,7 @@ body{position:relative;transition:background .4s}
 .lifelines-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
 /* ── ADMIN LAYOUT ── */
-#view-admin{display:flex;flex-direction:column;min-height:100vh;background:var(--bg-deep)}
+#view-admin{display:flex;flex-direction:column;min-height:100vh;background:var(--bg-deep);overflow:hidden}
 .admin-header{
   background:var(--bg-card);
   border-bottom:1px solid var(--border);
@@ -404,6 +404,7 @@ body{position:relative;transition:background .4s}
   height:var(--header-h);position:sticky;top:0;z-index:100;
   backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   box-shadow:0 1px 0 var(--border),0 4px 24px rgba(0,0,0,.18);
+  flex-shrink:0;
 }
 .admin-logo{
   font-size:1.05rem;font-weight:900;color:var(--accent1);
@@ -423,6 +424,8 @@ body{position:relative;transition:background .4s}
   border-bottom:1px solid var(--border);
   padding:0 24px;
   display:flex;gap:0;overflow-x:auto;
+  flex-shrink:0;
+  position:sticky;top:var(--header-h);z-index:90;
 }
 .admin-nav::-webkit-scrollbar{height:2px}
 .admin-nav::-webkit-scrollbar-track{background:transparent}
@@ -440,6 +443,9 @@ body{position:relative;transition:background .4s}
 .nav-tab.active{color:var(--accent1);border-bottom-color:var(--accent1);font-weight:700}
 .admin-content{
   flex:1;padding:24px;max-width:1200px;width:100%;margin:0 auto;
+  /* Enable independent scroll on larger screens */
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 /* ── CARDS ── */
@@ -679,6 +685,8 @@ body{position:relative;transition:background .4s}
   align-items:center;justify-content:center;
   padding:calc(var(--header-h) + 20px) 20px 80px;
   position:relative;overflow:hidden;text-align:center;
+  /* Fix mobile: ensure content starts at top of visible area */
+  box-sizing:border-box;
 }
 /* rings */
 .intro-rings{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden}
@@ -1062,6 +1070,24 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 .team-pres-card .team-pres-body{padding:16px 14px 14px}
   .team-pres-member-name{font-size:.78rem}
   .teams-pres-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  /* Mobile: ensure view fits viewport without forced scroll */
+  #view-intro,#view-teams,#view-categories,#view-scores,
+  #view-credits,#view-podium,#view-teamstats{
+    padding-top:calc(var(--header-h) + 12px);
+  }
+  /* Options editor on mobile */
+  .opt-editor-row{flex-wrap:wrap;gap:6px}
+  .opt-side-btns{flex-direction:row}
+  /* Podium on mobile */
+  .podium-stage{flex-wrap:wrap;gap:12px}
+  /* Cat display modes on mobile */
+  .cats-mode-switcher{gap:4px}
+  .cats-mode-btn{padding:5px 9px;font-size:.72rem}
+  .cats-jeopardy-board{gap:5px}
+  .jeopardy-col{min-width:70px}
+  .jeopardy-pts{font-size:1rem}
+  .cats-hidden-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+  #cats-wheel-canvas{max-width:min(340px,90vw);max-height:min(340px,50vh)}
 }
 
 
@@ -1488,14 +1514,15 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 
 /* ══ OPTION EDITOR (modal) ══ */
-.options-editor{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
+.options-editor{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
 .opt-editor-row{
-  display:grid;
-  grid-template-columns:28px 1fr auto;
-  gap:8px;align-items:start;
+  display:flex;
+  align-items:center;
+  gap:8px;
   background:var(--bg-panel);border:1px solid var(--border);
-  border-radius:10px;padding:10px 12px;
-  transition:border-color .2s;
+  border-radius:10px;padding:10px 10px 10px 12px;
+  transition:border-color .2s,background .15s,box-shadow .2s;
+  position:relative;
 }
 .opt-editor-row:focus-within{border-color:var(--accent2)}
 .opt-editor-row.has-image{border-color:rgba(0,230,118,.3)}
@@ -1510,7 +1537,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 .opt-editor-row.is-correct .opt-letter-badge{
   background:var(--success);color:#001a0e;border-color:var(--success);
 }
-.opt-input-area{display:flex;flex-direction:column;gap:5px}
+.opt-input-area{display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
 .opt-math-preview{
   font-size:.85rem;background:var(--bg-surface);
   border-radius:6px;padding:5px 8px;
@@ -1788,6 +1815,256 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   box-shadow:0 0 60px rgba(255,59,92,.7);
   animation:timeup-pop 2.5s ease forwards;
   font-family:'Cairo',sans-serif;
+}
+/* ── OPTION DRAG-DROP (answers reorder) ── */
+.opt-editor-row.drag-over-opt{
+  border-color:var(--accent1)!important;
+  background:var(--option-hover)!important;
+  box-shadow:0 0 0 2px var(--accent1)44;
+}
+.opt-editor-row.dragging-opt{
+  opacity:.45;border-color:var(--accent2)!important;
+}
+.opt-drag-handle{
+  cursor:grab;color:var(--text-muted);font-size:1.1rem;
+  padding:2px 4px;user-select:none;flex-shrink:0;
+  transition:color .15s;
+}
+.opt-drag-handle:hover{color:var(--accent1)}
+.opt-drag-handle:active{cursor:grabbing}
+
+/* ════ CAT DISPLAY MODE SWITCHER ════ */
+.cats-mode-switcher{
+  display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;
+  margin-bottom:clamp(10px,2vh,18px);
+}
+.cats-mode-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 13px;border-radius:20px;
+  border:1px solid var(--border);background:var(--bg-card);
+  color:var(--text-muted);font-family:'Cairo',sans-serif;
+  font-size:.78rem;font-weight:700;cursor:pointer;
+  transition:all .2s;white-space:nowrap;
+}
+.cats-mode-btn:hover{border-color:var(--border-light);color:var(--text-primary);background:var(--bg-surface)}
+.cats-mode-btn.active{border-color:var(--accent1);color:var(--accent1);background:rgba(0,0,0,.15);box-shadow:0 0 12px rgba(0,0,0,.2)}
+
+/* ════ LIST MODE ════ */
+.cats-list-mode{
+  display:flex;flex-direction:column;gap:12px;
+  width:100%;max-width:720px;
+}
+.cat-list-item{
+  display:flex;align-items:center;gap:16px;
+  background:var(--bg-card);border:2px solid var(--border);
+  border-radius:18px;padding:16px 22px;cursor:pointer;
+  transition:all .25s;position:relative;overflow:hidden;
+}
+.cat-list-item::before{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:5px;
+  border-radius:0 18px 18px 0;
+}
+.cat-list-item:not(.depleted):hover{
+  transform:translateX(-4px);
+  box-shadow:0 8px 32px rgba(0,0,0,.35);
+}
+.cat-list-item:not(.depleted):active{transform:scale(.98)}
+.cat-list-item.depleted{opacity:.35;cursor:default;filter:grayscale(.8)}
+.cat-list-icon{
+  font-size:clamp(2rem,4vw,2.8rem);flex-shrink:0;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.3));
+  line-height:1;
+}
+.cat-list-body{flex:1;min-width:0}
+.cat-list-name{font-size:clamp(1rem,2.2vw,1.3rem);font-weight:900;margin-bottom:3px}
+.cat-list-meta{display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--text-muted)}
+.cat-list-progress{
+  height:5px;background:var(--bg-surface);border-radius:3px;
+  margin-top:8px;overflow:hidden;
+}
+.cat-list-progress-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.cat-list-arrow{
+  font-size:1.4rem;flex-shrink:0;color:var(--text-muted);
+  opacity:.4;transition:opacity .2s,transform .2s;
+}
+.cat-list-item:not(.depleted):hover .cat-list-arrow{opacity:1;transform:translateX(-4px)}
+
+/* ════ HIDDEN / MYSTERY FLIP CARDS ════ */
+.cats-hidden-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(clamp(140px,16vw,200px),1fr));
+  gap:clamp(10px,2vw,18px);
+  width:100%;max-width:1100px;
+}
+.cat-flip-wrap{perspective:800px}
+.cat-flip-inner{
+  position:relative;
+  width:100%;min-height:clamp(130px,18vh,200px);
+  transform-style:preserve-3d;
+  transition:transform .55s cubic-bezier(.4,0,.2,1);
+  cursor:pointer;
+}
+.cat-flip-wrap.flipped .cat-flip-inner{transform:rotateY(180deg)}
+.cat-flip-face,.cat-flip-back{
+  position:absolute;inset:0;
+  border-radius:clamp(14px,2vw,22px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:clamp(14px,2.5vh,24px) 12px;text-align:center;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border:2px solid var(--border);
+  background:var(--bg-card);
+}
+.cat-flip-face{
+  background:linear-gradient(135deg,var(--bg-panel),var(--bg-card));
+  border:2px solid var(--border-light);
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+}
+.cat-flip-face-icon{
+  font-size:clamp(2.4rem,5vw,3.5rem);margin-bottom:8px;
+  animation:flip-idle 3s ease-in-out infinite alternate;
+}
+@keyframes flip-idle{
+  from{transform:scale(1) rotate(-3deg)}
+  to{transform:scale(1.1) rotate(3deg)}
+}
+.cat-flip-face-label{
+  font-size:clamp(.75rem,1.5vw,.9rem);color:var(--text-muted);font-weight:700;
+  letter-spacing:.06em;
+}
+.cat-flip-back{
+  transform:rotateY(180deg);
+  border-width:3px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.cat-flip-back-icon{font-size:clamp(2rem,4.5vw,3rem);margin-bottom:8px}
+.cat-flip-back-name{font-size:clamp(.9rem,1.8vw,1.15rem);font-weight:900;margin-bottom:6px}
+.cat-flip-back-count{
+  font-size:.78rem;font-weight:700;
+  background:rgba(0,0,0,.2);border-radius:20px;padding:2px 10px;
+}
+.cat-flip-back-click{
+  font-size:.7rem;color:rgba(255,255,255,.5);margin-top:10px;
+}
+.cat-flip-wrap.depleted .cat-flip-face{opacity:.3;filter:grayscale(1);cursor:default}
+.cat-flip-wrap.depleted .cat-flip-face-icon{animation:none}
+/* Hover glow on front face */
+.cat-flip-wrap:not(.depleted):not(.flipped) .cat-flip-face:hover{
+  border-color:var(--accent1);
+  box-shadow:var(--glow1),0 8px 30px rgba(0,0,0,.4);
+}
+
+/* ════ JEOPARDY MODE ════ */
+.cats-jeopardy-board{
+  display:flex;gap:clamp(6px,1.2vw,12px);
+  width:100%;max-width:1200px;
+  overflow-x:auto;
+  padding-bottom:8px;
+}
+.jeopardy-col{
+  flex:1;min-width:clamp(90px,12vw,160px);
+  display:flex;flex-direction:column;gap:clamp(5px,1vh,8px);
+}
+.jeopardy-cat-header{
+  border-radius:clamp(8px,1.2vw,14px);
+  padding:clamp(10px,2vh,18px) 8px;
+  text-align:center;
+  border:2px solid var(--border);
+  background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+}
+.jeopardy-cat-header-icon{font-size:clamp(1.4rem,2.8vw,2.2rem);margin-bottom:5px;line-height:1}
+.jeopardy-cat-header-name{
+  font-size:clamp(.7rem,1.3vw,.9rem);font-weight:900;
+  line-height:1.3;word-break:break-word;
+}
+.jeopardy-cell{
+  border-radius:clamp(8px,1.2vw,12px);
+  padding:clamp(10px,2.5vh,22px) 8px;
+  text-align:center;cursor:pointer;
+  border:2px solid rgba(255,255,255,.08);
+  background:var(--bg-card);
+  transition:all .22s;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;
+}
+.jeopardy-cell::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,transparent 60%);
+}
+.jeopardy-cell:not(.used):not(.depleted-col):hover{
+  transform:scale(1.04);
+  box-shadow:0 8px 28px rgba(0,0,0,.45);
+}
+.jeopardy-cell:not(.used):not(.depleted-col):active{transform:scale(.97)}
+.jeopardy-cell.used{
+  opacity:.22;filter:grayscale(1);cursor:default;
+  background:var(--bg-panel);border-color:var(--border);
+}
+.jeopardy-cell.depleted-col{opacity:.18;cursor:default;filter:grayscale(1)}
+.jeopardy-pts{
+  font-size:clamp(1.2rem,3vw,2rem);font-weight:900;
+  color:var(--accent1);text-shadow:var(--glow1);
+  line-height:1;
+}
+.jeopardy-used-icon{font-size:1.2rem;opacity:.5}
+.jeopardy-diff-dot{
+  width:8px;height:8px;border-radius:50%;margin-top:2px;opacity:.7;
+}
+
+/* ════ WHEEL MODE ════ */
+.cats-wheel-wrap{
+  display:flex;flex-direction:column;align-items:center;
+  gap:clamp(14px,2.5vh,28px);
+  width:100%;
+}
+.cats-wheel-stage{
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+#cats-wheel-canvas{
+  border-radius:50%;
+  box-shadow:0 0 0 6px var(--border),0 0 48px rgba(0,0,0,.6),var(--glow1);
+  display:block;max-width:min(420px,88vw);max-height:min(420px,56vh);
+  width:100%;height:auto;
+}
+.wheel-pointer{
+  position:absolute;top:-22px;left:50%;transform:translateX(-50%);
+  font-size:2.2rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6));
+  z-index:2;pointer-events:none;
+  animation:pointer-pulse 1.4s ease-in-out infinite alternate;
+}
+@keyframes pointer-pulse{
+  from{transform:translateX(-50%) translateY(0)}
+  to{transform:translateX(-50%) translateY(-4px)}
+}
+.wheel-center-btn{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:clamp(54px,10vw,72px);height:clamp(54px,10vw,72px);
+  border-radius:50%;border:3px solid var(--bg-deep);
+  background:linear-gradient(135deg,var(--accent1-dark),var(--accent1));
+  color:#050505;font-family:'Cairo',sans-serif;
+  font-size:clamp(.72rem,1.4vw,.84rem);font-weight:900;
+  cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.5);
+  transition:all .2s;display:flex;align-items:center;justify-content:center;
+  z-index:3;text-align:center;line-height:1.2;
+}
+.wheel-center-btn:hover{transform:translate(-50%,-50%) scale(1.08);box-shadow:var(--glow1)}
+.wheel-center-btn:disabled{opacity:.5;cursor:not-allowed;transform:translate(-50%,-50%)}
+.wheel-result-panel{
+  background:var(--bg-card);border:2px solid var(--border-light);
+  border-radius:20px;padding:20px 28px;text-align:center;
+  animation:float-up .4s ease;max-width:400px;width:90%;
+  box-shadow:0 12px 40px rgba(0,0,0,.5);
+}
+.wheel-result-icon{font-size:2.8rem;margin-bottom:8px}
+.wheel-result-name{font-size:1.4rem;font-weight:900;margin-bottom:14px}
+.wheel-result-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.wheel-winner-flash{
+  animation:winner-glow 1s ease-in-out infinite alternate;
+}
+@keyframes winner-glow{
+  from{box-shadow:var(--glow1)}
+  to{box-shadow:var(--glow1),0 0 60px rgba(0,0,0,.3)}
 }
 /* ── QUESTION DRAG HANDLE ── */
 .question-drag-handle{
@@ -2314,6 +2591,38 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
 
       <div class="card">
+        <div class="card-header"><div class="card-title"><div class="icon icon-accent">🎡</div> طريقة عرض الأقسام</div></div>
+        <div class="alert alert-info">🖼️ اختر الطريقة الافتراضية لعرض الأقسام عند بدء المسابقة — يمكن التبديل بينها في أي وقت أثناء اللعب</div>
+        <div class="form-group">
+          <label class="form-label">الطريقة الافتراضية</label>
+          <select id="s-cat-display-mode" class="form-select" onchange="updateSetting('catDisplayMode',this.value)">
+            <option value="grid">⊞ شبكة البطاقات — العرض الكلاسيكي</option>
+            <option value="wheel">🎡 عجلة الحظ — تدوير عشوائي للاختيار</option>
+            <option value="hidden">🃏 بطاقات مخفية — كشف تدريجي للأقسام</option>
+            <option value="list">☰ قائمة — عرض مفصّل مع شريط التقدم</option>
+            <option value="jeopardy">🎯 جيوباردي — لوحة بنقاط حسب الصعوبة</option>
+          </select>
+        </div>
+        <div class="form-row" style="grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px">
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='grid';updateSetting('catDisplayMode','grid')">
+            <div style="font-size:1.4rem;margin-bottom:4px">⊞</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">شبكة</div>
+          </div>
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='wheel';updateSetting('catDisplayMode','wheel')">
+            <div style="font-size:1.4rem;margin-bottom:4px">🎡</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">عجلة</div>
+          </div>
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='hidden';updateSetting('catDisplayMode','hidden')">
+            <div style="font-size:1.4rem;margin-bottom:4px">🃏</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">مخفي</div>
+          </div>
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='list';updateSetting('catDisplayMode','list')">
+            <div style="font-size:1.4rem;margin-bottom:4px">☰</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">قائمة</div>
+          </div>
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='jeopardy';updateSetting('catDisplayMode','jeopardy')">
+            <div style="font-size:1.4rem;margin-bottom:4px">🎯</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">جيوباردي</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
         <div class="card-header"><div class="card-title"><div class="icon icon-accent">🎮</div> نمط المسابقة</div></div>
         <div class="mode-cards">
           <div class="mode-card selected" id="mode-card-turns" onclick="selectMode('turns')"><div class="mode-card-icon">🔄</div><div class="mode-card-title">التناوب في الاختيار</div><div class="mode-card-desc">كل فريق يختار قسماً ويجيب على سؤال واحد ثم ينتقل الدور</div></div>
@@ -2612,6 +2921,36 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         </div>
       </div>
 
+      <!-- PODIUM MUSIC CARD -->
+      <div class="card">
+        <div class="card-header"><div class="card-title"><div class="icon icon-gold">🏆</div> موسيقى شاشة إعلان النتائج (المنصة)</div></div>
+        <div class="alert alert-info">🎶 تُشغَّل هذه الموسيقى تلقائياً عند فتح شاشة إعلان النتائج النهائية (المنصة) — مستقلة عن موسيقى المسابقة</div>
+        <div class="form-group">
+          <label class="form-label">🏆 ملف موسيقى الإعلان (MP3/OGG/WAV)</label>
+          <div class="audio-file-row">
+            <label class="audio-file-label" for="podium-music-input">📁 اختر ملفاً</label>
+            <input type="file" id="podium-music-input" accept="audio/*" class="hidden" onchange="loadPodiumMusic(this)">
+            <span class="audio-file-name" id="podium-music-name">لم يختر بعد</span>
+            <button class="audio-test-btn" id="test-btn-podiumMusic" onclick="testPodiumMusic()">▶ تشغيل</button>
+            <button class="audio-stop-btn hidden" id="stop-btn-podiumMusic" onclick="stopPodiumMusicTest()">⏹ إيقاف</button>
+            <button class="audio-clear-btn" onclick="clearPodiumMusic()">✕ حذف</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">مستوى صوت موسيقى الإعلان</label>
+          <div style="display:flex;align-items:center;gap:12px">
+            <input type="range" id="s-podium-music-vol" min="0" max="100" value="60" style="flex:1"
+              oninput="updateSetting('podiumMusicVol',+this.value);if(window._podiumAudioEl)window._podiumAudioEl.volume=(+this.value/100)">
+            <span id="podium-vol-display" style="min-width:36px;font-weight:700;color:var(--accent1)">60%</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">
+          <input type="checkbox" id="s-podium-music-loop" style="width:16px;height:16px;accent-color:var(--accent1)"
+            onchange="updateSetting('podiumMusicLoop',this.checked)">
+          <span class="text-sm text-muted">تكرار الموسيقى (Loop)</span>
+        </div>
+      </div>
+
     </div>
 
     <!-- CATEGORIES -->
@@ -2866,7 +3205,15 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   </div>
   <div class="categories-pres-title" id="cats-mode-label">اختر القسم</div>
   <div class="cats-turn-banner" id="cats-turn-banner"></div>
-  <div class="categories-pres-grid" id="cats-pres-grid"></div>
+  <!-- MODE SWITCHER -->
+  <div class="cats-mode-switcher" id="cats-mode-switcher">
+    <button class="cats-mode-btn active" data-mode="grid"    onclick="setCatDisplayMode('grid',this)"   title="شبكة البطاقات">⊞ شبكة</button>
+    <button class="cats-mode-btn"        data-mode="wheel"   onclick="setCatDisplayMode('wheel',this)"  title="عجلة الحظ">🎡 عجلة</button>
+    <button class="cats-mode-btn"        data-mode="hidden"  onclick="setCatDisplayMode('hidden',this)" title="بطاقات مخفية">🃏 مخفي</button>
+    <button class="cats-mode-btn"        data-mode="list"    onclick="setCatDisplayMode('list',this)"   title="عرض قائمة">☰ قائمة</button>
+    <button class="cats-mode-btn"        data-mode="jeopardy" onclick="setCatDisplayMode('jeopardy',this)" title="لوحة جيوباردي">🎯 جيوباردي</button>
+  </div>
+  <div id="cats-pres-grid"></div>
 </div>
 
 <!-- ═══ PRES: QUESTION ═══ -->
@@ -3037,6 +3384,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   <div class="pres-header-bar">
     <div class="pres-header-logo">🏆 نتائج المسابقة</div>
     <div class="pres-header-actions">
+      <button class="btn btn-ghost btn-sm" id="podium-music-toggle-btn" onclick="togglePodiumMusic()" title="تشغيل/إيقاف موسيقى الإعلان" style="display:none">🎵 <span id="podium-music-btn-label">موسيقى</span></button>
       <button class="btn btn-ghost btn-sm" onclick="showView('scores')">📊 مفصّل</button>
       <button class="btn btn-ghost btn-sm" onclick="showView('intro')">🏠 الرئيسية</button>
       <button class="btn btn-ghost btn-sm" onclick="goToAdmin()">⚙️</button>
@@ -3232,10 +3580,15 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     </div>
     <!-- Options Editor -->
     <div class="form-group">
-      <label class="form-label">خيارات الإجابة <span style="font-size:.74rem;color:var(--text-muted)">(نص | ∑ معادلة | 🖼 صورة)</span></label>
-      <div class="options-editor" id="options-editor">
+      <label class="form-label">خيارات الإجابة <span style="font-size:.74rem;color:var(--text-muted)">(نص | ∑ معادلة | 🖼 صورة)</span>
+        <span style="font-size:.7rem;color:var(--text-muted);font-weight:400;margin-right:8px">⠿ اسحب للترتيب</span>
+      </label>
+      <div class="options-editor" id="options-editor" ondragover="event.preventDefault()">
 
-    <div class="opt-editor-row" id="opt-row-0">
+    <div class="opt-editor-row" id="opt-row-0" draggable="true"
+      ondragstart="onOptDragStart(event,0)" ondragover="onOptDragOver(event,0)"
+      ondrop="onOptDrop(event,0)" ondragleave="this.classList.remove('drag-over-opt')" ondragend="onOptDragEnd()">
+      <div class="opt-drag-handle" title="اسحب لإعادة الترتيب">⠿</div>
       <div class="opt-letter-badge" id="opt-letter-badge-0">أ</div>
       <div class="opt-input-area">
         <input type="text" id="q-opt-0" class="form-input" dir="auto"
@@ -3256,7 +3609,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           onclick="document.getElementById('opt-img-file-0').click()" title="إضافة صورة للخيار">🖼</button>
       </div>
     </div>
-    <div class="opt-editor-row" id="opt-row-1">
+    <div class="opt-editor-row" id="opt-row-1" draggable="true"
+      ondragstart="onOptDragStart(event,1)" ondragover="onOptDragOver(event,1)"
+      ondrop="onOptDrop(event,1)" ondragleave="this.classList.remove('drag-over-opt')" ondragend="onOptDragEnd()">
+      <div class="opt-drag-handle" title="اسحب لإعادة الترتيب">⠿</div>
       <div class="opt-letter-badge" id="opt-letter-badge-1">ب</div>
       <div class="opt-input-area">
         <input type="text" id="q-opt-1" class="form-input" dir="auto"
@@ -3277,7 +3633,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           onclick="document.getElementById('opt-img-file-1').click()" title="إضافة صورة للخيار">🖼</button>
       </div>
     </div>
-    <div class="opt-editor-row" id="opt-row-2">
+    <div class="opt-editor-row" id="opt-row-2" draggable="true"
+      ondragstart="onOptDragStart(event,2)" ondragover="onOptDragOver(event,2)"
+      ondrop="onOptDrop(event,2)" ondragleave="this.classList.remove('drag-over-opt')" ondragend="onOptDragEnd()">
+      <div class="opt-drag-handle" title="اسحب لإعادة الترتيب">⠿</div>
       <div class="opt-letter-badge" id="opt-letter-badge-2">ج</div>
       <div class="opt-input-area">
         <input type="text" id="q-opt-2" class="form-input" dir="auto"
@@ -3298,7 +3657,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           onclick="document.getElementById('opt-img-file-2').click()" title="إضافة صورة للخيار">🖼</button>
       </div>
     </div>
-    <div class="opt-editor-row" id="opt-row-3">
+    <div class="opt-editor-row" id="opt-row-3" draggable="true"
+      ondragstart="onOptDragStart(event,3)" ondragover="onOptDragOver(event,3)"
+      ondrop="onOptDrop(event,3)" ondragleave="this.classList.remove('drag-over-opt')" ondragend="onOptDragEnd()">
+      <div class="opt-drag-handle" title="اسحب لإعادة الترتيب">⠿</div>
       <div class="opt-letter-badge" id="opt-letter-badge-3">د</div>
       <div class="opt-input-area">
         <input type="text" id="q-opt-3" class="form-input" dir="auto"
@@ -3452,11 +3814,14 @@ let state={
     catIconSize:100,             // category icon size % (50-200)
     showLifelinesWhenZero:false, // show disabled lifelines when count is 0
     // ── V5 NEW SETTINGS ──
-    negativeMarking:false,       // deduct points on wrong answer
-    negMarkValue:1,              // points to deduct
-    streakBonus:false,           // bonus for consecutive correct answers
-    streakCount:3,               // correct answers needed for streak bonus
-    streakValue:2,               // bonus points per streak
+    negativeMarking:false,
+    negMarkValue:1,
+    streakBonus:false,
+    streakCount:3,
+    streakValue:2,
+    podiumMusicData:null,
+    podiumMusicVol:60,
+    catDisplayMode:'grid',       // 'grid'|'wheel'|'hidden'|'list'|'jeopardy'
   },
   categories:[],teams:[],credits:[],
   currentCatId:null,currentQIndex:0,currentTeamIndex:0,
@@ -3494,10 +3859,12 @@ function saveState(){
     customMusicData:state.settings.customMusicData,
     customCorrectData:state.settings.customCorrectData,
     customWrongData:state.settings.customWrongData,
+    podiumMusicData:state.settings.podiumMusicData,
   };
   settingsClean.customMusicData=!!state.settings.customMusicData;
   settingsClean.customCorrectData=!!state.settings.customCorrectData;
   settingsClean.customWrongData=!!state.settings.customWrongData;
+  settingsClean.podiumMusicData=!!state.settings.podiumMusicData;
   try{localStorage.setItem('quiz_v4',JSON.stringify({settings:settingsClean,categories:state.categories,teams:state.teams,credits:state.credits}))}
   catch(e){toast('تحذير: مساحة التخزين ممتلئة. قد تحتاج لتصدير البيانات.','danger')}
   // Save audio data separately (may fail if large)
@@ -3548,6 +3915,7 @@ function loadState(){
       state.settings.customMusicData=ad.customMusicData||null;
       state.settings.customCorrectData=ad.customCorrectData||null;
       state.settings.customWrongData=ad.customWrongData||null;
+      state.settings.podiumMusicData=ad.podiumMusicData||null;
     }
     // Apply font scale
     applyFontScale(state.settings.fontScale||100);
@@ -3617,6 +3985,10 @@ function showView(name){
     cancelTransition(false);
     _transitionInProgress=false;
   }
+  // Scroll to top on every view change (fixes mobile scroll issue)
+  window.scrollTo({top:0,behavior:'instant'});
+  document.documentElement.scrollTop=0;
+  document.body.scrollTop=0;
   ALL_VIEWS.forEach(v=>document.getElementById('view-'+v).classList.add('hidden'));
   const el=document.getElementById('view-'+name);
   el.classList.remove('hidden');
@@ -3631,6 +4003,10 @@ function showView(name){
   if(name!=='question'){
     if(window._qAudioEl){try{window._qAudioEl.pause()}catch(e){}}
     stopEffectSound();
+  }
+  // Stop podium music when leaving podium screen
+  if(name!=='podium' && window._podiumMusicPlaying){
+    stopPodiumMusicInternal();
   }
   if(name==='admin'||name==='login'||name==='scores'||name==='credits') {
     if(name==='scores'||name==='credits') saveGameProgress();
@@ -3670,6 +4046,11 @@ function switchTab(name,el){
   document.querySelectorAll('.tab-content').forEach(t=>t.classList.add('hidden'));
   el.classList.add('active');
   document.getElementById('tab-'+name).classList.remove('hidden');
+  // Scroll admin content to top on tab switch
+  const ac=document.querySelector('.admin-content');
+  if(ac){ac.scrollTop=0;}
+  window.scrollTo({top:0,behavior:'instant'});
+  if(name==='settings'){renderAdmin();}
   if(name==='categories') renderCategoriesAdmin();
   if(name==='teams') renderTeamsAdmin();
   if(name==='credits') renderCreditsAdmin();
@@ -3727,6 +4108,11 @@ function renderAdmin(){
   document.getElementById('custom-music-name').textContent=s.customMusicData?'✅ ملف محمّل':'لم يختر بعد';
   document.getElementById('custom-correct-name').textContent=s.customCorrectData?'✅ محمّل':'مدمج';
   document.getElementById('custom-wrong-name').textContent=s.customWrongData?'✅ محمّل':'مدمج';
+  const pmn=document.getElementById('podium-music-name');if(pmn)pmn.textContent=s.podiumMusicData?'✅ ملف محمّل':'لم يختر بعد';
+  const pmv=document.getElementById('s-podium-music-vol');if(pmv)pmv.value=s.podiumMusicVol??60;
+  const pvd=document.getElementById('podium-vol-display');if(pvd)pvd.textContent=(s.podiumMusicVol??60)+'%';
+  const pml=document.getElementById('s-podium-music-loop');if(pml)pml.checked=!!s.podiumMusicLoop;
+  const cdm=document.getElementById('s-cat-display-mode');if(cdm)cdm.value=s.catDisplayMode||'grid';
   // Sync volume slider
   document.getElementById('s-music-vol').value=s.musicVol||40;
   document.getElementById('vol-display').textContent=(s.musicVol||40)+'%';
@@ -4205,6 +4591,13 @@ function renderCatsSlide(){
   }
   document.getElementById('cats-mode-label').textContent=
     state.settings.compMode==='full_cat'?'اختر القسم — ستُوزَّع جميع أسئلته على الفرق':'اختر القسم للإجابة';
+
+  // Sync mode switcher buttons
+  const mode=state.settings.catDisplayMode||'grid';
+  document.querySelectorAll('.cats-mode-btn').forEach(b=>{
+    b.classList.toggle('active',b.dataset.mode===mode);
+  });
+
   // Check if all categories are depleted
   const allDepleted=state.categories.every(cat=>{
     const used=state.usedQuestions[cat.id]||new Set();return cat.questions.length===used.size;
@@ -4218,7 +4611,27 @@ function renderCatsSlide(){
     setTimeout(()=>showView('scores'),2500);
     return;
   }
+
+  // Route to correct renderer
+  switch(mode){
+    case 'wheel':    renderCatsWheel();    break;
+    case 'hidden':   renderCatsHidden();   break;
+    case 'list':     renderCatsList();     break;
+    case 'jeopardy': renderCatsJeopardy(); break;
+    default:         renderCatsGrid();     break;
+  }
+}
+
+function setCatDisplayMode(mode, el){
+  state.settings.catDisplayMode=mode;
+  saveState();
+  renderCatsSlide();
+}
+
+// ─── MODE 1: GRID (classic) ───────────────────────────────────────
+function renderCatsGrid(){
   const grid=document.getElementById('cats-pres-grid');
+  grid.className='categories-pres-grid';
   grid.innerHTML=state.categories.map(cat=>{
     const used=state.usedQuestions[cat.id]||new Set();
     const rem=cat.questions.length-used.size;
@@ -4235,6 +4648,328 @@ function renderCatsSlide(){
       </div>
     </div>`;
   }).join('');
+}
+
+// ─── MODE 2: LIST ─────────────────────────────────────────────────
+function renderCatsList(){
+  const grid=document.getElementById('cats-pres-grid');
+  grid.className='';
+  grid.innerHTML='<div class="cats-list-mode">'+state.categories.map(cat=>{
+    const used=state.usedQuestions[cat.id]||new Set();
+    const rem=cat.questions.length-used.size;
+    const dep=rem===0;
+    const total=cat.questions.length;
+    const usedPct=total>0?Math.round((total-rem)/total*100):100;
+    return `<div class="cat-list-item${dep?' depleted':''}"
+      style="border-color:${dep?'var(--border)':cat.color+'55'}"
+      onclick="${dep?'':` selectCatAndStart('${cat.id}')`}">
+      <div class="cat-list-item" style="position:absolute;right:0;top:0;bottom:0;width:5px;background:${cat.color};border-radius:0 18px 18px 0;display:block"></div>
+      <div class="cat-list-icon">${dep?'✅':cat.icon||'📂'}</div>
+      <div class="cat-list-body">
+        <div class="cat-list-name" style="color:${dep?'var(--text-muted)':cat.color}">${cat.name}</div>
+        <div class="cat-list-meta">
+          <span>📋 ${total} سؤال</span>
+          <span style="color:${dep?'var(--danger)':'var(--success)'}">
+            ${dep?'✅ اكتمل':'⬤ '+rem+' متبقٍّ'}
+          </span>
+        </div>
+        <div class="cat-list-progress">
+          <div class="cat-list-progress-fill" style="width:${usedPct}%;background:${dep?'var(--success)':cat.color}"></div>
+        </div>
+      </div>
+      ${dep?'':'<div class="cat-list-arrow">←</div>'}
+    </div>`;
+  }).join('')+'</div>';
+}
+
+// ─── MODE 3: HIDDEN / MYSTERY FLIP CARDS ──────────────────────────
+function renderCatsHidden(){
+  const grid=document.getElementById('cats-pres-grid');
+  grid.className='';
+  const activeCats=state.categories.filter(c=>{
+    const used=state.usedQuestions[c.id]||new Set();
+    return c.questions.length>used.size;
+  });
+  grid.innerHTML=`<div class="cats-hidden-grid">`+state.categories.map(cat=>{
+    const used=state.usedQuestions[cat.id]||new Set();
+    const rem=cat.questions.length-used.size;
+    const dep=rem===0;
+    return `<div class="cat-flip-wrap${dep?' depleted':''}" id="flip-${cat.id}" onclick="flipCatCard('${cat.id}','${cat.id}')">
+      <div class="cat-flip-inner">
+        <div class="cat-flip-face">
+          <div class="cat-flip-face-icon">❓</div>
+          <div class="cat-flip-face-label">${dep?'اكتمل':'انقر للكشف'}</div>
+        </div>
+        <div class="cat-flip-back" style="border-color:${cat.color};box-shadow:0 8px 32px ${cat.color}44">
+          <div class="cat-flip-back-icon">${dep?'✅':cat.icon||'📂'}</div>
+          <div class="cat-flip-back-name" style="color:${cat.color}">${cat.name}</div>
+          <div class="cat-flip-back-count">${dep?'اكتمل':rem+' / '+cat.questions.length+' سؤال'}</div>
+          ${dep?'':`<div class="cat-flip-back-click" style="color:${cat.color}88">انقر مجدداً للبدء ▶</div>`}
+        </div>
+      </div>
+    </div>`;
+  }).join('')+'</div>';
+}
+
+let _flipReady={};
+function flipCatCard(catId, divId){
+  const used=state.usedQuestions[catId]||new Set();
+  const cat=state.categories.find(c=>c.id===catId);
+  if(!cat)return;
+  const dep=(cat.questions.length-used.size)===0;
+  if(dep)return;
+  const wrap=document.getElementById('flip-'+divId);
+  if(!wrap)return;
+  if(!wrap.classList.contains('flipped')){
+    // First click: flip to reveal
+    wrap.classList.add('flipped');
+    _flipReady[catId]=true;
+  } else if(_flipReady[catId]){
+    // Second click: start this category
+    selectCatAndStart(catId);
+  }
+}
+
+// ─── MODE 4: JEOPARDY BOARD ───────────────────────────────────────
+function renderCatsJeopardy(){
+  const grid=document.getElementById('cats-pres-grid');
+  grid.className='';
+  // Point tiers and difficulty mapping
+  const TIERS=[
+    {pts:100, diff:'easy',  label:'١٠٠', color:'var(--success)'},
+    {pts:200, diff:'medium',label:'٢٠٠', color:'var(--accent1)'},
+    {pts:300, diff:'hard',  label:'٣٠٠', color:'var(--danger)'},
+    {pts:400, diff:'hard',  label:'٤٠٠', color:'#a78bfa'},
+    {pts:500, diff:'hard',  label:'٥٠٠', color:'var(--accent2)'},
+  ];
+  const DIFF_COLORS={easy:'var(--success)',medium:'var(--accent1)',hard:'var(--danger)'};
+
+  // Build per-cat per-tier availability (question index to use)
+  // For jeopardy, we pre-assign question slots to tiers by difficulty
+  const board=state.categories.map(cat=>{
+    const used=state.usedQuestions[cat.id]||new Set();
+    const dep=(cat.questions.length-used.size)===0;
+    const allQ=cat.questions.map((q,i)=>({q,i,used:used.has(i)}));
+    // Assign: easy→tier0-1, medium→tier2-3, hard→tier4, fill others
+    const byDiff={easy:[],medium:[],hard:[]};
+    allQ.forEach(({q,i,used})=>{if(!used)byDiff[q.difficulty||'medium'].push(i);});
+    const tierSlots=TIERS.map((tier,ti)=>{
+      const pool=byDiff[tier.diff];
+      if(pool.length>0){const idx=pool.shift();return{qIdx:idx,available:true};}
+      // fallback: pick any available
+      const anyPool=[...byDiff.easy,...byDiff.medium,...byDiff.hard];
+      if(anyPool.length>0){const idx=anyPool[0];['easy','medium','hard'].forEach(d=>{byDiff[d]=byDiff[d].filter(i=>i!==idx)});return{qIdx:idx,available:true};}
+      return{qIdx:-1,available:false};
+    });
+    return{cat,dep,tierSlots};
+  });
+
+  grid.innerHTML=`<div class="cats-jeopardy-board">`+board.map(({cat,dep,tierSlots})=>`
+    <div class="jeopardy-col">
+      <div class="jeopardy-cat-header" style="border-color:${cat.color}55;background:${cat.color}15">
+        <div class="jeopardy-cat-header-icon">${dep?'✅':cat.icon||'📂'}</div>
+        <div class="jeopardy-cat-header-name" style="color:${cat.color}">${cat.name}</div>
+      </div>
+      ${TIERS.map((tier,ti)=>{
+        const slot=tierSlots[ti];
+        const avail=slot.available&&!dep;
+        return `<div class="jeopardy-cell${avail?'':' used'}${dep?' depleted-col':''}"
+          style="${avail?`border-color:${tier.color}55;box-shadow:0 2px 12px ${tier.color}22`:''}"
+          onclick="${avail?`selectCatJeopardy('${cat.id}',${slot.qIdx})`:''}">
+          ${avail
+            ?`<div class="jeopardy-pts" style="color:${tier.color};text-shadow:0 0 18px ${tier.color}88">${tier.label}</div>
+               <div class="jeopardy-diff-dot" style="background:${DIFF_COLORS[tier.diff]||tier.color}"></div>`
+            :`<div class="jeopardy-used-icon">✅</div>`}
+        </div>`;
+      }).join('')}
+    </div>`).join('')+'</div>';
+}
+
+function selectCatJeopardy(catId, qIdx){
+  if(qIdx<0)return;
+  state.currentCatId=catId;
+  if(!state.usedQuestions[catId])state.usedQuestions[catId]=new Set();
+  state.usedQuestions[catId].add(qIdx);
+  state.currentQIndex=qIdx;
+  showView('question');
+  showTurnOverlay(state.currentTeamIndex,()=>loadQuestion(catId,qIdx,state.currentTeamIndex));
+}
+
+// ─── MODE 5: FORTUNE WHEEL ────────────────────────────────────────
+let _wheelSpinning=false;
+let _wheelAngle=0;
+let _wheelWinnerIdx=-1;
+let _wheelAnimId=null;
+let _wheelCats=[];
+
+function renderCatsWheel(){
+  const grid=document.getElementById('cats-pres-grid');
+  grid.className='';
+  // Collect non-depleted categories
+  _wheelCats=state.categories.filter(cat=>{
+    const used=state.usedQuestions[cat.id]||new Set();
+    return cat.questions.length>used.size;
+  });
+  if(!_wheelCats.length){
+    grid.innerHTML='<div class="empty-state"><div class="empty-icon">🎡</div><p>لا توجد أقسام متاحة</p></div>';
+    return;
+  }
+  _wheelWinnerIdx=-1;
+  _wheelSpinning=false;
+  grid.innerHTML=`
+    <div class="cats-wheel-wrap">
+      <div class="cats-wheel-stage">
+        <div class="wheel-pointer">▼</div>
+        <canvas id="cats-wheel-canvas" width="500" height="500"></canvas>
+        <button class="wheel-center-btn" id="wheel-spin-btn" onclick="spinWheel()">دوِّر!</button>
+      </div>
+      <div id="wheel-result-panel" style="display:none"></div>
+    </div>`;
+  drawWheel(_wheelAngle);
+}
+
+function drawWheel(rotAngle){
+  const canvas=document.getElementById('cats-wheel-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width,H=canvas.height;
+  const cx=W/2,cy=H/2,R=W/2-8;
+  ctx.clearRect(0,0,W,H);
+  const n=_wheelCats.length;
+  const sliceAngle=(2*Math.PI)/n;
+
+  // Draw slices
+  _wheelCats.forEach((cat,i)=>{
+    const startA=rotAngle+i*sliceAngle-Math.PI/2;
+    const endA=startA+sliceAngle;
+    const isWinner=(i===_wheelWinnerIdx);
+
+    // Slice fill
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,R,startA,endA);
+    ctx.closePath();
+    ctx.fillStyle=cat.color+(isWinner?'ff':'bb');
+    ctx.fill();
+    // Slice border
+    ctx.strokeStyle='rgba(0,0,0,.25)';
+    ctx.lineWidth=2;
+    ctx.stroke();
+    // Winner glow ring
+    if(isWinner){
+      ctx.beginPath();
+      ctx.arc(cx,cy,R+4,startA,endA);
+      ctx.strokeStyle=cat.color;
+      ctx.lineWidth=6;
+      ctx.stroke();
+    }
+
+    // Icon + text on slice
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(startA+sliceAngle/2);
+    const mid=R*0.62;
+    // Icon emoji
+    ctx.font=`${Math.max(18,Math.min(32,180/n))}px serif`;
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillStyle='rgba(255,255,255,.95)';
+    ctx.shadowColor='rgba(0,0,0,.7)';
+    ctx.shadowBlur=6;
+    ctx.fillText(cat.icon||'📂',mid,0);
+    // Name text
+    const fs=Math.max(10,Math.min(14,130/n));
+    ctx.font=`bold ${fs}px Cairo, sans-serif`;
+    ctx.fillStyle='#ffffff';
+    ctx.shadowBlur=4;
+    const label=cat.name.length>10?cat.name.slice(0,9)+'…':cat.name;
+    ctx.fillText(label,mid,fs+4);
+    ctx.restore();
+  });
+
+  // Center circle
+  ctx.beginPath();
+  ctx.arc(cx,cy,R*0.16,0,2*Math.PI);
+  ctx.fillStyle='var(--bg-deep)'||'#02040f';
+  ctx.fill();
+  ctx.strokeStyle='var(--border)'||'#162040';
+  ctx.lineWidth=3;
+  ctx.stroke();
+}
+
+function spinWheel(){
+  if(_wheelSpinning)return;
+  if(!_wheelCats.length)return;
+  _wheelSpinning=true;
+  _wheelWinnerIdx=-1;
+  document.getElementById('wheel-spin-btn').disabled=true;
+  document.getElementById('wheel-result-panel').style.display='none';
+
+  // Decide winner first (weighted random)
+  const winIdx=Math.floor(Math.random()*_wheelCats.length);
+  const n=_wheelCats.length;
+  const sliceAngle=(2*Math.PI)/n;
+
+  // How many full rotations + land on winner
+  const extraSpins=(5+Math.floor(Math.random()*4))*2*Math.PI;
+  // Target angle: the winning slice's center should be at top (angle=0 from top = -PI/2)
+  const winCenterAngle=winIdx*sliceAngle; // offset of winner slice center from start
+  // We want: rotAngle + winCenterAngle = -PI/2 (pointing up) mod 2*PI
+  // So: rotAngle = -PI/2 - winCenterAngle
+  const targetRotBase=-Math.PI/2-winCenterAngle;
+  // Normalize to [0, 2PI]
+  const targetRot=(targetRotBase%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
+  const totalRot=extraSpins+targetRot-(_wheelAngle%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
+  const finalAngle=_wheelAngle+totalRot+extraSpins;
+
+  const duration=4200+Math.random()*800;
+  const startAngle=_wheelAngle;
+  const startTime=performance.now();
+
+  function easeOut(t){
+    // Cubic ease-out
+    return 1-Math.pow(1-t,3);
+  }
+
+  function frame(now){
+    const elapsed=now-startTime;
+    const t=Math.min(1,elapsed/duration);
+    const eased=easeOut(t);
+    _wheelAngle=startAngle+(finalAngle-startAngle)*eased;
+    drawWheel(_wheelAngle);
+    if(t<1){
+      _wheelAnimId=requestAnimationFrame(frame);
+    }else{
+      _wheelSpinning=false;
+      _wheelAngle=finalAngle;
+      _wheelWinnerIdx=winIdx;
+      drawWheel(_wheelAngle);
+      playSound('correct');
+      showWheelResult(_wheelCats[winIdx]);
+    }
+  }
+  _wheelAnimId=requestAnimationFrame(frame);
+}
+
+function showWheelResult(cat){
+  const panel=document.getElementById('wheel-result-panel');
+  if(!panel)return;
+  const used=state.usedQuestions[cat.id]||new Set();
+  const rem=cat.questions.length-used.size;
+  panel.style.display='block';
+  panel.innerHTML=`
+    <div class="wheel-result-panel wheel-winner-flash" style="border-color:${cat.color}">
+      <div class="wheel-result-icon">${cat.icon||'🎯'}</div>
+      <div class="wheel-result-name" style="color:${cat.color}">${cat.name}</div>
+      <div style="font-size:.82rem;color:var(--text-muted);margin-bottom:14px">${rem} سؤال متبقٍّ</div>
+      <div class="wheel-result-btns">
+        <button class="btn btn-primary" onclick="selectCatAndStart('${cat.id}')">▶ ابدأ الآن</button>
+        <button class="btn btn-ghost" onclick="spinWheel();document.getElementById('wheel-result-panel').style.display='none';document.getElementById('wheel-spin-btn').disabled=false;">🔄 دوِّر مجدداً</button>
+      </div>
+    </div>`;
+  // Re-enable spin btn (for re-spin via button)
+  const btn=document.getElementById('wheel-spin-btn');
+  if(btn)btn.disabled=false;
 }
 
 // ════════════════════════════════════════════════════════
@@ -6396,6 +7131,91 @@ function showPodium(){
   document.getElementById('podium-title').textContent='🎊 '+( state.settings.name||'المسابقة' );
   showView('podium');
   setTimeout(launchPodiumConfetti,600);
+  // Auto-play podium music if set
+  setTimeout(()=>startPodiumMusic(),400);
+}
+
+// ── PODIUM MUSIC FUNCTIONS ──
+window._podiumAudioEl=null;
+window._podiumMusicPlaying=false;
+
+function loadPodiumMusic(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    state.settings.podiumMusicData=e.target.result;
+    saveState();
+    const nm=document.getElementById('podium-music-name');
+    if(nm)nm.textContent='✅ '+file.name.slice(0,28);
+    toast('✅ تم رفع موسيقى المنصة','success');
+  };
+  reader.readAsDataURL(file);
+}
+
+function clearPodiumMusic(){
+  stopPodiumMusicTest();
+  state.settings.podiumMusicData=null;
+  saveState();
+  const nm=document.getElementById('podium-music-name');
+  if(nm)nm.textContent='لم يختر بعد';
+  toast('تم حذف موسيقى المنصة','info');
+}
+
+function testPodiumMusic(){
+  if(!state.settings.podiumMusicData){toast('لم يتم تحميل ملف صوتي','danger');return;}
+  stopPodiumMusicTest();
+  const audio=new Audio(state.settings.podiumMusicData);
+  audio.volume=(state.settings.podiumMusicVol??60)/100;
+  audio.play().catch(()=>{});
+  window._podiumTestAudio=audio;
+  const btn=document.getElementById('test-btn-podiumMusic');
+  const stop=document.getElementById('stop-btn-podiumMusic');
+  if(btn)btn.classList.add('playing');
+  if(stop)stop.classList.remove('hidden');
+  audio.onended=()=>{stopPodiumMusicTest();};
+}
+
+function stopPodiumMusicTest(){
+  if(window._podiumTestAudio){try{window._podiumTestAudio.pause();window._podiumTestAudio.src='';}catch(e){}}
+  window._podiumTestAudio=null;
+  const btn=document.getElementById('test-btn-podiumMusic');
+  const stop=document.getElementById('stop-btn-podiumMusic');
+  if(btn)btn.classList.remove('playing');
+  if(stop)stop.classList.add('hidden');
+}
+
+function startPodiumMusic(){
+  stopPodiumMusicInternal();
+  if(!state.settings.podiumMusicData)return;
+  const audio=new Audio(state.settings.podiumMusicData);
+  audio.volume=(state.settings.podiumMusicVol??60)/100;
+  audio.loop=!!state.settings.podiumMusicLoop;
+  audio.play().catch(()=>{});
+  window._podiumAudioEl=audio;
+  window._podiumMusicPlaying=true;
+  updatePodiumMusicBtn();
+}
+
+function stopPodiumMusicInternal(){
+  if(window._podiumAudioEl){try{window._podiumAudioEl.pause();window._podiumAudioEl.currentTime=0;window._podiumAudioEl.src='';}catch(e){}}
+  window._podiumAudioEl=null;
+  window._podiumMusicPlaying=false;
+  updatePodiumMusicBtn();
+}
+
+function togglePodiumMusic(){
+  if(window._podiumMusicPlaying){stopPodiumMusicInternal();}
+  else{startPodiumMusic();}
+}
+
+function updatePodiumMusicBtn(){
+  const btn=document.getElementById('podium-music-toggle-btn');
+  const lbl=document.getElementById('podium-music-btn-label');
+  if(!btn)return;
+  btn.style.display=state.settings.podiumMusicData?'inline-flex':'none';
+  if(lbl)lbl.textContent=window._podiumMusicPlaying?'إيقاف ⏸':'موسيقى ▶';
+  if(window._podiumMusicPlaying){btn.style.borderColor='var(--accent2)';btn.style.color='var(--accent2)';}
+  else{btn.style.borderColor='';btn.style.color='';}
 }
 function launchPodiumConfetti(){
   const canvas=document.getElementById('podium-confetti');
@@ -6441,8 +7261,125 @@ function resetForNewGame(){
 
 // ════════════════════════════════════════════════════════
 // ════════════════════════════════════════════════════════
-//  V5 — SAVE QUESTION (T/F SUPPORT)
+//  OPTION DRAG-DROP REORDER
 // ════════════════════════════════════════════════════════
+let _optDragSrc=-1;
+
+function onOptDragStart(e,idx){
+  _optDragSrc=idx;
+  e.dataTransfer.effectAllowed='move';
+  e.dataTransfer.setData('text/plain',String(idx));
+  const row=document.getElementById('opt-row-'+idx);
+  if(row) setTimeout(()=>row.classList.add('dragging-opt'),0);
+}
+
+function onOptDragOver(e,idx){
+  e.preventDefault();
+  e.dataTransfer.dropEffect='move';
+  document.querySelectorAll('.opt-editor-row').forEach(r=>r.classList.remove('drag-over-opt'));
+  const row=document.getElementById('opt-row-'+idx);
+  if(row&&idx!==_optDragSrc) row.classList.add('drag-over-opt');
+}
+
+function onOptDrop(e,targetIdx){
+  e.preventDefault();
+  e.stopPropagation();
+  document.querySelectorAll('.opt-editor-row').forEach(r=>{
+    r.classList.remove('drag-over-opt');
+    r.classList.remove('dragging-opt');
+  });
+  const srcIdx=_optDragSrc;
+  _optDragSrc=-1;
+  if(srcIdx<0||srcIdx===targetIdx)return;
+  // Swap option data between srcIdx and targetIdx
+  _swapOptionRows(srcIdx,targetIdx);
+}
+
+function onOptDragEnd(){
+  _optDragSrc=-1;
+  document.querySelectorAll('.opt-editor-row').forEach(r=>{
+    r.classList.remove('drag-over-opt');
+    r.classList.remove('dragging-opt');
+  });
+}
+
+function _swapOptionRows(a,b){
+  // Collect current data for all 4 rows
+  const rows=[];
+  for(let i=0;i<4;i++){
+    rows.push({
+      text:document.getElementById('q-opt-'+i)?.value||'',
+      imgSrc:document.getElementById('opt-img-thumb-'+i)?.src||'',
+      imgVisible:(document.getElementById('opt-img-row-'+i)?.style.display!=='none'),
+      mathVisible:(document.getElementById('opt-math-preview-'+i)?.style.display!=='none'),
+      mathHTML:document.getElementById('opt-math-preview-'+i)?.innerHTML||'',
+    });
+  }
+  // Perform swap
+  const tmp=rows[a];rows[a]=rows[b];rows[b]=tmp;
+  // Update correct answer index if it was one of the swapped rows
+  const correct=+document.getElementById('q-correct-input').value;
+  let newCorrect=correct;
+  if(correct===a) newCorrect=b;
+  else if(correct===b) newCorrect=a;
+  // Write back all row data
+  for(let i=0;i<4;i++){
+    const inpEl=document.getElementById('q-opt-'+i);
+    const imgRow=document.getElementById('opt-img-row-'+i);
+    const imgThumb=document.getElementById('opt-img-thumb-'+i);
+    const mathPrev=document.getElementById('opt-math-preview-'+i);
+    if(inpEl) inpEl.value=rows[i].text;
+    if(imgThumb) imgThumb.src=rows[i].imgSrc;
+    if(imgRow) imgRow.style.display=rows[i].imgVisible&&rows[i].imgSrc&&rows[i].imgSrc!==window.location.href?'flex':'none';
+    if(mathPrev){
+      mathPrev.innerHTML=rows[i].mathHTML;
+      mathPrev.style.display=rows[i].mathVisible&&rows[i].mathHTML?'block':'none';
+    }
+  }
+  // Update correct answer select
+  const corrEl=document.getElementById('q-correct-input');
+  if(corrEl){corrEl.value=String(newCorrect);updateOptRowState();}
+  // Also swap stored image data in _optImages array
+  if(typeof _optImages!=='undefined'&&Array.isArray(_optImages)){
+    const tmpImg=_optImages[a];
+    _optImages[a]=_optImages[b];
+    _optImages[b]=tmpImg;
+    // Re-sync thumb srcz from _optImages (in case src was empty placeholder)
+    for(let i=0;i<4;i++){
+      const thumb=document.getElementById('opt-img-thumb-'+i);
+      const imgRow=document.getElementById('opt-img-row-'+i);
+      if(thumb&&_optImages[i]){
+        thumb.src=_optImages[i];
+        if(imgRow)imgRow.style.display='flex';
+      }else if(thumb&&!_optImages[i]){
+        thumb.src='';
+        if(imgRow)imgRow.style.display='none';
+      }
+    }
+  }
+  toast('↕ تم إعادة ترتيب الخيارات','info');
+}
+
+// ════════════════════════════════════════════════════════
+//  MOBILE UI IMPROVEMENTS — ensure presentation views
+//  always start at top and admin nav is scrollable
+// ════════════════════════════════════════════════════════
+(function(){
+  // On admin-nav touch scroll: prevent body scroll bleed
+  const nav=document.querySelector('.admin-nav');
+  if(nav){
+    nav.addEventListener('touchmove',e=>e.stopPropagation(),{passive:true});
+  }
+  // On modal open, scroll modal content to top
+  const origOpenModal=window.openModal;
+  if(typeof origOpenModal==='function'){
+    window.openModal=function(id){
+      origOpenModal(id);
+      const m=document.querySelector('#'+id+' .modal');
+      if(m) m.scrollTop=0;
+    };
+  }
+})();
 (function(){
   const _orig=saveQuestion;
   saveQuestion=function(){
