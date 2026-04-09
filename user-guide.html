@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل مستخدم — منصة المسابقات التفاعلية</title>
+<title>دليل مستخدم v5 — منصة المسابقات التفاعلية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --gold:#f5c842;--gold-d:#c9a220;--gold-l:#fde87a;
-  --blue:#00d4ff;--green:#00e676;--red:#ff3b5c;--purple:#a78bfa;
-  --bg:#07091a;--bg2:#0d1528;--bg3:#111b35;--bg4:#18274a;
-  --border:#1e3060;--border2:#2a4080;
-  --txt:#eef2ff;--txt2:#8896b3;--txt3:#4a5980;
+  --gold:#00f5d4;--gold-d:#00c4aa;--gold-l:#7fffef;
+  --blue:#7b61ff;--green:#00e676;--red:#ff4060;--purple:#a78bfa;--orange:#fb923c;
+  --bg:#02040f;--bg2:#070e20;--bg3:#0c1630;--bg4:#111e3e;
+  --border:#162040;--border2:#1e2e56;
+  --txt:#e8f4ff;--txt2:#6e8fae;--txt3:#364d68;
   --r:14px;--header-h:64px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -22,15 +22,15 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--txt);overfl
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(ellipse at 15% 15%,rgba(0,212,255,.06) 0%,transparent 55%),
-    radial-gradient(ellipse at 85% 80%,rgba(245,200,66,.06) 0%,transparent 55%),
-    radial-gradient(ellipse at 50% 50%,rgba(13,21,40,.92) 0%,var(--bg) 100%);
+    radial-gradient(ellipse at 15% 25%,rgba(0,245,212,.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 85%  75%,rgba(123,97,255,.06) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 50%,rgba(7,14,32,.92) 0%,var(--bg) 100%);
 }
 body::after{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(30,48,96,.25) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(30,48,96,.25) 1px,transparent 1px);
+    linear-gradient(rgba(0,245,212,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,245,212,.07) 1px,transparent 1px);
   background-size:60px 60px;
   mask-image:radial-gradient(ellipse at center,black 0%,transparent 70%);
 }
@@ -38,7 +38,7 @@ body::after{
 /* ─── HEADER ─── */
 .site-header{
   position:sticky;top:0;z-index:100;
-  background:rgba(7,9,26,.9);backdrop-filter:blur(16px);
+  background:rgba(2,4,15,.92);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);
   padding:0 clamp(16px,4vw,48px);height:var(--header-h);
   display:flex;align-items:center;justify-content:space-between;gap:16px;
@@ -54,7 +54,7 @@ body::after{
   display:inline-flex;align-items:center;gap:5px;
 }
 .nav-pill:hover{background:var(--bg3);color:var(--txt)}
-.nav-pill.active{background:rgba(245,200,66,.12);color:var(--gold)}
+.nav-pill.active{background:rgba(0,245,212,.1);color:var(--gold)}
 
 /* ─── LAYOUT ─── */
 .page-wrapper{
@@ -70,7 +70,7 @@ body::after{
 }
 .hero-badge{
   display:inline-flex;align-items:center;gap:8px;
-  background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.3);
+  background:rgba(0,245,212,.08);border:1px solid rgba(0,245,212,.3);
   border-radius:30px;padding:7px 20px;font-size:.82rem;color:var(--gold);
   margin-bottom:28px;animation:fadeUp .7s ease both;
 }
@@ -83,7 +83,7 @@ body::after{
 }
 .hero p{
   font-size:clamp(1rem,2.5vw,1.25rem);color:var(--txt2);
-  max-width:600px;margin:0 auto 40px;
+  max-width:640px;margin:0 auto 40px;
   animation:fadeUp .7s ease .2s both;
 }
 .hero-stats{
@@ -111,11 +111,12 @@ body::after{
   display:flex;align-items:center;justify-content:center;
   font-size:1.3rem;flex-shrink:0;
 }
-.icon-gold{background:rgba(245,200,66,.12);color:var(--gold)}
-.icon-blue{background:rgba(0,212,255,.12);color:var(--blue)}
+.icon-gold{background:rgba(0,245,212,.12);color:var(--gold)}
+.icon-blue{background:rgba(123,97,255,.12);color:var(--blue)}
 .icon-green{background:rgba(0,230,118,.12);color:var(--green)}
-.icon-red{background:rgba(255,59,92,.12);color:var(--red)}
+.icon-red{background:rgba(255,64,96,.12);color:var(--red)}
 .icon-purple{background:rgba(167,139,250,.12);color:var(--purple)}
+.icon-orange{background:rgba(251,146,60,.12);color:var(--orange)}
 .section-title{font-size:1.4rem;font-weight:900;color:var(--txt)}
 .section-sub{font-size:.85rem;color:var(--txt2);margin-top:2px}
 
@@ -140,9 +141,9 @@ body::after{
 .step-num{
   width:40px;height:40px;border-radius:50%;flex-shrink:0;
   background:linear-gradient(135deg,var(--gold-d),var(--gold));
-  color:#1a1000;font-weight:900;font-size:1rem;
+  color:#001a14;font-weight:900;font-size:1rem;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 0 20px rgba(245,200,66,.3);
+  box-shadow:0 0 20px rgba(0,245,212,.3);
 }
 .step-body{flex:1}
 .step-title{font-size:1rem;font-weight:800;margin-bottom:6px;color:var(--txt)}
@@ -150,7 +151,7 @@ body::after{
 .step-tip{
   display:inline-flex;align-items:center;gap:6px;
   margin-top:10px;padding:6px 12px;
-  background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);
+  background:rgba(123,97,255,.08);border:1px solid rgba(123,97,255,.2);
   border-radius:8px;font-size:.78rem;color:var(--blue);
 }
 
@@ -160,10 +161,19 @@ body::after{
   display:flex;align-items:flex-start;gap:12px;font-size:.86rem;line-height:1.6;
 }
 .callout-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px}
-.callout.info{background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.2);color:var(--blue)}
-.callout.warn{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.22);color:var(--gold)}
+.callout.info{background:rgba(123,97,255,.07);border:1px solid rgba(123,97,255,.2);color:var(--blue)}
+.callout.warn{background:rgba(0,245,212,.07);border:1px solid rgba(0,245,212,.22);color:var(--gold)}
 .callout.tip{background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.22);color:var(--green)}
-.callout.danger{background:rgba(255,59,92,.07);border:1px solid rgba(255,59,92,.22);color:var(--red)}
+.callout.danger{background:rgba(255,64,96,.07);border:1px solid rgba(255,64,96,.22);color:var(--red)}
+.callout.new{background:rgba(251,146,60,.07);border:1px solid rgba(251,146,60,.25);color:var(--orange)}
+
+/* ─── NEW BADGE ─── */
+.new-badge{
+  display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;
+  font-size:.7rem;font-weight:900;letter-spacing:.04em;
+  background:rgba(251,146,60,.15);color:var(--orange);border:1px solid rgba(251,146,60,.3);
+  margin-right:6px;vertical-align:middle;
+}
 
 /* ─── TABLE ─── */
 .table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border)}
@@ -176,11 +186,12 @@ tr:last-child td{border-bottom:none}
 tr:hover td{background:var(--bg3)}
 td strong{color:var(--txt);font-weight:700}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:.75rem;font-weight:700}
-.badge-gold{background:rgba(245,200,66,.12);color:var(--gold);border:1px solid rgba(245,200,66,.25)}
-.badge-blue{background:rgba(0,212,255,.1);color:var(--blue);border:1px solid rgba(0,212,255,.22)}
+.badge-gold{background:rgba(0,245,212,.12);color:var(--gold);border:1px solid rgba(0,245,212,.25)}
+.badge-blue{background:rgba(123,97,255,.1);color:var(--blue);border:1px solid rgba(123,97,255,.22)}
 .badge-green{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.22)}
-.badge-red{background:rgba(255,59,92,.1);color:var(--red);border:1px solid rgba(255,59,92,.22)}
+.badge-red{background:rgba(255,64,96,.1);color:var(--red);border:1px solid rgba(255,64,96,.22)}
 .badge-purple{background:rgba(167,139,250,.1);color:var(--purple);border:1px solid rgba(167,139,250,.22)}
+.badge-orange{background:rgba(251,146,60,.1);color:var(--orange);border:1px solid rgba(251,146,60,.22)}
 
 /* ─── KEYBOARD ─── */
 kbd{
@@ -201,6 +212,16 @@ kbd{
 .feature-item .fi-body .fi-title{font-weight:800;font-size:.92rem;margin-bottom:3px}
 .feature-item .fi-body .fi-desc{font-size:.82rem;color:var(--txt2);line-height:1.6}
 
+/* ─── THEMES GRID ─── */
+.themes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.theme-card{
+  background:var(--bg2);border:1px solid var(--border);border-radius:12px;
+  padding:14px 16px;display:flex;align-items:center;gap:12px;
+}
+.theme-dot{width:36px;height:36px;border-radius:10px;flex-shrink:0}
+.theme-info .th-name{font-size:.88rem;font-weight:800;color:var(--txt);margin-bottom:2px}
+.theme-info .th-desc{font-size:.76rem;color:var(--txt2)}
+
 /* ─── TOC SIDEBAR ─── */
 .toc-sticky{
   position:sticky;top:calc(var(--header-h) + 20px);
@@ -213,25 +234,13 @@ kbd{
   transition:all .15s;border-radius:0 8px 8px 0;
 }
 .toc-item:hover{color:var(--txt);border-right-color:var(--border2)}
-.toc-item.active{color:var(--gold);border-right-color:var(--gold);background:rgba(245,200,66,.05)}
+.toc-item.active{color:var(--gold);border-right-color:var(--gold);background:rgba(0,245,212,.05)}
 .toc-title{font-size:.72rem;font-weight:900;color:var(--txt3);
            letter-spacing:.1em;text-transform:uppercase;padding:8px 14px 4px}
 
 /* ─── TWO-COL LAYOUT ─── */
 .two-col{display:grid;grid-template-columns:220px 1fr;gap:40px;align-items:start}
 @media(max-width:900px){.two-col{grid-template-columns:1fr}.toc-sticky{display:none}}
-
-/* ─── SCREENSHOT MOCKUP ─── */
-.screen-mockup{
-  background:var(--bg2);border:1px solid var(--border);border-radius:18px;
-  overflow:hidden;margin:20px 0;
-}
-.screen-toolbar{
-  height:36px;background:var(--bg3);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 14px;gap:7px;
-}
-.screen-dot{width:10px;height:10px;border-radius:50%}
-.screen-content{padding:20px;font-size:.83rem;color:var(--txt2)}
 
 /* ─── SHORTCUT GRID ─── */
 .shortcut-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
@@ -261,13 +270,12 @@ kbd{
   .hero{page-break-after:always}
   .section{page-break-inside:avoid}
   body{background:white;color:#111}
-  .card,.callout,.step,.feature-item{border:1px solid #ccc}
+  .card,.callout,.step,.feature-item,.theme-card{border:1px solid #ccc}
   .hero h1,.section-title,.step-title,.card-title{color:#111!important;-webkit-text-fill-color:#111!important}
   td,th,p,.step-desc,.card p{color:#333!important}
   a{color:inherit!important}
 }
 
-/* ─── UTILS ─── */
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
@@ -276,16 +284,19 @@ kbd{
 <body>
 <!-- HEADER -->
 <header class="site-header">
-  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات التفاعلية — دليل المستخدم</div>
+  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات — دليل المستخدم v5</div>
   <nav class="header-nav">
     <a class="nav-pill active" href="#overview">نظرة عامة</a>
     <a class="nav-pill" href="#setup">الإعداد</a>
     <a class="nav-pill" href="#questions">الأسئلة</a>
+    <a class="nav-pill" href="#q-types">أنواع الأسئلة</a>
+    <a class="nav-pill" href="#themes">الثيمات</a>
     <a class="nav-pill" href="#presentation">العرض</a>
+    <a class="nav-pill" href="#new-screens">شاشات جديدة</a>
     <a class="nav-pill" href="#lifelines">أطواق النجاة</a>
     <a class="nav-pill" href="#sound">الصوت</a>
     <a class="nav-pill" href="#shortcuts">الاختصارات</a>
-    <a class="nav-pill" href="#music-widget">الموسيقى</a>
+    <a class="nav-pill" href="#import">الاستيراد</a>
     <a class="nav-pill" href="#backup">النسخ الاحتياطي</a>
     <a class="nav-pill" href="#tips">نصائح</a>
     <a class="nav-pill" href="#troubleshoot">مشاكل شائعة</a>
@@ -305,15 +316,19 @@ kbd{
     <a class="toc-item" href="#categories">📂 الأقسام</a>
     <a class="toc-item" href="#questions">❓ الأسئلة</a>
     <a class="toc-item" href="#q-types">🖼️ أنواع الأسئلة</a>
+    <a class="toc-item" href="#option-images">🖼 صور الخيارات ✨</a>
+    <a class="toc-item" href="#shuffle">🔀 الخلط والعشوائية ✨</a>
     <a class="toc-item" href="#teams">👥 الفرق</a>
     <a class="toc-item" href="#competition-modes">🎮 أنماط المسابقة</a>
     <a class="toc-item" href="#presentation">🎬 شاشة العرض</a>
+    <a class="toc-item" href="#new-screens">🆕 شاشات جديدة ✨</a>
+    <a class="toc-item" href="#themes">🎨 الثيمات ✨</a>
     <a class="toc-item" href="#lifelines">🆘 أطواق النجاة</a>
     <a class="toc-item" href="#sound">🔊 الصوت</a>
-    <a class="toc-item" href="#shortcuts">⌨️ اختصارات لوحة المفاتيح</a>
+    <a class="toc-item" href="#shortcuts">⌨️ الاختصارات</a>
     <a class="toc-item" href="#import">📥 الاستيراد والتصدير</a>
-    <a class="toc-item" href="#music-widget">🎵 التحكم بالموسيقى</a>
-    <a class="toc-item" href="#transition">🔄 الانتقال بعد السؤال</a>
+    <a class="toc-item" href="#music-widget">🎵 الموسيقى</a>
+    <a class="toc-item" href="#transition">🔄 الانتقال</a>
     <a class="toc-item" href="#backup">💾 النسخ الاحتياطي</a>
     <a class="toc-item" href="#tips">💡 نصائح للمقدم</a>
     <a class="toc-item" href="#troubleshoot">🔧 مشاكل شائعة</a>
@@ -326,19 +341,24 @@ kbd{
 <!-- HERO -->
 <section id="overview">
   <div class="hero">
-    <div class="hero-badge">📖 دليل المستخدم الكامل </div>
+    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 5</strong> &nbsp;🆕</div>
     <h1>منصة المسابقات التفاعلية</h1>
     <p>منصة احترافية متكاملة لإعداد وتقديم مسابقات تفاعلية تعليمية وترفيهية، تعمل كاملاً في المتصفح دون الحاجة لاتصال بالإنترنت أثناء العرض.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num">4</div><div class="lbl">أنواع أسئلة</div></div>
-      <div class="hero-stat"><div class="num">2</div><div class="lbl">نمطا مسابقة</div></div>
-      <div class="hero-stat"><div class="num">💾</div><div class="lbl">نسخ احتياطي تلقائي</div></div>
+      <div class="hero-stat"><div class="num">5</div><div class="lbl">أنواع أسئلة</div></div>
+      <div class="hero-stat"><div class="num">11</div><div class="lbl">ثيماً بصرياً</div></div>
+      <div class="hero-stat"><div class="num">🎨</div><div class="lbl">ثيم مخصص</div></div>
+      <div class="hero-stat"><div class="num">💾</div><div class="lbl">نسخ احتياطي</div></div>
       <div class="hero-stat"><div class="num">3</div><div class="lbl">أطواق نجاة</div></div>
-      <div class="hero-stat"><div class="num">4</div><div class="lbl">ثيمات بصرية</div></div>
+      <div class="hero-stat"><div class="num">🏆</div><div class="lbl">منصة التتويج</div></div>
     </div>
   </div>
 
-  <!-- Overview cards -->
+  <div class="callout new" style="margin-bottom:28px">
+    <span class="callout-icon">🆕</span>
+    <span><strong>ما الجديد في الإصدار 5؟</strong> — نوع سؤال جديد (صح/خطأ) · صور على خيارات الإجابة · 11 ثيماً + ثيم مخصص قابل للتخصيص بالكامل · خلط الأسئلة والخيارات عشوائياً · بنك الأسئلة · شاشة منصة التتويج · شاشة الإحصاءات التفصيلية · ساعة كبيرة.</span>
+  </div>
+
   <div class="cards-grid">
     <div class="card">
       <div class="card-icon">🎯</div>
@@ -375,7 +395,7 @@ kbd{
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">افتح الملف في المتصفح</div>
-        <div class="step-desc">انقر نقراً مزدوجاً على ملف <strong>quiz-platform-v4.html</strong> لفتحه في متصفحك المفضل. يُوصى باستخدام Chrome أو Edge للحصول على أفضل تجربة.</div>
+        <div class="step-desc">انقر نقراً مزدوجاً على ملف <strong>quiz-platform.html</strong> لفتحه في متصفحك المفضل. يُوصى باستخدام Chrome أو Edge للحصول على أفضل تجربة.</div>
       </div>
     </div>
     <div class="step">
@@ -410,6 +430,9 @@ kbd{
         <tr><td><strong>رسالة الترحيب</strong></td><td>تظهر تحت عنوان المسابقة في الشاشة الرئيسية</td><td>—</td></tr>
         <tr><td><strong>وقت السؤال</strong></td><td>المدة الافتراضية بالثواني لكل سؤال</td><td>30 ثانية</td></tr>
         <tr><td><strong>نقاط السؤال الصعب</strong></td><td>عدد النقاط للأسئلة المصنفة صعبة</td><td>2 نقطة</td></tr>
+        <tr><td><strong>خلط الأسئلة</strong><span class="new-badge">جديد</span></td><td>يُعيد ترتيب الأسئلة عشوائياً في كل جلسة</td><td>معطّل</td></tr>
+        <tr><td><strong>خلط الخيارات</strong><span class="new-badge">جديد</span></td><td>يُرتّب خيارات أ-ب-ج-د بشكل عشوائي</td><td>معطّل</td></tr>
+        <tr><td><strong>بنك الأسئلة</strong><span class="new-badge">جديد</span></td><td>عدد الأسئلة العشوائية التي تُعرض من كل قسم لكل جلسة. 0 = كل الأسئلة</td><td>0</td></tr>
         <tr><td><strong>صوت الإجابة الصحيحة</strong></td><td>المؤثر الصوتي عند الإجابة الصحيحة</td><td>تصفيق</td></tr>
         <tr><td><strong>صوت الإجابة الخاطئة</strong></td><td>المؤثر الصوتي عند الإجابة الخاطئة</td><td>صوت خطأ</td></tr>
       </tbody>
@@ -446,7 +469,7 @@ kbd{
       <div class="step-num">3</div>
       <div class="step-body">
         <div class="step-title">اختر القسم لإضافة الأسئلة</div>
-        <div class="step-desc">انقر على اسم القسم من القائمة اليسرى لتظهر أسئلته في اللوح الأيسر، ثم اضغط "➕ سؤال" لإضافة سؤال جديد.</div>
+        <div class="step-desc">انقر على اسم القسم من القائمة لتظهر أسئلته، ثم اضغط "➕ سؤال" لإضافة سؤال جديد.</div>
       </div>
     </div>
   </div>
@@ -458,13 +481,14 @@ kbd{
     <div class="section-icon icon-blue">❓</div>
     <div><div class="section-title">إضافة الأسئلة</div><div class="section-sub">كيفية إنشاء الأسئلة وتحريرها</div></div>
   </div>
-  <div class="callout tip"><span class="callout-icon">✅</span><span>في نافذة إضافة السؤال، أدخل نص السؤال وأربعة خيارات على الأقل (خياران كحد أدنى)، ثم حدد الإجابة الصحيحة.</span></div>
+  <div class="callout tip"><span class="callout-icon">✅</span><span>في نافذة إضافة السؤال، أدخل نص السؤال وخيارات الإجابة (خياران كحد أدنى). لكل خيار: نص، معادلة رياضية، <strong>أو صورة</strong>.</span></div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>الحقل</th><th>الوصف</th><th>ملاحظات</th></tr></thead>
       <tbody>
         <tr><td><strong>نص السؤال</strong></td><td>متن السؤال الذي يُعرض للمشاركين</td><td>يدعم العربية والإنجليزية تلقائياً</td></tr>
-        <tr><td><strong>الخيارات أ — د</strong></td><td>خيارات الإجابة (2 كحد أدنى، 4 كحد أقصى)</td><td>الخيارات الفارغة لا تُعرض</td></tr>
+        <tr><td><strong>الخيارات أ — د</strong></td><td>خيارات الإجابة (2 كحد أدنى، 4 كحد أقصى)</td><td>نص أو معادلة أو صورة لكل خيار</td></tr>
+        <tr><td><strong>صورة الخيار</strong><span class="new-badge">جديد</span></td><td>أرفق صورة لأي خيار بالضغط على أيقونة 🖼</td><td>يمكن الجمع بين نص وصورة</td></tr>
         <tr><td><strong>الإجابة الصحيحة</strong></td><td>حدد الخيار الصحيح من القائمة</td><td>أ / ب / ج / د</td></tr>
         <tr><td><strong>الصعوبة</strong></td><td>⭐ سهل | ⭐⭐ متوسط | ⭐⭐⭐ صعب</td><td>الصعب يحصل على نقاط مضاعفة</td></tr>
         <tr><td><strong>الوقت</strong></td><td>مدة الإجابة بالثواني لهذا السؤال تحديداً</td><td>يتجاوز الإعداد الافتراضي</td></tr>
@@ -478,7 +502,7 @@ kbd{
 <section class="section" id="q-types">
   <div class="section-header">
     <div class="section-icon icon-purple">🖼️</div>
-    <div><div class="section-title">أنواع الأسئلة الأربعة</div><div class="section-sub">اختر النوع المناسب لكل سؤال</div></div>
+    <div><div class="section-title">أنواع الأسئلة الخمسة</div><div class="section-sub">اختر النوع المناسب لكل سؤال</div></div>
   </div>
   <div class="feature-list">
     <div class="feature-item">
@@ -512,6 +536,75 @@ kbd{
         </div>
       </div>
     </div>
+    <div class="feature-item" style="border-color:rgba(0,230,118,.25)">
+      <div class="fi-icon">✓✗</div>
+      <div class="fi-body">
+        <div class="fi-title">صح / خطأ <span class="new-badge">جديد في v5</span></div>
+        <div class="fi-desc">سؤال بخيارين فقط: "صح ✓" و"خطأ ✗". مثالي للاختبارات السريعة والمراجعة. يُعرض بتصميم خاص ومميز في شاشة العرض. لا تحتاج لإدخال خيارات — يتولى البرنامج ذلك تلقائياً.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OPTION IMAGES (NEW) ═══ -->
+<section class="section" id="option-images">
+  <div class="section-header">
+    <div class="section-icon icon-green">🖼</div>
+    <div><div class="section-title">صور خيارات الإجابة <span class="new-badge">جديد في v5</span></div><div class="section-sub">أضف صورة لأي خيار إجابة</div></div>
+  </div>
+  <div class="callout tip"><span class="callout-icon">🖼</span><span>يمكن الآن إرفاق صورة بأي خيار إجابة (أ, ب, ج, د) بغض النظر عن نوع السؤال. يمكن الجمع بين نص ومعادلة وصورة في نفس الخيار.</span></div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">اضغط أيقونة 🖼 بجانب الخيار</div>
+        <div class="step-desc">في نافذة إضافة/تعديل السؤال، اضغط على أيقونة الصورة 🖼 بجانب أي خيار لفتح منتقي الملفات.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">اختر الصورة</div>
+        <div class="step-desc">اختر صورة JPG أو PNG أو GIF. الحد الأقصى 3MB للخيار الواحد. تظهر معاينة صغيرة بعد الرفع.</div>
+        <div class="step-tip">💡 يُفضَّل استخدام صور مربعة أو أفقية لعرض أوضح في شاشة العرض</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">النص اختياري مع الصورة</div>
+        <div class="step-desc">يمكن ترك حقل النص فارغاً إذا اكتفيت بالصورة، أو إضافة نص تعريفي تحتها. كل خيار يجب أن يحتوي على نص أو صورة على الأقل.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SHUFFLE (NEW) ═══ -->
+<section class="section" id="shuffle">
+  <div class="section-header">
+    <div class="section-icon icon-orange">🔀</div>
+    <div><div class="section-title">الخلط والعشوائية <span class="new-badge">جديد في v5</span></div><div class="section-sub">تنويع تجربة كل جلسة</div></div>
+  </div>
+  <div class="cards-grid">
+    <div class="card" style="border-color:rgba(251,146,60,.3)">
+      <div class="card-icon">🔀</div>
+      <div class="card-title">خلط ترتيب الأسئلة</div>
+      <p>يُعيد ترتيب الأسئلة داخل كل قسم بشكل عشوائي في كل جلسة. المشاركون لن يتوقعوا ترتيباً ثابتاً.</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,146,60,.3)">
+      <div class="card-icon">🎲</div>
+      <div class="card-title">خلط خيارات الإجابة</div>
+      <p>يُرتّب الخيارات أ-ب-ج-د بشكل عشوائي في كل سؤال. البرنامج يتولى تتبع الإجابة الصحيحة تلقائياً.</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,146,60,.3)">
+      <div class="card-icon">🏦</div>
+      <div class="card-title">بنك الأسئلة</div>
+      <p>حدد عدداً معيناً من الأسئلة يُختار عشوائياً من كل قسم لكل جلسة. مثال: 5 = يعرض 5 أسئلة عشوائية من كل قسم. القيمة 0 تعني كل الأسئلة.</p>
+    </div>
+  </div>
+  <div class="callout warn" style="margin-top:16px">
+    <span class="callout-icon">💡</span>
+    <span>عند تفعيل بنك الأسئلة، يظهر شارة 🔀 عشوائي على أزرار الأقسام في شاشة العرض. يُضبط من <strong>لوحة التحكم → الإعدادات → بنك الأسئلة والخلط</strong>.</span>
   </div>
 </section>
 
@@ -540,7 +633,7 @@ kbd{
       <div class="step-num">3</div>
       <div class="step-body">
         <div class="step-title">أضف أعضاء الفريق</div>
-        <div class="step-desc">أدخل اسم كل عضو واضغط "➕ إضافة" أو مفتاح Enter. تظهر أسماء الأعضاء في بطاقة الفريق أثناء العرض بشكل واضح ومنظم.</div>
+        <div class="step-desc">أدخل اسم كل عضو واضغط "➕ إضافة" أو مفتاح Enter. تظهر أسماء الأعضاء في بطاقة الفريق أثناء العرض.</div>
         <div class="step-tip">💡 يمكنك تعديل نقاط أي فريق يدوياً من بطاقته (زر +1 / −1 / صفر)</div>
       </div>
     </div>
@@ -555,12 +648,12 @@ kbd{
     <div><div class="section-title">أنماط المسابقة</div><div class="section-sub">اختر أسلوب سير المسابقة</div></div>
   </div>
   <div class="cards-grid">
-    <div class="card" style="border-color:rgba(245,200,66,.3)">
+    <div class="card" style="border-color:rgba(0,245,212,.3)">
       <div class="card-icon">🔄</div>
       <div class="card-title">التناوب في الاختيار</div>
       <p>كل فريق يختار قسماً ويجيب على سؤال واحد، ثم ينتقل الدور للفريق التالي. الأنسب للمسابقات التنافسية.</p>
     </div>
-    <div class="card" style="border-color:rgba(0,212,255,.3)">
+    <div class="card" style="border-color:rgba(123,97,255,.3)">
       <div class="card-icon">📋</div>
       <div class="card-title">القسم الكامل</div>
       <p>يختار أحد الفرق قسماً، وتُوزَّع جميع أسئلته بالتساوي على الفرق. الأنسب للتعلم التعاوني.</p>
@@ -579,14 +672,14 @@ kbd{
       <div class="step-num">1</div>
       <div class="step-body">
         <div class="step-title">اضغط "🚀 بدء المسابقة"</div>
-        <div class="step-desc">من الشاشة الرئيسية أو من لوحة التحكم. ستُفعَّل ملء الشاشة تلقائياً لتجربة عرض احترافية. إذا كانت هناك مسابقة محفوظة، ستظهر لك نافذة تسألك: استئناف أم بدء جديد.</div>
+        <div class="step-desc">من الشاشة الرئيسية أو من لوحة التحكم. ستُفعَّل ملء الشاشة تلقائياً. إذا كانت هناك مسابقة محفوظة، ستظهر لك نافذة تسألك: استئناف أم بدء جديد.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">اختيار القسم</div>
-        <div class="step-desc">يختار الفريق قسماً من شاشة الأقسام. يظهر عدد الأسئلة المتبقية على كل زر. الأقسام المكتملة تُظهر "✅ اكتمل".</div>
+        <div class="step-desc">يختار الفريق قسماً من شاشة الأقسام. يظهر عدد الأسئلة المتبقية على كل زر. الأقسام المكتملة تُظهر "✅ اكتمل". عند تفعيل بنك الأسئلة، يظهر شارة 🔀 عشوائي.</div>
       </div>
     </div>
     <div class="step">
@@ -643,6 +736,98 @@ kbd{
   </div>
 </section>
 
+<!-- ═══ NEW SCREENS (NEW) ═══ -->
+<section class="section" id="new-screens">
+  <div class="section-header">
+    <div class="section-icon icon-orange">🆕</div>
+    <div><div class="section-title">الشاشات الجديدة <span class="new-badge">جديد في v5</span></div><div class="section-sub">ثلاث شاشات احترافية إضافية</div></div>
+  </div>
+  <div class="feature-list">
+    <div class="feature-item" style="border-color:rgba(0,245,212,.25)">
+      <div class="fi-icon">🏆</div>
+      <div class="fi-body">
+        <div class="fi-title">منصة التتويج (Podium) <span class="new-badge">جديد</span></div>
+        <div class="fi-desc">شاشة نهاية احتفالية مع منصة ثلاثية المراكز (ذهب - فضة - برونز) مع مؤثرات كونفيتي. تظهر أسماء الفرق مرتبةً حسب النقاط. تُفتح من شاشة النتائج عبر زر "🏆 منصة التتويج". اضغط "🎉 احتفال!" لتشغيل الكونفيتي.</div>
+      </div>
+    </div>
+    <div class="feature-item" style="border-color:rgba(123,97,255,.25)">
+      <div class="fi-icon">📊</div>
+      <div class="fi-body">
+        <div class="fi-title">الإحصاءات التفصيلية <span class="new-badge">جديد</span></div>
+        <div class="fi-desc">شاشة تُظهر أداء كل فريق بالتفصيل: عدد الإجابات الصحيحة، الخاطئة، المتجاوزة، ومتوسط وقت الإجابة. تُفتح من شاشة النتائج أو من منصة التتويج عبر زر "📊 الإحصاءات". مفيدة للتحليل بعد المسابقة.</div>
+      </div>
+    </div>
+    <div class="feature-item" style="border-color:rgba(251,146,60,.25)">
+      <div class="fi-icon">⏱️</div>
+      <div class="fi-body">
+        <div class="fi-title">الساعة الكبيرة (Big Clock) <span class="new-badge">جديد</span></div>
+        <div class="fi-desc">تُعرض شاشة مكبّرة للعداد فقط مع اسم القسم والسؤال في منتصف الشاشة. مثالية للقاعات الكبيرة حيث يُريد الجمهور رؤية العداد بوضوح دون عناصر أخرى. تُفتح من شاشة السؤال، اضغط "← رجوع للسؤال" للعودة.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ THEMES (UPDATED) ═══ -->
+<section class="section" id="themes">
+  <div class="section-header">
+    <div class="section-icon icon-purple">🎨</div>
+    <div><div class="section-title">الثيمات البصرية <span class="new-badge">محدَّث — 11 ثيماً</span></div><div class="section-sub">اختر شخصية المسابقة البصرية</div></div>
+  </div>
+  <div class="callout info"><span class="callout-icon">🎨</span><span>يُضبط الثيم من <strong>لوحة التحكم → المظهر → الثيم</strong>. يُطبَّق فورياً على جميع الشاشات.</span></div>
+
+  <div class="themes-grid" style="margin-bottom:24px">
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#00f5d4,#7b61ff)"></div>
+      <div class="theme-info"><div class="th-name">كوني عميق (Space)</div><div class="th-desc">تيل + بنفسجي كوني</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#c6ff00,#ff007a)"></div>
+      <div class="theme-info"><div class="th-name">سايبر حامضي (Cyber) ✨</div><div class="th-desc">أخضر حامض + وردي نيون</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#f0a500,#e05c20)"></div>
+      <div class="theme-info"><div class="th-name">ذهبي غروب (Gold)</div><div class="th-desc">ذهبي دافئ + نحاسي</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#00e5ff,#b39ddb)"></div>
+      <div class="theme-info"><div class="th-name">مرجاني (Mermaid) ✨</div><div class="th-desc">أكوا متألق + بنفسجي</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#a78bfa,#34d399)"></div>
+      <div class="theme-info"><div class="th-name">شفق قطبي (Aurora) ✨</div><div class="th-desc">بنفسجي + زمردي</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#00ff87,#69e3ff)"></div>
+      <div class="theme-info"><div class="th-name">نعناع رقمي (Mint) ✨</div><div class="th-desc">أخضر نعناع + سماوي</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#fb923c,#fbbf24)"></div>
+      <div class="theme-info"><div class="th-name">غروب صحراوي (Earth) ✨</div><div class="th-desc">برتقالي ترابي + عنبري</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#3b82f6,#a78bfa)"></div>
+      <div class="theme-info"><div class="th-name">رسمي أزرق (Formal)</div><div class="th-desc">أزرق نيلي + بنفسجي</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#f59e0b,#e879f9)"></div>
+      <div class="theme-info"><div class="th-name">ليلة مباركة (Occasion)</div><div class="th-desc">ذهبي + وردي احتفالي</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#1d4ed8,#0891b2)"></div>
+      <div class="theme-info"><div class="th-name">فاتح راقي (Light)</div><div class="th-desc">خلفية فاتحة للنهار</div></div>
+    </div>
+    <div class="theme-card">
+      <div class="theme-dot" style="background:linear-gradient(135deg,#d4956a,#c9a84c)"></div>
+      <div class="theme-info"><div class="th-name">موكا فاخر (Mocha) ✨</div><div class="th-desc">بني موكا + ذهبي خافت</div></div>
+    </div>
+  </div>
+
+  <div class="callout new">
+    <span class="callout-icon">🎨</span>
+    <span><strong>ثيم مخصص (Custom) — جديد كلياً في v5!</strong> اختر ثيم "مخصص 🎨" لفتح محرر الألوان. يمكنك ضبط لون الخلفية، اللون الرئيسي، اللون الثانوي، ولون النص يدوياً. مثالي لمطابقة هوية مؤسستك أو ألوان مناسبتك.</span>
+  </div>
+</section>
+
 <!-- ═══ LIFELINES ═══ -->
 <section class="section" id="lifelines">
   <div class="section-header">
@@ -684,11 +869,6 @@ kbd{
     <div class="section-icon icon-blue">🔊</div>
     <div><div class="section-title">الصوت والموسيقى</div><div class="section-sub">التحكم الكامل في تجربة الصوت</div></div>
   </div>
-
-  <div style="margin-bottom:24px">
-    <div class="callout tip"><span class="callout-icon">🎵</span><span>مستوى الصوت الواحد يتحكم في الموسيقى الخلفية. يمكن ضبطه من الشريط في لوحة التحكم <strong>أو</strong> من الشريط المصغر في شاشة العرض مباشرة.</span></div>
-  </div>
-
   <div class="feature-list">
     <div class="feature-item">
       <div class="fi-icon">🎵</div>
@@ -708,18 +888,17 @@ kbd{
       <div class="fi-icon">✅❌</div>
       <div class="fi-body">
         <div class="fi-title">أصوات الإجابات (خارجية)</div>
-        <div class="fi-desc">ارفع ملفات صوتية مخصصة بدلاً من الأصوات المدمجة لصوت الإجابة الصحيحة والخاطئة. تستبدل الأصوات المدمجة تلقائياً عند الرفع. اضغط "▶ تجربة" للاستماع.</div>
+        <div class="fi-desc">ارفع ملفات صوتية مخصصة بدلاً من الأصوات المدمجة لصوت الإجابة الصحيحة والخاطئة. اضغط "▶ تجربة" للاستماع.</div>
       </div>
     </div>
     <div class="feature-item">
       <div class="fi-icon">🎛️</div>
       <div class="fi-body">
         <div class="fi-title">مستوى الصوت</div>
-        <div class="fi-desc">شريط واحد يتحكم في الموسيقى الخلفية. يتزامن بين لوحة التحكم والشريط المصغر في شاشة العرض. أي تغيير من أي مكان يُطبَّق فورياً على الصوت الجاري.</div>
+        <div class="fi-desc">شريط واحد يتحكم في الموسيقى الخلفية. يتزامن بين لوحة التحكم والشريط المصغر في شاشة العرض. أي تغيير يُطبَّق فورياً.</div>
       </div>
     </div>
   </div>
-
   <div class="callout warn" style="margin-top:16px">
     <span class="callout-icon">⚠️</span>
     <span>إذا لم يعمل الصوت: انقر في أي مكان على الصفحة أولاً (سياسة المتصفحات تمنع الصوت التلقائي قبل تفاعل المستخدم). بعد أول نقرة يعمل الصوت بشكل طبيعي.</span>
@@ -791,7 +970,7 @@ kbd{
       <div class="card-icon">📊</div>
       <div class="card-title">استيراد من Excel</div>
       <p>اسحب ملف xlsx/xls/csv أو اضغط لاختياره. الأعمدة المطلوبة بالترتيب:</p>
-      <div style="margin-top:10px;background:var(--bg3);border-radius:8px;padding:10px;font-size:.76rem;font-family:monospace;direction:ltr;color:var(--blue);line-height:1.8">
+      <div style="margin-top:10px;background:var(--bg3);border-radius:8px;padding:10px;font-size:.76rem;font-family:monospace;direction:ltr;color:var(--gold);line-height:1.8">
         Question | Opt1 | Opt2 | Opt3 | Opt4<br>
         Correct(1-4) | Category | Time | Difficulty | Explanation
       </div>
@@ -813,14 +992,13 @@ kbd{
   </div>
 </section>
 
-
 <!-- ═══ MUSIC WIDGET ═══ -->
 <section class="section" id="music-widget">
   <div class="section-header">
     <div class="section-icon icon-blue">🎵</div>
     <div><div class="section-title">التحكم بالموسيقى أثناء العرض</div><div class="section-sub">زر الموسيقى متاح في جميع الشاشات</div></div>
   </div>
-  <div class="callout tip"><span class="callout-icon">🎵</span><span>يظهر <strong>شريط الموسيقى العائم</strong> في أسفل يسار الشاشة على جميع شاشات العرض (الفرق، الأقسام، السؤال، النتائج، الشكر). انقر عليه للتشغيل/الإيقاف، ومرّر الفأرة فوقه لإظهار شريط الصوت.</span></div>
+  <div class="callout tip"><span class="callout-icon">🎵</span><span>يظهر <strong>شريط الموسيقى العائم</strong> في أسفل يسار الشاشة على جميع شاشات العرض. انقر عليه للتشغيل/الإيقاف، ومرّر الفأرة فوقه لإظهار شريط الصوت.</span></div>
   <div class="steps">
     <div class="step">
       <div class="step-num">🎵</div>
@@ -851,7 +1029,7 @@ kbd{
       <div class="card-title">الانتقال التلقائي (افتراضي)</div>
       <p>بعد الإجابة، ينتقل البرنامج فوراً لشاشة الأقسام. يمكن ضبط تأخير من 0 إلى 10 ثواني قبل الانتقال.</p>
     </div>
-    <div class="card" style="border-color:rgba(245,200,66,.3)">
+    <div class="card" style="border-color:rgba(0,245,212,.3)">
       <div class="card-icon">✋</div>
       <div class="card-title">الانتقال اليدوي</div>
       <p>يبقى في شاشة السؤال حتى يضغط المقدم زر "📂 الأقسام" يدوياً. مفيد للشرح والتعليق قبل الانتقال.</p>
@@ -880,10 +1058,10 @@ kbd{
     </table>
   </div>
   <div style="margin-top:16px">
-    <button class="callout tip" style="cursor:default;width:100%;text-align:right;display:flex;align-items:flex-start;gap:12px">
-      <span style="font-size:1.1rem">💡</span>
+    <div class="callout tip">
+      <span class="callout-icon">💡</span>
       <span>لنسخ فوري انقر <strong>"💾 نسخ احتياطي الآن"</strong> في تبويب الاستيراد. الملف الناتج يمكن استعادته لاحقاً بزر "📥 استيراد JSON".</span>
-    </button>
+    </div>
   </div>
 </section>
 
@@ -898,7 +1076,7 @@ kbd{
       <div class="fi-icon">🧪</div>
       <div class="fi-body">
         <div class="fi-title">جرّب قبل العرض</div>
-        <div class="fi-desc">افتح ملف المسابقة مرة كاملة بمفردك قبل العرض الحقيقي. تأكد من أن الصوت يعمل، الصور تظهر، والأسئلة صحيحة.</div>
+        <div class="fi-desc">افتح ملف المسابقة مرة كاملة بمفردك قبل العرض الحقيقي. تأكد من أن الصوت يعمل، الصور تظهر، الخيارات الصورية تُعرض، والأسئلة صحيحة.</div>
       </div>
     </div>
     <div class="feature-item">
@@ -919,7 +1097,7 @@ kbd{
       <div class="fi-icon">🔠</div>
       <div class="fi-body">
         <div class="fi-title">اضبط حجم الخط حسب القاعة</div>
-        <div class="fi-desc">في قاعات كبيرة، رفع حجم الخط لـ 130%-150% يجعل الأسئلة مقروءة من الخلف. اضبطه من إعدادات المظهر.</div>
+        <div class="fi-desc">في قاعات كبيرة، رفع حجم الخط لـ 130%-150% يجعل الأسئلة مقروءة من الخلف. استخدم الساعة الكبيرة لعرض العداد في قاعات واسعة.</div>
       </div>
     </div>
     <div class="feature-item">
@@ -934,6 +1112,13 @@ kbd{
       <div class="fi-body">
         <div class="fi-title">وقت السؤال مرن</div>
         <div class="fi-desc">يمكن ضبط وقت مختلف لكل سؤال. للأسئلة الصعبة أو الصورية أو الصوتية، زد الوقت إلى 45-60 ثانية. استخدم طوق "⏰ +15 ثانية" للطوارئ.</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">🏆</div>
+      <div class="fi-body">
+        <div class="fi-title">استخدم منصة التتويج في النهاية</div>
+        <div class="fi-desc">في نهاية المسابقة، افتح منصة التتويج لإعلان الفائزين بشكل احترافي مع مؤثرات الكونفيتي. ثم اعرض شاشة الإحصاءات التفصيلية للمراجعة والتحليل.</div>
       </div>
     </div>
   </div>
@@ -960,9 +1145,19 @@ kbd{
           <td>ضغّط الصورة أو قلّل حجمها ثم ارفعها مجدداً</td>
         </tr>
         <tr>
+          <td><strong>صورة الخيار لا تظهر</strong></td>
+          <td>حجم الصورة أكبر من 3MB</td>
+          <td>ضغّط الصورة وأعد رفعها</td>
+        </tr>
+        <tr>
           <td><strong>المعادلة لا تُعرض</strong></td>
           <td>صيغة LaTeX خاطئة أو مكتبة KaTeX لم تُحمَّل</td>
           <td>تأكد من اتصال الإنترنت عند أول فتح، واستخدم زر "👁 معاينة"</td>
+        </tr>
+        <tr>
+          <td><strong>خلط الخيارات يُبلبل الإجابة الصحيحة</strong></td>
+          <td>توقع طبيعي</td>
+          <td>البرنامج يتتبع الإجابة الصحيحة تلقائياً بغض النظر عن ترتيب الخيارات</td>
         </tr>
         <tr>
           <td><strong>فقدان البيانات بعد إغلاق المتصفح</strong></td>
@@ -1005,9 +1200,9 @@ kbd{
           <td>اسمح للمتصفح بتنزيل ملفات متعددة من هذا الموقع</td>
         </tr>
         <tr>
-          <td><strong>صورة الخيار لا تظهر</strong></td>
-          <td>حجم الصورة أكبر من 3MB</td>
-          <td>ضغّط الصورة وأعد رفعها</td>
+          <td><strong>منصة التتويج لا تظهر بشكل صحيح</strong></td>
+          <td>لا توجد فرق بنقاط مختلفة</td>
+          <td>تأكد من إضافة فرق ومنح نقاط لها قبل فتح المنصة</td>
         </tr>
       </tbody>
     </table>
