@@ -802,14 +802,11 @@ body{position:relative;transition:background .4s}
 .btn-label-hide-xs{display:inline}
 
 /* ── TEAMS SLIDE ── */
-#view-teams{min-height:100vh;padding:calc(var(--header-h) + 32px) 24px 80px;display:flex;flex-direction:column;align-items:center}
+#view-teams{min-height:100svh;padding:calc(var(--header-h) + clamp(14px,2vh,28px)) clamp(12px,2vw,24px) clamp(50px,6vh,80px);display:flex;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
 .teams-slide-title{font-size:clamp(1.4rem,4vw,2.5rem);font-weight:900;color:var(--accent1);margin-bottom:32px;animation:float-up .6s ease both;text-align:center}
 .teams-pres-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;width:100%;max-width:1200px}
 
 /* ── CATEGORIES ── */
-#view-categories{min-height:100vh;padding:calc(var(--header-h) + 28px) 24px 80px;display:flex;flex-direction:column;align-items:center}
-.categories-pres-title{font-size:clamp(1.1rem,3.5vw,2rem);font-weight:900;color:var(--text-primary);margin-bottom:8px;text-align:center}
-.cats-turn-banner{font-size:clamp(1rem,2.5vw,1.4rem);font-weight:800;margin-bottom:28px;text-align:center}
 .categories-pres-grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(clamp(160px,18vw,220px),1fr));
@@ -818,12 +815,12 @@ body{position:relative;transition:background .4s}
 }
 .cat-pres-btn{
   background:var(--bg-card);border:3px solid var(--border);
-  border-radius:clamp(14px,2vw,24px);
-  padding:clamp(20px,3vh,36px) clamp(12px,2vw,20px);
+  border-radius:clamp(12px,2vw,22px);
+  padding:clamp(12px,2vh,24px) clamp(10px,1.5vw,18px);
   text-align:center;cursor:pointer;transition:all .25s;
   position:relative;overflow:hidden;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  min-height:clamp(120px,16vh,180px);
+  min-height:clamp(100px,13vh,155px);
 }
 .cat-pres-btn::before{
   content:'';position:absolute;inset:0;
@@ -837,8 +834,8 @@ body{position:relative;transition:background .4s}
 .cat-pres-btn:not(.depleted):active{transform:scale(.97)}
 .cat-pres-btn.depleted{opacity:.35;cursor:default;filter:grayscale(.9)}
 .cat-pres-icon{
-  font-size:calc(clamp(2rem,5vw,3.5rem) * var(--cat-icon-scale, 1));
-  margin-bottom:clamp(8px,1.5vh,14px);
+  font-size:calc(clamp(1.6rem,4vw,2.8rem) * var(--cat-icon-scale, 1));
+  margin-bottom:clamp(5px,1vh,10px);
   line-height:1;
   filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));
 }
@@ -853,25 +850,33 @@ body{position:relative;transition:background .4s}
   background:rgba(0,0,0,.2);border-radius:20px;
   padding:2px 10px;margin-top:4px;
 }
+.cat-pres-img{
+  width:clamp(48px,7vw,72px);height:clamp(48px,7vw,72px);
+  border-radius:10px;object-fit:cover;
+  margin-bottom:clamp(5px,1vh,10px);
+  border:2px solid rgba(255,255,255,.15);
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
 /* Categories view sizing */
 #view-categories{
-  min-height:100vh;
-  padding:calc(var(--header-h) + clamp(16px,2vh,28px)) clamp(12px,3vw,32px) clamp(60px,8vh,90px);
+  min-height:100svh;height:100svh;
+  padding:calc(var(--header-h) + clamp(10px,1.5vh,18px)) clamp(12px,3vw,32px) clamp(40px,5vh,70px);
   display:flex;flex-direction:column;align-items:center;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;
 }
 .categories-pres-title{
-  font-size:clamp(1rem,2.8vw,1.8rem);font-weight:900;
-  color:var(--text-primary);margin-bottom:6px;text-align:center;
+  font-size:clamp(.9rem,2.2vw,1.5rem);font-weight:900;
+  color:var(--text-primary);margin-bottom:4px;text-align:center;flex-shrink:0;
 }
 .cats-turn-banner{
-  font-size:clamp(.95rem,2.2vw,1.35rem);font-weight:800;
-  margin-bottom:clamp(16px,3vh,28px);text-align:center;
+  font-size:clamp(.85rem,2vw,1.2rem);font-weight:800;
+  margin-bottom:clamp(8px,1.5vh,18px);text-align:center;flex-shrink:0;
 }
 .cat-pres-count{font-size:.78rem;color:var(--text-secondary)}
 
 /* ── QUESTION SLIDE ── */
-#view-question{min-height:100vh;display:flex;flex-direction:column;padding:calc(var(--header-h) + clamp(8px,2vh,20px)) clamp(12px,3vw,24px) 80px;align-items:center;justify-content:center}
-.question-slide-wrapper{width:100%;max-width:min(860px,98vw)}
+#view-question{min-height:100svh;display:flex;flex-direction:column;padding:calc(var(--header-h) + clamp(8px,2vh,16px)) clamp(12px,3vw,24px) clamp(60px,8vh,90px);align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
+.question-slide-wrapper{width:100%;max-width:min(860px,98vw);padding-top:clamp(4px,1vh,12px)}
 .question-meta-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
 .question-cat-label{display:inline-flex;align-items:center;gap:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:30px;padding:5px 13px;font-size:.8rem;font-weight:700}
 .question-team-label{display:inline-flex;align-items:center;gap:7px;border-radius:30px;padding:5px 13px;font-size:.8rem;font-weight:700;color:#1a1000}
@@ -1086,7 +1091,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   .cats-jeopardy-board{gap:5px}
   .jeopardy-col{min-width:70px}
   .jeopardy-pts{font-size:1rem}
-  .cats-hidden-grid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+  .cats-hidden-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
   #cats-wheel-canvas{max-width:min(340px,90vw);max-height:min(340px,50vh)}
 }
 
@@ -1816,6 +1821,18 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   animation:timeup-pop 2.5s ease forwards;
   font-family:'Cairo',sans-serif;
 }
+/* ── CATEGORY DRAG REORDER ── */
+.category-card{
+  background:var(--bg-panel);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:10px 12px;
+  margin-bottom:8px;position:relative;overflow:hidden;
+  cursor:pointer;transition:border-color .2s,background .15s;
+}
+.category-card:hover{border-color:var(--border-light);background:var(--bg-surface)}
+.category-card.selected{border-color:var(--accent1);background:rgba(0,0,0,.1)}
+.category-card.drag-over-cat{border-color:var(--accent2)!important;background:rgba(0,212,255,.06)!important;transform:translateY(-2px)}
+.category-card.dragging-cat{opacity:.4;border-color:var(--accent1)!important}
+
 /* ── OPTION DRAG-DROP (answers reorder) ── */
 .opt-editor-row.drag-over-opt{
   border-color:var(--accent1)!important;
@@ -1835,15 +1852,15 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 /* ════ CAT DISPLAY MODE SWITCHER ════ */
 .cats-mode-switcher{
-  display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;
-  margin-bottom:clamp(10px,2vh,18px);
+  display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:center;
+  margin-bottom:clamp(6px,1vh,12px);flex-shrink:0;
 }
 .cats-mode-btn{
-  display:flex;align-items:center;gap:5px;
-  padding:6px 13px;border-radius:20px;
+  display:flex;align-items:center;gap:4px;
+  padding:5px 11px;border-radius:20px;
   border:1px solid var(--border);background:var(--bg-card);
   color:var(--text-muted);font-family:'Cairo',sans-serif;
-  font-size:.78rem;font-weight:700;cursor:pointer;
+  font-size:.73rem;font-weight:700;cursor:pointer;
   transition:all .2s;white-space:nowrap;
 }
 .cats-mode-btn:hover{border-color:var(--border-light);color:var(--text-primary);background:var(--bg-surface)}
@@ -2620,6 +2637,13 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
             <div style="font-size:1.4rem;margin-bottom:4px">🎯</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">جيوباردي</div>
           </div>
         </div>
+        <div class="form-group" style="margin-top:16px">
+          <label class="form-label">📍 ظهور مبدِّل طريقة العرض</label>
+          <select id="s-cat-switcher-location" class="form-select" onchange="updateSetting('catSwitcherLocation',this.value)">
+            <option value="both">في لوحة التحكم وشاشة العرض</option>
+            <option value="admin">في لوحة التحكم فقط (مخفي أثناء العرض)</option>
+          </select>
+        </div>
       </div>
 
       <div class="card">
@@ -2653,76 +2677,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <div class="card-header"><div class="card-title"><div class="icon icon-accent">📊</div> إحصائيات</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:11px" id="stats-grid"></div>
       </div>
-    </div>
 
-    <!-- APPEARANCE -->
-    <div id="tab-appearance" class="tab-content hidden">
-      <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-gold">🎨</div> ثيم المنصة — 2026</div></div>
-        <div class="alert alert-info" style="margin-bottom:14px">✨ ألوان مُستوحاة من اتجاهات التصميم لعام 2026 — كل ثيم بشخصية مستقلة</div>
-        <div class="theme-grid" id="theme-grid"></div>
-
-        <!-- CUSTOM THEME EDITOR -->
-        <div id="custom-theme-panel" style="display:none;margin-top:18px">
-          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;padding:16px">
-            <div style="font-size:.9rem;font-weight:800;margin-bottom:14px;color:var(--accent1)">🎨 تخصيص الثيم</div>
-            <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;">
-              <div class="form-group">
-                <label class="form-label">خلفية عميقة</label>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <input type="color" id="ct-bg-deep" value="#02040f" oninput="applyCustomColor('bg-deep',this.value)" style="width:40px;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
-                  <input type="text" id="ct-bg-deep-hex" value="#02040f" class="form-input" style="flex:1;font-size:.78rem;font-family:monospace;direction:ltr" oninput="syncColorInput('bg-deep',this.value)">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">لون رئيسي</label>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <input type="color" id="ct-accent1" value="#00f5d4" oninput="applyCustomColor('accent1',this.value);applyCustomColor('accent1-light',lightenColor(this.value,30));applyCustomColor('accent1-dark',darkenColor(this.value,20))" style="width:40px;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
-                  <input type="text" id="ct-accent1-hex" value="#00f5d4" class="form-input" style="flex:1;font-size:.78rem;font-family:monospace;direction:ltr" oninput="syncColorInput('accent1',this.value)">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">لون ثانوي</label>
-                <div style="display:flex;align-items:center;gap:8px">
-                  <input type="color" id="ct-accent2" value="#7b61ff" oninput="applyCustomColor('accent2',this.value)" style="width:40px;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
-                  <input type="text" id="ct-accent2-hex" value="#7b61ff" class="form-input" style="flex:1;font-size:.78rem;font-family:monospace;direction:ltr" oninput="syncColorInput('accent2',this.value)">
-                </div>
-              </div>
-            </div>
-            <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;margin-top:4px">
-              <div class="form-group">
-                <label class="form-label">بطاقة / كارد</label>
-                <input type="color" id="ct-bg-card" value="#070e20" oninput="applyCustomColor('bg-card',this.value)" style="width:100%;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
-              </div>
-              <div class="form-group">
-                <label class="form-label">نص رئيسي</label>
-                <input type="color" id="ct-text-primary" value="#e8f4ff" oninput="applyCustomColor('text-primary',this.value)" style="width:100%;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
-              </div>
-              <div class="form-group">
-                <label class="form-label">حدود</label>
-                <input type="color" id="ct-border" value="#162040" oninput="applyCustomColor('border',this.value);applyCustomColor('border-light',lightenColor(this.value,15))" style="width:100%;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
-              </div>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('dark-teal')">🌊 داكن تيل</button>
-              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('warm-rose')">🌹 وردي دافئ</button>
-              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('pure-black')">⬛ أسود نقي</button>
-              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('midnight-blue')">🌊 أزرق منتصف الليل</button>
-              <button class="btn btn-accent btn-sm" onclick="exportCustomTheme()">📋 نسخ CSS</button>
-              <button class="btn btn-ghost btn-sm" onclick="resetCustomTheme()">↺ إعادة تعيين</button>
-            </div>
-          </div>
-        </div>
-      </div>
-        <div class="form-group" style="margin-top:16px">
-          <label class="form-label">حجم أيقونات الأقسام في شاشة العرض</label>
-          <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
-            <input type="range" id="s-cat-icon-size" min="50" max="200" value="100" style="flex:1"
-              oninput="applyCatIconScale(+this.value);updateSetting('catIconSize',+this.value)">
-            <span id="cat-icon-size-display" style="min-width:40px;font-weight:700;color:var(--accent1)">100%</span>
-          </div>
-        </div>
-      </div>
       <div class="card">
         <div class="card-header"><div class="card-title"><div class="icon icon-accent">🎵</div> الموسيقى والمؤثرات الصوتية</div></div>
         <div class="alert alert-info">🎵 يمكن تشغيل/إيقاف الموسيقى من شاشة العرض — أو ارفع ملف صوتي خارجي</div>
@@ -2950,8 +2905,77 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           <span class="text-sm text-muted">تكرار الموسيقى (Loop)</span>
         </div>
       </div>
-
     </div>
+
+    <!-- APPEARANCE -->
+    <div id="tab-appearance" class="tab-content hidden">
+      <div class="card">
+        <div class="card-header"><div class="card-title"><div class="icon icon-gold">🎨</div> ثيم المنصة — 2026</div></div>
+        <div class="alert alert-info" style="margin-bottom:14px">✨ ألوان مُستوحاة من اتجاهات التصميم لعام 2026 — كل ثيم بشخصية مستقلة</div>
+        <div class="theme-grid" id="theme-grid"></div>
+
+        <!-- CUSTOM THEME EDITOR -->
+        <div id="custom-theme-panel" style="display:none;margin-top:18px">
+          <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;padding:16px">
+            <div style="font-size:.9rem;font-weight:800;margin-bottom:14px;color:var(--accent1)">🎨 تخصيص الثيم</div>
+            <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;">
+              <div class="form-group">
+                <label class="form-label">خلفية عميقة</label>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <input type="color" id="ct-bg-deep" value="#02040f" oninput="applyCustomColor('bg-deep',this.value)" style="width:40px;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
+                  <input type="text" id="ct-bg-deep-hex" value="#02040f" class="form-input" style="flex:1;font-size:.78rem;font-family:monospace;direction:ltr" oninput="syncColorInput('bg-deep',this.value)">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">لون رئيسي</label>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <input type="color" id="ct-accent1" value="#00f5d4" oninput="applyCustomColor('accent1',this.value);applyCustomColor('accent1-light',lightenColor(this.value,30));applyCustomColor('accent1-dark',darkenColor(this.value,20))" style="width:40px;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
+                  <input type="text" id="ct-accent1-hex" value="#00f5d4" class="form-input" style="flex:1;font-size:.78rem;font-family:monospace;direction:ltr" oninput="syncColorInput('accent1',this.value)">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">لون ثانوي</label>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <input type="color" id="ct-accent2" value="#7b61ff" oninput="applyCustomColor('accent2',this.value)" style="width:40px;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
+                  <input type="text" id="ct-accent2-hex" value="#7b61ff" class="form-input" style="flex:1;font-size:.78rem;font-family:monospace;direction:ltr" oninput="syncColorInput('accent2',this.value)">
+                </div>
+              </div>
+            </div>
+            <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;margin-top:4px">
+              <div class="form-group">
+                <label class="form-label">بطاقة / كارد</label>
+                <input type="color" id="ct-bg-card" value="#070e20" oninput="applyCustomColor('bg-card',this.value)" style="width:100%;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
+              </div>
+              <div class="form-group">
+                <label class="form-label">نص رئيسي</label>
+                <input type="color" id="ct-text-primary" value="#e8f4ff" oninput="applyCustomColor('text-primary',this.value)" style="width:100%;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
+              </div>
+              <div class="form-group">
+                <label class="form-label">حدود</label>
+                <input type="color" id="ct-border" value="#162040" oninput="applyCustomColor('border',this.value);applyCustomColor('border-light',lightenColor(this.value,15))" style="width:100%;height:32px;border:none;border-radius:6px;cursor:pointer;background:none">
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('dark-teal')">🌊 داكن تيل</button>
+              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('warm-rose')">🌹 وردي دافئ</button>
+              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('pure-black')">⬛ أسود نقي</button>
+              <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('midnight-blue')">🌊 أزرق منتصف الليل</button>
+              <button class="btn btn-accent btn-sm" onclick="exportCustomTheme()">📋 نسخ CSS</button>
+              <button class="btn btn-ghost btn-sm" onclick="resetCustomTheme()">↺ إعادة تعيين</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group" style="margin-top:16px">
+          <label class="form-label">حجم أيقونات الأقسام في شاشة العرض</label>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:6px">
+            <input type="range" id="s-cat-icon-size" min="50" max="200" value="100" style="flex:1"
+              oninput="applyCatIconScale(+this.value);updateSetting('catIconSize',+this.value)">
+            <span id="cat-icon-size-display" style="min-width:40px;font-weight:700;color:var(--accent1)">100%</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tab-appearance -->
 
     <!-- CATEGORIES -->
     <div id="tab-categories" class="tab-content hidden">
@@ -3213,7 +3237,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <button class="cats-mode-btn"        data-mode="list"    onclick="setCatDisplayMode('list',this)"   title="عرض قائمة">☰ قائمة</button>
     <button class="cats-mode-btn"        data-mode="jeopardy" onclick="setCatDisplayMode('jeopardy',this)" title="لوحة جيوباردي">🎯 جيوباردي</button>
   </div>
-  <div id="cats-pres-grid"></div>
+  <div id="cats-pres-grid" style="width:100%;max-width:1200px;display:flex;flex-direction:column;align-items:center"></div>
 </div>
 
 <!-- ═══ PRES: QUESTION ═══ -->
@@ -3407,8 +3431,28 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <div id="modal-category" class="modal-overlay hidden">
   <div class="modal">
     <div class="modal-header"><div class="modal-title" id="cat-modal-title">➕ إضافة قسم</div><button class="modal-close" onclick="closeModal('modal-category')">✕</button></div>
-    <div class="form-group"><label class="form-label">الاسم</label><input type="text" id="cat-name-input" class="form-input" dir="auto" placeholder="تاريخ، علوم..."></div>
-    <div class="form-group"><label class="form-label">أيقونة</label><input type="text" id="cat-icon-input" class="form-input" placeholder="📚" maxlength="4"></div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">الاسم</label>
+        <input type="text" id="cat-name-input" class="form-input" dir="auto" placeholder="تاريخ، علوم...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">أيقونة / إيموجي <span style="font-size:.72rem;color:var(--text-muted)">(يظهر إذا لم تكن صورة)</span></label>
+        <input type="text" id="cat-icon-input" class="form-input" placeholder="📚" maxlength="8" dir="auto">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">🖼️ صورة القسم <span style="font-size:.72rem;color:var(--text-muted)">(اختياري — تحل محل الأيقونة)</span></label>
+      <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+        <label class="audio-file-label" for="cat-image-file-input">📁 اختر صورة</label>
+        <input type="file" id="cat-image-file-input" accept="image/*" class="hidden" onchange="loadCatImage(this)">
+        <div id="cat-image-preview-wrap" style="display:none;position:relative">
+          <img id="cat-image-preview" style="width:52px;height:52px;border-radius:8px;object-fit:cover;border:2px solid var(--accent1)" src="" alt="">
+          <button style="position:absolute;top:-6px;left:-6px;width:20px;height:20px;border-radius:50%;background:var(--danger);border:none;color:white;font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="clearCatImage()">✕</button>
+        </div>
+        <span style="font-size:.78rem;color:var(--text-muted)" id="cat-image-name">لم تُختر صورة</span>
+      </div>
+    </div>
     <div class="form-group"><label class="form-label">اللون</label><div style="display:flex;align-items:center;gap:10px"><input type="color" id="cat-color-input" value="#f5c842"><div style="display:flex;gap:5px;flex-wrap:wrap" id="color-swatches"></div></div></div>
     <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-category')">إلغاء</button><button class="btn btn-primary" onclick="saveCategory()">💾 حفظ</button></div>
   </div>
@@ -3706,12 +3750,33 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <div id="modal-team" class="modal-overlay hidden">
   <div class="modal">
     <div class="modal-header"><div class="modal-title" id="team-modal-title">➕ إضافة فريق</div><button class="modal-close" onclick="closeModal('modal-team')">✕</button></div>
-    <div class="form-group"><label class="form-label">اسم الفريق</label><input type="text" id="team-name-input" class="form-input" dir="auto"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">اسم الفريق</label><input type="text" id="team-name-input" class="form-input" dir="auto"></div>
+      <div class="form-group">
+        <label class="form-label">أيقونة / إيموجي الفريق</label>
+        <input type="text" id="team-icon-input" class="form-input" placeholder="🏆 ⚡ 🎯..." maxlength="8" dir="auto">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">🖼️ صورة الفريق <span style="font-size:.72rem;color:var(--text-muted)">(اختياري)</span></label>
+      <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+        <label class="audio-file-label" for="team-image-file-input">📁 اختر صورة</label>
+        <input type="file" id="team-image-file-input" accept="image/*" class="hidden" onchange="loadTeamImage(this)">
+        <div id="team-image-preview-wrap" style="display:none;position:relative">
+          <img id="team-image-preview" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--accent1)" src="" alt="">
+          <button style="position:absolute;top:-6px;left:-6px;width:20px;height:20px;border-radius:50%;background:var(--danger);border:none;color:white;font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="clearTeamImage()">✕</button>
+        </div>
+      </div>
+    </div>
     <div class="form-group"><label class="form-label">اللون</label><div style="display:flex;align-items:center;gap:10px"><input type="color" id="team-color-input" value="#00d4ff"><div style="display:flex;gap:5px;flex-wrap:wrap" id="team-color-swatches"></div></div></div>
     <div class="form-group">
       <label class="form-label">الأعضاء</label>
-      <div style="display:flex;gap:7px"><input type="text" id="team-member-input" class="form-input" dir="auto" placeholder="اسم العضو" onkeydown="if(event.key==='Enter')addMemberToModal()"><button class="btn btn-accent btn-sm" onclick="addMemberToModal()">+ إضافة</button></div>
-      <div id="modal-members-list" style="display:flex;flex-wrap:wrap;gap:5px;margin-top:8px"></div>
+      <div style="display:flex;gap:7px">
+        <input type="text" id="team-member-input" class="form-input" dir="auto" placeholder="اسم العضو" onkeydown="if(event.key==='Enter')addMemberToModal()">
+        <input type="text" id="team-member-icon-input" class="form-input" placeholder="😊" maxlength="4" style="width:64px;flex-shrink:0" title="إيموجي العضو">
+        <button class="btn btn-accent btn-sm" onclick="addMemberToModal()" style="white-space:nowrap">+ إضافة</button>
+      </div>
+      <div id="modal-members-list" style="display:flex;flex-direction:column;gap:6px;margin-top:10px"></div>
     </div>
     <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-team')">إلغاء</button><button class="btn btn-success" onclick="saveTeam()">💾 حفظ</button></div>
   </div>
@@ -3822,6 +3887,7 @@ let state={
     podiumMusicData:null,
     podiumMusicVol:60,
     catDisplayMode:'grid',       // 'grid'|'wheel'|'hidden'|'list'|'jeopardy'
+    catSwitcherLocation:'both',    // 'both'|'admin' - where mode switcher appears
   },
   categories:[],teams:[],credits:[],
   currentCatId:null,currentQIndex:0,currentTeamIndex:0,
@@ -3855,6 +3921,15 @@ function saveState(){
   // Don't save large media data in main quiz_v4 key (save separately per question)
   const settingsClean={...state.settings};
   // Save audio file data separately to avoid quota issues
+  // Save category images separately
+  const catImages={};
+  state.categories.forEach(c=>{if(c.catImage)catImages[c.id]=c.catImage;});
+  const teamImages={};
+  state.teams.forEach(t=>{if(t.teamImage)teamImages[t.id]=t.teamImage;});
+  const memberImages={};
+  state.teams.forEach(t=>{if(t.memberImages)memberImages[t.id]=t.memberImages;});
+  try{localStorage.setItem('quiz_v4_catimg',JSON.stringify(catImages))}catch(e){}
+  try{localStorage.setItem('quiz_v4_teamimg',JSON.stringify({teamImages,memberImages}))}catch(e){}
   const audioData={
     customMusicData:state.settings.customMusicData,
     customCorrectData:state.settings.customCorrectData,
@@ -3900,6 +3975,7 @@ function loadState(){
     const s=JSON.parse(raw);
     state.settings={...state.settings,...s.settings};
     state.categories=(s.categories||[]).map(cat=>({
+      catImage:null,
       ...cat,
       questions:(cat.questions||[]).map(q=>({
         optionImages:[null,null,null,null],
@@ -3908,6 +3984,11 @@ function loadState(){
     }));
     state.teams=s.teams||[];
     state.credits=s.credits||[];
+    // Restore cat images
+    try{const ci=JSON.parse(localStorage.getItem('quiz_v4_catimg')||'{}');state.categories.forEach(c=>{if(ci[c.id])c.catImage=ci[c.id];});}catch(e){}
+    // Restore team images
+    try{const ti=JSON.parse(localStorage.getItem('quiz_v4_teamimg')||'{}');
+      state.teams.forEach(t=>{if(ti.teamImages&&ti.teamImages[t.id])t.teamImage=ti.teamImages[t.id];if(ti.memberImages&&ti.memberImages[t.id])t.memberImages=ti.memberImages[t.id];});}catch(e){}
     // Restore audio data
     const audioRaw=localStorage.getItem('quiz_v4_audio');
     if(audioRaw){
@@ -4113,6 +4194,7 @@ function renderAdmin(){
   const pvd=document.getElementById('podium-vol-display');if(pvd)pvd.textContent=(s.podiumMusicVol??60)+'%';
   const pml=document.getElementById('s-podium-music-loop');if(pml)pml.checked=!!s.podiumMusicLoop;
   const cdm=document.getElementById('s-cat-display-mode');if(cdm)cdm.value=s.catDisplayMode||'grid';
+  const csl=document.getElementById('s-cat-switcher-location');if(csl)csl.value=s.catSwitcherLocation||'both';
   // Sync volume slider
   document.getElementById('s-music-vol').value=s.musicVol||40;
   document.getElementById('vol-display').textContent=(s.musicVol||40)+'%';
@@ -4191,10 +4273,18 @@ function renderCategoriesAdmin(){
   const el=document.getElementById('categories-list-admin');
   if(!state.categories.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">📂</div><p>لا توجد أقسام</p></div>';return}
   el.innerHTML=state.categories.map(cat=>`
-    <div class="category-card ${state.currentCatId===cat.id?'selected':''}" onclick="selectCatAdmin('${cat.id}')">
+    <div class="category-card ${state.currentCatId===cat.id?'selected':''}"
+      draggable="true" data-catid="${cat.id}"
+      onclick="selectCatAdmin('${cat.id}')"
+      ondragstart="onCatDragStart(event,'${cat.id}')"
+      ondragover="onCatDragOver(event,'${cat.id}')"
+      ondrop="onCatDrop(event,'${cat.id}')"
+      ondragleave="this.classList.remove('drag-over-cat')"
+      ondragend="onCatDragEnd()">
       <div style="position:absolute;top:0;right:0;width:4px;height:100%;background:${cat.color}"></div>
       <div style="display:flex;align-items:center;gap:7px;padding-right:8px">
-        <span style="font-size:1.2rem">${cat.icon||'📂'}</span>
+        <span style="font-size:1rem;cursor:grab;color:var(--text-muted);padding:2px">⠿</span>
+        ${cat.catImage?`<img src="${cat.catImage}" style="width:32px;height:32px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)">`:`<span style="font-size:1.4rem">${cat.icon||'📂'}</span>`}
         <div><div style="font-weight:700;font-size:.9rem">${cat.name}</div><div style="font-size:.76rem;color:var(--text-secondary)">${cat.questions.length} سؤال</div></div>
       </div>
       <div style="display:flex;gap:4px;margin-top:9px">
@@ -4254,8 +4344,8 @@ function renderQuestionsAdmin(catId){
 }
 function openCatModal(catId=null){
   state.editingCatId=catId;
-  if(catId){const c=state.categories.find(c=>c.id===catId);document.getElementById('cat-modal-title').textContent='✏️ تعديل القسم';document.getElementById('cat-name-input').value=c.name;document.getElementById('cat-icon-input').value=c.icon||'';document.getElementById('cat-color-input').value=c.color||'#f5c842'}
-  else{document.getElementById('cat-modal-title').textContent='➕ إضافة قسم';document.getElementById('cat-name-input').value='';document.getElementById('cat-icon-input').value='📚';document.getElementById('cat-color-input').value=CAT_COLORS[state.categories.length%CAT_COLORS.length]}
+  if(catId){const c=state.categories.find(c=>c.id===catId);document.getElementById('cat-modal-title').textContent='✏️ تعديل القسم';document.getElementById('cat-name-input').value=c.name;document.getElementById('cat-icon-input').value=c.icon||'';document.getElementById('cat-color-input').value=c.color||'#f5c842';_showCatImagePreview(c.catImage);}
+  else{document.getElementById('cat-modal-title').textContent='➕ إضافة قسم';document.getElementById('cat-name-input').value='';document.getElementById('cat-icon-input').value='📚';document.getElementById('cat-color-input').value=CAT_COLORS[state.categories.length%CAT_COLORS.length];_showCatImagePreview(null);}
   openModal('modal-category');
 }
 function saveCategory(){
@@ -4263,8 +4353,10 @@ function saveCategory(){
   if(!name){toast('أدخل اسم القسم','danger');return}
   const icon=document.getElementById('cat-icon-input').value.trim()||'📚';
   const color=document.getElementById('cat-color-input').value;
-  if(state.editingCatId){const c=state.categories.find(c=>c.id===state.editingCatId);c.name=name;c.icon=icon;c.color=color}
-  else state.categories.push({id:uid(),name,icon,color,questions:[]});
+  const catImg=window._catImageTemp||null;
+  if(state.editingCatId){const c=state.categories.find(c=>c.id===state.editingCatId);c.name=name;c.icon=icon;c.color=color;if(catImg!==undefined)c.catImage=catImg;}
+  else state.categories.push({id:uid(),name,icon,color,catImage:catImg,questions:[]});
+  window._catImageTemp=undefined;
   saveState();closeModal('modal-category');renderCategoriesAdmin();toast('تم الحفظ ✓','success');
 }
 function deleteCat(id){confirmAction('حذف هذا القسم وجميع أسئلته؟',()=>{state.categories=state.categories.filter(c=>c.id!==id);if(state.currentCatId===id){state.currentCatId=null;document.getElementById('btn-add-question').classList.add('hidden');document.getElementById('questions-list-admin').innerHTML=''}saveState();renderCategoriesAdmin();toast('تم الحذف','info')})}
@@ -4378,7 +4470,10 @@ function renderTeamsAdmin(){
     <div class="team-card">
       <div class="team-color-bar" style="background:${t.color}"></div>
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
-        <div><div class="team-name-display" style="color:${t.color}">${t.name}</div><div class="team-score-display">${t.score||0}<span style="font-size:.82rem;color:var(--text-muted)"> نقطة</span></div></div>
+        <div style="display:flex;align-items:center;gap:10px">
+          ${t.teamImage?`<img src="${t.teamImage}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid ${t.color}66">`:t.teamIcon?`<span style="font-size:1.6rem">${t.teamIcon}</span>`:`<div style="width:36px;height:36px;border-radius:50%;background:${t.color};display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900;color:#1a1000">${t.name.charAt(0)}</div>`}
+          <div><div class="team-name-display" style="color:${t.color}">${t.name}</div><div class="team-score-display">${t.score||0}<span style="font-size:.82rem;color:var(--text-muted)"> نقطة</span></div></div>
+        </div>
         <div style="display:flex;gap:4px;flex-wrap:wrap">
           <button class="btn btn-ghost btn-sm btn-icon" onclick="moveTeam('${t.id}',-1)" title="تحريك للأعلى">▲</button>
           <button class="btn btn-ghost btn-sm btn-icon" onclick="moveTeam('${t.id}',1)" title="تحريك للأسفل">▼</button>
@@ -4386,7 +4481,7 @@ function renderTeamsAdmin(){
           <button class="btn btn-danger btn-sm btn-icon" onclick="deleteTeam('${t.id}')">🗑️</button>
         </div>
       </div>
-      <div class="team-members-list">${t.members.map(m=>`<span class="member-tag">${m}</span>`).join('')||'<span class="text-sm text-muted">لا أعضاء</span>'}</div>
+      <div class="team-members-list">${(t.members||[]).map(m=>{const nm=typeof m==='object'?m.name:m;const ic=typeof m==='object'&&m.icon?m.icon:'';return `<span class="member-tag">${ic?ic+' ':''}<span>${nm}</span></span>`}).join('')||'<span class="text-sm text-muted">لا أعضاء</span>'}</div>
       <div style="display:flex;gap:5px;margin-top:9px;flex-wrap:wrap">
         <button class="btn btn-sm btn-ghost" onclick="adjustScore('${t.id}',1)">+1</button>
         <button class="btn btn-sm btn-ghost" onclick="adjustScore('${t.id}',-1)">−1</button>
@@ -4396,18 +4491,62 @@ function renderTeamsAdmin(){
 }
 function openTeamModal(teamId=null){
   state.editingTeamId=teamId;state.modalMembers=[];
-  if(teamId){const t=state.teams.find(t=>t.id===teamId);document.getElementById('team-modal-title').textContent='✏️ تعديل';document.getElementById('team-name-input').value=t.name;document.getElementById('team-color-input').value=t.color;state.modalMembers=[...t.members]}
-  else{document.getElementById('team-modal-title').textContent='➕ إضافة فريق';document.getElementById('team-name-input').value='';document.getElementById('team-color-input').value=TEAM_COLORS[state.teams.length%TEAM_COLORS.length];document.getElementById('team-member-input').value=''}
+  window._teamImageTemp=undefined;
+  if(teamId){
+    const t=state.teams.find(t=>t.id===teamId);
+    document.getElementById('team-modal-title').textContent='✏️ تعديل';
+    document.getElementById('team-name-input').value=t.name;
+    document.getElementById('team-color-input').value=t.color;
+    const ti=document.getElementById('team-icon-input');if(ti)ti.value=t.teamIcon||'';
+    state.modalMembers=(t.members||[]).map((m,i)=>(typeof m==='object'?{name:m.name||'',icon:m.icon||''}:{name:m,icon:''}));
+    _showTeamImagePreview(t.teamImage);
+  }else{
+    document.getElementById('team-modal-title').textContent='➕ إضافة فريق';
+    document.getElementById('team-name-input').value='';
+    document.getElementById('team-color-input').value=TEAM_COLORS[state.teams.length%TEAM_COLORS.length];
+    document.getElementById('team-member-input').value='';
+    const ti=document.getElementById('team-icon-input');if(ti)ti.value='';
+    _showTeamImagePreview(null);
+  }
   renderModalMembers();openModal('modal-team');
 }
-function addMemberToModal(){const v=document.getElementById('team-member-input').value.trim();if(!v)return;state.modalMembers.push(v);document.getElementById('team-member-input').value='';renderModalMembers()}
-function renderModalMembers(){document.getElementById('modal-members-list').innerHTML=state.modalMembers.map((m,i)=>`<span class="member-tag">${m} <span class="rm" onclick="removeModalMember(${i})">✕</span></span>`).join('')}
+function addMemberToModal(){
+  const v=document.getElementById('team-member-input').value.trim();if(!v)return;
+  const icon=document.getElementById('team-member-icon-input')?.value.trim()||'';
+  state.modalMembers.push({name:v,icon});
+  document.getElementById('team-member-input').value='';
+  const ti=document.getElementById('team-member-icon-input');if(ti)ti.value='';
+  renderModalMembers();
+}
+function renderModalMembers(){
+  document.getElementById('modal-members-list').innerHTML=state.modalMembers.map((m,i)=>{
+    const name=typeof m==='object'?m.name:m;
+    const icon=typeof m==='object'?m.icon:'';
+    return `<div class="member-edit-row">
+      <span style="font-size:1.2rem;min-width:24px">${icon||'👤'}</span>
+      <input type="text" class="form-input" value="${name}" style="flex:1" oninput="updateModalMember(${i},'name',this.value)">
+      <input type="text" class="form-input" value="${icon}" placeholder="😊" style="width:52px;flex-shrink:0" maxlength="4" oninput="updateModalMember(${i},'icon',this.value)" title="إيموجي العضو">
+      <button class="rm-btn" onclick="removeModalMember(${i})">✕</button>
+    </div>`;
+  }).join('');
+}
 function removeModalMember(i){state.modalMembers.splice(i,1);renderModalMembers()}
+function updateModalMember(i,field,val){if(state.modalMembers[i])state.modalMembers[i][field]=val;}
 function saveTeam(){
   const name=document.getElementById('team-name-input').value.trim();if(!name){toast('أدخل اسم الفريق','danger');return}
   const color=document.getElementById('team-color-input').value;
-  if(state.editingTeamId){const t=state.teams.find(t=>t.id===state.editingTeamId);t.name=name;t.color=color;t.members=[...state.modalMembers]}
-  else state.teams.push({id:uid(),name,color,members:[...state.modalMembers],score:0});
+  const teamIcon=document.getElementById('team-icon-input')?.value.trim()||'';
+  const teamImage=window._teamImageTemp!==undefined?window._teamImageTemp:undefined;
+  // Convert members to objects
+  const members=state.modalMembers.map(m=>typeof m==='object'?m:{name:m,icon:''});
+  if(state.editingTeamId){
+    const t=state.teams.find(t=>t.id===state.editingTeamId);
+    t.name=name;t.color=color;t.members=members;t.teamIcon=teamIcon;
+    if(teamImage!==undefined)t.teamImage=teamImage;
+  }else{
+    state.teams.push({id:uid(),name,color,teamIcon,teamImage:teamImage||null,members,score:0});
+  }
+  window._teamImageTemp=undefined;
   saveState();closeModal('modal-team');renderTeamsAdmin();toast('تم الحفظ ✓','success');
 }
 function deleteTeam(id){confirmAction('حذف هذا الفريق؟',()=>{state.teams=state.teams.filter(t=>t.id!==id);saveState();renderTeamsAdmin();toast('تم الحذف','info')})}
@@ -4597,6 +4736,9 @@ function renderCatsSlide(){
   document.querySelectorAll('.cats-mode-btn').forEach(b=>{
     b.classList.toggle('active',b.dataset.mode===mode);
   });
+  // Show/hide mode switcher based on catSwitcherLocation setting
+  const switcher=document.getElementById('cats-mode-switcher');
+  if(switcher) switcher.style.display=(state.settings.catSwitcherLocation==='admin')?'none':'flex';
 
   // Check if all categories are depleted
   const allDepleted=state.categories.every(cat=>{
@@ -4631,7 +4773,7 @@ function setCatDisplayMode(mode, el){
 // ─── MODE 1: GRID (classic) ───────────────────────────────────────
 function renderCatsGrid(){
   const grid=document.getElementById('cats-pres-grid');
-  grid.className='categories-pres-grid';
+  grid.className='categories-pres-grid';grid.style.display='grid';
   grid.innerHTML=state.categories.map(cat=>{
     const used=state.usedQuestions[cat.id]||new Set();
     const rem=cat.questions.length-used.size;
@@ -4639,9 +4781,10 @@ function renderCatsGrid(){
     const bankSize=state.settings.bankSize||0;
     const showCount=bankSize>0&&!dep?Math.min(bankSize,rem):rem;
     const shuffleBadge=state.settings.shuffleQuestions&&!dep?'<div class="shuffle-badge">🔀 عشوائي</div>':'';
+    const iconHtml=dep?'<span style="font-size:2rem">✅</span>':cat.catImage?`<img src="${cat.catImage}" style="width:clamp(48px,7vw,72px);height:clamp(48px,7vw,72px);border-radius:10px;object-fit:cover;margin-bottom:clamp(5px,1vh,10px);border:2px solid ${cat.color}44" alt="">`:`<div class="cat-pres-icon">${cat.icon||'📂'}</div>`;
     return `<div class="cat-pres-btn ${dep?'depleted':''}" style="border-color:${dep?'var(--border)':cat.color+'55'}" onclick="${dep?'':` selectCatAndStart('${cat.id}')`}">
       ${shuffleBadge}
-      <div class="cat-pres-icon">${dep?'✅':cat.icon||'📂'}</div>
+      ${iconHtml}
       <div class="cat-pres-name" style="color:${dep?'var(--text-muted)':cat.color}">${cat.name}</div>
       <div class="cat-pres-count" style="${!dep?'color:'+cat.color+';font-weight:800':''}">
         ${dep?'اكتمل':showCount+(bankSize>0&&rem>bankSize?' من '+cat.questions.length:' / '+cat.questions.length)}
@@ -4653,8 +4796,8 @@ function renderCatsGrid(){
 // ─── MODE 2: LIST ─────────────────────────────────────────────────
 function renderCatsList(){
   const grid=document.getElementById('cats-pres-grid');
-  grid.className='';
-  grid.innerHTML='<div class="cats-list-mode">'+state.categories.map(cat=>{
+  grid.className='';grid.style.display='flex';grid.style.flexDirection='column';grid.style.alignItems='center';
+  grid.innerHTML='<div class="cats-list-mode" style="width:100%;max-width:720px">'+state.categories.map(cat=>{
     const used=state.usedQuestions[cat.id]||new Set();
     const rem=cat.questions.length-used.size;
     const dep=rem===0;
@@ -4685,7 +4828,7 @@ function renderCatsList(){
 // ─── MODE 3: HIDDEN / MYSTERY FLIP CARDS ──────────────────────────
 function renderCatsHidden(){
   const grid=document.getElementById('cats-pres-grid');
-  grid.className='';
+  grid.className='';grid.style.display='block';grid.style.width='100%';
   const activeCats=state.categories.filter(c=>{
     const used=state.usedQuestions[c.id]||new Set();
     return c.questions.length>used.size;
@@ -4701,7 +4844,7 @@ function renderCatsHidden(){
           <div class="cat-flip-face-label">${dep?'اكتمل':'انقر للكشف'}</div>
         </div>
         <div class="cat-flip-back" style="border-color:${cat.color};box-shadow:0 8px 32px ${cat.color}44">
-          <div class="cat-flip-back-icon">${dep?'✅':cat.icon||'📂'}</div>
+          <div class="cat-flip-back-icon">${dep?'✅':cat.catImage?`<img src="${cat.catImage}" style="width:52px;height:52px;border-radius:8px;object-fit:cover">`:cat.icon||'📂'}</div>
           <div class="cat-flip-back-name" style="color:${cat.color}">${cat.name}</div>
           <div class="cat-flip-back-count">${dep?'اكتمل':rem+' / '+cat.questions.length+' سؤال'}</div>
           ${dep?'':`<div class="cat-flip-back-click" style="color:${cat.color}88">انقر مجدداً للبدء ▶</div>`}
@@ -4733,7 +4876,7 @@ function flipCatCard(catId, divId){
 // ─── MODE 4: JEOPARDY BOARD ───────────────────────────────────────
 function renderCatsJeopardy(){
   const grid=document.getElementById('cats-pres-grid');
-  grid.className='';
+  grid.className='';grid.style.display='flex';grid.style.flexDirection='column';grid.style.alignItems='center';
   // Point tiers and difficulty mapping
   const TIERS=[
     {pts:100, diff:'easy',  label:'١٠٠', color:'var(--success)'},
@@ -4767,7 +4910,7 @@ function renderCatsJeopardy(){
   grid.innerHTML=`<div class="cats-jeopardy-board">`+board.map(({cat,dep,tierSlots})=>`
     <div class="jeopardy-col">
       <div class="jeopardy-cat-header" style="border-color:${cat.color}55;background:${cat.color}15">
-        <div class="jeopardy-cat-header-icon">${dep?'✅':cat.icon||'📂'}</div>
+        <div class="jeopardy-cat-header-icon">${dep?'✅':cat.catImage?`<img src="${cat.catImage}" style="width:36px;height:36px;border-radius:6px;object-fit:cover">`:(cat.icon||'📂')}</div>
         <div class="jeopardy-cat-header-name" style="color:${cat.color}">${cat.name}</div>
       </div>
       ${TIERS.map((tier,ti)=>{
@@ -4876,7 +5019,8 @@ function drawWheel(rotAngle){
     ctx.fillStyle='rgba(255,255,255,.95)';
     ctx.shadowColor='rgba(0,0,0,.7)';
     ctx.shadowBlur=6;
-    ctx.fillText(cat.icon||'📂',mid,0);
+    // Draw icon or fallback text for wheel
+    ctx.fillText(cat.catImage?'🖼':cat.icon||'📂',mid,0);
     // Name text
     const fs=Math.max(10,Math.min(14,130/n));
     ctx.font=`bold ${fs}px Cairo, sans-serif`;
@@ -7261,9 +7405,102 @@ function resetForNewGame(){
 
 // ════════════════════════════════════════════════════════
 // ════════════════════════════════════════════════════════
-//  OPTION DRAG-DROP REORDER
+//  CATEGORY DRAG REORDER (admin panel)
+// ════════════════════════════════════════════════════════
+let _catDragSrc=null;
+
+function onCatDragStart(e,catId){
+  _catDragSrc=catId;
+  e.dataTransfer.effectAllowed='move';
+  e.dataTransfer.setData('text/plain',catId);
+  const el=e.currentTarget;
+  if(el)setTimeout(()=>el.classList.add('dragging-cat'),0);
+}
+function onCatDragOver(e,catId){
+  e.preventDefault();
+  e.dataTransfer.dropEffect='move';
+  document.querySelectorAll('.category-card').forEach(c=>c.classList.remove('drag-over-cat'));
+  if(catId!==_catDragSrc){
+    const el=document.querySelector(`[data-catid="${catId}"]`);
+    if(el)el.classList.add('drag-over-cat');
+  }
+}
+function onCatDrop(e,targetCatId){
+  e.preventDefault();
+  document.querySelectorAll('.category-card').forEach(c=>{c.classList.remove('drag-over-cat');c.classList.remove('dragging-cat');});
+  const srcId=_catDragSrc; _catDragSrc=null;
+  if(!srcId||srcId===targetCatId)return;
+  const srcIdx=state.categories.findIndex(c=>c.id===srcId);
+  const tgtIdx=state.categories.findIndex(c=>c.id===targetCatId);
+  if(srcIdx<0||tgtIdx<0)return;
+  const [moved]=state.categories.splice(srcIdx,1);
+  state.categories.splice(tgtIdx,0,moved);
+  saveState();
+  renderCategoriesAdmin();
+  toast('↕ تم إعادة ترتيب الأقسام','success');
+}
+function onCatDragEnd(){
+  _catDragSrc=null;
+  document.querySelectorAll('.category-card').forEach(c=>{c.classList.remove('drag-over-cat');c.classList.remove('dragging-cat');});
+}
+
+// ════════════════════════════════════════════════════════
+//  CAT IMAGE + TEAM IMAGE HELPERS
+// ════════════════════════════════════════════════════════
+function loadCatImage(input){
+  const f=input.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    window._catImageTemp=e.target.result;
+    _showCatImagePreview(e.target.result);
+    const nm=document.getElementById('cat-image-name');
+    if(nm)nm.textContent=f.name.slice(0,24);
+  };
+  reader.readAsDataURL(f);
+}
+function _showCatImagePreview(src){
+  const wrap=document.getElementById('cat-image-preview-wrap');
+  const img=document.getElementById('cat-image-preview');
+  const nm=document.getElementById('cat-image-name');
+  if(src){
+    if(img)img.src=src;
+    if(wrap)wrap.style.display='block';
+    if(nm)nm.textContent='صورة محمّلة ✅';
+  }else{
+    if(img)img.src='';
+    if(wrap)wrap.style.display='none';
+    if(nm)nm.textContent='لم تُختر صورة';
+  }
+  window._catImageTemp=src||null;
+}
+function clearCatImage(){_showCatImagePreview(null);}
+
+function loadTeamImage(input){
+  const f=input.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    window._teamImageTemp=e.target.result;
+    _showTeamImagePreview(e.target.result);
+  };
+  reader.readAsDataURL(f);
+}
+function _showTeamImagePreview(src){
+  const wrap=document.getElementById('team-image-preview-wrap');
+  const img=document.getElementById('team-image-preview');
+  if(src){if(img)img.src=src;if(wrap)wrap.style.display='block';}
+  else{if(img)img.src='';if(wrap)wrap.style.display='none';}
+  window._teamImageTemp=src||null;
+}
+function clearTeamImage(){_showTeamImagePreview(null);}
+
+// ════════════════════════════════════════════════════════
+//  OPTION DRAG-DROP REORDER (mouse + touch)
 // ════════════════════════════════════════════════════════
 let _optDragSrc=-1;
+let _optTouchSrc=-1;
+let _optTouchEl=null;
+let _optTouchClone=null;
+let _optTouchStartY=0;
 
 function onOptDragStart(e,idx){
   _optDragSrc=idx;
@@ -7291,7 +7528,6 @@ function onOptDrop(e,targetIdx){
   const srcIdx=_optDragSrc;
   _optDragSrc=-1;
   if(srcIdx<0||srcIdx===targetIdx)return;
-  // Swap option data between srcIdx and targetIdx
   _swapOptionRows(srcIdx,targetIdx);
 }
 
@@ -7302,6 +7538,60 @@ function onOptDragEnd(){
     r.classList.remove('dragging-opt');
   });
 }
+
+// ── Touch drag for option rows ──
+function onOptHandleTouchStart(e,idx){
+  e.stopPropagation();
+  _optTouchSrc=idx;
+  _optTouchStartY=e.touches[0].clientY;
+  const row=document.getElementById('opt-row-'+idx);
+  if(!row)return;
+  _optTouchEl=row;
+  _optTouchEl.classList.add('dragging-opt');
+  // Create floating clone
+  _optTouchClone=row.cloneNode(true);
+  _optTouchClone.style.cssText=`position:fixed;z-index:9999;left:${row.getBoundingClientRect().left}px;top:${row.getBoundingClientRect().top}px;width:${row.offsetWidth}px;opacity:.85;pointer-events:none;background:var(--bg-card);border:2px solid var(--accent1);border-radius:10px;`;
+  document.body.appendChild(_optTouchClone);
+}
+function onOptHandleTouchMove(e){
+  if(_optTouchSrc<0||!_optTouchClone)return;
+  e.preventDefault();
+  const touch=e.touches[0];
+  _optTouchClone.style.top=(touch.clientY-30)+'px';
+  // Find target row
+  document.querySelectorAll('.opt-editor-row').forEach(r=>r.classList.remove('drag-over-opt'));
+  const elBelow=document.elementFromPoint(touch.clientX,touch.clientY);
+  const targetRow=elBelow?.closest('.opt-editor-row');
+  if(targetRow&&targetRow!==_optTouchEl){
+    const tidx=+targetRow.id.replace('opt-row-','');
+    if(!isNaN(tidx)) targetRow.classList.add('drag-over-opt');
+  }
+}
+function onOptHandleTouchEnd(e){
+  if(_optTouchSrc<0)return;
+  if(_optTouchClone){_optTouchClone.remove();_optTouchClone=null;}
+  document.querySelectorAll('.opt-editor-row').forEach(r=>{r.classList.remove('drag-over-opt');r.classList.remove('dragging-opt');});
+  // Find drop target
+  const touch=e.changedTouches[0];
+  const elBelow=document.elementFromPoint(touch.clientX,touch.clientY);
+  const targetRow=elBelow?.closest('.opt-editor-row');
+  const src=_optTouchSrc;
+  _optTouchSrc=-1;_optTouchEl=null;
+  if(targetRow){
+    const tidx=+targetRow.id.replace('opt-row-','');
+    if(!isNaN(tidx)&&tidx!==src) _swapOptionRows(src,tidx);
+  }
+}
+// Attach touch handlers after DOM ready
+function _initOptTouchDrag(){
+  for(let i=0;i<4;i++){
+    const handle=document.querySelector(`#opt-row-${i} .opt-drag-handle`);
+    if(!handle)continue;
+    handle.ontouchstart=(e)=>onOptHandleTouchStart(e,i);
+  }
+}
+document.addEventListener('touchmove',e=>{if(_optTouchSrc>=0)onOptHandleTouchMove(e);},{passive:false});
+document.addEventListener('touchend',e=>{if(_optTouchSrc>=0)onOptHandleTouchEnd(e);},{passive:true});
 
 function _swapOptionRows(a,b){
   // Collect current data for all 4 rows
@@ -7370,13 +7660,14 @@ function _swapOptionRows(a,b){
   if(nav){
     nav.addEventListener('touchmove',e=>e.stopPropagation(),{passive:true});
   }
-  // On modal open, scroll modal content to top
+  // On modal open, scroll modal content to top + init touch drag
   const origOpenModal=window.openModal;
   if(typeof origOpenModal==='function'){
     window.openModal=function(id){
       origOpenModal(id);
       const m=document.querySelector('#'+id+' .modal');
       if(m) m.scrollTop=0;
+      if(id==='modal-question') setTimeout(_initOptTouchDrag,100);
     };
   }
 })();
