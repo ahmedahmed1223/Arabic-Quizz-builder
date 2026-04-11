@@ -295,7 +295,7 @@ window.addEventListener('load',function(){
 
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:'Cairo',sans-serif;background:var(--bg-deep);color:var(--text-primary);overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{height:100%;font-family:'Cairo','Segoe UI',Tahoma,'Noto Sans Arabic',sans-serif;background:var(--bg-deep);color:var(--text-primary);overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{position:relative;transition:background .4s}
 
 /* ── BACKGROUNDS ── */
@@ -336,9 +336,9 @@ body{position:relative;transition:background .4s}
 }
 .ticker-team{
   display:flex;align-items:center;gap:8px;padding:0 20px;
-  border-right:1px solid var(--border);flex:1;justify-content:center;max-width:200px;
+  border-inline-start:1px solid var(--border);flex:1;justify-content:center;max-width:200px;
 }
-.ticker-team:last-child{border-right:none}
+.ticker-team:last-child{border-inline-start:none}
 .ticker-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .ticker-name{font-size:.82rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px}
 .ticker-score{font-size:1.1rem;font-weight:900;color:var(--accent1);min-width:28px;text-align:center}
@@ -617,12 +617,12 @@ body{position:relative;transition:background .4s}
   padding:10px 14px;border-radius:var(--radius-sm);
   margin-bottom:12px;font-size:.84rem;
   display:flex;align-items:center;gap:8px;
-  border-right:3px solid;
+  border-inline-start:3px solid;
 }
-.alert-info{background:rgba(0,0,0,.2);border-color:var(--accent2);color:var(--text-secondary);border-right-color:var(--accent2)}
-.alert-success{background:rgba(0,0,0,.2);border-color:var(--success);color:var(--text-secondary);border-right-color:var(--success)}
-.alert-warning{background:rgba(0,0,0,.2);border-color:var(--accent1);color:var(--text-secondary);border-right-color:var(--accent1)}
-.alert-danger{background:rgba(255,64,96,.08);border-color:var(--danger);color:var(--danger);border-right-color:var(--danger)}
+.alert-info{background:rgba(0,0,0,.2);border-color:var(--accent2);color:var(--text-secondary);border-inline-start-color:var(--accent2)}
+.alert-success{background:rgba(0,0,0,.2);border-color:var(--success);color:var(--text-secondary);border-inline-start-color:var(--success)}
+.alert-warning{background:rgba(0,0,0,.2);border-color:var(--accent1);color:var(--text-secondary);border-inline-start-color:var(--accent1)}
+.alert-danger{background:rgba(255,64,96,.08);border-color:var(--danger);color:var(--danger);border-inline-start-color:var(--danger)}
 .divider{border:none;border-top:1px solid var(--border);margin:16px 0}
 
 /* ── IMPORT ZONE ── */
@@ -676,7 +676,7 @@ body{position:relative;transition:background .4s}
 .theme-swatch.active .sw-tick{display:flex}
 .number-stepper button{width:32px;height:32px;border:none;background:var(--bg-surface);color:var(--text-primary);cursor:pointer;font-size:.95rem;transition:background .15s}
 .number-stepper button:hover{background:var(--border)}
-.number-stepper input{width:52px;text-align:center;border:none;border-left:1px solid var(--border);border-right:1px solid var(--border);background:var(--bg-deep);color:var(--text-primary);font-family:'Cairo',sans-serif;font-size:.88rem;padding:5px;height:32px}
+.number-stepper input{width:52px;text-align:center;border:none;border-inline-start:1px solid var(--border);border-inline-end:1px solid var(--border);background:var(--bg-deep);color:var(--text-primary);font-family:'Cairo',sans-serif;font-size:.88rem;padding:5px;height:32px}
 .number-stepper input:focus{outline:none}
 
 /* ── PRES SHARED ── */
@@ -1170,6 +1170,11 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 .teams-pres-grid{grid-template-columns:1fr 1fr}
   .team-pres-score{font-size:2rem}
   .team-pres-avatar{width:50px;height:50px;font-size:1.3rem}
+  /* theme grid — 2 columns on small screens */
+  .theme-grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .theme-swatch .sw-desc{display:none}
+  .theme-swatch{padding:8px 6px 10px;border-radius:12px}
+  .theme-swatch .sw-preview{height:32px;margin-bottom:6px}
 }
 
 
@@ -1371,6 +1376,14 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   .intro-primary-actions{grid-template-columns:1fr;max-width:260px}
   .intro-action-pill{font-size:.8rem;padding:8px 14px}
   .pres-header-logo{font-size:.68rem}
+  /* theme grid — compact on tiny screens */
+  .theme-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .theme-swatch{padding:6px 5px 8px;border-radius:10px}
+  .theme-swatch .sw-name{font-size:.7rem}
+  .theme-swatch .sw-desc{display:none}
+  .theme-swatch .sw-preview{height:28px;margin-bottom:5px}
+  .theme-swatch .sw-dot{width:9px;height:9px}
+  .theme-swatch .sw-dot.sm{width:6px;height:6px}
 }
 
 
@@ -1471,8 +1484,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 .math-cat-label{
   font-size:.7rem;font-weight:800;color:var(--text-muted);
   letter-spacing:.08em;text-transform:uppercase;
-  margin:10px 0 6px;padding-right:8px;
-  border-right:3px solid var(--accent2);
+  margin:10px 0 6px;padding-inline-start:8px;
+  border-inline-start:3px solid var(--accent2);
 }
 .math-ar-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
@@ -1632,13 +1645,13 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,.25);
 }
 .option-btn:not(.revealed):hover{
-  border-color:var(--accent1);background:var(--option-hover);transform:translateX(-3px);
+  border-color:var(--accent1);background:var(--option-hover);transform:translateX(3px);
   box-shadow:var(--glow1),0 4px 18px rgba(0,0,0,.3);
 }
 .opt-btn-letter{
   min-width:48px;height:100%;display:flex;align-items:center;justify-content:center;
   font-size:.84rem;font-weight:900;color:var(--text-secondary);
-  background:var(--bg-surface);border-left:2px solid var(--border-light);
+  background:var(--bg-surface);border-inline-end:2px solid var(--border-light);
   padding:14px 0;flex-shrink:0;transition:all .3s;
 }
 .opt-btn-content{
@@ -2577,7 +2590,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 /* Score ticker: bolder team names */
 .ticker-name{font-weight:900}
 .ticker-score{font-size:1.2rem;font-weight:900;color:var(--accent1)}
-.ticker-active{background:rgba(255,255,255,.06);border-left:2px solid var(--accent1)}
+.ticker-active{background:rgba(255,255,255,.06);border-inline-end:2px solid var(--accent1)}
 
 /* Correct / wrong answer states: brighter for projectors */
 .option-btn.correct-answer{
@@ -2750,6 +2763,32 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 [data-theme="light"] .scoreboard-title{text-shadow:none}
 [data-theme="light"] .timer-ring-fill{filter:drop-shadow(0 0 4px var(--success))}
 
+/* ═══════════════════════════════════════════════════════
+   ACCESSIBILITY — Reduced Motion
+   Respects user's OS-level motion preference
+═══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.15s !important;
+    scroll-behavior: auto !important;
+  }
+  .bg-grid, .bg-stars { animation: none !important; }
+  .ring { animation: none !important; }
+  .streak-float, .streak-badge { animation: none !important; }
+  .music-note { animation: none !important; }
+  .wheel-winner-flash { animation: none !important; }
+  .pointer-pulse { animation: none !important; }
+  .loading-bar-fill { animation: none !important; width: 100% !important; }
+  .conv { animation: none !important; }
+  #flames path { animation: none !important; }
+  .toast { animation: none !important; opacity: 1 !important; }
+  .view-animate-enter { animation: none !important; }
+  .option-btn { animation: none !important; opacity: 1 !important; transform: none !important; }
+  .turn-overlay-inner { animation: none !important; opacity: 1 !important; }
+}
+
 </style>
 </head>
 <body>
@@ -2807,15 +2846,16 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <div id="app">
 
 <!-- ═══ LOGIN ═══ -->
-<div id="view-login" class="hidden">
-  <div class="login-card">
-    <div class="login-icon">🔐</div>
-    <div class="login-title">لوحة التحكم</div>
+<div id="view-login" class="hidden" role="main" aria-label="تسجيل الدخول">
+  <div class="login-card" role="form" aria-label="نموذج تسجيل الدخول">
+    <div class="login-icon" aria-hidden="true">🔐</div>
+    <div class="login-title" id="login-heading">لوحة التحكم</div>
     <div class="login-sub">أدخل كلمة المرور للوصول إلى إعدادات المسابقة</div>
     <div class="form-group">
-      <input type="password" id="login-password-input" class="form-input" placeholder="كلمة المرور" style="text-align:center;letter-spacing:4px" onkeydown="if(event.key==='Enter')doLogin()">
+      <label for="login-password-input" class="hidden">كلمة المرور</label>
+      <input type="password" id="login-password-input" class="form-input" placeholder="كلمة المرور" aria-label="كلمة المرور" aria-describedby="login-error" style="text-align:center;letter-spacing:4px" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-    <div id="login-error" class="alert alert-danger hidden">❌ كلمة المرور غير صحيحة</div>
+    <div id="login-error" class="alert alert-danger hidden" role="alert" aria-live="assertive">❌ كلمة المرور غير صحيحة</div>
     <button class="btn btn-primary btn-full btn-lg" onclick="doLogin()">دخول</button>
     <hr class="divider">
     <button class="btn btn-accent btn-full" onclick="showView('intro')">🎬 عرض المسابقة مباشرة</button>
@@ -2823,26 +2863,26 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 </div>
 
 <!-- ═══ ADMIN ═══ -->
-<div id="view-admin" class="hidden">
-  <header class="admin-header">
-    <div class="admin-logo"><div class="admin-logo-icon">🏆</div> <span class="admin-logo-brand">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
+<div id="view-admin" class="hidden" role="main" aria-label="لوحة التحكم">
+  <header class="admin-header" role="banner">
+    <div class="admin-logo"><div class="admin-logo-icon" aria-hidden="true">🏆</div> <span class="admin-logo-brand">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
     <div class="admin-header-actions">
-      <button class="btn btn-success btn-sm" onclick="showView('intro')">🎬 بدء العرض</button>
-      <button class="btn btn-ghost btn-sm" onclick="doLogout()">خروج</button>
+      <button class="btn btn-success btn-sm" onclick="showView('intro')" aria-label="بدء العرض التقديمي">🎬 بدء العرض</button>
+      <button class="btn btn-ghost btn-sm" onclick="doLogout()" aria-label="تسجيل الخروج">خروج</button>
     </div>
   </header>
-  <nav class="admin-nav">
-    <button class="nav-tab active" onclick="switchTab('settings',this)">⚙️ إعدادات</button>
-    <button class="nav-tab" onclick="switchTab('appearance',this)">🎨 المظهر</button>
-    <button class="nav-tab" onclick="switchTab('categories',this)">📂 الأقسام</button>
-    <button class="nav-tab" onclick="switchTab('teams',this)">👥 الفرق</button>
-    <button class="nav-tab" onclick="switchTab('credits',this)">🌟 الشكر</button>
-    <button class="nav-tab" onclick="switchTab('import',this)">📥 استيراد</button>
+  <nav class="admin-nav" role="tablist" aria-label="تبويبات لوحة التحكم">
+    <button class="nav-tab active" role="tab" aria-selected="true" aria-controls="tab-settings" onclick="switchTab('settings',this)">⚙️ إعدادات</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-appearance" onclick="switchTab('appearance',this)">🎨 المظهر</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-categories" onclick="switchTab('categories',this)">📂 الأقسام</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-teams" onclick="switchTab('teams',this)">👥 الفرق</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-credits" onclick="switchTab('credits',this)">🌟 الشكر</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-import" onclick="switchTab('import',this)">📥 استيراد</button>
   </nav>
   <div class="admin-content">
 
     <!-- SETTINGS -->
-    <div id="tab-settings" class="tab-content">
+    <div id="tab-settings" class="tab-content" role="tabpanel" aria-label="إعدادات المسابقة">
       <div class="card">
         <div class="card-header"><div class="card-title"><div class="icon icon-gold">⚙️</div> إعدادات المسابقة</div></div>
         <div class="form-row">
@@ -3445,6 +3485,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <span class="btn-icon-main">⛶</span>
         <span class="btn-label-hide-sm">شاشة كاملة</span>
       </button>
+      <button class="btn btn-ghost btn-sm icon-only-sm btn-label-hide-sm" onclick="_showKeyboardHelp()" title="اختصارات لوحة المفاتيح" aria-label="اختصارات لوحة المفاتيح">
+        <span class="btn-icon-main">⌨</span>
+      </button>
       <button class="btn btn-ghost btn-sm icon-only-sm" onclick="showView('login')" title="لوحة التحكم">
         <span class="btn-icon-main">⚙️</span>
         <span class="btn-label-hide-sm">التحكم</span>
@@ -3632,7 +3675,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 
 <!-- Resume Competition Modal -->
-<div id="modal-resume" class="modal-overlay hidden">
+<div id="modal-resume" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:420px;text-align:center">
     <div class="resume-icon">⏸️</div>
     <div class="modal-title" style="justify-content:center;font-size:1.2rem">مسابقة سابقة موجودة</div>
@@ -3707,9 +3750,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ══════════════ MODALS ══════════════ -->
 
 <!-- Category -->
-<div id="modal-category" class="modal-overlay hidden">
+<div id="modal-category" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="cat-modal-title">➕ إضافة قسم</div><button class="modal-close" onclick="closeModal('modal-category')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="cat-modal-title">➕ إضافة قسم</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-category')">✕</button></div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">الاسم</label>
@@ -3738,9 +3781,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 </div>
 
 <!-- Question -->
-<div id="modal-question" class="modal-overlay hidden">
+<div id="modal-question" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:640px">
-    <div class="modal-header"><div class="modal-title" id="q-modal-title">➕ إضافة سؤال</div><button class="modal-close" onclick="closeModal('modal-question')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="q-modal-title">➕ إضافة سؤال</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-question')">✕</button></div>
     <!-- Question Type Tabs -->
     <div class="form-group">
       <label class="form-label">نوع السؤال</label>
@@ -4026,9 +4069,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 </div>
 
 <!-- Team -->
-<div id="modal-team" class="modal-overlay hidden">
+<div id="modal-team" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="team-modal-title">➕ إضافة فريق</div><button class="modal-close" onclick="closeModal('modal-team')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="team-modal-title">➕ إضافة فريق</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-team')">✕</button></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">اسم الفريق</label><input type="text" id="team-name-input" class="form-input" dir="auto"></div>
       <div class="form-group">
@@ -4062,9 +4105,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 </div>
 
 <!-- Credit person -->
-<div id="modal-credit-person" class="modal-overlay hidden">
+<div id="modal-credit-person" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:460px">
-    <div class="modal-header"><div class="modal-title" id="credit-modal-title">➕ إضافة شخص</div><button class="modal-close" onclick="closeModal('modal-credit-person')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="credit-modal-title">➕ إضافة شخص</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-credit-person')">✕</button></div>
     <div class="form-group"><label class="form-label">الاسم</label><input type="text" id="cp-name-input" class="form-input"></div>
     <div class="form-group"><label class="form-label">الدور</label><input type="text" id="cp-role-input" class="form-input" placeholder="معدّ المسابقة، راعٍ..."></div>
     <div class="form-group"><label class="form-label">التصنيف</label>
@@ -4082,7 +4125,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 </div>
 
 <!-- Confirm -->
-<div id="modal-confirm" class="modal-overlay hidden">
+<div id="modal-confirm" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:380px;text-align:center">
     <div style="font-size:2.4rem;margin-bottom:13px" id="confirm-icon">⚠️</div>
     <div class="modal-title" id="confirm-title" style="justify-content:center;margin-bottom:9px">تأكيد</div>
@@ -4351,9 +4394,10 @@ function showView(name){
   window.scrollTo({top:0,behavior:'instant'});
   document.documentElement.scrollTop=0;
   document.body.scrollTop=0;
-  ALL_VIEWS.forEach(v=>document.getElementById('view-'+v).classList.add('hidden'));
+  ALL_VIEWS.forEach(v=>{const ve=document.getElementById('view-'+v);ve.classList.add('hidden');ve.setAttribute('aria-hidden','true');});
   const el=document.getElementById('view-'+name);
   el.classList.remove('hidden');
+  el.setAttribute('aria-hidden','false');
   if(state.settings.viewTransitions!==false){
     el.classList.remove('view-animate-enter');
     void el.offsetWidth;
@@ -4404,10 +4448,13 @@ function doLogout(){showView('login')}
 //  ADMIN
 // ════════════════════════════════════════════════════════
 function switchTab(name,el){
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(t=>t.classList.add('hidden'));
+  document.querySelectorAll('.nav-tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false');});
+  document.querySelectorAll('.tab-content').forEach(t=>{t.classList.add('hidden');t.setAttribute('aria-hidden','true');});
   el.classList.add('active');
-  document.getElementById('tab-'+name).classList.remove('hidden');
+  el.setAttribute('aria-selected','true');
+  const tabEl=document.getElementById('tab-'+name);
+  tabEl.classList.remove('hidden');
+  tabEl.setAttribute('aria-hidden','false');
   // Scroll admin content to top on tab switch
   const ac=document.querySelector('.admin-content');
   if(ac){ac.scrollTop=0;}
@@ -5801,8 +5848,8 @@ function loadQuestion(catId,qIdx,teamIdx){
     const imgHtml=hasImg?`<img class="opt-btn-image" src="${optImgs[i]}" alt="خيار ${LETTERS[i]}">`:'' ;
     const textHtml=hasText?`<div class="opt-btn-text" dir="auto">${_sanitize(opt)}</div>`:'';
     const extraCls=!hasText&&hasImg?'opt-btn-img-only':'';
-    return `<button class="option-btn ${hiddenCls} ${extraCls}" id="opt-btn-${i}" onclick="handleOptionClick(${i})">
-      <div class="opt-btn-letter">${LETTERS[i]}</div>
+    return `<button class="option-btn ${hiddenCls} ${extraCls}" id="opt-btn-${i}" onclick="handleOptionClick(${i})" aria-label="الخيار ${LETTERS[i]}: ${hasText?_sanitize(opt).replace(/<[^>]*>/g,''):'صورة'}">
+      <div class="opt-btn-letter" aria-hidden="true">${LETTERS[i]}</div>
       <div class="opt-btn-content">${imgHtml}${textHtml}</div>
     </button>`;
   }).join('');
@@ -8019,6 +8066,168 @@ function _swapOptionRows(a,b){
     closeModal('modal-question');
     toast(state.editingQId?'✅ تم التعديل':'✅ تم إضافة السؤال','success');
   };
+})();
+
+// ════════════════════════════════════════════════════════
+//  KEYBOARD SHORTCUTS — Presentation & Admin
+// ════════════════════════════════════════════════════════
+(function(){
+  function getCurrentView(){
+    for(const v of ALL_VIEWS){
+      const el=document.getElementById('view-'+v);
+      if(el&&!el.classList.contains('hidden'))return v;
+    }
+    return null;
+  }
+
+  document.addEventListener('keydown',function(e){
+    // Skip if user is typing in an input/textarea/select
+    if(e.target.matches('input,textarea,select,[contenteditable]'))return;
+
+    const view=getCurrentView();
+
+    // ── Presentation: Question view shortcuts ──
+    if(view==='question'){
+      if(e.code==='Space'){
+        e.preventDefault();
+        // Progressive reveal or show answer
+        if(state.settings.progressiveReveal&&state.optionsRevealed<state.totalOptionsToReveal){
+          if(typeof revealNextOption==='function')revealNextOption();
+        }
+      }
+      if(e.code==='KeyT'&&typeof toggleTimer==='function'){toggleTimer();}
+      if(e.code==='KeyM'){toggleMusic();}
+      // Digit keys 1-4 to select options
+      if(e.key>='1'&&e.key<='4'){
+        const idx=+e.key-1;
+        const btn=document.getElementById('opt-btn-'+idx);
+        if(btn&&!btn.classList.contains('hidden-option')&&!btn.classList.contains('faded')){
+          btn.click();
+        }
+      }
+    }
+
+    // ── Presentation: Navigation shortcuts ──
+    if(['intro','teams','categories','scores','credits','podium','teamstats'].includes(view)){
+      if(e.code==='KeyM'){toggleMusic();}
+      if(e.code==='KeyF'){
+        e.preventDefault();
+        if(typeof toggleFullscreen==='function')toggleFullscreen();
+      }
+    }
+
+    // ── Admin: Undo with Ctrl+Z ──
+    if(view==='admin'&&e.ctrlKey&&e.code==='KeyZ'){
+      e.preventDefault();
+      if(typeof performUndo==='function')performUndo();
+      else if(state.scoreHistory&&state.scoreHistory.length){
+        // Score undo fallback
+        const last=state.scoreHistory.pop();
+        if(last){
+          const t=state.teams.find(tm=>tm.id===last.teamId);
+          if(t){t.score-=last.delta;saveState();renderAdmin();toast('↩ تم التراجع عن تغيير النقاط','info');}
+        }
+      }
+    }
+
+    // ── Escape to go back ──
+    if(e.code==='Escape'){
+      // Close any open modal first
+      const openModal=document.querySelector('.modal-overlay:not(.hidden)');
+      if(openModal){
+        const id=openModal.id;
+        if(id)closeModal(id);
+        return;
+      }
+      // Then navigate back
+      if(['teams','categories','question','scores','credits','podium','teamstats','bigclock'].includes(view)){
+        if(typeof goToAdmin==='function')goToAdmin();
+      }
+    }
+  });
+
+  // ── Keyboard shortcut help overlay ──
+  window._showKeyboardHelp=function(){
+    let ov=document.getElementById('kb-help-overlay');
+    if(ov){ov.style.display=ov.style.display==='flex'?'none':'flex';return;}
+    ov=document.createElement('div');
+    ov.id='kb-help-overlay';
+    ov.onclick=function(e){if(e.target===ov)ov.style.display='none';};
+    ov.style.cssText='position:fixed;inset:0;z-index:6000;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;animation:fade-in .2s ease;';
+    const shortcuts=[
+      {section:'أثناء عرض السؤال',items:[
+        ['مسافة','كشف الخيار التالي'],['1 - 4','اختيار الإجابة'],
+        ['T','تشغيل/إيقاف المؤقت'],['M','تشغيل/إيقاف الموسيقى']]},
+      {section:'أثناء العرض',items:[
+        ['F','ملء الشاشة'],['M','الموسيقى'],['Esc','العودة']]},
+      {section:'في لوحة التحكم',items:[
+        ['Ctrl+Z','تراجع'],['Esc','إغلاق النافذة']]}
+    ];
+    let html='<div style="background:var(--bg-card);border:1px solid var(--border-light);border-radius:20px;padding:28px;max-width:420px;width:100%;max-height:80vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.6)">';
+    html+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><div style="font-size:1.05rem;font-weight:800;color:var(--text-primary)">⌨️ اختصارات لوحة المفاتيح</div><button onclick="document.getElementById(\'kb-help-overlay\').style.display=\'none\'" style="width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--bg-surface);color:var(--text-secondary);cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center">✕</button></div>';
+    shortcuts.forEach(function(s){
+      html+='<div style="font-size:.78rem;font-weight:700;color:var(--accent2);margin:14px 0 8px;letter-spacing:.05em">'+s.section+'</div>';
+      s.items.forEach(function(item){
+        html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border)">';
+        html+='<span style="font-size:.85rem;color:var(--text-secondary)">'+item[1]+'</span>';
+        html+='<kbd style="background:var(--bg-surface);border:1px solid var(--border-light);border-radius:6px;padding:3px 10px;font-size:.78rem;font-weight:700;color:var(--accent1);font-family:monospace;min-width:36px;text-align:center">'+item[0]+'</kbd>';
+        html+='</div>';
+      });
+    });
+    html+='</div>';
+    ov.innerHTML=html;
+    document.body.appendChild(ov);
+  };
+})();
+
+// ════════════════════════════════════════════════════════
+//  LOADING OVERLAY — show/hide during heavy operations
+// ════════════════════════════════════════════════════════
+function showLoading(msg){
+  msg=msg||'جاري التحميل...';
+  let ov=document.getElementById('loading-overlay');
+  if(!ov){
+    ov=document.createElement('div');
+    ov.id='loading-overlay';
+    ov.setAttribute('role','alert');
+    ov.setAttribute('aria-live','assertive');
+    ov.style.cssText='position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:opacity .2s;';
+    ov.innerHTML='<div style="text-align:center"><div style="font-size:2.2rem;margin-bottom:14px;animation:pulse-glow 1s ease-in-out infinite" id="loading-spinner-icon">⏳</div><div id="loading-msg" style="font-size:.95rem;font-weight:700;color:var(--text-primary)"></div><div style="width:160px;height:3px;background:var(--border);margin:16px auto 0;border-radius:2px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,var(--accent2),var(--accent1));animation:loading-progress 2s ease infinite;width:60%"></div></div></div>';
+    document.body.appendChild(ov);
+  }
+  document.getElementById('loading-msg').textContent=msg;
+  ov.style.display='flex';
+  ov.style.opacity='1';
+}
+function hideLoading(){
+  const ov=document.getElementById('loading-overlay');
+  if(ov){ov.style.opacity='0';setTimeout(()=>{ov.style.display='none';},200);}
+}
+// ── Patch importJSON to show loading ──
+(function(){
+  const _origImportJSON=window.importJSON;
+  if(typeof _origImportJSON==='function'){
+    window.importJSON=function(e){
+      showLoading('جاري استيراد البيانات...');
+      setTimeout(()=>{
+        try{_origImportJSON(e);}catch(err){toast('خطأ: '+err.message,'danger');}
+        hideLoading();
+      },100);
+    };
+  }
+})();
+// ── Patch importExcel if exists ──
+(function(){
+  const _origImportExcel=window.importExcelFile;
+  if(typeof _origImportExcel==='function'){
+    window.importExcelFile=function(e){
+      showLoading('جاري معالجة ملف Excel...');
+      setTimeout(()=>{
+        try{_origImportExcel(e);}catch(err){toast('خطأ: '+err.message,'danger');}
+        hideLoading();
+      },100);
+    };
+  }
 })();
 </script>
 </body>
