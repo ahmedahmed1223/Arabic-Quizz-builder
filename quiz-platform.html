@@ -723,9 +723,8 @@ body{position:relative;transition:background .4s}
 #view-intro{
   min-height:100svh;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  padding:calc(var(--header-h) + 20px) 20px 80px;
-  position:relative;overflow:hidden;text-align:center;
-  /* Fix mobile: ensure content starts at top of visible area */
+  padding:calc(var(--header-h) + 20px) 20px calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 20px);
+  position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch;text-align:center;
   box-sizing:border-box;
 }
 /* rings */
@@ -842,7 +841,7 @@ body{position:relative;transition:background .4s}
 .btn-label-hide-xs{display:inline}
 
 /* ── TEAMS SLIDE ── */
-#view-teams{min-height:100svh;padding:calc(var(--header-h) + clamp(14px,2vh,28px)) clamp(12px,2vw,24px) clamp(50px,6vh,80px);display:flex;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
+#view-teams{min-height:100svh;padding:calc(var(--header-h) + clamp(14px,2vh,28px)) clamp(12px,2vw,24px) calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 16px);display:flex;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
 .teams-slide-title{font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:900;color:var(--accent1);text-shadow:var(--glow1);margin-bottom:clamp(18px,3.5vh,36px);animation:float-up .6s ease both;text-align:center;letter-spacing:.01em}
 .teams-pres-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;width:100%;max-width:1200px}
 
@@ -903,14 +902,10 @@ body{position:relative;transition:background .4s}
 }
 /* Categories view sizing */
 #view-categories{
-  height:100svh;
-  padding:calc(var(--header-h) + clamp(6px,1vh,12px)) clamp(10px,2.5vw,28px) clamp(30px,4vh,56px);
+  min-height:100svh;
+  padding:calc(var(--header-h) + clamp(6px,1vh,12px)) clamp(10px,2.5vw,28px) calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 12px);
   display:flex;flex-direction:column;align-items:center;
-  overflow:hidden;box-sizing:border-box;
-}
-/* When content overflows (many cats), allow scroll */
-@media(max-width:768px){
-  #view-categories{overflow-y:auto;-webkit-overflow-scrolling:touch;height:auto;min-height:100svh}
+  overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;
 }
 .categories-pres-title{
   font-size:clamp(1rem,2.5vw,1.7rem);font-weight:900;
@@ -923,7 +918,7 @@ body{position:relative;transition:background .4s}
 .cat-pres-count{font-size:.78rem;color:var(--text-secondary)}
 
 /* ── QUESTION SLIDE ── */
-#view-question{min-height:100svh;display:flex;flex-direction:column;padding:calc(var(--header-h) + clamp(6px,1.5vh,14px)) clamp(10px,2.5vw,22px) clamp(50px,7vh,80px);align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
+#view-question{min-height:100svh;display:flex;flex-direction:column;padding:calc(var(--header-h) + clamp(6px,1.5vh,14px)) clamp(10px,2.5vw,22px) calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 16px);align-items:center;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
 .question-slide-wrapper{width:100%;max-width:min(860px,98vw);padding-top:clamp(4px,1vh,12px)}
 .question-meta-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
 .question-cat-label{display:inline-flex;align-items:center;gap:7px;background:var(--bg-card);border:1px solid var(--border);border-radius:30px;padding:5px 13px;font-size:.8rem;font-weight:700}
@@ -1030,7 +1025,7 @@ body{position:relative;transition:background .4s}
 .score-undo-btn:hover{border-color:var(--accent1);color:var(--accent1);background:rgba(245,200,66,.07)}
 
 /* ── SCORES SLIDE ── */
-#view-scores{min-height:100svh;padding:calc(var(--header-h) + clamp(14px,2vh,28px)) clamp(10px,2vw,24px) clamp(50px,7vh,80px);display:flex;flex-direction:column;align-items:center;overflow-y:auto;box-sizing:border-box}
+#view-scores{min-height:100svh;padding:calc(var(--header-h) + clamp(14px,2vh,28px)) clamp(10px,2vw,24px) calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 16px);display:flex;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box}
 .scoreboard-title{font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:900;color:var(--accent1);text-shadow:var(--glow1),0 0 60px rgba(255,255,255,.06);margin-bottom:clamp(18px,3vh,32px);animation:float-up .6s ease both;text-align:center;letter-spacing:.01em}
 .scoreboard-list{width:100%;max-width:700px;display:flex;flex-direction:column;gap:11px}
 .score-row{background:var(--bg-card);border:2px solid var(--border-light);border-radius:18px;padding:16px 22px;display:flex;align-items:center;gap:14px;animation:float-up .5s ease both;box-shadow:0 4px 20px rgba(0,0,0,.3)}
@@ -1042,7 +1037,7 @@ body{position:relative;transition:background .4s}
 .score-points{font-size:1.5rem;font-weight:900;color:var(--accent1);text-shadow:var(--glow1);min-width:72px;text-align:left}
 
 /* ── CREDITS ── */
-#view-credits{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:calc(var(--header-h) + 48px) 24px 80px;position:relative;overflow:hidden}
+#view-credits{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:calc(var(--header-h) + 48px) 24px calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 20px);position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .credits-shine{position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:400px;pointer-events:none;background:radial-gradient(ellipse at top,rgba(0,0,0,.0) 0%,transparent 70%)}
 .credits-title-block{text-align:center;margin-bottom:52px;animation:float-up .8s ease both}
 .credits-main-title{font-size:clamp(1.4rem,4vw,2.5rem);font-weight:900;color:var(--accent1);text-shadow:var(--glow1);margin-bottom:7px}
@@ -1406,6 +1401,27 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 .team-pres-member-name{font-size:.83rem;font-weight:600;color:var(--text-primary)}
 .team-pres-empty-members{font-size:.78rem;color:var(--text-muted);font-style:italic;padding:4px 0}
 
+
+/* ── MEMBER IMAGE (editor + presentation) ── */
+.member-img-btn{
+  width:28px;height:28px;border-radius:50%;border:1px solid var(--border);
+  background:var(--bg-surface);color:var(--text-muted);cursor:pointer;
+  font-size:.7rem;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;overflow:hidden;padding:0;
+}
+.member-img-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+.member-img-btn img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.team-pres-member-avatar{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:900;color:#1a1000;
+  overflow:hidden;
+}
+.team-pres-member-avatar img{width:100%;height:100%;object-fit:cover}
+/* SVG icon base */
+.svg-icon{width:1em;height:1em;vertical-align:-.125em;fill:currentColor;flex-shrink:0}
+.svg-icon-lg{width:1.2em;height:1.2em}
+.svg-icon-xl{width:1.5em;height:1.5em}
 
 /* ── PAUSE TIMER ── */
 .timer-ring-wrapper.paused .timer-ring-fill{stroke:var(--accent1)!important;animation:none}
@@ -2797,7 +2813,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 <!-- Loading -->
 <div id="loading-screen">
-  <div class="logo-text">🏆 منصة المسابقات التفاعلية</div>
+  <div class="logo-text">منصة المسابقات التفاعلية</div>
   <div class="loading-bar"><div class="loading-bar-fill"></div></div>
 </div>
 
@@ -2819,20 +2835,20 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 <!-- ═══════════ BUZZER OVERLAY ═══════════ -->
 <div id="buzzer-overlay">
-  <button class="buzzer-close-btn" onclick="closeBuzzerMode()">✕ إغلاق</button>
-  <div class="buzzer-title" id="buzzer-title">🔔 وضع المُسرِّع</div>
+  <button class="buzzer-close-btn" onclick="closeBuzzerMode()">إغلاق</button>
+  <div class="buzzer-title" id="buzzer-title">وضع المُسرِّع</div>
   <div class="buzzer-subtitle" id="buzzer-subtitle">أيّ فريق يضغط أولاً؟</div>
   <div class="buzzer-grid" id="buzzer-grid"></div>
   <div class="buzzer-winner-banner hidden" id="buzzer-winner-banner">
     <div class="buzzer-winner-name" id="buzzer-winner-name">الفريق الأول</div>
-    <div class="buzzer-winner-label">ضغط أولاً! 🎉</div>
-    <button class="buzzer-reset-btn" onclick="resetBuzzer()">🔄 جولة جديدة</button>
+    <div class="buzzer-winner-label">ضغط أولاً! </div>
+    <button class="buzzer-reset-btn" onclick="resetBuzzer()">جولة جديدة</button>
   </div>
 </div>
 <!-- Global Music Widget (shows on all presentation screens) -->
 <div id="global-music-widget" class="global-music-widget" style="display:none">
   <button class="gm-toggle" id="gm-toggle-btn" onclick="toggleMusic()" title="تشغيل / إيقاف الموسيقى">
-    <span id="gm-icon">🔇</span>
+    <span id="gm-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg></span>
   </button>
   <div class="gm-vol-wrap" id="gm-vol-wrap">
     <input type="range" min="0" max="100" id="gm-vol-slider" value="40"
@@ -2848,43 +2864,43 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ═══ LOGIN ═══ -->
 <div id="view-login" class="hidden" role="main" aria-label="تسجيل الدخول">
   <div class="login-card" role="form" aria-label="نموذج تسجيل الدخول">
-    <div class="login-icon" aria-hidden="true">🔐</div>
+    <div class="login-icon" aria-hidden="true"><svg style="width:3rem;height:3rem;opacity:.7" viewBox="0 0 24 24" fill="var(--accent1)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg></div>
     <div class="login-title" id="login-heading">لوحة التحكم</div>
     <div class="login-sub">أدخل كلمة المرور للوصول إلى إعدادات المسابقة</div>
     <div class="form-group">
       <label for="login-password-input" class="hidden">كلمة المرور</label>
       <input type="password" id="login-password-input" class="form-input" placeholder="كلمة المرور" aria-label="كلمة المرور" aria-describedby="login-error" style="text-align:center;letter-spacing:4px" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
-    <div id="login-error" class="alert alert-danger hidden" role="alert" aria-live="assertive">❌ كلمة المرور غير صحيحة</div>
+    <div id="login-error" class="alert alert-danger hidden" role="alert" aria-live="assertive">كلمة المرور غير صحيحة</div>
     <button class="btn btn-primary btn-full btn-lg" onclick="doLogin()">دخول</button>
     <hr class="divider">
-    <button class="btn btn-accent btn-full" onclick="showView('intro')">🎬 عرض المسابقة مباشرة</button>
+    <button class="btn btn-accent btn-full" onclick="showView('intro')">عرض المسابقة مباشرة</button>
   </div>
 </div>
 
 <!-- ═══ ADMIN ═══ -->
 <div id="view-admin" class="hidden" role="main" aria-label="لوحة التحكم">
   <header class="admin-header" role="banner">
-    <div class="admin-logo"><div class="admin-logo-icon" aria-hidden="true">🏆</div> <span class="admin-logo-brand">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
+    <div class="admin-logo"><div class="admin-logo-icon" aria-hidden="true"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> <span class="admin-logo-brand">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
     <div class="admin-header-actions">
-      <button class="btn btn-success btn-sm" onclick="showView('intro')" aria-label="بدء العرض التقديمي">🎬 بدء العرض</button>
+      <button class="btn btn-success btn-sm" onclick="showView('intro')" aria-label="بدء العرض التقديمي"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M8 5v14l11-7z"/></svg> بدء العرض</button>
       <button class="btn btn-ghost btn-sm" onclick="doLogout()" aria-label="تسجيل الخروج">خروج</button>
     </div>
   </header>
   <nav class="admin-nav" role="tablist" aria-label="تبويبات لوحة التحكم">
-    <button class="nav-tab active" role="tab" aria-selected="true" aria-controls="tab-settings" onclick="switchTab('settings',this)">⚙️ إعدادات</button>
-    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-appearance" onclick="switchTab('appearance',this)">🎨 المظهر</button>
-    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-categories" onclick="switchTab('categories',this)">📂 الأقسام</button>
-    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-teams" onclick="switchTab('teams',this)">👥 الفرق</button>
-    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-credits" onclick="switchTab('credits',this)">🌟 الشكر</button>
-    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-import" onclick="switchTab('import',this)">📥 استيراد</button>
+    <button class="nav-tab active" role="tab" aria-selected="true" aria-controls="tab-settings" onclick="switchTab('settings',this)"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg> إعدادات</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-appearance" onclick="switchTab('appearance',this)"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-1 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg> المظهر</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-categories" onclick="switchTab('categories',this)"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg> الأقسام</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-teams" onclick="switchTab('teams',this)"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> الفرق</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-credits" onclick="switchTab('credits',this)"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg> الشكر</button>
+    <button class="nav-tab" role="tab" aria-selected="false" aria-controls="tab-import" onclick="switchTab('import',this)"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg> استيراد</button>
   </nav>
   <div class="admin-content">
 
     <!-- SETTINGS -->
     <div id="tab-settings" class="tab-content" role="tabpanel" aria-label="إعدادات المسابقة">
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-gold">⚙️</div> إعدادات المسابقة</div></div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-gold"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg></div> إعدادات المسابقة</div></div>
         <div class="form-row">
           <div class="form-group"><label class="form-label">اسم المسابقة</label><input type="text" id="s-comp-name" class="form-input" dir="auto" placeholder="مسابقة المعرفة" oninput="updateSetting('name',this.value)"></div>
           <div class="form-group"><label class="form-label">كلمة المرور</label><input type="text" id="s-password" class="form-input" placeholder="1234" oninput="updateSetting('password',this.value)"></div>
@@ -2896,19 +2912,19 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
             <div class="number-stepper"><button onclick="stepValue('s-default-time',-5)">−</button><input type="number" id="s-default-time" value="30" min="5" max="300" oninput="updateSetting('defaultTime',+this.value)"><button onclick="stepValue('s-default-time',5)">+</button></div>
           </div>
           <div class="form-group">
-            <label class="form-label">نقاط السؤال الصعب 🔴</label>
+            <label class="form-label">نقاط السؤال الصعب</label>
             <div class="number-stepper"><button onclick="stepValue('s-hard-pts',-1)">−</button><input type="number" id="s-hard-pts" value="2" min="1" max="10" oninput="updateSetting('hardPoints',+this.value)"><button onclick="stepValue('s-hard-pts',1)">+</button></div>
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label class="form-label">🔊 إجابة صحيحة</label>
+            <label class="form-label">إجابة صحيحة</label>
             <select id="s-sound-correct" class="form-select" onchange="updateSetting('soundCorrect',this.value)">
               <option value="applause">تصفيق 👏</option><option value="chime">رنين 🎵</option><option value="fanfare">نفير 🎺</option><option value="none">بدون صوت</option>
             </select>
           </div>
           <div>
-            <label class="form-label">🔊 إجابة خاطئة</label>
+            <label class="form-label">إجابة خاطئة</label>
             <select id="s-sound-wrong" class="form-select" onchange="updateSetting('soundWrong',this.value)">
               <option value="buzz">خطأ 🔴</option><option value="descend">هبوط 📉</option><option value="none">بدون صوت</option>
             </select>
@@ -2917,16 +2933,16 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
 
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-accent">🎡</div> طريقة عرض الأقسام</div></div>
-        <div class="alert alert-info">🖼️ اختر الطريقة الافتراضية لعرض الأقسام عند بدء المسابقة — يمكن التبديل بينها في أي وقت أثناء اللعب</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-accent"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/><path d="M12 6v6l4 2"/></svg></div> طريقة عرض الأقسام</div></div>
+        <div class="alert alert-info">اختر الطريقة الافتراضية لعرض الأقسام عند بدء المسابقة — يمكن التبديل بينها في أي وقت أثناء اللعب</div>
         <div class="form-group">
           <label class="form-label">الطريقة الافتراضية</label>
           <select id="s-cat-display-mode" class="form-select" onchange="updateSetting('catDisplayMode',this.value)">
             <option value="grid">⊞ شبكة البطاقات — العرض الكلاسيكي</option>
-            <option value="wheel">🎡 عجلة الحظ — تدوير عشوائي للاختيار</option>
+            <option value="wheel">عجلة الحظ — تدوير عشوائي للاختيار</option>
             <option value="hidden">🃏 بطاقات مخفية — كشف تدريجي للأقسام</option>
             <option value="list">☰ قائمة — عرض مفصّل مع شريط التقدم</option>
-            <option value="jeopardy">🎯 جيوباردي — لوحة بنقاط حسب الصعوبة</option>
+            <option value="jeopardy">جيوباردي — لوحة بنقاط حسب الصعوبة</option>
           </select>
         </div>
         <div class="form-row" style="grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px">
@@ -2947,7 +2963,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           </div>
         </div>
         <div class="form-group" style="margin-top:16px">
-          <label class="form-label">📍 ظهور مبدِّل طريقة العرض</label>
+          <label class="form-label">ظهور مبدِّل طريقة العرض</label>
           <select id="s-cat-switcher-location" class="form-select" onchange="updateSetting('catSwitcherLocation',this.value)">
             <option value="both">في لوحة التحكم وشاشة العرض</option>
             <option value="admin">في لوحة التحكم فقط (مخفي أثناء العرض)</option>
@@ -2956,7 +2972,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
 
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-accent">🎮</div> نمط المسابقة</div></div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-accent"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div> نمط المسابقة</div></div>
         <div class="mode-cards">
           <div class="mode-card selected" id="mode-card-turns" onclick="selectMode('turns')"><div class="mode-card-icon">🔄</div><div class="mode-card-title">التناوب في الاختيار</div><div class="mode-card-desc">كل فريق يختار قسماً ويجيب على سؤال واحد ثم ينتقل الدور</div></div>
           <div class="mode-card" id="mode-card-full_cat" onclick="selectMode('full_cat')"><div class="mode-card-icon">📋</div><div class="mode-card-title">القسم الكامل</div><div class="mode-card-desc">الفريق يختار قسماً وتُوزَّع جميع أسئلته بالتساوي على الفرق</div></div>
@@ -2983,13 +2999,13 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
 
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-accent">📊</div> إحصائيات</div></div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-accent"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div> إحصائيات</div></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:11px" id="stats-grid"></div>
       </div>
 
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-accent">🎵</div> الموسيقى والمؤثرات الصوتية</div></div>
-        <div class="alert alert-info">🎵 يمكن تشغيل/إيقاف الموسيقى من شاشة العرض — أو ارفع ملف صوتي خارجي</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-accent"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div> الموسيقى والمؤثرات الصوتية</div></div>
+        <div class="alert alert-info">يمكن تشغيل/إيقاف الموسيقى من شاشة العرض — أو ارفع ملف صوتي خارجي</div>
         <div class="form-row">
           <div>
             <label class="form-label">نوع الموسيقى الخلفية (مدمجة)</label>
@@ -2998,7 +3014,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
               <option value="ambient">هادئة</option>
               <option value="upbeat">نشيطة</option>
               <option value="tense">توتر (الأسئلة الصعبة)</option>
-              <option value="custom">ملف خارجي 📁</option>
+              <option value="custom">ملف خارجي </option>
             </select>
           </div>
           <div>
@@ -3008,36 +3024,36 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           </div>
         </div>
         <div class="form-group">
-          <label class="form-label">🎶 موسيقى خلفية خارجية (MP3/OGG/WAV)</label>
+          <label class="form-label">موسيقى خلفية خارجية (MP3/OGG/WAV)</label>
           <div class="audio-file-row">
-            <label class="audio-file-label" for="custom-music-input">📁 اختر ملفاً</label>
+            <label class="audio-file-label" for="custom-music-input">اختر ملفاً</label>
             <input type="file" id="custom-music-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customMusicData','custom-music-name')">
             <span class="audio-file-name" id="custom-music-name">لم يختر بعد</span>
-            <button class="audio-test-btn" id="test-btn-customMusicData" onclick="testCustomAudio('customMusicData','test-btn-customMusicData')">▶ تشغيل</button>
-            <button class="audio-stop-btn hidden" id="stop-btn-customMusicData" onclick="stopCustomAudioTest('customMusicData','test-btn-customMusicData')">⏹ إيقاف</button>
-            <button class="audio-clear-btn" onclick="clearCustomAudio('customMusicData','custom-music-name')">✕ حذف</button>
+            <button class="audio-test-btn" id="test-btn-customMusicData" onclick="testCustomAudio('customMusicData','test-btn-customMusicData')">تشغيل</button>
+            <button class="audio-stop-btn hidden" id="stop-btn-customMusicData" onclick="stopCustomAudioTest('customMusicData','test-btn-customMusicData')">إيقاف</button>
+            <button class="audio-clear-btn" onclick="clearCustomAudio('customMusicData','custom-music-name')">حذف</button>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">✅ صوت الإجابة الصحيحة (خارجي)</label>
+            <label class="form-label">صوت الإجابة الصحيحة (خارجي)</label>
             <div class="audio-file-row">
-              <label class="audio-file-label" for="custom-correct-input">📁 اختر</label>
+              <label class="audio-file-label" for="custom-correct-input">اختر</label>
               <input type="file" id="custom-correct-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customCorrectData','custom-correct-name')">
               <span class="audio-file-name" id="custom-correct-name">مدمج</span>
-              <button class="audio-test-btn" id="test-btn-customCorrectData" onclick="testCustomAudio('customCorrectData','test-btn-customCorrectData')">▶ تشغيل</button>
-              <button class="audio-stop-btn hidden" id="stop-btn-customCorrectData" onclick="stopCustomAudioTest('customCorrectData','test-btn-customCorrectData')">⏹ إيقاف</button>
+              <button class="audio-test-btn" id="test-btn-customCorrectData" onclick="testCustomAudio('customCorrectData','test-btn-customCorrectData')">تشغيل</button>
+              <button class="audio-stop-btn hidden" id="stop-btn-customCorrectData" onclick="stopCustomAudioTest('customCorrectData','test-btn-customCorrectData')">إيقاف</button>
               <button class="audio-clear-btn" onclick="clearCustomAudio('customCorrectData','custom-correct-name')">✕</button>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">❌ صوت الإجابة الخاطئة (خارجي)</label>
+            <label class="form-label">صوت الإجابة الخاطئة (خارجي)</label>
             <div class="audio-file-row">
-              <label class="audio-file-label" for="custom-wrong-input">📁 اختر</label>
+              <label class="audio-file-label" for="custom-wrong-input">اختر</label>
               <input type="file" id="custom-wrong-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customWrongData','custom-wrong-name')">
               <span class="audio-file-name" id="custom-wrong-name">مدمج</span>
-              <button class="audio-test-btn" id="test-btn-customWrongData" onclick="testCustomAudio('customWrongData','test-btn-customWrongData')">▶ تشغيل</button>
-              <button class="audio-stop-btn hidden" id="stop-btn-customWrongData" onclick="stopCustomAudioTest('customWrongData','test-btn-customWrongData')">⏹ إيقاف</button>
+              <button class="audio-test-btn" id="test-btn-customWrongData" onclick="testCustomAudio('customWrongData','test-btn-customWrongData')">تشغيل</button>
+              <button class="audio-stop-btn hidden" id="stop-btn-customWrongData" onclick="stopCustomAudioTest('customWrongData','test-btn-customWrongData')">إيقاف</button>
               <button class="audio-clear-btn" onclick="clearCustomAudio('customWrongData','custom-wrong-name')">✕</button>
             </div>
           </div>
@@ -3053,7 +3069,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         </div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-purple">🔤</div> حجم الخط والعرض</div></div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-purple"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9.93 13.5h4.14L12 7.98zM20 2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-4.05 16.5l-1.14-3H9.17l-1.12 3H5.96l5.11-13h1.86l5.11 13h-2.09z"/></svg></div> حجم الخط والعرض</div></div>
         <div class="form-group">
           <label class="form-label">حجم الخط في شاشة السؤال</label>
           <div class="font-scale-row">
@@ -3079,8 +3095,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           <div class="form-group">
             <label class="form-label">الانتقال بعد السؤال</label>
             <select id="s-auto-transition" class="form-select" onchange="updateSetting('autoTransition',this.value==='auto');updateSetting('autoTransitionDelay',+document.getElementById('s-transition-delay').value)">
-              <option value="auto">🔄 تلقائي — ينتقل فوراً للأقسام</option>
-              <option value="manual">✋ يدوي — ينتظر الضغط على "الأقسام"</option>
+              <option value="auto">تلقائي — ينتقل فوراً للأقسام</option>
+              <option value="manual">يدوي — ينتظر الضغط على "الأقسام"</option>
             </select>
           </div>
           <div class="form-group" id="transition-delay-wrap">
@@ -3102,10 +3118,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           <div class="form-group">
             <label class="form-label">عند انتهاء الوقت</label>
             <select id="s-timer-end-action" class="form-select" onchange="updateSetting('timerEndAction',this.value)">
-              <option value="reveal">🔍 كشف الإجابة تلقائياً</option>
-              <option value="sound">🔔 صوت الخطأ فقط (بدون كشف)</option>
-              <option value="notify">📢 تنبيه كبير فقط</option>
-              <option value="all">✨ الثلاثة معاً</option>
+              <option value="reveal"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:.9em;height:.9em"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg> كشف الإجابة تلقائياً</option>
+              <option value="sound">صوت الخطأ فقط (بدون كشف)</option>
+              <option value="notify">تنبيه كبير فقط</option>
+              <option value="all">الثلاثة معاً</option>
             </select>
           </div>
           <div class="form-group">
@@ -3119,7 +3135,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">🔴 الخصم عند الإجابة الخاطئة</label>
+            <label class="form-label">الخصم عند الإجابة الخاطئة</label>
             <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
               <input type="checkbox" id="s-negative-marking" style="width:18px;height:18px;accent-color:var(--danger)"
                 onchange="updateSetting('negativeMarking',this.checked);document.getElementById('neg-mark-val-wrap').style.display=this.checked?'flex':'none'">
@@ -3135,7 +3151,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">🔥 مكافأة التسلسل (Streak)</label>
+            <label class="form-label">مكافأة التسلسل (Streak)</label>
             <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
               <input type="checkbox" id="s-streak-bonus" style="width:18px;height:18px;accent-color:var(--accent1)"
                 onchange="updateSetting('streakBonus',this.checked);document.getElementById('streak-val-wrap').style.display=this.checked?'flex':'none'">
@@ -3187,17 +3203,17 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
       <!-- PODIUM MUSIC CARD -->
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-gold">🏆</div> موسيقى شاشة إعلان النتائج (المنصة)</div></div>
-        <div class="alert alert-info">🎶 تُشغَّل هذه الموسيقى تلقائياً عند فتح شاشة إعلان النتائج النهائية (المنصة) — مستقلة عن موسيقى المسابقة</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-gold"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> موسيقى شاشة إعلان النتائج (المنصة)</div></div>
+        <div class="alert alert-info">تُشغَّل هذه الموسيقى تلقائياً عند فتح شاشة إعلان النتائج النهائية (المنصة) — مستقلة عن موسيقى المسابقة</div>
         <div class="form-group">
-          <label class="form-label">🏆 ملف موسيقى الإعلان (MP3/OGG/WAV)</label>
+          <label class="form-label">ملف موسيقى الإعلان (MP3/OGG/WAV)</label>
           <div class="audio-file-row">
-            <label class="audio-file-label" for="podium-music-input">📁 اختر ملفاً</label>
+            <label class="audio-file-label" for="podium-music-input">اختر ملفاً</label>
             <input type="file" id="podium-music-input" accept="audio/*" class="hidden" onchange="loadPodiumMusic(this)">
             <span class="audio-file-name" id="podium-music-name">لم يختر بعد</span>
-            <button class="audio-test-btn" id="test-btn-podiumMusic" onclick="testPodiumMusic()">▶ تشغيل</button>
-            <button class="audio-stop-btn hidden" id="stop-btn-podiumMusic" onclick="stopPodiumMusicTest()">⏹ إيقاف</button>
-            <button class="audio-clear-btn" onclick="clearPodiumMusic()">✕ حذف</button>
+            <button class="audio-test-btn" id="test-btn-podiumMusic" onclick="testPodiumMusic()">تشغيل</button>
+            <button class="audio-stop-btn hidden" id="stop-btn-podiumMusic" onclick="stopPodiumMusicTest()">إيقاف</button>
+            <button class="audio-clear-btn" onclick="clearPodiumMusic()">حذف</button>
           </div>
         </div>
         <div class="form-group">
@@ -3219,14 +3235,14 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <!-- APPEARANCE -->
     <div id="tab-appearance" class="tab-content hidden">
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-gold">🎨</div> ثيم المنصة — 2026</div></div>
-        <div class="alert alert-info" style="margin-bottom:14px">✨ ألوان مُستوحاة من اتجاهات التصميم لعام 2026 — كل ثيم بشخصية مستقلة</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-gold"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-1 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div> ثيم المنصة — 2026</div></div>
+        <div class="alert alert-info" style="margin-bottom:14px">ألوان مُستوحاة من اتجاهات التصميم لعام 2026 — كل ثيم بشخصية مستقلة</div>
         <div class="theme-grid" id="theme-grid"></div>
 
         <!-- CUSTOM THEME EDITOR -->
         <div id="custom-theme-panel" style="display:none;margin-top:18px">
           <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:12px;padding:16px">
-            <div style="font-size:.9rem;font-weight:800;margin-bottom:14px;color:var(--accent1)">🎨 تخصيص الثيم</div>
+            <div style="font-size:.9rem;font-weight:800;margin-bottom:14px;color:var(--accent1)">تخصيص الثيم</div>
             <div class="form-row" style="grid-template-columns:1fr 1fr 1fr;">
               <div class="form-group">
                 <label class="form-label">خلفية عميقة</label>
@@ -3269,7 +3285,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
               <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('warm-rose')">🌹 وردي دافئ</button>
               <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('pure-black')">⬛ أسود نقي</button>
               <button class="btn btn-ghost btn-sm" onclick="loadCustomThemePreset('midnight-blue')">🌊 أزرق منتصف الليل</button>
-              <button class="btn btn-accent btn-sm" onclick="exportCustomTheme()">📋 نسخ CSS</button>
+              <button class="btn btn-accent btn-sm" onclick="exportCustomTheme()">نسخ CSS</button>
               <button class="btn btn-ghost btn-sm" onclick="resetCustomTheme()">↺ إعادة تعيين</button>
             </div>
           </div>
@@ -3301,19 +3317,19 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       <div style="display:grid;grid-template-columns:minmax(240px,290px) 1fr;gap:16px">
         <div>
           <div class="card">
-            <div class="card-header"><div class="card-title"><div class="icon icon-gold">📂</div> الأقسام</div><button class="btn btn-primary btn-sm" onclick="openCatModal()">+ إضافة</button></div>
+            <div class="card-header"><div class="card-title"><div class="icon icon-gold"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg></div> الأقسام</div><button class="btn btn-primary btn-sm" onclick="openCatModal()">+ إضافة</button></div>
             <div id="categories-list-admin"></div>
           </div>
         </div>
         <div>
           <div class="card">
             <div class="card-header">
-              <div class="card-title" id="questions-panel-title"><div class="icon icon-accent">❓</div> اختر قسماً</div>
+              <div class="card-title" id="questions-panel-title"><div class="icon icon-accent"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg></div> اختر قسماً</div>
               <button class="btn btn-accent btn-sm hidden" id="btn-add-question" onclick="openQuestionModal()">+ سؤال</button>
             </div>
             <div id="q-search-container" class="hidden">
               <div class="q-search-wrap">
-                <span class="q-search-icon">🔍</span>
+                <span class="q-search-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:.9em;height:.9em"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></span>
                 <input type="text" class="q-search-input" id="q-search-input" placeholder="ابحث في الأسئلة..." dir="auto" oninput="filterQuestions(this.value)">
               </div>
               <div class="q-filter-bar">
@@ -3321,7 +3337,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
                 <button class="q-filter-btn" data-filter="easy" onclick="setQFilter('easy',this)">⭐ سهل</button>
                 <button class="q-filter-btn" data-filter="medium" onclick="setQFilter('medium',this)">⭐⭐ متوسط</button>
                 <button class="q-filter-btn" data-filter="hard" onclick="setQFilter('hard',this)">⭐⭐⭐ صعب</button>
-                <button class="q-filter-btn" data-filter="tf" onclick="setQFilter('tf',this)">✓✗ صح/خطأ</button>
+                <button class="q-filter-btn" data-filter="tf" onclick="setQFilter('tf',this)">صح/خطأ</button>
               </div>
             </div>
             <div id="questions-list-admin"><div class="empty-state"><div class="empty-icon">📂</div><p>اختر قسماً</p></div></div>
@@ -3333,7 +3349,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <!-- TEAMS -->
     <div id="tab-teams" class="tab-content hidden">
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-green">👥</div> الفرق</div><button class="btn btn-success btn-sm" onclick="openTeamModal()">+ فريق</button></div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-green"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div> الفرق</div><button class="btn btn-success btn-sm" onclick="openTeamModal()">+ فريق</button></div>
         <div id="teams-grid-admin" class="teams-grid"></div>
       </div>
     </div>
@@ -3341,21 +3357,21 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <!-- CREDITS -->
     <div id="tab-credits" class="tab-content hidden">
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-purple">🌟</div> الشكر والتقدير</div><button class="btn btn-ghost btn-sm" onclick="showView('credits')">👁 معاينة</button></div>
-        <div class="alert alert-info">✨ تظهر هذه الشريحة في نهاية العرض</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-purple"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> الشكر والتقدير</div><button class="btn btn-ghost btn-sm" onclick="showView('credits')">معاينة</button></div>
+        <div class="alert alert-info">تظهر هذه الشريحة في نهاية العرض</div>
         <div class="form-group"><label class="form-label">رسالة الختام</label><textarea id="s-closing-msg" class="form-textarea" dir="auto" rows="2" oninput="updateSetting('closingMessage',this.value)"></textarea></div>
         <div id="credits-admin-sections"></div>
-        <button class="btn btn-primary mt-4" onclick="openCreditPersonModal()">➕ إضافة شخص</button>
+        <button class="btn btn-primary mt-4" onclick="openCreditPersonModal()">إضافة شخص</button>
       </div>
     </div>
 
     <!-- IMPORT -->
     <div id="tab-import" class="tab-content hidden">
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-accent">📥</div> استيراد من Excel</div></div>
-        <div class="alert alert-info">📋 الأعمدة: <span dir="ltr" style="font-family:monospace;font-size:.83em;letter-spacing:.03em"><strong>Question | Opt1 | Opt2 | Opt3 | Opt4 | Correct(1-4) | Category | Time | Difficulty(easy/medium/hard) | Explanation</strong></span></div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-accent"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></div> استيراد من Excel</div></div>
+        <div class="alert alert-info">الأعمدة: <span dir="ltr" style="font-family:monospace;font-size:.83em;letter-spacing:.03em"><strong>Question | Opt1 | Opt2 | Opt3 | Opt4 | Correct(1-4) | Category | Time | Difficulty(easy/medium/hard) | Explanation</strong></span></div>
         <div class="import-zone" id="import-zone" onclick="document.getElementById('excel-file-input').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleFileDrop(event)">
-          <div class="upload-icon">📊</div>
+          <div class="upload-icon"></div>
           <p style="font-weight:700">اسحب ملف Excel هنا أو انقر للاختيار</p>
           <p style="font-size:.8rem">يدعم: .xlsx, .xls, .csv</p>
         </div>
@@ -3363,11 +3379,11 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <div id="import-preview" class="hidden" style="margin-top:14px"></div>
       </div>
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-orange">💾</div> حفظ واسترداد</div></div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-orange"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg></div> حفظ واسترداد</div></div>
         <div style="display:flex;gap:9px;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="exportData()">📤 تصدير JSON</button>
-          <button class="btn btn-accent" onclick="document.getElementById('import-json-input').click()">📥 استيراد JSON</button>
-          <button class="btn btn-danger" onclick="clearAllData()">🗑️ مسح الكل</button>
+          <button class="btn btn-primary" onclick="exportData()">تصدير JSON</button>
+          <button class="btn btn-accent" onclick="document.getElementById('import-json-input').click()">استيراد JSON</button>
+          <button class="btn btn-danger" onclick="clearAllData()">مسح الكل</button>
           <button class="btn btn-ghost" onclick="clearGameProgress();toast('تم مسح التقدم المحفوظ','info')">↺ مسح التقدم</button>
         </div>
         <input type="file" id="import-json-input" accept=".json" class="hidden" onchange="importJSON(event)">
@@ -3375,8 +3391,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
       <!-- AUTO-BACKUP CARD -->
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-green">🔒</div> النسخ الاحتياطي التلقائي</div></div>
-        <div class="alert alert-info">💾 يُنزَّل الملف تلقائياً بصيغة JSON في مجلد التنزيلات. اسم الملف يتضمن اسم المسابقة والتاريخ.</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-green"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg></div> النسخ الاحتياطي التلقائي</div></div>
+        <div class="alert alert-info">يُنزَّل الملف تلقائياً بصيغة JSON في مجلد التنزيلات. اسم الملف يتضمن اسم المسابقة والتاريخ.</div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">تكرار النسخ الاحتياطي</label>
@@ -3418,20 +3434,20 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           </div>
         </div>
         <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:12px">
-          <button class="btn btn-success btn-sm" onclick="doBackupNow(false)">💾 نسخ الآن</button>
-          <button class="btn btn-ghost btn-sm" onclick="doBackupNow(false,true)">📋 نسخ مختصرة</button>
+          <button class="btn btn-success btn-sm" onclick="doBackupNow(false)">نسخ الآن</button>
+          <button class="btn btn-ghost btn-sm" onclick="doBackupNow(false,true)">نسخ مختصرة</button>
           <span class="text-sm text-muted" id="backup-status" style="flex:1">لم يتم أي نسخ بعد</span>
         </div>
         <div id="backup-history-wrap" style="margin-top:12px;display:none">
-          <div class="form-label" style="margin-bottom:6px">📂 آخر 3 نسخ</div>
+          <div class="form-label" style="margin-bottom:6px">آخر 3 نسخ</div>
           <div id="backup-history-list" style="display:flex;flex-direction:column;gap:5px"></div>
         </div>
       </div>
 
       <!-- QUESTION BANK / SHUFFLE CARD -->
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-purple">🔀</div> بنك الأسئلة والخلط</div></div>
-        <div class="alert alert-warning">🎲 عند التفعيل، تُختار أسئلة عشوائياً من كل قسم في كل جلسة</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-purple"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/></svg></div> بنك الأسئلة والخلط</div></div>
+        <div class="alert alert-warning">عند التفعيل، تُختار أسئلة عشوائياً من كل قسم في كل جلسة</div>
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">خلط ترتيب الأسئلة</label>
@@ -3469,16 +3485,16 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ═══ PRES: INTRO ═══ -->
 <div id="view-intro" class="hidden">
   <div class="pres-header-bar intro-header-bar">
-    <div class="pres-header-logo intro-header-logo">🏆 منصة المسابقات التفاعلية</div>
+    <div class="pres-header-logo intro-header-logo"><svg class="svg-icon svg-icon-lg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg> منصة المسابقات التفاعلية</div>
     <div class="pres-header-actions intro-header-actions">
       <div class="music-vol-wrap btn-label-hide-sm" id="music-vol-wrap" title="مستوى الموسيقى">
-        <label>🎵</label>
+        <label><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></label>
         <input type="range" min="0" max="100" id="pres-vol-slider" value="40"
           oninput="updateMusicVol(+this.value)">
         <label id="pres-vol-display">40%</label>
       </div>
       <button class="music-btn" id="music-toggle-btn" onclick="toggleMusic()">
-        <span class="music-note" id="music-icon">🔇</span>
+        <span class="music-note" id="music-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg></span>
         <span id="music-label" class="btn-label-hide-xs">موسيقى</span>
       </button>
       <button class="btn btn-ghost btn-sm icon-only-sm" onclick="toggleFullscreen()" title="ملء الشاشة / خروج">
@@ -3489,7 +3505,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <span class="btn-icon-main">⌨</span>
       </button>
       <button class="btn btn-ghost btn-sm icon-only-sm" onclick="showView('login')" title="لوحة التحكم">
-        <span class="btn-icon-main">⚙️</span>
+        <span class="btn-icon-main"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg></span>
         <span class="btn-label-hide-sm">التحكم</span>
       </button>
     </div>
@@ -3501,24 +3517,24 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   </div>
 
   <div class="intro-content-wrapper">
-    <div class="intro-badge">✨ مرحباً بكم</div>
+    <div class="intro-badge">مرحباً بكم</div>
     <h1 class="intro-title" id="intro-title-text">مسابقة المعرفة</h1>
     <p class="intro-welcome" id="intro-welcome-text">أهلاً وسهلاً</p>
 
     <div class="intro-actions-grid">
       <div class="intro-primary-actions">
         <button class="intro-action-card primary-card" onclick="startCompetition()">
-          <span class="iac-icon">🚀</span>
+          <span class="iac-icon"><svg style="width:2rem;height:2rem" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
           <span class="iac-label">بدء المسابقة</span>
         </button>
         <button class="intro-action-card teams-card" onclick="showView('teams')">
-          <span class="iac-icon">👥</span>
+          <span class="iac-icon"><svg style="width:2rem;height:2rem" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></span>
           <span class="iac-label">الفرق</span>
         </button>
       </div>
       <div class="intro-secondary-actions">
-        <button class="intro-action-pill" onclick="showView('scores')">🏆 النتائج</button>
-        <button class="intro-action-pill purple-pill" onclick="showView('credits')">🌟 الشكر والتقدير</button>
+        <button class="intro-action-pill" onclick="showView('scores')">النتائج</button>
+        <button class="intro-action-pill purple-pill" onclick="showView('credits')">الشكر والتقدير</button>
       </div>
     </div>
   </div>
@@ -3527,26 +3543,26 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ═══ PRES: TEAMS ═══ -->
 <div id="view-teams" class="hidden">
   <div class="pres-header-bar">
-    <div class="pres-header-logo">👥 الفرق المشاركة</div>
+    <div class="pres-header-logo">الفرق المشاركة</div>
     <div class="pres-header-actions">
       <button class="btn btn-ghost btn-sm" onclick="showView('intro')" title="رجوع">← <span class="btn-label-hide-sm">رجوع</span></button>
-      <button class="btn btn-primary btn-sm" onclick="startCompetition()">🚀 <span class="btn-label-hide-sm">بدء</span></button>
-      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()" title="لوحة التحكم">⚙️</button>
+      <button class="btn btn-primary btn-sm" onclick="startCompetition()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> <span class="btn-label-hide-sm">بدء</span></button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()" title="لوحة التحكم"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg></button>
     </div>
   </div>
-  <div class="teams-slide-title">👥 الفرق المشاركة</div>
+  <div class="teams-slide-title">الفرق المشاركة</div>
   <div class="teams-pres-grid" id="teams-pres-grid"></div>
 </div>
 
 <!-- ═══ PRES: CATEGORIES ═══ -->
 <div id="view-categories" class="hidden">
   <div class="pres-header-bar">
-    <div class="pres-header-logo" id="cats-comp-name">🏆</div>
+    <div class="pres-header-logo" id="cats-comp-name"></div>
     <div class="pres-header-actions">
-      <button class="btn btn-ghost btn-sm" onclick="showView('teams')" title="الفرق">👥 <span class="btn-label-hide-sm">الفرق</span></button>
-      <button class="btn btn-ghost btn-sm" onclick="openBuzzerMode()" title="وضع الباز" style="color:var(--accent1);border-color:var(--border-light)">🔔 <span class="btn-label-hide-sm">الباز</span></button>
-      <button class="btn btn-ghost btn-sm" onclick="showView('scores')" title="النتائج">🏆 <span class="btn-label-hide-sm">النتائج</span></button>
-      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()" title="لوحة التحكم">⚙️</button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('teams')" title="الفرق"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 3-1.34 3-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> <span class="btn-label-hide-sm">الفرق</span></button>
+      <button class="btn btn-ghost btn-sm" onclick="openBuzzerMode()" title="وضع الباز" style="color:var(--accent1);border-color:var(--border-light)"><span class="btn-label-hide-sm">الباز</span></button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('scores')" title="النتائج"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg> <span class="btn-label-hide-sm">النتائج</span></button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()" title="لوحة التحكم"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg></button>
     </div>
   </div>
   <div class="categories-pres-title" id="cats-mode-label">اختر القسم</div>
@@ -3554,10 +3570,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   <!-- MODE SWITCHER -->
   <div class="cats-mode-switcher" id="cats-mode-switcher">
     <button class="cats-mode-btn active" data-mode="grid"    onclick="setCatDisplayMode('grid',this)"   title="شبكة البطاقات">⊞ شبكة</button>
-    <button class="cats-mode-btn"        data-mode="wheel"   onclick="setCatDisplayMode('wheel',this)"  title="عجلة الحظ">🎡 عجلة</button>
+    <button class="cats-mode-btn"        data-mode="wheel"   onclick="setCatDisplayMode('wheel',this)"  title="عجلة الحظ">عجلة</button>
     <button class="cats-mode-btn"        data-mode="hidden"  onclick="setCatDisplayMode('hidden',this)" title="بطاقات مخفية">🃏 مخفي</button>
     <button class="cats-mode-btn"        data-mode="list"    onclick="setCatDisplayMode('list',this)"   title="عرض قائمة">☰ قائمة</button>
-    <button class="cats-mode-btn"        data-mode="jeopardy" onclick="setCatDisplayMode('jeopardy',this)" title="لوحة جيوباردي">🎯 جيوباردي</button>
+    <button class="cats-mode-btn"        data-mode="jeopardy" onclick="setCatDisplayMode('jeopardy',this)" title="لوحة جيوباردي">جيوباردي</button>
   </div>
   <div id="cats-pres-grid" style="width:100%;max-width:1200px;display:flex;flex-direction:column;align-items:center;flex:1"></div>
 </div>
@@ -3565,12 +3581,12 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ═══ PRES: QUESTION ═══ -->
 <div id="view-question" class="hidden">
   <div class="pres-header-bar">
-    <div class="pres-header-logo">❓ السؤال</div>
+    <div class="pres-header-logo">السؤال</div>
     <div class="pres-header-actions">
       <button class="btn btn-ghost btn-sm" onclick="skipQuestion()">تخطي ⏭</button>
       <button class="btn btn-ghost btn-sm" onclick="enterBigClock()" title="عرض العداد الكبير">⏱️</button>
       <button class="btn btn-ghost btn-sm" onclick="goBackFromQuestion()">← الأقسام</button>
-      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()" style="opacity:.6">⚙️</button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()" style="opacity:.6"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg></button>
     </div>
   </div>
   <div class="question-slide-wrapper">
@@ -3607,10 +3623,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     </div>
     <div class="options-grid" id="q-options-grid"></div>
     <div class="answer-confirm-panel hidden" id="answer-confirm-panel">
-      <span class="confirm-team-label">✋ هل هذه إجابتك النهائية؟</span>
+      <span class="confirm-team-label">هل هذه إجابتك النهائية؟</span>
       <div class="confirm-btns">
         <button class="btn btn-ghost btn-sm" onclick="undoAnswer()">↩ تغيير</button>
-        <button class="btn btn-success btn-sm" onclick="confirmAnswer()">✓ تأكيد</button>
+        <button class="btn btn-success btn-sm" onclick="confirmAnswer()">تأكيد</button>
       </div>
     </div>
     <div id="q-explanation-box" class="explanation-box hidden"></div>
@@ -3620,14 +3636,14 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <div class="lifelines-bar" id="lifelines-bar"></div>
         <div id="streak-display" style="display:none"></div>
         <div class="footer-action-btns">
-          <button class="btn btn-ghost btn-sm" id="btn-reveal-answer" onclick="revealAnswer()">🔍 كشف</button>
+          <button class="btn btn-ghost btn-sm" id="btn-reveal-answer" onclick="revealAnswer()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:.9em;height:.9em"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg> كشف</button>
           <button class="btn btn-primary btn-sm" onclick="nextQuestion()">التالي ←</button>
         </div>
       </div>
       <!-- Score controls row -->
       <div class="score-controls" id="score-controls-wrap">
         <div class="score-controls-label" style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-          <span>🏅 منح نقطة للفريق</span>
+          <span>منح نقطة للفريق</span>
           <button class="undo-score-btn" id="undo-score-btn" onclick="undoLastScore()" disabled title="تراجع عن آخر تغيير في النقاط">↩ تراجع</button>
         </div>
         <div class="score-btns-row">
@@ -3641,32 +3657,32 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ═══ PRES: SCORES ═══ -->
 <div id="view-scores" class="hidden">
   <div class="pres-header-bar">
-    <div class="pres-header-logo">🏆 النتائج</div>
+    <div class="pres-header-logo">النتائج</div>
     <div class="pres-header-actions">
       <button class="btn btn-ghost btn-sm" onclick="showView('categories')">← المسابقة</button>
-      <button class="btn btn-accent btn-sm" onclick="showTeamStats()">📊 الإحصاءات</button>
-      <button class="btn btn-success btn-sm" onclick="showPodium()">🏆 المنصة</button>
-      <button class="btn btn-purple btn-sm" onclick="showView('credits')">🌟 الشكر</button>
-      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()">⚙️ التحكم</button>
+      <button class="btn btn-accent btn-sm" onclick="showTeamStats()">الإحصاءات</button>
+      <button class="btn btn-success btn-sm" onclick="showPodium()">المنصة</button>
+      <button class="btn btn-purple btn-sm" onclick="showView('credits')">الشكر</button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg> التحكم</button>
     </div>
   </div>
-  <div class="scoreboard-title">🏆 جدول النتائج</div>
+  <div class="scoreboard-title">جدول النتائج</div>
   <div class="scoreboard-list" id="scoreboard-list"></div>
 </div>
 
 <!-- ═══ PRES: CREDITS ═══ -->
 <div id="view-credits" class="hidden">
   <div class="pres-header-bar">
-    <div class="pres-header-logo">🌟 الشكر والتقدير</div>
+    <div class="pres-header-logo">الشكر والتقدير</div>
     <div class="pres-header-actions">
-      <button class="btn btn-ghost btn-sm" onclick="showView('scores')">🏆</button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('scores')"></button>
       <button class="btn btn-ghost btn-sm" onclick="showView('intro')">الرئيسية</button>
-      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()">⚙️ التحكم</button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg> التحكم</button>
     </div>
   </div>
   <div class="credits-shine"></div>
   <div class="credits-title-block">
-    <div class="credits-main-title">🌟 شكر وتقدير</div>
+    <div class="credits-main-title">شكر وتقدير</div>
     <div class="credits-comp-name" id="credits-comp-name-display"></div>
   </div>
   <div class="credits-sections" id="credits-sections-display"></div>
@@ -3713,14 +3729,14 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ═══ PRES: TEAM STATS ═══ -->
 <div id="view-teamstats" class="hidden">
   <div class="pres-header-bar">
-    <div class="pres-header-logo">📊 إحصاءات الفرق</div>
+    <div class="pres-header-logo">إحصاءات الفرق</div>
     <div class="pres-header-actions">
-      <button class="btn btn-ghost btn-sm" onclick="showView('scores')">🏆 النتائج</button>
-      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()">⚙️</button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('scores')">النتائج</button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg></button>
     </div>
   </div>
   <div class="teamstats-wrapper">
-    <div class="teamstats-title">📊 الإحصاءات التفصيلية</div>
+    <div class="teamstats-title">الإحصاءات التفصيلية</div>
     <div id="teamstats-grid" class="teamstats-grid"></div>
   </div>
 </div>
@@ -3728,22 +3744,22 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- ═══ PRES: PODIUM ═══ -->
 <div id="view-podium" class="hidden">
   <div class="pres-header-bar">
-    <div class="pres-header-logo">🏆 نتائج المسابقة</div>
+    <div class="pres-header-logo">نتائج المسابقة</div>
     <div class="pres-header-actions">
       <button class="btn btn-ghost btn-sm" id="podium-music-toggle-btn" onclick="togglePodiumMusic()" title="تشغيل/إيقاف موسيقى الإعلان" style="display:none">🎵 <span id="podium-music-btn-label">موسيقى</span></button>
-      <button class="btn btn-ghost btn-sm" onclick="showView('scores')">📊 مفصّل</button>
-      <button class="btn btn-ghost btn-sm" onclick="showView('intro')">🏠 الرئيسية</button>
-      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()">⚙️</button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('scores')">مفصّل</button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('intro')">الرئيسية</button>
+      <button class="btn btn-ghost btn-sm" onclick="goToAdmin()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg></button>
     </div>
   </div>
   <div class="podium-particles"></div>
-  <h1 class="podium-title" id="podium-title">🎊 ختام المسابقة</h1>
+  <h1 class="podium-title" id="podium-title">ختام المسابقة</h1>
   <div class="podium-stage" id="podium-stage"></div>
   <div class="podium-rest" id="podium-rest"></div>
   <div class="podium-actions" style="margin-top:24px">
-    <button class="btn btn-primary btn-lg" onclick="launchPodiumConfetti()">🎉 احتفال!</button>
-    <button class="btn btn-ghost btn-lg" onclick="showView('teamstats')">📊 الإحصاءات</button>
-    <button class="btn btn-accent btn-lg" onclick="resetForNewGame()">🔄 مسابقة جديدة</button>
+    <button class="btn btn-primary btn-lg" onclick="launchPodiumConfetti()"> احتفال!</button>
+    <button class="btn btn-ghost btn-lg" onclick="showView('teamstats')">الإحصاءات</button>
+    <button class="btn btn-accent btn-lg" onclick="resetForNewGame()">مسابقة جديدة</button>
   </div>
 </div>
 
@@ -3752,7 +3768,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 <!-- Category -->
 <div id="modal-category" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="cat-modal-title">➕ إضافة قسم</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-category')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="cat-modal-title">إضافة قسم</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-category')">✕</button></div>
     <div class="form-row">
       <div class="form-group">
         <label class="form-label">الاسم</label>
@@ -3764,9 +3780,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">🖼️ صورة القسم <span style="font-size:.72rem;color:var(--text-muted)">(اختياري — تحل محل الأيقونة)</span></label>
+      <label class="form-label">صورة القسم <span style="font-size:.72rem;color:var(--text-muted)">(اختياري — تحل محل الأيقونة)</span></label>
       <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
-        <label class="audio-file-label" for="cat-image-file-input">📁 اختر صورة</label>
+        <label class="audio-file-label" for="cat-image-file-input">اختر صورة</label>
         <input type="file" id="cat-image-file-input" accept="image/*" class="hidden" onchange="loadCatImage(this)">
         <div id="cat-image-preview-wrap" style="display:none;position:relative">
           <img id="cat-image-preview" style="width:52px;height:52px;border-radius:8px;object-fit:cover;border:2px solid var(--accent1)" src="" alt="">
@@ -3776,23 +3792,23 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
     </div>
     <div class="form-group"><label class="form-label">اللون</label><div style="display:flex;align-items:center;gap:10px"><input type="color" id="cat-color-input" value="#f5c842"><div style="display:flex;gap:5px;flex-wrap:wrap" id="color-swatches"></div></div></div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-category')">إلغاء</button><button class="btn btn-primary" onclick="saveCategory()">💾 حفظ</button></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-category')">إلغاء</button><button class="btn btn-primary" onclick="saveCategory()">حفظ</button></div>
   </div>
 </div>
 
 <!-- Question -->
 <div id="modal-question" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:640px">
-    <div class="modal-header"><div class="modal-title" id="q-modal-title">➕ إضافة سؤال</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-question')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="q-modal-title">إضافة سؤال</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-question')">✕</button></div>
     <!-- Question Type Tabs -->
     <div class="form-group">
       <label class="form-label">نوع السؤال</label>
       <div class="qtype-tabs">
-        <div class="qtype-tab active" onclick="setQType('text')">📝 نصي</div>
-        <div class="qtype-tab" onclick="setQType('image')">🖼️ صوري</div>
-        <div class="qtype-tab" onclick="setQType('audio')">🎧 صوتي</div>
+        <div class="qtype-tab active" onclick="setQType('text')">نصي</div>
+        <div class="qtype-tab" onclick="setQType('image')">صوري</div>
+        <div class="qtype-tab" onclick="setQType('audio')">صوتي</div>
         <div class="qtype-tab" onclick="setQType('math')">∑ رياضي</div>
-        <div class="qtype-tab" onclick="setQType('tf')">✓✗ صح/خطأ</div>
+        <div class="qtype-tab" onclick="setQType('tf')">صح/خطأ</div>
       </div>
     </div>
     <!-- True/False Section -->
@@ -3800,10 +3816,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       <div class="alert alert-info" style="margin-bottom:10px">✓ سؤال صح أو خطأ — يعرض خيارَين فقط في شاشة العرض</div>
       <div class="tf-options-grid">
         <button class="tf-btn tf-true" id="tf-true-btn" onclick="selectTFAnswer('true')">
-          <span class="tf-icon">✅</span>صحيح
+          <span class="tf-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="var(--success)" style="width:2rem;height:2rem"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></span>صحيح
         </button>
         <button class="tf-btn tf-false" id="tf-false-btn" onclick="selectTFAnswer('false')">
-          <span class="tf-icon">❌</span>خطأ
+          <span class="tf-icon"><svg class="svg-icon" viewBox="0 0 24 24" fill="var(--danger)" style="width:2rem;height:2rem"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></span>خطأ
         </button>
       </div>
       <input type="hidden" id="tf-correct-answer" value="true">
@@ -3813,7 +3829,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
         <!-- Quick insert toolbar -->
         <div class="math-ar-panel">
-          <div class="math-ar-title">🔢 أدوات المعادلات السريعة</div>
+          <div class="math-ar-title">أدوات المعادلات السريعة</div>
           
           <!-- Category: Basic operations -->
           <div class="math-cat-label">العمليات الأساسية</div>
@@ -3867,7 +3883,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           </div>
 
           <!-- Category: Arabic text in equations -->
-          <div class="math-cat-label" style="color:var(--accent1)">🌟 النص العربي داخل المعادلة</div>
+          <div class="math-cat-label" style="color:var(--accent1)">النص العربي داخل المعادلة</div>
           <div class="math-ar-btns">
             <button class="math-ins-btn math-ins-wide" onclick="insertArabicText()" title="إدراج نص عربي داخل المعادلة">أب ← \text{نص}</button>
             <button class="math-ins-btn math-ins-wide" onclick="insertMathSnippet('\\text{س}')" title="المجهول س">المجهول س</button>
@@ -3877,7 +3893,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           </div>
 
           <!-- Arabic variable shortcuts -->
-          <div class="math-cat-label" style="color:var(--accent2)">⚡ اختصارات المتغيرات العربية</div>
+          <div class="math-cat-label" style="color:var(--accent2)">اختصارات المتغيرات العربية</div>
           <div class="math-ar-grid">
             <button class="math-var-btn" onclick="insertMathSnippet('x')" title="المتغير x">س ← x</button>
             <button class="math-var-btn" onclick="insertMathSnippet('y')" title="المتغير y">ص ← y</button>
@@ -3901,12 +3917,12 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
         <!-- Live preview -->
         <div class="math-preview-box" id="math-preview-area">
-          <div class="math-preview-label">👁 معاينة فورية</div>
+          <div class="math-preview-label">معاينة فورية</div>
           <div id="math-live-preview" class="math-preview-output">
             <span style="color:var(--text-muted);font-size:.85rem">اكتب معادلة وستظهر هنا...</span>
           </div>
           <div class="math-preview-tips">
-            <span>💡 نصائح:</span>
+            <span>نصائح:</span>
             <code>$x^2$</code> معادلة مضمّنة ·
             <code>$$\frac{a}{b}$$</code> معادلة مستقلة ·
             <code>	ext{نص عربي}</code> نص داخل معادلة
@@ -3917,11 +3933,11 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <!-- Image Section -->
     <div id="qtype-image-section" class="qtype-section" style="display:none">
       <div class="form-group">
-        <label class="form-label">🖼️ صورة السؤال</label>
+        <label class="form-label">صورة السؤال</label>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <label class="audio-file-label" for="q-image-input">📁 اختر صورة</label>
+          <label class="audio-file-label" for="q-image-input">اختر صورة</label>
           <input type="file" id="q-image-input" accept="image/*" class="hidden" onchange="loadQuestionMedia(this,'image')">
-          <button class="audio-clear-btn" onclick="clearQuestionMedia('image')">✕ حذف</button>
+          <button class="audio-clear-btn" onclick="clearQuestionMedia('image')">حذف</button>
         </div>
         <div id="q-image-preview" class="media-preview-wrap" style="display:none;margin-top:8px">
           <img id="q-image-preview-img" class="media-preview-img" src="" alt="">
@@ -3931,16 +3947,16 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <!-- Audio Section -->
     <div id="qtype-audio-section" class="qtype-section" style="display:none">
       <div class="form-group">
-        <label class="form-label">🎧 مقطع صوتي للسؤال</label>
+        <label class="form-label">مقطع صوتي للسؤال</label>
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <label class="audio-file-label" for="q-audio-input">📁 اختر مقطعاً</label>
+          <label class="audio-file-label" for="q-audio-input">اختر مقطعاً</label>
           <input type="file" id="q-audio-input" accept="audio/*" class="hidden" onchange="loadQuestionMedia(this,'audio')">
-          <button class="audio-test-btn" id="test-btn-qAudio" onclick="testQuestionAudio()">▶ تشغيل</button>
-          <button class="audio-stop-btn hidden" id="stop-btn-qAudio" onclick="stopQuestionAudioTest()">⏹ إيقاف</button>
-          <button class="audio-clear-btn" onclick="clearQuestionMedia('audio')">✕ حذف</button>
+          <button class="audio-test-btn" id="test-btn-qAudio" onclick="testQuestionAudio()">تشغيل</button>
+          <button class="audio-stop-btn hidden" id="stop-btn-qAudio" onclick="stopQuestionAudioTest()">إيقاف</button>
+          <button class="audio-clear-btn" onclick="clearQuestionMedia('audio')">حذف</button>
         </div>
         <div id="q-audio-preview" class="media-preview-audio" style="display:none">
-          <span>🎵</span><span id="q-audio-preview-name" style="font-size:.8rem;color:var(--text-secondary)">ملف صوتي</span>
+          <span></span><span id="q-audio-preview-name" style="font-size:.8rem;color:var(--text-secondary)">ملف صوتي</span>
         </div>
       </div>
     </div>
@@ -4063,15 +4079,15 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <div class="number-stepper"><button onclick="stepValue('q-time-input',-5)">−</button><input type="number" id="q-time-input" value="30" min="5" max="300"><button onclick="stepValue('q-time-input',5)">+</button></div>
       </div>
     </div>
-    <div class="form-group"><label class="form-label">💡 شرح الإجابة (يظهر بعد الكشف)</label><input type="text" id="q-explanation-input" class="form-input" dir="auto" placeholder="اختياري — معلومة إضافية..."></div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-question')">إلغاء</button><button class="btn btn-primary" onclick="saveQuestion()">💾 حفظ</button></div>
+    <div class="form-group"><label class="form-label">شرح الإجابة (يظهر بعد الكشف)</label><input type="text" id="q-explanation-input" class="form-input" dir="auto" placeholder="اختياري — معلومة إضافية..."></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-question')">إلغاء</button><button class="btn btn-primary" onclick="saveQuestion()">حفظ</button></div>
   </div>
 </div>
 
 <!-- Team -->
 <div id="modal-team" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title" id="team-modal-title">➕ إضافة فريق</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-team')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="team-modal-title">إضافة فريق</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-team')">✕</button></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">اسم الفريق</label><input type="text" id="team-name-input" class="form-input" dir="auto"></div>
       <div class="form-group">
@@ -4080,9 +4096,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
     </div>
     <div class="form-group">
-      <label class="form-label">🖼️ صورة الفريق <span style="font-size:.72rem;color:var(--text-muted)">(اختياري)</span></label>
+      <label class="form-label">صورة الفريق <span style="font-size:.72rem;color:var(--text-muted)">(اختياري)</span></label>
       <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
-        <label class="audio-file-label" for="team-image-file-input">📁 اختر صورة</label>
+        <label class="audio-file-label" for="team-image-file-input">اختر صورة</label>
         <input type="file" id="team-image-file-input" accept="image/*" class="hidden" onchange="loadTeamImage(this)">
         <div id="team-image-preview-wrap" style="display:none;position:relative">
           <img id="team-image-preview" style="width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--accent1)" src="" alt="">
@@ -4093,21 +4109,24 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <div class="form-group"><label class="form-label">اللون</label><div style="display:flex;align-items:center;gap:10px"><input type="color" id="team-color-input" value="#00d4ff"><div style="display:flex;gap:5px;flex-wrap:wrap" id="team-color-swatches"></div></div></div>
     <div class="form-group">
       <label class="form-label">الأعضاء</label>
-      <div style="display:flex;gap:7px">
-        <input type="text" id="team-member-input" class="form-input" dir="auto" placeholder="اسم العضو" onkeydown="if(event.key==='Enter')addMemberToModal()">
-        <input type="text" id="team-member-icon-input" class="form-input" placeholder="😊" maxlength="4" style="width:64px;flex-shrink:0" title="إيموجي العضو">
+      <div style="display:flex;gap:7px;align-items:center">
+        <input type="text" id="team-member-input" class="form-input" dir="auto" placeholder="اسم العضو" onkeydown="if(event.key==='Enter')addMemberToModal()" style="flex:1">
+        <label class="member-img-btn" for="team-member-img-input" title="صورة العضو">
+          <span id="member-add-img-preview"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12m-3.2 0a3.2 3.2 0 1 0 6.4 0a3.2 3.2 0 1 0-6.4 0M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9z"/></svg></span>
+        </label>
+        <input type="file" id="team-member-img-input" accept="image/*" class="hidden" onchange="previewMemberAddImage(this)">
         <button class="btn btn-accent btn-sm" onclick="addMemberToModal()" style="white-space:nowrap">+ إضافة</button>
       </div>
       <div id="modal-members-list" style="display:flex;flex-direction:column;gap:6px;margin-top:10px"></div>
     </div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-team')">إلغاء</button><button class="btn btn-success" onclick="saveTeam()">💾 حفظ</button></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-team')">إلغاء</button><button class="btn btn-success" onclick="saveTeam()">حفظ</button></div>
   </div>
 </div>
 
 <!-- Credit person -->
 <div id="modal-credit-person" class="modal-overlay hidden" role="dialog" aria-modal="true">
   <div class="modal" style="max-width:460px">
-    <div class="modal-header"><div class="modal-title" id="credit-modal-title">➕ إضافة شخص</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-credit-person')">✕</button></div>
+    <div class="modal-header"><div class="modal-title" id="credit-modal-title">إضافة شخص</div><button class="modal-close" aria-label="إغلاق" onclick="closeModal('modal-credit-person')">✕</button></div>
     <div class="form-group"><label class="form-label">الاسم</label><input type="text" id="cp-name-input" class="form-input"></div>
     <div class="form-group"><label class="form-label">الدور</label><input type="text" id="cp-role-input" class="form-input" placeholder="معدّ المسابقة، راعٍ..."></div>
     <div class="form-group"><label class="form-label">التصنيف</label>
@@ -4120,7 +4139,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </select>
     </div>
     <div class="form-group"><label class="form-label">لون البطاقة</label><input type="color" id="cp-color-input" value="#f5c842"></div>
-    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-credit-person')">إلغاء</button><button class="btn btn-purple" onclick="saveCreditPerson()">💾 حفظ</button></div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('modal-credit-person')">إلغاء</button><button class="btn btn-purple" onclick="saveCreditPerson()">حفظ</button></div>
   </div>
 </div>
 
@@ -4162,11 +4181,11 @@ const THEMES=[
   {id:'custom',  name:'مخصص 🎨',          bg:'#08091a', accent:'#00e8d0', accent2:'#a259ff',  desc:'صمّم ثيمك الخاص'},
 ];
 const CREDIT_CATS={
-  producers:{label:'🎬 إعداد المسابقة',color:'#f5c842'},
-  questions:{label:'✍️ إعداد الأسئلة',color:'#00d4ff'},
-  sponsors:{label:'🤝 الرعاة',color:'#00e676'},
-  tech:{label:'💻 الفريق التقني',color:'#a78bfa'},
-  special:{label:'⭐ شكر خاص',color:'#ff6b35'},
+  producers:{label:'إعداد المسابقة',color:'#f5c842'},
+  questions:{label:'إعداد الأسئلة',color:'#00d4ff'},
+  sponsors:{label:'الرعاة',color:'#00e676'},
+  tech:{label:'الفريق التقني',color:'#a78bfa'},
+  special:{label:'شكر خاص',color:'#ff6b35'},
 };
 
 // ════════════════════════════════════════════════════════
@@ -4250,7 +4269,13 @@ function saveState(){
   const teamImages={};
   state.teams.forEach(t=>{if(t.teamImage)teamImages[t.id]=t.teamImage;});
   const memberImages={};
-  state.teams.forEach(t=>{if(t.memberImages)memberImages[t.id]=t.memberImages;});
+  state.teams.forEach(t=>{
+    const imgs={};
+    (t.members||[]).forEach((m,i)=>{
+      if(typeof m==='object'&&m.image){imgs[i]=m.image;}
+    });
+    if(Object.keys(imgs).length)memberImages[t.id]=imgs;
+  });
   try{localStorage.setItem('quiz_v4_catimg',JSON.stringify(catImages))}catch(e){}
   try{localStorage.setItem('quiz_v4_teamimg',JSON.stringify({teamImages,memberImages}))}catch(e){}
   const audioData={
@@ -4263,7 +4288,13 @@ function saveState(){
   settingsClean.customCorrectData=!!state.settings.customCorrectData;
   settingsClean.customWrongData=!!state.settings.customWrongData;
   settingsClean.podiumMusicData=!!state.settings.podiumMusicData;
-  try{localStorage.setItem('quiz_v4',JSON.stringify({settings:settingsClean,categories:state.categories,teams:state.teams,credits:state.credits}))}
+  // Strip member images and team images from main save (stored separately)
+  const teamsClean=state.teams.map(t=>{
+    const tc={...t,teamImage:!!t.teamImage};
+    tc.members=(t.members||[]).map(m=>typeof m==='object'?{name:m.name,icon:m.icon||''}:m);
+    return tc;
+  });
+  try{localStorage.setItem('quiz_v4',JSON.stringify({settings:settingsClean,categories:state.categories,teams:teamsClean,credits:state.credits}))}
   catch(e){toast('تحذير: مساحة التخزين ممتلئة. قد تحتاج لتصدير البيانات.','danger')}
   // Save audio data separately (may fail if large)
   try{localStorage.setItem('quiz_v4_audio',JSON.stringify(audioData))}catch(e){}
@@ -4309,9 +4340,21 @@ function loadState(){
     state.credits=s.credits||[];
     // Restore cat images
     try{const ci=JSON.parse(localStorage.getItem('quiz_v4_catimg')||'{}');state.categories.forEach(c=>{if(ci[c.id])c.catImage=ci[c.id];});}catch(e){}
-    // Restore team images
+    // Restore team images + member images
     try{const ti=JSON.parse(localStorage.getItem('quiz_v4_teamimg')||'{}');
-      state.teams.forEach(t=>{if(ti.teamImages&&ti.teamImages[t.id])t.teamImage=ti.teamImages[t.id];if(ti.memberImages&&ti.memberImages[t.id])t.memberImages=ti.memberImages[t.id];});}catch(e){}
+      state.teams.forEach(t=>{
+        if(ti.teamImages&&ti.teamImages[t.id])t.teamImage=ti.teamImages[t.id];
+        // Restore member images into member objects
+        if(ti.memberImages&&ti.memberImages[t.id]){
+          const mImgs=ti.memberImages[t.id];
+          (t.members||[]).forEach((m,i)=>{
+            if(mImgs[i]){
+              if(typeof m==='object')m.image=mImgs[i];
+              else t.members[i]={name:m,icon:'',image:mImgs[i]};
+            }
+          });
+        }
+      });}catch(e){}
     // Restore audio data
     const audioRaw=localStorage.getItem('quiz_v4_audio');
     if(audioRaw){
@@ -4811,7 +4854,7 @@ function renderTeamsAdmin(){
           <button class="btn btn-danger btn-sm btn-icon" onclick="deleteTeam('${t.id}')">🗑️</button>
         </div>
       </div>
-      <div class="team-members-list">${(t.members||[]).map(m=>{const nm=typeof m==='object'?m.name:m;const ic=typeof m==='object'&&m.icon?m.icon:'';return `<span class="member-tag">${ic?ic+' ':''}<span>${nm}</span></span>`}).join('')||'<span class="text-sm text-muted">لا أعضاء</span>'}</div>
+      <div class="team-members-list">${(t.members||[]).map(m=>{const nm=typeof m==='object'?m.name:m;const mImg=typeof m==='object'&&m.image?m.image:null;return `<span class="member-tag">${mImg?'<img src="'+mImg+'" style="width:18px;height:18px;border-radius:50%;object-fit:cover"> ':''}<span>${nm}</span></span>`}).join('')||'<span class="text-sm text-muted">لا أعضاء</span>'}</div>
       <div style="display:flex;gap:5px;margin-top:9px;flex-wrap:wrap">
         <button class="btn btn-sm btn-ghost" onclick="adjustScore('${t.id}',1)">+1</button>
         <button class="btn btn-sm btn-ghost" onclick="adjustScore('${t.id}',-1)">−1</button>
@@ -4828,7 +4871,7 @@ function openTeamModal(teamId=null){
     document.getElementById('team-name-input').value=t.name;
     document.getElementById('team-color-input').value=t.color;
     const ti=document.getElementById('team-icon-input');if(ti)ti.value=t.teamIcon||'';
-    state.modalMembers=(t.members||[]).map((m,i)=>(typeof m==='object'?{name:m.name||'',icon:m.icon||''}:{name:m,icon:''}));
+    state.modalMembers=(t.members||[]).map((m,i)=>(typeof m==='object'?{name:m.name||'',icon:m.icon||'',image:m.image||null}:{name:m,icon:'',image:null}));
     _showTeamImagePreview(t.teamImage);
   }else{
     document.getElementById('team-modal-title').textContent='➕ إضافة فريق';
@@ -4842,22 +4885,53 @@ function openTeamModal(teamId=null){
 }
 function addMemberToModal(){
   const v=document.getElementById('team-member-input').value.trim();if(!v)return;
-  const icon=document.getElementById('team-member-icon-input')?.value.trim()||'';
-  state.modalMembers.push({name:v,icon});
+  const img=window._pendingMemberImage||null;
+  state.modalMembers.push({name:v,icon:'',image:img});
   document.getElementById('team-member-input').value='';
-  const ti=document.getElementById('team-member-icon-input');if(ti)ti.value='';
+  window._pendingMemberImage=null;
+  // Reset add-image preview
+  const prev=document.getElementById('member-add-img-preview');
+  if(prev)prev.innerHTML='📷';
+  const fi=document.getElementById('team-member-img-input');if(fi)fi.value='';
   renderModalMembers();
+}
+function previewMemberAddImage(input){
+  const f=input.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    window._pendingMemberImage=e.target.result;
+    const prev=document.getElementById('member-add-img-preview');
+    if(prev)prev.innerHTML='<img src="'+e.target.result+'" style="width:26px;height:26px;border-radius:50%;object-fit:cover">';
+  };
+  reader.readAsDataURL(f);
+}
+function loadMemberImageForRow(input,idx){
+  const f=input.files[0];if(!f)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    if(state.modalMembers[idx]){
+      state.modalMembers[idx].image=e.target.result;
+      renderModalMembers();
+    }
+  };
+  reader.readAsDataURL(f);
+}
+function clearMemberImage(idx){
+  if(state.modalMembers[idx]){state.modalMembers[idx].image=null;renderModalMembers();}
 }
 function renderModalMembers(){
   document.getElementById('modal-members-list').innerHTML=state.modalMembers.map((m,i)=>{
     const name=typeof m==='object'?m.name:m;
-    const icon=typeof m==='object'?m.icon:'';
-    return `<div class="member-edit-row">
-      <span style="font-size:1.2rem;min-width:24px">${icon||'👤'}</span>
-      <input type="text" class="form-input" value="${name}" style="flex:1" oninput="updateModalMember(${i},'name',this.value)">
-      <input type="text" class="form-input" value="${icon}" placeholder="😊" style="width:52px;flex-shrink:0" maxlength="4" oninput="updateModalMember(${i},'icon',this.value)" title="إيموجي العضو">
-      <button class="rm-btn" onclick="removeModalMember(${i})">✕</button>
-    </div>`;
+    const img=typeof m==='object'?m.image:null;
+    const avatarHtml=img
+      ?'<button class="member-img-btn" onclick="clearMemberImage('+i+')" title="حذف الصورة"><img src="'+img+'" alt=""></button>'
+      :'<label class="member-img-btn" for="member-img-file-'+i+'" title="إضافة صورة"><svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4 0-8 2-8 4v2h16v-2c0-2-4-4-8-4z"/></svg></label>';
+    return '<div class="member-edit-row">'
+      +avatarHtml
+      +'<input type="file" id="member-img-file-'+i+'" accept="image/*" class="hidden" onchange="loadMemberImageForRow(this,'+i+')">'
+      +'<input type="text" class="form-input" value="'+name+'" style="flex:1" oninput="updateModalMember('+i+',\'name\',this.value)">'
+      +'<button class="rm-btn" onclick="removeModalMember('+i+')">✕</button>'
+      +'</div>';
   }).join('');
 }
 function removeModalMember(i){state.modalMembers.splice(i,1);renderModalMembers()}
@@ -5019,26 +5093,36 @@ function renderIntro(){
 // ════════════════════════════════════════════════════════
 function renderTeamsSlide(){
   const el=document.getElementById('teams-pres-grid');
-  if(!state.teams.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">👥</div><p>لا توجد فرق</p></div>';return}
+  if(!state.teams.length){el.innerHTML='<div class="empty-state"><p style="font-size:1.5rem;opacity:.4;margin-bottom:8px">👥</p><p>لا توجد فرق</p></div>';return}
   el.innerHTML=state.teams.map((t,i)=>{
     const membersHtml=t.members.length
-      ? t.members.map((m,mi)=>`
-          <div class="team-pres-member-row">
-            <div class="team-pres-member-icon" style="background:${t.color}">${m[0]||'؟'}</div>
-            <div class="team-pres-member-name">${m}</div>
-          </div>`).join('')
+      ? t.members.map((m,mi)=>{
+          const mName=typeof m==='object'?m.name:m;
+          const mImg=typeof m==='object'?m.image:null;
+          const avatarInner=mImg
+            ?`<img src="${mImg}" alt="${mName}">`
+            :`<span>${mName[0]||'؟'}</span>`;
+          return `<div class="team-pres-member-row">
+            <div class="team-pres-member-avatar" style="background:${t.color}">${avatarInner}</div>
+            <div class="team-pres-member-name">${mName}</div>
+          </div>`;
+        }).join('')
       : `<div class="team-pres-empty-members">لا يوجد أعضاء مسجلون</div>`;
     const membersSection=t.members.length?`
       <div class="team-pres-divider"></div>
       <div class="team-pres-members-section">
-        <div class="team-pres-members-title">👥 <span>الأعضاء (${t.members.length})</span></div>
+        <div class="team-pres-members-title"><svg class="svg-icon" viewBox="0 0 24 24" style="opacity:.6"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg> <span>الأعضاء (${t.members.length})</span></div>
         <div class="team-pres-members-list">${membersHtml}</div>
       </div>`:'';
+    // Team avatar: image > icon > first letter
+    const teamAvatarInner=t.teamImage
+      ?`<img src="${t.teamImage}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`
+      :`${t.name[0]}`;
     return `
       <div class="team-pres-card" style="animation-delay:${i*.1}s;border-color:${t.color}30">
         <div class="team-pres-top-bar" style="background:linear-gradient(90deg,${t.color},${t.color}99)"></div>
         <div class="team-pres-body">
-          <div class="team-pres-avatar" style="background:${t.color}">${t.name[0]}</div>
+          <div class="team-pres-avatar" style="background:${t.color}">${teamAvatarInner}</div>
           <div class="team-pres-name" style="color:${t.color}">${t.name}</div>
           <div class="team-pres-score" style="color:${t.color};text-shadow:0 0 30px ${t.color}66">${t.score||0}</div>
           <div class="team-pres-score-label">نقطة</div>
@@ -6321,8 +6405,11 @@ function updateTicker(){
   const curTeam=state.teams[state.currentTeamIndex];
   ticker.innerHTML=state.teams.map(t=>{
     const isActive=t.id===curTeam?.id;
+    const dotHtml=t.teamImage
+      ?`<img src="${t.teamImage}" style="width:16px;height:16px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid ${t.color}88">`
+      :`<div class="ticker-dot" style="background:${t.color};${isActive?'box-shadow:0 0 8px '+t.color:''}"></div>`;
     return `<div class="ticker-team ${isActive?'ticker-active':''}" data-team-id="${t.id}" style="${isActive?'border-bottom:2px solid '+t.color:''}">
-      <div class="ticker-dot" style="background:${t.color};${isActive?'box-shadow:0 0 8px '+t.color:''}"></div>
+      ${dotHtml}
       <div class="ticker-name" style="${isActive?'color:'+t.color:''}">${_sanitize(t.name)}</div>
       <div class="ticker-score" style="${isActive?'color:'+t.color:''}">${t.score||0}</div>
     </div>`;
