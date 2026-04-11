@@ -292,8 +292,11 @@ kbd{
     <a class="nav-pill" href="#q-types">أنواع الأسئلة</a>
     <a class="nav-pill" href="#themes">الثيمات</a>
     <a class="nav-pill" href="#presentation">العرض</a>
+    <a class="nav-pill" href="#cat-display">طرق العرض</a>
     <a class="nav-pill" href="#new-screens">شاشات جديدة</a>
     <a class="nav-pill" href="#lifelines">أطواق النجاة</a>
+    <a class="nav-pill" href="#buzzer">المُسرِّع</a>
+    <a class="nav-pill" href="#streak">التسلسل</a>
     <a class="nav-pill" href="#sound">الصوت</a>
     <a class="nav-pill" href="#shortcuts">الاختصارات</a>
     <a class="nav-pill" href="#import">الاستيراد</a>
@@ -320,16 +323,20 @@ kbd{
     <a class="toc-item" href="#shuffle">🔀 الخلط والعشوائية ✨</a>
     <a class="toc-item" href="#teams">👥 الفرق</a>
     <a class="toc-item" href="#competition-modes">🎮 أنماط المسابقة</a>
+    <a class="toc-item" href="#cat-display">🖼️ طرق عرض الأقسام</a>
     <a class="toc-item" href="#presentation">🎬 شاشة العرض</a>
     <a class="toc-item" href="#new-screens">🆕 شاشات جديدة ✨</a>
     <a class="toc-item" href="#themes">🎨 الثيمات ✨</a>
     <a class="toc-item" href="#lifelines">🆘 أطواق النجاة</a>
+    <a class="toc-item" href="#buzzer">🔔 وضع المُسرِّع ✨</a>
+    <a class="toc-item" href="#streak">🔥 مكافأة التسلسل ✨</a>
     <a class="toc-item" href="#sound">🔊 الصوت</a>
     <a class="toc-item" href="#shortcuts">⌨️ الاختصارات</a>
     <a class="toc-item" href="#import">📥 الاستيراد والتصدير</a>
     <a class="toc-item" href="#music-widget">🎵 الموسيقى</a>
     <a class="toc-item" href="#transition">🔄 الانتقال</a>
     <a class="toc-item" href="#backup">💾 النسخ الاحتياطي</a>
+    <a class="toc-item" href="#credits">⭐ الشكر والتقدير</a>
     <a class="toc-item" href="#tips">💡 نصائح للمقدم</a>
     <a class="toc-item" href="#troubleshoot">🔧 مشاكل شائعة</a>
   </div>
@@ -350,13 +357,14 @@ kbd{
       <div class="hero-stat"><div class="num">🎨</div><div class="lbl">ثيم مخصص</div></div>
       <div class="hero-stat"><div class="num">💾</div><div class="lbl">نسخ احتياطي</div></div>
       <div class="hero-stat"><div class="num">3</div><div class="lbl">أطواق نجاة</div></div>
+      <div class="hero-stat"><div class="num">🔔</div><div class="lbl">وضع المُسرِّع</div></div>
       <div class="hero-stat"><div class="num">🏆</div><div class="lbl">منصة التتويج</div></div>
     </div>
   </div>
 
   <div class="callout new" style="margin-bottom:28px">
     <span class="callout-icon">🆕</span>
-    <span><strong>ما الجديد في الإصدار 5؟</strong> — نوع سؤال جديد (صح/خطأ) · صور على خيارات الإجابة · 11 ثيماً + ثيم مخصص قابل للتخصيص بالكامل · خلط الأسئلة والخيارات عشوائياً · بنك الأسئلة · شاشة منصة التتويج · شاشة الإحصاءات التفصيلية · ساعة كبيرة.</span>
+    <span><strong>ما الجديد في الإصدار 5؟</strong> — نوع سؤال جديد (صح/خطأ) · صور على خيارات الإجابة · 11 ثيماً + ثيم مخصص قابل للتخصيص بالكامل · خلط الأسئلة والخيارات عشوائياً · بنك الأسئلة · شاشة منصة التتويج · شاشة الإحصاءات التفصيلية · ساعة كبيرة · وضع المُسرِّع (Buzzer) · مكافأة التسلسل · خصم النقاط عند الإجابة الخاطئة · موسيقى منصة التتويج.</span>
   </div>
 
   <div class="cards-grid">
@@ -433,6 +441,8 @@ kbd{
         <tr><td><strong>خلط الأسئلة</strong><span class="new-badge">جديد</span></td><td>يُعيد ترتيب الأسئلة عشوائياً في كل جلسة</td><td>معطّل</td></tr>
         <tr><td><strong>خلط الخيارات</strong><span class="new-badge">جديد</span></td><td>يُرتّب خيارات أ-ب-ج-د بشكل عشوائي</td><td>معطّل</td></tr>
         <tr><td><strong>بنك الأسئلة</strong><span class="new-badge">جديد</span></td><td>عدد الأسئلة العشوائية التي تُعرض من كل قسم لكل جلسة. 0 = كل الأسئلة</td><td>0</td></tr>
+        <tr><td><strong>الخصم عند الخطأ</strong><span class="new-badge">جديد</span></td><td>خصم نقاط من الفريق عند الإجابة الخاطئة. يمكن ضبط قيمة الخصم (1-10)</td><td>معطّل</td></tr>
+        <tr><td><strong>مكافأة التسلسل</strong><span class="new-badge">جديد</span></td><td>منح نقاط إضافية عند تحقيق سلسلة إجابات صحيحة متتالية. يمكن ضبط عدد الإجابات المطلوبة (2-10) وقيمة المكافأة (1-20)</td><td>معطّل</td></tr>
         <tr><td><strong>صوت الإجابة الصحيحة</strong></td><td>المؤثر الصوتي عند الإجابة الصحيحة</td><td>تصفيق</td></tr>
         <tr><td><strong>صوت الإجابة الخاطئة</strong></td><td>المؤثر الصوتي عند الإجابة الخاطئة</td><td>صوت خطأ</td></tr>
       </tbody>
@@ -461,7 +471,7 @@ kbd{
       <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">أضف قسماً جديداً</div>
-        <div class="step-desc">اضغط "➕ إضافة" لفتح نافذة إنشاء قسم. حدد: الاسم، الأيقونة (emoji)، واللون. يظهر هذا القسم كزر في شاشة العرض.</div>
+        <div class="step-desc">اضغط "➕ إضافة" لفتح نافذة إنشاء قسم. حدد: الاسم، الأيقونة (emoji)، واللون. يمكن أيضاً رفع صورة خلفية للقسم تُعرض على بطاقته في شاشة العرض. يظهر هذا القسم كزر في شاشة العرض.</div>
         <div class="step-tip">💡 اختر ألواناً متباينة لتسهيل التمييز بين الأقسام أثناء العرض</div>
       </div>
     </div>
@@ -482,6 +492,7 @@ kbd{
     <div><div class="section-title">إضافة الأسئلة</div><div class="section-sub">كيفية إنشاء الأسئلة وتحريرها</div></div>
   </div>
   <div class="callout tip"><span class="callout-icon">✅</span><span>في نافذة إضافة السؤال، أدخل نص السؤال وخيارات الإجابة (خياران كحد أدنى). لكل خيار: نص، معادلة رياضية، <strong>أو صورة</strong>.</span></div>
+  <div class="callout info"><span class="callout-icon">🔍</span><span><strong>بحث وتصفية:</strong> استخدم شريط البحث أعلى قائمة الأسئلة للعثور على سؤال بالنص. يمكن تصفية الأسئلة حسب الصعوبة (سهل / متوسط / صعب) أو حسب النوع (صح/خطأ). كما يمكن <strong>نسخ أي سؤال</strong> بالضغط على زر النسخ بجانبه لإنشاء نسخة مطابقة قابلة للتعديل.</span></div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>الحقل</th><th>الوصف</th><th>ملاحظات</th></tr></thead>
@@ -626,14 +637,14 @@ kbd{
       <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">أدخل اسم الفريق واللون</div>
-        <div class="step-desc">اختر اسماً مميزاً ولوناً يميز الفريق في الشاشة والشريط السفلي.</div>
+        <div class="step-desc">اختر اسماً مميزاً ولوناً يميز الفريق في الشاشة والشريط السفلي. يمكن أيضاً رفع صورة (شعار) للفريق تظهر في بطاقته.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
         <div class="step-title">أضف أعضاء الفريق</div>
-        <div class="step-desc">أدخل اسم كل عضو واضغط "➕ إضافة" أو مفتاح Enter. تظهر أسماء الأعضاء في بطاقة الفريق أثناء العرض.</div>
+        <div class="step-desc">أدخل اسم كل عضو واضغط "➕ إضافة" أو مفتاح Enter. يمكن رفع صورة شخصية لكل عضو بالضغط على أيقونة الكاميرا. تظهر أسماء الأعضاء وصورهم في بطاقة الفريق أثناء العرض.</div>
         <div class="step-tip">💡 يمكنك تعديل نقاط أي فريق يدوياً من بطاقته (زر +1 / −1 / صفر)</div>
       </div>
     </div>
@@ -661,7 +672,41 @@ kbd{
   </div>
 </section>
 
-<!-- ═══ PRESENTATION ═══ -->
+<!-- ═══ CAT DISPLAY MODES (NEW) ═══ -->
+<section class="section" id="cat-display">
+  <div class="section-header">
+    <div class="section-icon icon-purple">🖼️</div>
+    <div><div class="section-title">طرق عرض الأقسام <span class="new-badge">5 طرق</span></div><div class="section-sub">اختر الشكل الأنسب لعرض أقسام المسابقة</div></div>
+  </div>
+  <div class="callout info"><span class="callout-icon">⚙️</span><span>يُضبط من <strong>لوحة التحكم → المظهر → طريقة عرض الأقسام</strong>. يمكن التبديل بين الطرق أثناء المسابقة من أزرار أعلى شاشة الأقسام.</span></div>
+  <div class="cards-grid">
+    <div class="card" style="border-color:rgba(0,245,212,.3)">
+      <div class="card-icon">⊞</div>
+      <div class="card-title">شبكة البطاقات (افتراضي)</div>
+      <p>بطاقات كبيرة ملوّنة في شبكة مرنة. تظهر أيقونة القسم واسمه وعدد الأسئلة المتبقية. الطريقة الأوضح والأبسط.</p>
+    </div>
+    <div class="card" style="border-color:rgba(123,97,255,.3)">
+      <div class="card-icon">🎡</div>
+      <div class="card-title">عجلة الحظ</div>
+      <p>عجلة دوّارة ملوّنة تحتوي على جميع الأقسام. اضغط زر "🎡 لف!" لتدور العجلة وتختار قسماً عشوائياً. مثالية لإضافة عنصر المفاجأة والتشويق.</p>
+    </div>
+    <div class="card" style="border-color:rgba(0,230,118,.3)">
+      <div class="card-icon">🃏</div>
+      <div class="card-title">بطاقات مخفية</div>
+      <p>بطاقات مقلوبة لا تظهر محتواها حتى يضغط عليها الفريق. بعد الضغط تنقلب البطاقة وتكشف القسم. مثالية لمسابقات المفاجآت.</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,146,60,.3)">
+      <div class="card-icon">☰</div>
+      <div class="card-title">عرض القائمة</div>
+      <p>قائمة عمودية مرتّبة بأسماء الأقسام مع شريط تقدم يوضح عدد الأسئلة المكتملة والمتبقية لكل قسم.</p>
+    </div>
+    <div class="card" style="border-color:rgba(167,139,250,.3)">
+      <div class="card-icon">📊</div>
+      <div class="card-title">لوحة جيوباردي</div>
+      <p>لوحة شبكية على غرار برنامج Jeopardy الشهير. الأعمدة = الأقسام، الصفوف = الأسئلة مرتّبة بالصعوبة. يمكن اختيار أي سؤال مباشرة من الشبكة.</p>
+    </div>
+  </div>
+</section>
 <section class="section" id="presentation">
   <div class="section-header">
     <div class="section-icon icon-blue">🎬</div>
@@ -863,6 +908,64 @@ kbd{
   <div class="callout warn" style="margin-top:16px"><span class="callout-icon">⚠️</span><span>إذا لم يتبقَّ خيارات كافية لطوق 50/50 (مثلاً سؤال بخيارين فقط)، يُعاد الطوق تلقائياً ويظهر تنبيه.</span></div>
 </section>
 
+<!-- ═══ BUZZER MODE (NEW) ═══ -->
+<section class="section" id="buzzer">
+  <div class="section-header">
+    <div class="section-icon icon-red">🔔</div>
+    <div><div class="section-title">وضع المُسرِّع (Buzzer) <span class="new-badge">جديد في v5</span></div><div class="section-sub">من يضغط أولاً يجيب!</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">🔔</span><span>وضع المُسرِّع يُحوّل المسابقة إلى تحدّي سرعة: تظهر أزرار كبيرة لكل فريق، والفريق الذي يضغط أولاً يحصل على فرصة الإجابة.</span></div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">تفعيل وضع المُسرِّع</div>
+        <div class="step-desc">من شاشة السؤال أثناء العرض، اضغط على زر "🔔 المُسرِّع" لفتح شاشة المُسرِّع. تظهر أزرار ملوّنة كبيرة لكل فريق.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">الضغط السريع</div>
+        <div class="step-desc">يتنافس الفرق على الضغط أولاً. الفريق الذي يضغط زرّه أولاً يظهر اسمه في لافتة كبيرة مع تأثير بصري احتفالي.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">جولة جديدة أو إغلاق</div>
+        <div class="step-desc">اضغط "جولة جديدة" لإعادة ضبط الأزرار لسؤال آخر، أو "إغلاق" للعودة لشاشة السؤال.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STREAK BONUS (NEW) ═══ -->
+<section class="section" id="streak">
+  <div class="section-header">
+    <div class="section-icon icon-orange">🔥</div>
+    <div><div class="section-title">مكافأة التسلسل <span class="new-badge">جديد في v5</span></div><div class="section-sub">نقاط إضافية للإجابات المتتالية</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">🔥</span><span>عند تحقيق الفريق لسلسلة إجابات صحيحة متتالية، يحصل على نقاط مكافأة إضافية تلقائياً مع تأثير بصري مميز!</span></div>
+  <div class="feature-list">
+    <div class="feature-item" style="border-color:rgba(251,146,60,.25)">
+      <div class="fi-icon">⚙️</div>
+      <div class="fi-body">
+        <div class="fi-title">الإعداد</div>
+        <div class="fi-desc">من <strong>لوحة التحكم → الإعدادات</strong>، فعّل "مكافأة التسلسل". اضبط عدد الإجابات المتتالية المطلوبة (الافتراضي: 3) وقيمة المكافأة بالنقاط (الافتراضي: 2).</div>
+      </div>
+    </div>
+    <div class="feature-item" style="border-color:rgba(251,146,60,.25)">
+      <div class="fi-icon">🎯</div>
+      <div class="fi-body">
+        <div class="fi-title">أثناء المسابقة</div>
+        <div class="fi-desc">يظهر عدّاد التسلسل أسفل السؤال. عند تحقيق السلسلة المطلوبة (مثلاً 3 صحيحة متتالية)، تُضاف النقاط تلقائياً ويظهر تأثير "🔥 مكافأة!" متحرك.</div>
+      </div>
+    </div>
+  </div>
+  <div class="callout warn" style="margin-top:16px"><span class="callout-icon">💡</span><span>أي إجابة خاطئة تُعيد عدّاد التسلسل للصفر. التسلسل يُحسب لكل فريق على حدة.</span></div>
+</section>
+
 <!-- ═══ SOUND ═══ -->
 <section class="section" id="sound">
   <div class="section-header">
@@ -896,6 +999,13 @@ kbd{
       <div class="fi-body">
         <div class="fi-title">مستوى الصوت</div>
         <div class="fi-desc">شريط واحد يتحكم في الموسيقى الخلفية. يتزامن بين لوحة التحكم والشريط المصغر في شاشة العرض. أي تغيير يُطبَّق فورياً.</div>
+      </div>
+    </div>
+    <div class="feature-item" style="border-color:rgba(251,146,60,.25)">
+      <div class="fi-icon">🏆</div>
+      <div class="fi-body">
+        <div class="fi-title">موسيقى منصة التتويج <span class="new-badge">جديد في v5</span></div>
+        <div class="fi-desc">ارفع ملف صوتي مخصص يُشغَّل تلقائياً عند فتح منصة التتويج. يمكن ضبط مستوى الصوت وتفعيل التكرار التلقائي. يُضبط من <strong>لوحة التحكم → الإعدادات → قسم الصوت</strong>.</div>
       </div>
     </div>
   </div>
@@ -1065,6 +1175,15 @@ kbd{
   </div>
 </section>
 
+<!-- ═══ CREDITS ═══ -->
+<section class="section" id="credits">
+  <div class="section-header">
+    <div class="section-icon icon-purple">⭐</div>
+    <div><div class="section-title">الشكر والتقدير</div><div class="section-sub">شاشة شكر مخصصة في نهاية المسابقة</div></div>
+  </div>
+  <div class="callout tip"><span class="callout-icon">⭐</span><span>أضف أسماء المنظمين والمساهمين والرعاة من تبويب <strong>"⭐ الشكر"</strong> في لوحة التحكم. تُعرض شاشة احترافية في نهاية المسابقة مع أسماء الأشخاص وأدوارهم وصورهم (اختياري). اضغط "معاينة" لرؤية الشاشة قبل العرض.</span></div>
+</section>
+
 <!-- ═══ TIPS ═══ -->
 <section class="section" id="tips">
   <div class="section-header">
@@ -1203,6 +1322,21 @@ kbd{
           <td><strong>منصة التتويج لا تظهر بشكل صحيح</strong></td>
           <td>لا توجد فرق بنقاط مختلفة</td>
           <td>تأكد من إضافة فرق ومنح نقاط لها قبل فتح المنصة</td>
+        </tr>
+        <tr>
+          <td><strong>المُسرِّع لا يستجيب</strong></td>
+          <td>لم يتم إضافة فرق</td>
+          <td>أضف فريقين على الأقل قبل استخدام وضع المُسرِّع</td>
+        </tr>
+        <tr>
+          <td><strong>مكافأة التسلسل لا تظهر</strong></td>
+          <td>الميزة معطّلة أو لم تتحقق السلسلة</td>
+          <td>فعّل "مكافأة التسلسل" من الإعدادات وتأكد من تحقيق العدد المطلوب من الإجابات المتتالية</td>
+        </tr>
+        <tr>
+          <td><strong>موسيقى المنصة لا تعمل</strong></td>
+          <td>لم يُرفع ملف صوتي أو قيود المتصفح</td>
+          <td>ارفع ملف صوتي من إعدادات الصوت وانقر على الصفحة أولاً لتفعيل الصوت</td>
         </tr>
       </tbody>
     </table>
