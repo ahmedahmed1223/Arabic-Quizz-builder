@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل مستخدم v5 — منصة المسابقات التفاعلية</title>
+<title>دليل مستخدم v6 — منصة المسابقات التفاعلية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -292,11 +292,8 @@ kbd{
     <a class="nav-pill" href="#q-types">أنواع الأسئلة</a>
     <a class="nav-pill" href="#themes">الثيمات</a>
     <a class="nav-pill" href="#presentation">العرض</a>
-    <a class="nav-pill" href="#cat-display">طرق العرض</a>
     <a class="nav-pill" href="#new-screens">شاشات جديدة</a>
     <a class="nav-pill" href="#lifelines">أطواق النجاة</a>
-    <a class="nav-pill" href="#buzzer">المُسرِّع</a>
-    <a class="nav-pill" href="#streak">التسلسل</a>
     <a class="nav-pill" href="#sound">الصوت</a>
     <a class="nav-pill" href="#shortcuts">الاختصارات</a>
     <a class="nav-pill" href="#import">الاستيراد</a>
@@ -314,29 +311,35 @@ kbd{
   <div class="toc-sticky">
     <div class="toc-title">محتويات الدليل</div>
     <a class="toc-item active" href="#overview">🗺️ نظرة عامة</a>
+    <a class="toc-item" href="#whats-new-v6">🆕 الجديد في v6 ✨</a>
     <a class="toc-item" href="#login">🔐 تسجيل الدخول</a>
     <a class="toc-item" href="#settings">⚙️ الإعدادات</a>
     <a class="toc-item" href="#categories">📂 الأقسام</a>
     <a class="toc-item" href="#questions">❓ الأسئلة</a>
     <a class="toc-item" href="#q-types">🖼️ أنواع الأسئلة</a>
-    <a class="toc-item" href="#option-images">🖼 صور الخيارات ✨</a>
-    <a class="toc-item" href="#shuffle">🔀 الخلط والعشوائية ✨</a>
+    <a class="toc-item" href="#order-question">📝 سؤال الترتيب ✨</a>
+    <a class="toc-item" href="#option-images">🖼 صور الخيارات</a>
+    <a class="toc-item" href="#shuffle">🔀 الخلط والعشوائية</a>
     <a class="toc-item" href="#teams">👥 الفرق</a>
+    <a class="toc-item" href="#team-layout">📐 تخصيص عرض الفرق ✨</a>
     <a class="toc-item" href="#competition-modes">🎮 أنماط المسابقة</a>
-    <a class="toc-item" href="#cat-display">🖼️ طرق عرض الأقسام</a>
     <a class="toc-item" href="#presentation">🎬 شاشة العرض</a>
-    <a class="toc-item" href="#new-screens">🆕 شاشات جديدة ✨</a>
-    <a class="toc-item" href="#themes">🎨 الثيمات ✨</a>
+    <a class="toc-item" href="#sequential-mode">🎞 الوضع التسلسلي ✨</a>
+    <a class="toc-item" href="#next-behavior">⏭ سلوك زر "التالي" ✨</a>
+    <a class="toc-item" href="#play-search">🔍 البحث أثناء اللعب ✨</a>
+    <a class="toc-item" href="#remote-control">📡 التحكم عن بُعد ✨</a>
+    <a class="toc-item" href="#new-screens">🏆 المنصة والإحصاءات</a>
+    <a class="toc-item" href="#themes">🎨 الثيمات</a>
+    <a class="toc-item" href="#custom-palettes">🎨 لوحات الألوان ✨</a>
     <a class="toc-item" href="#lifelines">🆘 أطواق النجاة</a>
-    <a class="toc-item" href="#buzzer">🔔 وضع المُسرِّع ✨</a>
-    <a class="toc-item" href="#streak">🔥 مكافأة التسلسل ✨</a>
     <a class="toc-item" href="#sound">🔊 الصوت</a>
+    <a class="toc-item" href="#tense-music">😰 موسيقى التوتر ✨</a>
     <a class="toc-item" href="#shortcuts">⌨️ الاختصارات</a>
     <a class="toc-item" href="#import">📥 الاستيراد والتصدير</a>
     <a class="toc-item" href="#music-widget">🎵 الموسيقى</a>
     <a class="toc-item" href="#transition">🔄 الانتقال</a>
     <a class="toc-item" href="#backup">💾 النسخ الاحتياطي</a>
-    <a class="toc-item" href="#credits">⭐ الشكر والتقدير</a>
+    <a class="toc-item" href="#mobile-touch">📱 استخدام الجوال ✨</a>
     <a class="toc-item" href="#tips">💡 نصائح للمقدم</a>
     <a class="toc-item" href="#troubleshoot">🔧 مشاكل شائعة</a>
   </div>
@@ -348,46 +351,106 @@ kbd{
 <!-- HERO -->
 <section id="overview">
   <div class="hero">
-    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 5</strong> &nbsp;🆕</div>
+    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 6</strong> &nbsp;🆕</div>
     <h1>منصة المسابقات التفاعلية</h1>
     <p>منصة احترافية متكاملة لإعداد وتقديم مسابقات تفاعلية تعليمية وترفيهية، تعمل كاملاً في المتصفح دون الحاجة لاتصال بالإنترنت أثناء العرض.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num">5</div><div class="lbl">أنواع أسئلة</div></div>
+      <div class="hero-stat"><div class="num">6</div><div class="lbl">أنواع أسئلة</div></div>
       <div class="hero-stat"><div class="num">11</div><div class="lbl">ثيماً بصرياً</div></div>
-      <div class="hero-stat"><div class="num">🎨</div><div class="lbl">ثيم مخصص</div></div>
-      <div class="hero-stat"><div class="num">💾</div><div class="lbl">نسخ احتياطي</div></div>
-      <div class="hero-stat"><div class="num">3</div><div class="lbl">أطواق نجاة</div></div>
-      <div class="hero-stat"><div class="num">🔔</div><div class="lbl">وضع المُسرِّع</div></div>
+      <div class="hero-stat"><div class="num">🎨</div><div class="lbl">لوحات مخصصة</div></div>
+      <div class="hero-stat"><div class="num">📡</div><div class="lbl">تحكم عن بُعد</div></div>
+      <div class="hero-stat"><div class="num">📱</div><div class="lbl">دعم اللمس</div></div>
       <div class="hero-stat"><div class="num">🏆</div><div class="lbl">منصة التتويج</div></div>
     </div>
   </div>
 
   <div class="callout new" style="margin-bottom:28px">
     <span class="callout-icon">🆕</span>
-    <span><strong>ما الجديد في الإصدار 5؟</strong> — نوع سؤال جديد (صح/خطأ) · صور على خيارات الإجابة · 11 ثيماً + ثيم مخصص قابل للتخصيص بالكامل · خلط الأسئلة والخيارات عشوائياً · بنك الأسئلة · شاشة منصة التتويج · شاشة الإحصاءات التفصيلية · ساعة كبيرة · وضع المُسرِّع (Buzzer) · مكافأة التسلسل · خصم النقاط عند الإجابة الخاطئة · موسيقى منصة التتويج.</span>
+    <span><strong>ما الجديد في الإصدار 6؟</strong> — نوع سؤال "ترتيب" بالسحب والإفلات · زر "السابق" في الوضع التسلسلي · تأكيد قبل "التالي" مع خيار خصم النقاط · تحكم كامل بارتفاع بطاقات الفرق · البحث والانتقال لأي سؤال أثناء اللعب · التحكم عن بُعد بين النوافذ · لوحات ألوان مخصصة قابلة للحفظ · السحب والإفلات يعمل على الجوال · موسيقى توتر بمستوى صوت مستقل · IndexedDB لتخزين الوسائط · 63 إصلاحاً وميزة جديدة.</span>
   </div>
 
   <div class="cards-grid">
     <div class="card">
       <div class="card-icon">🎯</div>
       <div class="card-title">إعداد سريع</div>
-      <p>أضف الأقسام والأسئلة والفرق من لوحة تحكم بسيطة، أو استورد الأسئلة مباشرة من ملف Excel.</p>
+      <p>أضف الأقسام والأسئلة والفرق من لوحة تحكم بسيطة، أو استورد الأسئلة مباشرة من ملف Excel مع الصور والصوتيات.</p>
     </div>
     <div class="card">
       <div class="card-icon">🖥️</div>
       <div class="card-title">عرض احترافي</div>
-      <p>واجهة عرض مبهرة مع دعم ملء الشاشة، الموسيقى الخلفية، والمؤثرات الصوتية لتجربة لا تُنسى.</p>
+      <p>واجهة عرض مبهرة مع دعم ملء الشاشة، الموسيقى الخلفية، موسيقى التوتر، والمؤثرات الصوتية.</p>
     </div>
     <div class="card">
       <div class="card-icon">💾</div>
       <div class="card-title">حفظ تلقائي</div>
-      <p>يُحفظ كل شيء محلياً في المتصفح. يمكن استئناف المسابقة المتوقفة في أي وقت.</p>
+      <p>يُحفظ كل شيء محلياً في المتصفح (localStorage + IndexedDB للوسائط الكبيرة). استأنف المسابقة في أي وقت.</p>
     </div>
     <div class="card">
       <div class="card-icon">📱</div>
       <div class="card-title">متوافق مع كل الشاشات</div>
-      <p>يعمل على الهواتف، الأجهزة اللوحية، الحواسيب، وشاشات العرض الكبيرة والـ 4K.</p>
+      <p>يعمل على الهواتف (بلمسة الإصبع)، الأجهزة اللوحية، الحواسيب، وشاشات العرض الكبيرة والـ 4K.</p>
     </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT'S NEW V6 ═══ -->
+<section class="section" id="whats-new-v6">
+  <div class="section-header">
+    <div class="section-icon icon-gold">🆕</div>
+    <div><div class="section-title">الجديد في الإصدار 6</div><div class="section-sub">ملخّص سريع لأهم التحسينات الـ 63</div></div>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card" style="border-color:rgba(0,245,212,.3)">
+      <div class="card-icon">📝</div>
+      <div class="card-title">نوع سؤال "ترتيب"</div>
+      <p>أضف سؤالاً يطلب من الفريق ترتيب عناصر (تواريخ، خطوات، قيم) بالسحب والإفلات. يعمل بالفأرة واللمس.</p>
+    </div>
+    <div class="card" style="border-color:rgba(123,97,255,.3)">
+      <div class="card-icon">🎞</div>
+      <div class="card-title">زر "السابق" في الوضع التسلسلي</div>
+      <p>تنقّل بين شاشات الترحيب والشكر والفرق والأقسام بحرية — للأمام وللخلف.</p>
+    </div>
+    <div class="card" style="border-color:rgba(255,64,96,.3)">
+      <div class="card-icon">⏭</div>
+      <div class="card-title">تأكيد قبل "التالي"</div>
+      <p>عند الضغط على "التالي" بدون إجابة: اختر بين تنبيه، خيار خصم النقاط، أو انتقال صامت.</p>
+    </div>
+    <div class="card" style="border-color:rgba(0,230,118,.3)">
+      <div class="card-icon">📐</div>
+      <div class="card-title">تحكم بارتفاع الفرق</div>
+      <p>5 خيارات للارتفاع بما فيها "ملء الشاشة" الذي يمتد بين الشريطين العلوي والسفلي.</p>
+    </div>
+    <div class="card" style="border-color:rgba(0,212,255,.3)">
+      <div class="card-icon">🔍</div>
+      <div class="card-title">البحث أثناء اللعب</div>
+      <p>زر 🔍 في شاشة السؤال يفتح قائمة الأسئلة مع بحث بالنص أو الرقم للانتقال الفوري.</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,146,60,.3)">
+      <div class="card-icon">📡</div>
+      <div class="card-title">التحكم عن بُعد</div>
+      <p>افتح نافذتين على نفس المتصفح وتحكّم بالعرض من الثانية عبر BroadcastChannel.</p>
+    </div>
+    <div class="card" style="border-color:rgba(167,139,250,.3)">
+      <div class="card-icon">🎨</div>
+      <div class="card-title">لوحات ألوان مخصصة</div>
+      <p>احفظ تركيبة الألوان الخاصة بك، طبّقها في أي وقت، أو شاركها عبر التصدير.</p>
+    </div>
+    <div class="card" style="border-color:rgba(0,245,212,.3)">
+      <div class="card-icon">📱</div>
+      <div class="card-title">السحب والإفلات على الجوال</div>
+      <p>أعد ترتيب الفرق والأقسام والأسئلة بإصبعك — نظام سحب كامل متوافق مع اللمس.</p>
+    </div>
+    <div class="card" style="border-color:rgba(255,64,96,.3)">
+      <div class="card-icon">😰</div>
+      <div class="card-title">موسيقى التوتر المحسّنة</div>
+      <p>تفعيل/تعطيل مستقل، مستوى صوت منفصل، خيار بين النغمات المدمجة أو ملف صوتي مخصص.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:20px">
+    <span class="callout-icon">💡</span>
+    <span><strong>ملاحظة:</strong> جميع الإعدادات الجديدة متاحة من <strong>لوحة التحكم → تبويب الإعدادات</strong>. لا تحتاج لأي إعداد خارجي — كل شيء يعمل مباشرةً من المتصفح.</span>
   </div>
 </section>
 
@@ -441,8 +504,6 @@ kbd{
         <tr><td><strong>خلط الأسئلة</strong><span class="new-badge">جديد</span></td><td>يُعيد ترتيب الأسئلة عشوائياً في كل جلسة</td><td>معطّل</td></tr>
         <tr><td><strong>خلط الخيارات</strong><span class="new-badge">جديد</span></td><td>يُرتّب خيارات أ-ب-ج-د بشكل عشوائي</td><td>معطّل</td></tr>
         <tr><td><strong>بنك الأسئلة</strong><span class="new-badge">جديد</span></td><td>عدد الأسئلة العشوائية التي تُعرض من كل قسم لكل جلسة. 0 = كل الأسئلة</td><td>0</td></tr>
-        <tr><td><strong>الخصم عند الخطأ</strong><span class="new-badge">جديد</span></td><td>خصم نقاط من الفريق عند الإجابة الخاطئة. يمكن ضبط قيمة الخصم (1-10)</td><td>معطّل</td></tr>
-        <tr><td><strong>مكافأة التسلسل</strong><span class="new-badge">جديد</span></td><td>منح نقاط إضافية عند تحقيق سلسلة إجابات صحيحة متتالية. يمكن ضبط عدد الإجابات المطلوبة (2-10) وقيمة المكافأة (1-20)</td><td>معطّل</td></tr>
         <tr><td><strong>صوت الإجابة الصحيحة</strong></td><td>المؤثر الصوتي عند الإجابة الصحيحة</td><td>تصفيق</td></tr>
         <tr><td><strong>صوت الإجابة الخاطئة</strong></td><td>المؤثر الصوتي عند الإجابة الخاطئة</td><td>صوت خطأ</td></tr>
       </tbody>
@@ -471,7 +532,7 @@ kbd{
       <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">أضف قسماً جديداً</div>
-        <div class="step-desc">اضغط "➕ إضافة" لفتح نافذة إنشاء قسم. حدد: الاسم، الأيقونة (emoji)، واللون. يمكن أيضاً رفع صورة خلفية للقسم تُعرض على بطاقته في شاشة العرض. يظهر هذا القسم كزر في شاشة العرض.</div>
+        <div class="step-desc">اضغط "➕ إضافة" لفتح نافذة إنشاء قسم. حدد: الاسم، الأيقونة (emoji)، واللون. يظهر هذا القسم كزر في شاشة العرض.</div>
         <div class="step-tip">💡 اختر ألواناً متباينة لتسهيل التمييز بين الأقسام أثناء العرض</div>
       </div>
     </div>
@@ -492,7 +553,6 @@ kbd{
     <div><div class="section-title">إضافة الأسئلة</div><div class="section-sub">كيفية إنشاء الأسئلة وتحريرها</div></div>
   </div>
   <div class="callout tip"><span class="callout-icon">✅</span><span>في نافذة إضافة السؤال، أدخل نص السؤال وخيارات الإجابة (خياران كحد أدنى). لكل خيار: نص، معادلة رياضية، <strong>أو صورة</strong>.</span></div>
-  <div class="callout info"><span class="callout-icon">🔍</span><span><strong>بحث وتصفية:</strong> استخدم شريط البحث أعلى قائمة الأسئلة للعثور على سؤال بالنص. يمكن تصفية الأسئلة حسب الصعوبة (سهل / متوسط / صعب) أو حسب النوع (صح/خطأ). كما يمكن <strong>نسخ أي سؤال</strong> بالضغط على زر النسخ بجانبه لإنشاء نسخة مطابقة قابلة للتعديل.</span></div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>الحقل</th><th>الوصف</th><th>ملاحظات</th></tr></thead>
@@ -637,14 +697,14 @@ kbd{
       <div class="step-num">2</div>
       <div class="step-body">
         <div class="step-title">أدخل اسم الفريق واللون</div>
-        <div class="step-desc">اختر اسماً مميزاً ولوناً يميز الفريق في الشاشة والشريط السفلي. يمكن أيضاً رفع صورة (شعار) للفريق تظهر في بطاقته.</div>
+        <div class="step-desc">اختر اسماً مميزاً ولوناً يميز الفريق في الشاشة والشريط السفلي.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
         <div class="step-title">أضف أعضاء الفريق</div>
-        <div class="step-desc">أدخل اسم كل عضو واضغط "➕ إضافة" أو مفتاح Enter. يمكن رفع صورة شخصية لكل عضو بالضغط على أيقونة الكاميرا. تظهر أسماء الأعضاء وصورهم في بطاقة الفريق أثناء العرض.</div>
+        <div class="step-desc">أدخل اسم كل عضو واضغط "➕ إضافة" أو مفتاح Enter. تظهر أسماء الأعضاء في بطاقة الفريق أثناء العرض.</div>
         <div class="step-tip">💡 يمكنك تعديل نقاط أي فريق يدوياً من بطاقته (زر +1 / −1 / صفر)</div>
       </div>
     </div>
@@ -672,41 +732,7 @@ kbd{
   </div>
 </section>
 
-<!-- ═══ CAT DISPLAY MODES (NEW) ═══ -->
-<section class="section" id="cat-display">
-  <div class="section-header">
-    <div class="section-icon icon-purple">🖼️</div>
-    <div><div class="section-title">طرق عرض الأقسام <span class="new-badge">5 طرق</span></div><div class="section-sub">اختر الشكل الأنسب لعرض أقسام المسابقة</div></div>
-  </div>
-  <div class="callout info"><span class="callout-icon">⚙️</span><span>يُضبط من <strong>لوحة التحكم → المظهر → طريقة عرض الأقسام</strong>. يمكن التبديل بين الطرق أثناء المسابقة من أزرار أعلى شاشة الأقسام.</span></div>
-  <div class="cards-grid">
-    <div class="card" style="border-color:rgba(0,245,212,.3)">
-      <div class="card-icon">⊞</div>
-      <div class="card-title">شبكة البطاقات (افتراضي)</div>
-      <p>بطاقات كبيرة ملوّنة في شبكة مرنة. تظهر أيقونة القسم واسمه وعدد الأسئلة المتبقية. الطريقة الأوضح والأبسط.</p>
-    </div>
-    <div class="card" style="border-color:rgba(123,97,255,.3)">
-      <div class="card-icon">🎡</div>
-      <div class="card-title">عجلة الحظ</div>
-      <p>عجلة دوّارة ملوّنة تحتوي على جميع الأقسام. اضغط زر "🎡 لف!" لتدور العجلة وتختار قسماً عشوائياً. مثالية لإضافة عنصر المفاجأة والتشويق.</p>
-    </div>
-    <div class="card" style="border-color:rgba(0,230,118,.3)">
-      <div class="card-icon">🃏</div>
-      <div class="card-title">بطاقات مخفية</div>
-      <p>بطاقات مقلوبة لا تظهر محتواها حتى يضغط عليها الفريق. بعد الضغط تنقلب البطاقة وتكشف القسم. مثالية لمسابقات المفاجآت.</p>
-    </div>
-    <div class="card" style="border-color:rgba(251,146,60,.3)">
-      <div class="card-icon">☰</div>
-      <div class="card-title">عرض القائمة</div>
-      <p>قائمة عمودية مرتّبة بأسماء الأقسام مع شريط تقدم يوضح عدد الأسئلة المكتملة والمتبقية لكل قسم.</p>
-    </div>
-    <div class="card" style="border-color:rgba(167,139,250,.3)">
-      <div class="card-icon">📊</div>
-      <div class="card-title">لوحة جيوباردي</div>
-      <p>لوحة شبكية على غرار برنامج Jeopardy الشهير. الأعمدة = الأقسام، الصفوف = الأسئلة مرتّبة بالصعوبة. يمكن اختيار أي سؤال مباشرة من الشبكة.</p>
-    </div>
-  </div>
-</section>
+<!-- ═══ PRESENTATION ═══ -->
 <section class="section" id="presentation">
   <div class="section-header">
     <div class="section-icon icon-blue">🎬</div>
@@ -908,64 +934,6 @@ kbd{
   <div class="callout warn" style="margin-top:16px"><span class="callout-icon">⚠️</span><span>إذا لم يتبقَّ خيارات كافية لطوق 50/50 (مثلاً سؤال بخيارين فقط)، يُعاد الطوق تلقائياً ويظهر تنبيه.</span></div>
 </section>
 
-<!-- ═══ BUZZER MODE (NEW) ═══ -->
-<section class="section" id="buzzer">
-  <div class="section-header">
-    <div class="section-icon icon-red">🔔</div>
-    <div><div class="section-title">وضع المُسرِّع (Buzzer) <span class="new-badge">جديد في v5</span></div><div class="section-sub">من يضغط أولاً يجيب!</div></div>
-  </div>
-  <div class="callout new"><span class="callout-icon">🔔</span><span>وضع المُسرِّع يُحوّل المسابقة إلى تحدّي سرعة: تظهر أزرار كبيرة لكل فريق، والفريق الذي يضغط أولاً يحصل على فرصة الإجابة.</span></div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">تفعيل وضع المُسرِّع</div>
-        <div class="step-desc">من شاشة السؤال أثناء العرض، اضغط على زر "🔔 المُسرِّع" لفتح شاشة المُسرِّع. تظهر أزرار ملوّنة كبيرة لكل فريق.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">الضغط السريع</div>
-        <div class="step-desc">يتنافس الفرق على الضغط أولاً. الفريق الذي يضغط زرّه أولاً يظهر اسمه في لافتة كبيرة مع تأثير بصري احتفالي.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">جولة جديدة أو إغلاق</div>
-        <div class="step-desc">اضغط "جولة جديدة" لإعادة ضبط الأزرار لسؤال آخر، أو "إغلاق" للعودة لشاشة السؤال.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ STREAK BONUS (NEW) ═══ -->
-<section class="section" id="streak">
-  <div class="section-header">
-    <div class="section-icon icon-orange">🔥</div>
-    <div><div class="section-title">مكافأة التسلسل <span class="new-badge">جديد في v5</span></div><div class="section-sub">نقاط إضافية للإجابات المتتالية</div></div>
-  </div>
-  <div class="callout new"><span class="callout-icon">🔥</span><span>عند تحقيق الفريق لسلسلة إجابات صحيحة متتالية، يحصل على نقاط مكافأة إضافية تلقائياً مع تأثير بصري مميز!</span></div>
-  <div class="feature-list">
-    <div class="feature-item" style="border-color:rgba(251,146,60,.25)">
-      <div class="fi-icon">⚙️</div>
-      <div class="fi-body">
-        <div class="fi-title">الإعداد</div>
-        <div class="fi-desc">من <strong>لوحة التحكم → الإعدادات</strong>، فعّل "مكافأة التسلسل". اضبط عدد الإجابات المتتالية المطلوبة (الافتراضي: 3) وقيمة المكافأة بالنقاط (الافتراضي: 2).</div>
-      </div>
-    </div>
-    <div class="feature-item" style="border-color:rgba(251,146,60,.25)">
-      <div class="fi-icon">🎯</div>
-      <div class="fi-body">
-        <div class="fi-title">أثناء المسابقة</div>
-        <div class="fi-desc">يظهر عدّاد التسلسل أسفل السؤال. عند تحقيق السلسلة المطلوبة (مثلاً 3 صحيحة متتالية)، تُضاف النقاط تلقائياً ويظهر تأثير "🔥 مكافأة!" متحرك.</div>
-      </div>
-    </div>
-  </div>
-  <div class="callout warn" style="margin-top:16px"><span class="callout-icon">💡</span><span>أي إجابة خاطئة تُعيد عدّاد التسلسل للصفر. التسلسل يُحسب لكل فريق على حدة.</span></div>
-</section>
-
 <!-- ═══ SOUND ═══ -->
 <section class="section" id="sound">
   <div class="section-header">
@@ -999,13 +967,6 @@ kbd{
       <div class="fi-body">
         <div class="fi-title">مستوى الصوت</div>
         <div class="fi-desc">شريط واحد يتحكم في الموسيقى الخلفية. يتزامن بين لوحة التحكم والشريط المصغر في شاشة العرض. أي تغيير يُطبَّق فورياً.</div>
-      </div>
-    </div>
-    <div class="feature-item" style="border-color:rgba(251,146,60,.25)">
-      <div class="fi-icon">🏆</div>
-      <div class="fi-body">
-        <div class="fi-title">موسيقى منصة التتويج <span class="new-badge">جديد في v5</span></div>
-        <div class="fi-desc">ارفع ملف صوتي مخصص يُشغَّل تلقائياً عند فتح منصة التتويج. يمكن ضبط مستوى الصوت وتفعيل التكرار التلقائي. يُضبط من <strong>لوحة التحكم → الإعدادات → قسم الصوت</strong>.</div>
       </div>
     </div>
   </div>
@@ -1175,13 +1136,411 @@ kbd{
   </div>
 </section>
 
-<!-- ═══ CREDITS ═══ -->
-<section class="section" id="credits">
+<!-- ═══ ORDER QUESTION (v6 NEW) ═══ -->
+<section class="section" id="order-question">
   <div class="section-header">
-    <div class="section-icon icon-purple">⭐</div>
-    <div><div class="section-title">الشكر والتقدير</div><div class="section-sub">شاشة شكر مخصصة في نهاية المسابقة</div></div>
+    <div class="section-icon icon-purple">📝</div>
+    <div><div class="section-title">سؤال الترتيب (v6 ✨)</div><div class="section-sub">نوع سؤال جديد يعتمد على السحب والإفلات</div></div>
   </div>
-  <div class="callout tip"><span class="callout-icon">⭐</span><span>أضف أسماء المنظمين والمساهمين والرعاة من تبويب <strong>"⭐ الشكر"</strong> في لوحة التحكم. تُعرض شاشة احترافية في نهاية المسابقة مع أسماء الأشخاص وأدوارهم وصورهم (اختياري). اضغط "معاينة" لرؤية الشاشة قبل العرض.</span></div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>نوع سؤال جديد يعرض عناصر يجب على الفريق ترتيبها بالتسلسل الصحيح. مثالي لأسئلة التاريخ (ترتيب الأحداث)، العلوم (خطوات التجربة)، أو اللغة (ترتيب الأحرف).</span>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">إنشاء السؤال</div>
+        <div class="step-desc">من لوحة التحكم → الأقسام → اختر قسماً → "➕ إضافة سؤال" → تبويب <strong>"📝 ترتيب"</strong>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">أدخل العناصر بالترتيب الصحيح</div>
+        <div class="step-desc">في حقول الخيارات أ-ب-ج-د، أدخل العناصر بالتسلسل الصحيح. مثال: أ=1969 · ب=1989 · ج=2001 · د=2020. النظام سيخلطها للمتسابقين ويطلب ترتيبها.</div>
+        <div class="step-tip">🎯 يدعم من عنصرين حتى 4 عناصر</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">أثناء العرض</div>
+        <div class="step-desc">تظهر العناصر مخلوطة. الفريق يسحب العناصر (بالفأرة أو بالإصبع على الجوال) لترتيبها. عند الضغط على "✅ تحقق من الإجابة"، تُلوَّن العناصر: أخضر للصحيح، أحمر للخاطئ.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">احتساب النقاط</div>
+        <div class="step-desc">إذا كان الترتيب كاملاً صحيحاً → يحصل الفريق على نقاط السؤال (1 للسهل/المتوسط، حسب الإعدادات للصعب). إذا خاطئ → خصم نقاط إذا كان "الخصم عند الإجابة الخاطئة" مفعّلاً.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TEAM LAYOUT (v6 NEW) ═══ -->
+<section class="section" id="team-layout">
+  <div class="section-header">
+    <div class="section-icon icon-green">📐</div>
+    <div><div class="section-title">تخصيص عرض الفرق (v6 ✨)</div><div class="section-sub">تحكم كامل بحجم وارتفاع بطاقات الفرق</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>أضفنا 5 خيارات لارتفاع بطاقات الفرق في شاشة العرض، بما فيها <strong>"ملء الشاشة"</strong> الذي يجعل البطاقات تمتد بين الشريطين العلوي والسفلي لملء كامل المساحة.</span>
+  </div>
+
+  <div class="cards-grid" style="margin-top:18px">
+    <div class="card" style="border-color:rgba(110,143,174,.3)">
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">تلقائي (Auto)</div>
+      <p>الارتفاع يتكيّف مع المحتوى. مناسب للفرق القليلة مع عدد محدود من الأعضاء. الافتراضي.</p>
+    </div>
+    <div class="card" style="border-color:rgba(0,245,212,.3)">
+      <div class="card-icon">📦</div>
+      <div class="card-title">مدمج (280px)</div>
+      <p>ارتفاع مدروس — مناسب للعرض على شاشات صغيرة أو عدد كبير من الفرق (6+).</p>
+    </div>
+    <div class="card" style="border-color:rgba(123,97,255,.3)">
+      <div class="card-icon">📊</div>
+      <div class="card-title">متوسط (360px)</div>
+      <p>الحجم الأمثل للشاشات العادية. يعرض جميع الأعضاء بدون تمرير في معظم الحالات.</p>
+    </div>
+    <div class="card" style="border-color:rgba(0,230,118,.3)">
+      <div class="card-icon">📈</div>
+      <div class="card-title">كبير (460px)</div>
+      <p>لعرض مريح على شاشات العرض الكبيرة. مناسب للقاعات والمؤتمرات.</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,146,60,.3)">
+      <div class="card-icon">⛶</div>
+      <div class="card-title">ملء الشاشة</div>
+      <p>يمتد تلقائياً بين الشريط العلوي والشريط السفلي. <strong>الخيار الأفضل للعروض الاحترافية.</strong></p>
+    </div>
+  </div>
+
+  <div class="step" style="margin-top:20px">
+    <div class="step-num">🎯</div>
+    <div class="step-body">
+      <div class="step-title">كيفية التغيير</div>
+      <div class="step-desc">لوحة التحكم → الإعدادات → البحث عن <strong>"ارتفاع بطاقات الفرق في شاشة العرض"</strong> → اختر الخيار المناسب. التطبيق فوري ومباشر.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SEQUENTIAL MODE (v6 UPDATED) ═══ -->
+<section class="section" id="sequential-mode">
+  <div class="section-header">
+    <div class="section-icon icon-blue">🎞</div>
+    <div><div class="section-title">الوضع التسلسلي (v6 محدّث ✨)</div><div class="section-sub">عرض افتتاحي متسلسل بين شاشات المسابقة</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>أضفنا <strong>زر "السابق"</strong> بجانب زر "التالي" للتنقل بحرية بين شاشات: الترحيب ← الشكر ← الفرق ← الأقسام. مع تحسينات استقرار شاملة.</span>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">اختيار الوضع</div>
+        <div class="step-desc">لوحة التحكم → الإعدادات → "نمط بدء العرض" → اختر: <br>
+          • <strong>مباشر</strong> — ينتقل فوراً لشاشة الأقسام (افتراضي) <br>
+          • <strong>تسلسلي تلقائي</strong> — ينتقل كل 5 ثوانٍ بين الشاشات <br>
+          • <strong>تسلسلي يدوي</strong> — تتحكم بالانتقال بزر "التالي" و "السابق"</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">التنقل بين الشاشات</div>
+        <div class="step-desc">يظهر شريط تنقل في الأسفل يحتوي:
+          <br>• <code>→ السابق</code> — الرجوع للشاشة السابقة
+          <br>• <code>1 / 4</code> — موقعك الحالي في التسلسل
+          <br>• <code>التالي ←</code> — الانتقال للشاشة التالية
+          <br>• <code>تخطي</code> — القفز مباشرةً لشاشة الأقسام</div>
+        <div class="step-tip">🎯 زر "السابق" معطّل في الشاشة الأولى (opacity منخفض)</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">إخفاء زر "بدء المسابقة"</div>
+        <div class="step-desc">في الوضع التسلسلي، يُخفى زر "بدء المسابقة" تلقائياً من شاشات الفرق والأقسام (مفعّل افتراضياً). يمكن تغييره من الإعدادات → "إخفاء زر بدء المسابقة في النمط التسلسلي".</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NEXT BEHAVIOR (v6 NEW) ═══ -->
+<section class="section" id="next-behavior">
+  <div class="section-header">
+    <div class="section-icon icon-red">⏭</div>
+    <div><div class="section-title">سلوك زر "التالي" (v6 ✨)</div><div class="section-sub">تحكم بما يحدث عند الضغط على "التالي" بدون إجابة</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>عندما يضغط المقدم "التالي" دون الإجابة على السؤال، يمكنك اختيار ثلاثة سلوكيات مختلفة من لوحة التحكم.</span>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card" style="border-color:rgba(245,200,66,.3)">
+      <div class="card-icon">⚠️</div>
+      <div class="card-title">تنبيه (Warn)</div>
+      <p>يظهر تنبيه: <em>"لم تتم الإجابة. هل تريد المتابعة؟"</em> مع زر "انتقال بدون خصم". <strong>الوضع الافتراضي.</strong></p>
+    </div>
+    <div class="card" style="border-color:rgba(255,64,96,.3)">
+      <div class="card-icon">❌</div>
+      <div class="card-title">خيار الخصم (Deduct)</div>
+      <p>نفس التنبيه السابق + زر إضافي <strong>"⏭ خصم وانتقال"</strong> يخصم النقاط من الفريق الحالي عند تفعيل الخصم.</p>
+    </div>
+    <div class="card" style="border-color:rgba(110,143,174,.3)">
+      <div class="card-icon">🤫</div>
+      <div class="card-title">انتقال صامت (Silent)</div>
+      <p>ينتقل مباشرةً للسؤال التالي بدون أي تنبيه. مناسب للمسابقات السريعة.</p>
+    </div>
+  </div>
+
+  <div class="step" style="margin-top:20px">
+    <div class="step-num">🎯</div>
+    <div class="step-body">
+      <div class="step-title">الوصول للإعداد</div>
+      <div class="step-desc">لوحة التحكم → الإعدادات → <strong>"عند الضغط على التالي بدون إجابة"</strong> → اختر أحد الأوضاع الثلاثة. التغيير فوري.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PLAY SEARCH (v6 NEW) ═══ -->
+<section class="section" id="play-search">
+  <div class="section-header">
+    <div class="section-icon icon-blue">🔍</div>
+    <div><div class="section-title">البحث أثناء اللعب (v6 ✨)</div><div class="section-sub">انتقل لأي سؤال بنقرة واحدة</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>زر جديد 🔍 في شريط شاشة السؤال يتيح لك تصفّح قائمة الأسئلة كاملة والانتقال مباشرةً لأي سؤال تريده — مثالي لتجاوز سؤال أو الرجوع لسؤال سبق.</span>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">فتح قائمة البحث</div>
+        <div class="step-desc">في شاشة السؤال، اضغط زر <strong>🔍</strong> في الشريط العلوي. تفتح نافذة تعرض جميع أسئلة القسم الحالي.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">البحث بالنص أو الرقم</div>
+        <div class="step-desc">اكتب في مربع البحث: <br>
+          • <strong>كلمة أو جزء من السؤال</strong> — مثال: "الجاذبية" <br>
+          • <strong>رقم السؤال</strong> — مثال: "3" ينتقل للسؤال الثالث</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">قراءة الحالة</div>
+        <div class="step-desc">كل سؤال يُعرض مع حالته:
+          <br>• <span style="color:#00e676">✅</span> — تمت الإجابة عليه (غير قابل للنقر)
+          <br>• <strong>قابل للنقر</strong> — لم تتم الإجابة بعد</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">الانتقال</div>
+        <div class="step-desc">انقر على أي سؤال متاح → تُغلق النافذة تلقائياً وينتقل العرض للسؤال المختار فوراً.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REMOTE CONTROL (v6 NEW) ═══ -->
+<section class="section" id="remote-control">
+  <div class="section-header">
+    <div class="section-icon icon-orange">📡</div>
+    <div><div class="section-title">التحكم عن بُعد (v6 ✨)</div><div class="section-sub">تحكّم بالعرض من نافذة أو جهاز آخر على نفس المتصفح</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>استخدم <strong>BroadcastChannel API</strong> للتحكم بالعرض من نافذة أخرى — لا يحتاج خادم، لا يحتاج اتصال إنترنت. مفيد جداً إذا كنت تعرض على شاشة كبيرة وتريد التحكم من لابتوب صغير.</span>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">افتح النافذة الأولى (العرض)</div>
+        <div class="step-desc">افتح الصفحة الرئيسية للمنصة في متصفح على الشاشة الكبيرة. ابدأ المسابقة عادياً.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">افتح النافذة الثانية (التحكم)</div>
+        <div class="step-desc">في نفس المتصفح (مهم!)، افتح تبويب جديد أو نافذة جديدة بنفس رابط المنصة. اضغط زر <strong>📡</strong> في شاشة السؤال.</div>
+        <div class="step-tip">🎯 يجب أن يكون نفس المتصفح — لن يعمل بين Chrome و Firefox مثلاً</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">استخدم لوحة التحكم</div>
+        <div class="step-desc">تظهر 7 أزرار:
+          <br>• <strong>التالي ←</strong> — الانتقال للسؤال التالي
+          <br>• <strong>🔍 كشف</strong> — كشف الإجابة
+          <br>• <strong>📂 الأقسام</strong> — الرجوع لشاشة الأقسام
+          <br>• <strong>🏆 النتائج</strong> — عرض النتائج
+          <br>• <strong>⏱ العداد</strong> — تشغيل/إيقاف العداد
+          <br>• <strong>🎵 الموسيقى</strong> — تشغيل/إيقاف الموسيقى
+          <br>• <strong>🎊 المنصة</strong> — عرض منصة التتويج</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px">
+    <span class="callout-icon">💡</span>
+    <span><strong>نصيحة:</strong> يمكنك استخدام جهاز آخر (مثل تابلت أو هاتف) كريموت — فقط افتح نفس الرابط في متصفح الجوال على نفس الشبكة المحلية للجهاز الرئيسي. الأزرار تعمل مباشرةً.</span>
+  </div>
+</section>
+
+<!-- ═══ CUSTOM PALETTES (v6 NEW) ═══ -->
+<section class="section" id="custom-palettes">
+  <div class="section-header">
+    <div class="section-icon icon-purple">🎨</div>
+    <div><div class="section-title">لوحات الألوان المخصصة (v6 ✨)</div><div class="section-sub">احفظ وشارك تركيبات ألوان بلا حدود</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>بالإضافة للثيم المخصص الفردي، أصبح بإمكانك الآن حفظ <strong>عدد لا محدود من لوحات الألوان</strong> واستعادتها في أي وقت.</span>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">إنشاء لوحة</div>
+        <div class="step-desc">لوحة التحكم → المظهر → اختر ثيم <strong>"مخصص"</strong> → عدّل الألوان كما تريد (الخلفية، النصوص، التمييز، إلخ).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">حفظ اللوحة</div>
+        <div class="step-desc">في لوحة الثيم المخصص، ابحث عن <strong>"💾 حفظ اللوحة"</strong> → اكتب اسماً (مثل "لوحة المدرسة" أو "الخريف الدافئ") → احفظ.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">تطبيق لوحة محفوظة</div>
+        <div class="step-desc">اضغط <strong>"📂 استعادة"</strong> → تظهر قائمة جميع لوحاتك المحفوظة مع عيّنة ألوان صغيرة لكل واحدة → اضغط <strong>تطبيق</strong>.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">إعادة تعيين أو حذف</div>
+        <div class="step-desc">• <strong>🔄 إعادة تعيين</strong> — يرجع للثيم الافتراضي <br>• <strong>✕</strong> بجانب أي لوحة في القائمة — يحذفها نهائياً</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px">
+    <span class="callout-icon">💾</span>
+    <span><strong>مكان التخزين:</strong> اللوحات تُحفظ في <code>localStorage</code> الخاص بالمتصفح مفتاح <code>quiz_custom_palettes</code>. لن تُفقد بعد إغلاق المتصفح، لكن مسح بيانات الموقع سيحذفها.</span>
+  </div>
+</section>
+
+<!-- ═══ TENSE MUSIC (v6 NEW) ═══ -->
+<section class="section" id="tense-music">
+  <div class="section-header">
+    <div class="section-icon icon-red">😰</div>
+    <div><div class="section-title">موسيقى التوتر (v6 محسّنة ✨)</div><div class="section-sub">أضف الإثارة للثواني الأخيرة من كل سؤال</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>طورنا نظام موسيقى التوتر بشكل كامل: تفعيل/تعطيل مستقل، مستوى صوت منفصل عن الموسيقى العامة، وخيار استخدام ملف صوتي خاص بك.</span>
+  </div>
+
+  <div class="feature-list">
+    <div class="feature-item">
+      <div class="fi-icon">🎚</div>
+      <div class="fi-body">
+        <div class="fi-title">تفعيل/تعطيل</div>
+        <div class="fi-desc">خانة اختيار "تفعيل موسيقى التوتر" — يمكنك إيقافها كلياً إذا كنت لا تريد أي تأثير صوتي في النهاية.</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">🎵</div>
+      <div class="fi-body">
+        <div class="fi-title">نوع الموسيقى</div>
+        <div class="fi-desc">• <strong>مدمجة</strong>: نغمات توتر مُولَّدة تلقائياً (افتراضي)<br>• <strong>ملف مخصص</strong>: ارفع ملف MP3/OGG/WAV خاص بك</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">🔊</div>
+      <div class="fi-body">
+        <div class="fi-title">مستوى صوت مستقل</div>
+        <div class="fi-desc">Slider منفصل من 10% إلى 100% — مستقل تماماً عن موسيقى الخلفية العامة.</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <div class="fi-icon">⏰</div>
+      <div class="fi-body">
+        <div class="fi-title">وقت التشغيل</div>
+        <div class="fi-desc">من الإعدادات → "تشغيل موسيقى التوتر في آخر X ثانية" (3-30 ثانية من نهاية العداد).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px">
+    <span class="callout-icon">🎯</span>
+    <span><strong>نصيحة:</strong> استخدم ملف توتر بسيط (مثل تيك-تاك ساعة أو نبضات قلب) بدلاً من موسيقى كاملة. الهدف إضافة ضغط نفسي، ليس تشتيت الانتباه.</span>
+  </div>
+</section>
+
+<!-- ═══ MOBILE TOUCH (v6 NEW) ═══ -->
+<section class="section" id="mobile-touch">
+  <div class="section-header">
+    <div class="section-icon icon-blue">📱</div>
+    <div><div class="section-title">استخدام الجوال (v6 ✨)</div><div class="section-sub">دعم كامل للّمس والسحب بالإصبع</div></div>
+  </div>
+  <div class="callout new">
+    <span class="callout-icon">🆕</span>
+    <span>أضفنا نظام سحب وإفلات كامل يعمل على الشاشات اللمسية — أعد ترتيب الفرق والأقسام والأسئلة بإصبعك مباشرةً.</span>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card" style="border-color:rgba(0,245,212,.3)">
+      <div class="card-icon">👆</div>
+      <div class="card-title">سحب الأقسام</div>
+      <p>المس مقبض السحب <code>⠿</code> بجانب اسم القسم، اسحب للأعلى أو الأسفل لإعادة الترتيب. سيظهر إطار أخضر للمكان الجديد.</p>
+    </div>
+    <div class="card" style="border-color:rgba(0,230,118,.3)">
+      <div class="card-icon">🎯</div>
+      <div class="card-title">سحب الفرق</div>
+      <p>نفس الآلية في تبويب الفرق — المس المقبض الصغير واسحب. إطار أصفر يؤشّر للموقع الجديد.</p>
+    </div>
+    <div class="card" style="border-color:rgba(167,139,250,.3)">
+      <div class="card-icon">❓</div>
+      <div class="card-title">سحب الأسئلة</div>
+      <p>داخل القسم، المس مقبض السؤال واسحب لإعادة ترتيبها ضمن القسم.</p>
+    </div>
+    <div class="card" style="border-color:rgba(251,146,60,.3)">
+      <div class="card-icon">📝</div>
+      <div class="card-title">سؤال الترتيب</div>
+      <p>أثناء العرض، إذا كان نوع السؤال "ترتيب" — يمكن للفريق السحب مباشرةً بإصبعه على الشاشة للوصول للترتيب الصحيح.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:28px;margin-bottom:12px">⚠️ تنبيه: منع تحديث الصفحة</h3>
+  <div class="callout" style="background:rgba(255,64,96,.06);border-color:rgba(255,64,96,.3)">
+    <span class="callout-icon">🛡</span>
+    <span>على الجوال، عندما تسحب لأسفل في أعلى الصفحة عادةً تُحدَّث الصفحة. <strong>هذا محجوب أثناء المسابقة</strong> — ستظهر نافذة تأكيد تسألك "هل تريد التحديث؟" بدلاً من التحديث المباشر.</span>
+  </div>
 </section>
 
 <!-- ═══ TIPS ═══ -->
@@ -1322,21 +1681,6 @@ kbd{
           <td><strong>منصة التتويج لا تظهر بشكل صحيح</strong></td>
           <td>لا توجد فرق بنقاط مختلفة</td>
           <td>تأكد من إضافة فرق ومنح نقاط لها قبل فتح المنصة</td>
-        </tr>
-        <tr>
-          <td><strong>المُسرِّع لا يستجيب</strong></td>
-          <td>لم يتم إضافة فرق</td>
-          <td>أضف فريقين على الأقل قبل استخدام وضع المُسرِّع</td>
-        </tr>
-        <tr>
-          <td><strong>مكافأة التسلسل لا تظهر</strong></td>
-          <td>الميزة معطّلة أو لم تتحقق السلسلة</td>
-          <td>فعّل "مكافأة التسلسل" من الإعدادات وتأكد من تحقيق العدد المطلوب من الإجابات المتتالية</td>
-        </tr>
-        <tr>
-          <td><strong>موسيقى المنصة لا تعمل</strong></td>
-          <td>لم يُرفع ملف صوتي أو قيود المتصفح</td>
-          <td>ارفع ملف صوتي من إعدادات الصوت وانقر على الصفحة أولاً لتفعيل الصوت</td>
         </tr>
       </tbody>
     </table>
