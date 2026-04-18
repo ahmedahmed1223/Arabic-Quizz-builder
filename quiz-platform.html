@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>منصة المسابقات التفاعلية</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
@@ -424,6 +425,8 @@ body{position:relative;transition:background .4s}
 .btn-success{background:linear-gradient(135deg,#00a854,var(--success));color:#001a0e}
 .btn-success:hover{box-shadow:0 4px 18px rgba(0,230,118,.38);transform:translateY(-1px)}
 .btn-purple{background:linear-gradient(135deg,#6d52e0,#a78bfa);color:#0e0a26}
+.btn-gold{background:linear-gradient(135deg,#c8960a,#f5c842);color:#1a1000}
+.btn-gold:hover{box-shadow:0 4px 18px rgba(245,200,66,.4);transform:translateY(-1px)}
 .btn-purple:hover{box-shadow:0 4px 18px rgba(167,139,250,.38);transform:translateY(-1px)}
 .btn-sm{padding:6px 13px;font-size:.8rem}
 .btn-lg{padding:15px 34px;font-size:1.08rem}
@@ -872,13 +875,13 @@ body{position:relative;transition:background .4s}
 .btn-label-hide-xs{display:inline}
 
 /* ── TEAMS SLIDE ── */
-#view-teams{min-height:100svh;padding:calc(var(--header-h) + clamp(14px,2vh,28px)) clamp(12px,2vw,24px) calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 16px);display:flex;flex-direction:column;align-items:center;overflow-y:auto;-webkit-overflow-scrolling:touch;box-sizing:border-box;}
+#view-teams{min-height:100svh;padding:calc(var(--header-h) + clamp(14px,2vh,28px)) clamp(12px,2vw,24px) calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 16px);display:flex;flex-direction:column;align-items:center;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;box-sizing:border-box;width:100%;}
 .teams-slide-title{font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:900;color:var(--accent1);text-shadow:var(--glow1);margin-bottom:clamp(18px,3.5vh,36px);animation:float-up .6s ease both;text-align:center;letter-spacing:.01em}
-.teams-pres-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;width:100%;max-width:1200px;align-content:stretch;justify-items:stretch;flex:1;align-items:stretch}
-.teams-pres-grid[data-count="1"]{grid-template-columns:minmax(280px,420px);justify-content:center}
-.teams-pres-grid[data-count="2"]{grid-template-columns:repeat(2,minmax(220px,420px));justify-content:center}
-.teams-pres-grid[data-count="3"]{grid-template-columns:repeat(3,minmax(220px,1fr))}
-.teams-pres-grid[data-count="4"]{grid-template-columns:repeat(2,minmax(220px,1fr));grid-template-rows:repeat(2,1fr)}
+.teams-pres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));gap:16px;width:100%;max-width:1200px;align-content:start;justify-items:stretch;flex:1;overflow-x:hidden;box-sizing:border-box}
+.teams-pres-grid[data-count="1"]{grid-template-columns:min(420px,100%);justify-content:center}
+.teams-pres-grid[data-count="2"]{grid-template-columns:repeat(2,minmax(min(220px,45%),1fr));justify-content:center}
+.teams-pres-grid[data-count="3"]{grid-template-columns:repeat(3,minmax(min(180px,30%),1fr))}
+.teams-pres-grid[data-count="4"]{grid-template-columns:repeat(2,minmax(min(200px,45%),1fr));grid-template-rows:repeat(2,1fr)}
 
 /* ── CATEGORIES ── */
 .categories-pres-grid{
@@ -974,7 +977,8 @@ body{position:relative;transition:background .4s}
 .question-box{background:var(--bg-card);border:2px solid var(--border-light);border-radius:22px;padding:26px;margin-bottom:18px;position:relative;overflow:hidden;animation:float-up .5s ease;box-shadow:0 8px 40px rgba(0,0,0,.35)}
 .question-box::before{content:'';position:absolute;top:0;right:0;left:0;height:4px;background:linear-gradient(90deg,var(--accent2),var(--accent1),var(--accent2))}
 .question-number-label{font-size:.76rem;color:var(--text-muted);font-weight:700;margin-bottom:9px;letter-spacing:.06em;text-transform:uppercase}
-.question-text-main{font-size:calc(clamp(1.15rem,3vw,1.75rem)*var(--fs));font-weight:800;line-height:1.6;unicode-bidi:plaintext;direction:rtl;color:var(--text-primary)}
+.question-text-main{font-size:calc(clamp(1.15rem,3vw,1.75rem)*var(--fs));font-weight:800;line-height:1.6;unicode-bidi:plaintext;direction:rtl;color:var(--text-primary);transition:font-family .2s,line-height .2s}
+.question-text-main[style*="Amiri"]{font-weight:400;letter-spacing:.02em}
 
 /* Options */
 .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
@@ -1162,7 +1166,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   .team-pres-members-section{max-height:none;overflow-y:visible}
   .team-pres-members-title{font-size:.68rem;margin-bottom:4px}
   .team-pres-member-row{padding:3px 6px}
-  .teams-pres-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+  .teams-pres-grid{grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:8px;overflow-x:hidden}
   .teams-slide-title{font-size:clamp(1.2rem,3.5vw,2rem);margin-bottom:clamp(10px,2vh,18px)}
   /* Scores compact on mobile */
   .scoreboard-title{font-size:clamp(1.3rem,4vw,2.2rem);margin-bottom:clamp(10px,2vh,18px)}
@@ -1226,7 +1230,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   .intro-badge{margin-bottom:clamp(8px,2vh,16px);padding:5px 14px;font-size:.78rem}
   .intro-welcome{margin-bottom:clamp(12px,3vh,28px)}
   /* team cards - very compact on phone */
-  .teams-pres-grid{grid-template-columns:1fr 1fr;gap:6px}
+  .teams-pres-grid{grid-template-columns:repeat(auto-fill,minmax(min(140px,45%),1fr));gap:6px;overflow-x:hidden}
   .team-pres-card .team-pres-body{padding:10px 8px 8px}
   .team-pres-avatar{width:36px;height:36px;font-size:1rem;margin-bottom:4px;border-width:2px}
   .team-pres-name{font-size:.82rem;margin-bottom:2px}
@@ -1545,7 +1549,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 
 @media(min-width:1200px){
-.teams-pres-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.teams-pres-grid{grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr))}
   .team-pres-member-name{font-size:.9rem}
 }
 
@@ -1865,7 +1869,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 
 /* ══ BIG CLOCK VIEW ══ */
-#view-bigclock{
+#view-bigclock{z-index:1;will-change:transform;
   position:fixed;inset:0;z-index:4000;
   background:var(--bg-deep);
   display:flex;align-items:center;justify-content:center;
@@ -1928,7 +1932,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 }
 
 /* ══ TEAM STATS VIEW ══ */
-#view-teamstats{min-height:100svh;max-height:none;display:block;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:auto;padding:0;box-sizing:border-box;background:var(--bg-deep)}
+#view-teamstats{min-height:100svh;max-height:none;display:block;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scroll-behavior:auto;padding:0;box-sizing:border-box;background:var(--bg-deep);position:relative;z-index:1;will-change:transform}
 .teamstats-wrapper{
   flex:1;padding:calc(var(--header-h)+12px) clamp(12px,3vw,32px) calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 12px);
   display:flex;flex-direction:column;align-items:center;
@@ -2515,6 +2519,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   -webkit-overflow-scrolling:touch;
   box-sizing:border-box;
   scroll-behavior:auto;
+  z-index:1;
+  will-change:transform;
 }
 #view-podium::before{
   content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
@@ -2629,6 +2635,46 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 }
 .podium-confetti-canvas{
   position:absolute;inset:0;pointer-events:none;z-index:2;
+}
+
+
+/* ── FITB (Fill-in-the-blank) ── */
+.q-font-btn{transition:all .15s!important}
+.q-font-btn.font-active{border-color:var(--accent1)!important;color:var(--accent1)!important;background:rgba(0,232,208,.08)!important;font-weight:900!important}
+.fitb-blank-wrap{display:inline-block;margin:0 4px;vertical-align:middle}
+.fitb-input{
+  display:inline-block;min-width:140px;max-width:320px;
+  background:transparent;border:none;border-bottom:3px solid var(--accent1);
+  color:var(--text-primary);font-family:'Cairo',sans-serif;font-size:1em;font-weight:700;
+  text-align:center;padding:4px 10px;outline:none;
+  transition:border-color .2s;border-radius:0;
+}
+.fitb-input:focus{border-bottom-color:var(--accent2)}
+.fitb-input:disabled{border-bottom-color:var(--success);color:var(--success)}
+.fitb-correct-hint{
+  margin-top:10px;color:var(--success);font-weight:700;font-size:.95rem;
+  text-align:center;padding:8px 14px;
+  background:rgba(0,230,118,.08);border-radius:8px;border:1px solid rgba(0,230,118,.25);
+}
+
+/* ── Quran verse display ── */
+.quran-verse-display{
+  font-family:'Amiri','Noto Naskh Arabic',serif;
+  font-size:clamp(1.1rem,3.5vw,1.7rem);
+  line-height:2.2;direction:rtl;
+  text-align:center;color:var(--text-primary);
+  padding:8px 12px;
+  letter-spacing:.02em;
+}
+.quran-verse-display .quran-blank{
+  display:inline-block;border-bottom:3px solid var(--accent1);
+  min-width:120px;margin:0 6px;opacity:.5;
+}
+.quran-meta-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--bg-panel);border:1px solid var(--border);
+  border-radius:20px;padding:4px 12px;font-size:.75rem;
+  color:var(--text-muted);margin-top:8px;
 }
 
 /* ── QUESTION SEARCH ── */
@@ -3010,7 +3056,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 @keyframes member-fade-in{from{opacity:0;transform:translateX(15px)}to{opacity:1;transform:none}}
 
-.order-option-item{background:var(--bg-panel);border:2px solid var(--border);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:grab;touch-action:none;transition:all .2s;user-select:none}
+.order-option-item{background:var(--bg-panel);border:2px solid var(--border);border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:grab;touch-action:none;transition:border-color .15s,background .15s,transform .1s;user-select:none;-webkit-user-select:none}
+.order-option-item.drag-over{border-color:var(--accent2);background:rgba(0,212,255,.06);transform:scale(1.01)}
+.order-option-item.dragging{opacity:.45;transform:scale(.98)}
 .order-option-item:active{cursor:grabbing;transform:scale(1.02);box-shadow:0 6px 20px rgba(0,0,0,.4)}
 .order-option-item.correct-pos{border-color:var(--success);background:rgba(0,230,118,.08)}
 .order-option-item.wrong-pos{border-color:var(--danger);background:rgba(255,61,90,.08)}
@@ -3114,6 +3162,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <div class="admin-logo"><div class="admin-logo-icon" aria-hidden="true"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> <span class="admin-logo-brand">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
     <div class="admin-header-actions">
       <button class="btn btn-success btn-sm" onclick="showView('intro')" aria-label="بدء العرض التقديمي"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M8 5v14l11-7z"/></svg> بدء العرض</button>
+      <button class="btn btn-ghost btn-sm" onclick="openTrainingMode()" title="وضع التدريب">🎓</button>
       <button class="btn btn-ghost btn-sm" onclick="showQuizQR()" title="رمز QR">📱</button>
       <button class="btn btn-ghost btn-sm" onclick="doLogout()" aria-label="تسجيل الخروج">خروج</button>
     </div>
@@ -3145,20 +3194,6 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           <div class="form-group">
             <label class="form-label">نقاط السؤال الصعب</label>
             <div class="number-stepper"><button onclick="stepValue('s-hard-pts',-1)">−</button><input type="number" id="s-hard-pts" value="2" min="1" max="10" oninput="updateSetting('hardPoints',+this.value)"><button onclick="stepValue('s-hard-pts',1)">+</button></div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div>
-            <label class="form-label">إجابة صحيحة</label>
-            <select id="s-sound-correct" class="form-select" onchange="updateSetting('soundCorrect',this.value)">
-              <option value="applause">تصفيق 👏</option><option value="chime">رنين 🎵</option><option value="fanfare">نفير 🎺</option><option value="none">بدون صوت</option>
-            </select>
-          </div>
-          <div>
-            <label class="form-label">إجابة خاطئة</label>
-            <select id="s-sound-wrong" class="form-select" onchange="updateSetting('soundWrong',this.value)">
-              <option value="buzz">خطأ 🔴</option><option value="descend">هبوط 📉</option><option value="none">بدون صوت</option>
-            </select>
           </div>
         </div>
       </div>
@@ -3237,6 +3272,50 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       <div class="card">
         <div class="card-header"><div class="card-title"><div class="icon icon-accent"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div> الموسيقى والمؤثرات الصوتية</div></div>
         <div class="alert alert-info">يمكن تشغيل/إيقاف الموسيقى من شاشة العرض — أو ارفع ملف صوتي خارجي</div>
+
+        <!-- ─── أصوات الإجابة ─── -->
+        <div style="font-size:.74rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px">أصوات الإجابة<span style="flex:1;height:1px;background:var(--border)"></span></div>
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group">
+            <label class="form-label">صوت الإجابة الصحيحة (مدمج)</label>
+            <select id="s-sound-correct" class="form-select" onchange="updateSetting('soundCorrect',this.value)">
+              <option value="applause">تصفيق 👏</option><option value="chime">رنين 🎵</option><option value="fanfare">نفير 🎺</option><option value="none">بدون صوت</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">صوت الإجابة الخاطئة (مدمج)</label>
+            <select id="s-sound-wrong" class="form-select" onchange="updateSetting('soundWrong',this.value)">
+              <option value="buzz">خطأ 🔴</option><option value="descend">هبوط 📉</option><option value="none">بدون صوت</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row" style="margin-bottom:16px">
+          <div class="form-group">
+            <label class="form-label">صوت صحيحة مخصص (ملف خارجي)</label>
+            <div class="audio-file-row">
+              <label class="audio-file-label" for="custom-correct-input">اختر</label>
+              <input type="file" id="custom-correct-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customCorrectData','custom-correct-name')">
+              <span class="audio-file-name" id="custom-correct-name">مدمج</span>
+              <button class="audio-test-btn" id="test-btn-customCorrectData" onclick="testCustomAudio('customCorrectData','test-btn-customCorrectData')">تشغيل</button>
+              <button class="audio-stop-btn hidden" id="stop-btn-customCorrectData" onclick="stopCustomAudioTest('customCorrectData','test-btn-customCorrectData')">إيقاف</button>
+              <button class="audio-clear-btn" onclick="clearCustomAudio('customCorrectData','custom-correct-name')">✕</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">صوت خاطئة مخصص (ملف خارجي)</label>
+            <div class="audio-file-row">
+              <label class="audio-file-label" for="custom-wrong-input">اختر</label>
+              <input type="file" id="custom-wrong-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customWrongData','custom-wrong-name')">
+              <span class="audio-file-name" id="custom-wrong-name">مدمج</span>
+              <button class="audio-test-btn" id="test-btn-customWrongData" onclick="testCustomAudio('customWrongData','test-btn-customWrongData')">تشغيل</button>
+              <button class="audio-stop-btn hidden" id="stop-btn-customWrongData" onclick="stopCustomAudioTest('customWrongData','test-btn-customWrongData')">إيقاف</button>
+              <button class="audio-clear-btn" onclick="clearCustomAudio('customWrongData','custom-wrong-name')">✕</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── الموسيقى الخلفية ─── -->
+        <div style="font-size:.74rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px">الموسيقى الخلفية<span style="flex:1;height:1px;background:var(--border)"></span></div>
         <div class="form-row">
           <div>
             <label class="form-label">نوع الموسيقى الخلفية (مدمجة)</label>
@@ -3265,30 +3344,39 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
             <button class="audio-clear-btn" onclick="clearCustomAudio('customMusicData','custom-music-name')">حذف</button>
           </div>
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">صوت الإجابة الصحيحة (خارجي)</label>
-            <div class="audio-file-row">
-              <label class="audio-file-label" for="custom-correct-input">اختر</label>
-              <input type="file" id="custom-correct-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customCorrectData','custom-correct-name')">
-              <span class="audio-file-name" id="custom-correct-name">مدمج</span>
-              <button class="audio-test-btn" id="test-btn-customCorrectData" onclick="testCustomAudio('customCorrectData','test-btn-customCorrectData')">تشغيل</button>
-              <button class="audio-stop-btn hidden" id="stop-btn-customCorrectData" onclick="stopCustomAudioTest('customCorrectData','test-btn-customCorrectData')">إيقاف</button>
-              <button class="audio-clear-btn" onclick="clearCustomAudio('customCorrectData','custom-correct-name')">✕</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">صوت الإجابة الخاطئة (خارجي)</label>
-            <div class="audio-file-row">
-              <label class="audio-file-label" for="custom-wrong-input">اختر</label>
-              <input type="file" id="custom-wrong-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customWrongData','custom-wrong-name')">
-              <span class="audio-file-name" id="custom-wrong-name">مدمج</span>
-              <button class="audio-test-btn" id="test-btn-customWrongData" onclick="testCustomAudio('customWrongData','test-btn-customWrongData')">تشغيل</button>
-              <button class="audio-stop-btn hidden" id="stop-btn-customWrongData" onclick="stopCustomAudioTest('customWrongData','test-btn-customWrongData')">إيقاف</button>
-              <button class="audio-clear-btn" onclick="clearCustomAudio('customWrongData','custom-wrong-name')">✕</button>
-            </div>
+
+        <!-- ─── موسيقى المنصة ─── -->
+        <div style="font-size:.74rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin:16px 0 10px;display:flex;align-items:center;gap:8px">موسيقى شاشة المنصة<span style="flex:1;height:1px;background:var(--border)"></span></div>
+        <div class="alert alert-info" style="margin-bottom:10px">تُشغَّل تلقائياً عند فتح شاشة إعلان النتائج — مستقلة عن موسيقى المسابقة</div>
+        <div class="form-group">
+          <label class="form-label">ملف موسيقى الإعلان (MP3/OGG/WAV)</label>
+          <div class="audio-file-row">
+            <label class="audio-file-label" for="podium-music-input">اختر ملفاً</label>
+            <input type="file" id="podium-music-input" accept="audio/*" class="hidden" onchange="loadPodiumMusic(this)">
+            <span class="audio-file-name" id="podium-music-name">لم يختر بعد</span>
+            <button class="audio-test-btn" id="test-btn-podiumMusic" onclick="testPodiumMusic()">تشغيل</button>
+            <button class="audio-stop-btn hidden" id="stop-btn-podiumMusic" onclick="stopPodiumMusicTest()">إيقاف</button>
+            <button class="audio-clear-btn" onclick="clearPodiumMusic()">حذف</button>
           </div>
         </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">مستوى صوت موسيقى الإعلان</label>
+            <div style="display:flex;align-items:center;gap:12px">
+              <input type="range" id="s-podium-music-vol" min="0" max="100" value="60" style="flex:1"
+                oninput="updateSetting('podiumMusicVol',+this.value);if(window._podiumAudioEl)window._podiumAudioEl.volume=(+this.value/100);document.getElementById('podium-vol-display').textContent=this.value+'%'">
+              <span id="podium-vol-display" style="min-width:36px;font-weight:700;color:var(--accent1)">60%</span>
+            </div>
+          </div>
+          <div class="form-group" style="display:flex;align-items:center;gap:8px;padding-top:24px">
+            <input type="checkbox" id="s-podium-music-loop" style="width:16px;height:16px;accent-color:var(--accent1)"
+              onchange="updateSetting('podiumMusicLoop',this.checked)">
+            <span class="text-sm text-muted">تكرار الموسيقى (Loop)</span>
+          </div>
+        </div>
+
+        <!-- ─── موسيقى التوتر ─── -->
+        <div style="font-size:.74rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin:16px 0 10px;display:flex;align-items:center;gap:8px">موسيقى التوتر<span style="flex:1;height:1px;background:var(--border)"></span></div>
         <div class="form-group">
           <label class="form-label">تشغيل موسيقى التوتر في آخر</label>
           <div class="number-stepper">
@@ -3355,17 +3443,22 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
             <div id="progressive-mode-wrap" style="display:none;margin-top:8px">
               <select id="s-progressive-reveal-mode" class="form-select" onchange="updateSetting('progressiveRevealMode',this.value);document.getElementById('reveal-duration-wrap').style.display=this.value==='auto'?'block':'none'">
                 <option value="manual">يدوي — اضغط لكشف كل خيار</option>
-                <option value="auto">تلقائي — كشف تسلسلي تلقائي حسب المدة المحددة</option>
+                <option value="auto">تلقائي — كشف تسلسلي كل مدة زمنية محددة</option>
               </select>
-              <div class="text-sm text-muted mt-3">في النمط اليدوي اضغط "التالي" أو Space | في التلقائي تظهر الخيارات واحداً تلو الآخر</div>
+              <div class="text-sm text-muted mt-3">في النمط اليدوي اضغط زر "إظهار خيار" | في التلقائي تظهر الخيارات واحداً تلو الآخر حسب المدة</div>
               <div id="reveal-duration-wrap" style="display:none;margin-top:10px">
-                <label class="form-label">مدة كشف كل خيار (ثانية)</label>
+                <label class="form-label">فترة الكشف — كل خيار يظهر بعد <span id="reveal-dur-display" style="color:var(--accent2);font-weight:900">1.0</span> ثانية</label>
                 <div style="display:flex;align-items:center;gap:12px">
-                  <input type="range" id="s-reveal-duration" min="500" max="5000" step="250" value="1000" style="flex:1"
-                    oninput="updateSetting('revealDuration',+this.value);document.getElementById('reveal-dur-display').textContent=(this.value/1000).toFixed(1)+'s'">
-                  <span id="reveal-dur-display" style="min-width:50px;font-weight:700;color:var(--accent2)">1.0s</span>
+                  <input type="range" id="s-reveal-duration" min="500" max="6000" step="500" value="1000" style="flex:1"
+                    oninput="updateSetting('revealDuration',+this.value);document.getElementById('reveal-dur-display').textContent=(this.value/1000).toFixed(1)">
+                  <div class="number-stepper" style="max-width:130px">
+                    <button onclick="let el=document.getElementById('s-reveal-duration');el.value=Math.max(500,+el.value-500);el.dispatchEvent(new Event('input'))">−</button>
+                    <input type="number" id="s-reveal-duration-num" min="0.5" max="6" step="0.5" value="1" style="width:52px"
+                      oninput="let v=Math.round(+this.value*1000);let r=document.getElementById('s-reveal-duration');r.value=v;updateSetting('revealDuration',v);document.getElementById('reveal-dur-display').textContent=(v/1000).toFixed(1)">
+                    <button onclick="let el=document.getElementById('s-reveal-duration');el.value=Math.min(6000,+el.value+500);el.dispatchEvent(new Event('input'))">+</button>
+                  </div>
                 </div>
-                <div class="text-sm text-muted mt-3">الفترة بين كشف خيار والذي يليه — من 0.5 إلى 5 ثوانٍ</div>
+                <div class="text-sm text-muted mt-3">الفترة الزمنية بين كشف كل خيار — من 0.5 إلى 6 ثوانٍ</div>
               </div>
             </div>
           </div>
@@ -3392,15 +3485,38 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
             </div>
             <div class="text-sm text-muted mt-3">0 = فوري | 1-10 ثانية تأخير</div>
           </div>
+
+          <!-- ── نمط بدء العرض + خياراته ── -->
           <div class="form-group">
             <label class="form-label">نمط بدء العرض</label>
-            <select id="s-presentation-mode" class="form-select" onchange="updateSetting('presentationMode',this.value)">
+            <select id="s-presentation-mode" class="form-select" onchange="updateSetting('presentationMode',this.value);document.getElementById('seq-options-wrap').style.display=(this.value!=='direct')?'block':'none'">
               <option value="direct">مباشر — ينتقل فوراً لشاشة الأقسام</option>
               <option value="sequence">تسلسلي تلقائي — ترحيب ← شكر ← فرق ← أقسام</option>
-              <option value="manual">تسلسلي يدوي — تنقل بزر التالي</option>
+              <option value="manual">تسلسلي يدوي — تنقل بزر التالي / الأسهم</option>
             </select>
-            <div class="text-sm text-muted mt-3">التلقائي ينتقل كل 5 ثوانٍ | اليدوي يتيح التحكم بزر التالي</div>
+            <div class="text-sm text-muted mt-3">التلقائي ينتقل كل 5 ثوانٍ | اليدوي يتيح التحكم بزر التالي أو مفاتيح الأسهم ← →</div>
+            <!-- خيارات النمط التسلسلي — تظهر فقط عند اختيار تسلسلي -->
+            <div id="seq-options-wrap" style="display:none;margin-top:12px;padding:12px 14px;background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <input type="checkbox" id="s-hide-start-in-seq" checked style="width:16px;height:16px;accent-color:var(--accent1)" onchange="updateSetting('hideStartInSeq',this.checked)">
+                <span class="text-sm text-muted">إخفاء زر "بدء المسابقة" حتى الوصول لشاشة الأقسام</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <input type="checkbox" id="s-seq-keyboard" style="width:16px;height:16px;accent-color:var(--accent2)" onchange="updateSetting('seqKeyboard',this.checked)">
+                <span class="text-sm text-muted">التحكم بالأسهم ← → في لوحة المفاتيح أثناء العرض التسلسلي</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <label class="form-label" style="margin:0;white-space:nowrap;min-width:fit-content">تأخير بدء العداد</label>
+                <div class="number-stepper" style="max-width:130px">
+                  <button onclick="stepValue('s-timer-start-delay',-1)">−</button>
+                  <input type="number" id="s-timer-start-delay" value="0" min="0" max="10" oninput="updateSetting('timerStartDelay',+this.value)">
+                  <button onclick="stepValue('s-timer-start-delay',1)">+</button>
+                </div>
+                <span class="text-sm text-muted">ثانية قبل بدء العداد (0 = فوري)</span>
+              </div>
+            </div>
           </div>
+
           <div class="form-group">
             <label class="form-label">ارتفاع بطاقات الفرق في شاشة العرض</label>
             <select id="s-team-card-height" class="form-select" onchange="updateSetting('teamCardHeight',this.value);_applyTeamCardHeight()">
@@ -3413,27 +3529,11 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
             <div class="text-sm text-muted mt-3">"ملء الشاشة" يجعل البطاقات تمتد بين الشريط العلوي والسفلي تلقائياً</div>
           </div>
           <div class="form-group">
-            <label class="form-label">إخفاء زر "بدء المسابقة" في النمط التسلسلي</label>
-            <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
-              <input type="checkbox" id="s-hide-start-in-seq" checked style="width:18px;height:18px;accent-color:var(--accent1)" onchange="updateSetting('hideStartInSeq',this.checked)">
-              <span class="text-sm text-muted">يُخفي زر البدء في شاشة الفرق والأقسام عند استخدام النمط التسلسلي</span>
-            </div>
-          </div>
-          <div class="form-group">
             <label class="form-label">إظهار شاشة منح النقطة يدوياً</label>
             <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
               <input type="checkbox" id="s-show-manual-point" checked style="width:18px;height:18px;accent-color:var(--accent1)" onchange="updateSetting('showManualPoint',this.checked)">
-              <span class="text-sm text-muted">يُظهر شريط منح النقطة للفريق في شاشة السؤال (مُفعَّل افتراضياً)</span>
+              <span class="text-sm text-muted">يُظهر شريط منح النقطة للفريق في شاشة السؤال</span>
             </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">تأخير بدء العداد (ثانية)</label>
-            <div class="number-stepper">
-              <button onclick="stepValue('s-timer-start-delay',-1)">−</button>
-              <input type="number" id="s-timer-start-delay" value="0" min="0" max="10" oninput="updateSetting('timerStartDelay',+this.value)">
-              <button onclick="stepValue('s-timer-start-delay',1)">+</button>
-            </div>
-            <div class="text-sm text-muted mt-3">0 = يبدأ فوراً | 1–10 ثانية قبل بدء العداد</div>
           </div>
         </div>
       </div>
@@ -3512,6 +3612,25 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         </div>
         <div class="form-row">
           <div class="form-group">
+            <label class="form-label">نظام الفائز المبكر</label>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+              <input type="checkbox" id="s-early-winner" style="width:16px;height:16px;accent-color:var(--accent1)"
+                onchange="updateSetting('earlyWinnerEnabled',this.checked);document.getElementById('early-winner-wrap').style.display=this.checked?'flex':'none'">
+              <span class="text-sm text-muted">إنهاء المسابقة تلقائياً عند وصول فريق لعدد نقاط محدد</span>
+            </div>
+            <div id="early-winner-wrap" style="display:none;align-items:center;gap:8px;margin-top:8px">
+              <label class="form-label" style="margin:0;white-space:nowrap">عند بلوغ</label>
+              <div class="number-stepper" style="max-width:120px">
+                <button onclick="stepValue('s-early-winner-score',-1)">−</button>
+                <input type="number" id="s-early-winner-score" value="10" min="1" max="200" oninput="updateSetting('earlyWinnerScore',+this.value)">
+                <button onclick="stepValue('s-early-winner-score',1)">+</button>
+              </div>
+              <span class="text-sm text-muted">نقطة</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
             <label class="form-label">أطواق النجاة</label>
             <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
               <div style="display:flex;align-items:center;gap:8px">
@@ -3537,42 +3656,17 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         </div>
       </div>
 
-      <!-- PODIUM MUSIC CARD -->
-      <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-gold"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> موسيقى شاشة إعلان النتائج (المنصة)</div></div>
-        <div class="alert alert-info">تُشغَّل هذه الموسيقى تلقائياً عند فتح شاشة إعلان النتائج النهائية (المنصة) — مستقلة عن موسيقى المسابقة</div>
-        <div class="form-group">
-          <label class="form-label">ملف موسيقى الإعلان (MP3/OGG/WAV)</label>
-          <div class="audio-file-row">
-            <label class="audio-file-label" for="podium-music-input">اختر ملفاً</label>
-            <input type="file" id="podium-music-input" accept="audio/*" class="hidden" onchange="loadPodiumMusic(this)">
-            <span class="audio-file-name" id="podium-music-name">لم يختر بعد</span>
-            <button class="audio-test-btn" id="test-btn-podiumMusic" onclick="testPodiumMusic()">تشغيل</button>
-            <button class="audio-stop-btn hidden" id="stop-btn-podiumMusic" onclick="stopPodiumMusicTest()">إيقاف</button>
-            <button class="audio-clear-btn" onclick="clearPodiumMusic()">حذف</button>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">مستوى صوت موسيقى الإعلان</label>
-          <div style="display:flex;align-items:center;gap:12px">
-            <input type="range" id="s-podium-music-vol" min="0" max="100" value="60" style="flex:1"
-              oninput="updateSetting('podiumMusicVol',+this.value);if(window._podiumAudioEl)window._podiumAudioEl.volume=(+this.value/100)">
-            <span id="podium-vol-display" style="min-width:36px;font-weight:700;color:var(--accent1)">60%</span>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px">
-          <input type="checkbox" id="s-podium-music-loop" style="width:16px;height:16px;accent-color:var(--accent1)"
-            onchange="updateSetting('podiumMusicLoop',this.checked)">
-          <span class="text-sm text-muted">تكرار الموسيقى (Loop)</span>
-        </div>
-      </div>
     </div>
 
     <!-- APPEARANCE -->
     <div id="tab-appearance" class="tab-content hidden">
       <div class="card">
-        <div class="card-header"><div class="card-title"><div class="icon icon-gold"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-1 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div> ثيم المنصة — 2026</div></div>
-        <div class="alert alert-info" style="margin-bottom:14px">ألوان مُستوحاة من اتجاهات التصميم لعام 2026 — كل ثيم بشخصية مستقلة</div>
+        <div class="card-header"><div class="card-title"><div class="icon icon-gold"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-1 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9c-.83 0-1.5-.67-1.5-1.5S5.67 9 6.5 9 8 9.67 8 10.5 7.33 12 6.5 12zm3-4C8.67 8 8 7.33 8 6.5S8.67 5 9.5 5s1.5.67 1.5 1.5S10.33 8 9.5 8zm5 0c-.83 0-1.5-.67-1.5-1.5S13.67 5 14.5 5s1.5.67 1.5 1.5S15.33 8 14.5 8zm3 4c-.83 0-1.5-.67-1.5-1.5S16.67 9 17.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg></div> 🎨 تخصيص المظهر</div></div>
+        <div style="padding:10px 14px;background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;margin-bottom:14px;font-size:.82rem;direction:rtl;line-height:1.7">
+          <div style="font-weight:900;color:var(--accent1);margin-bottom:4px">اختر الطابع البصري لشاشات العرض</div>
+          <div style="color:var(--text-muted)">كل ثيم يغيّر: الألوان الرئيسية • الخلفية • التوهج • ألوان الأزرار والبطاقات</div>
+          <div style="color:var(--text-muted);font-size:.76rem;margin-top:3px">التغيير يُطبَّق فوراً على جميع شاشات العرض التقديمي</div>
+        </div>
         <div class="theme-grid" id="theme-grid"></div>
 
         <!-- CUSTOM THEME EDITOR -->
@@ -4023,6 +4117,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <div class="pres-header-actions">
       <button class="btn btn-ghost btn-sm" onclick="showView('categories')">← المسابقة</button>
       <button class="btn btn-accent btn-sm" onclick="showTeamStats()">الإحصاءات</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportResultsCSV()" title="تصدير النتائج">⬇ تصدير</button>
+      <button class="btn btn-ghost btn-sm" onclick="openCompare1v1()" title="مقارنة فريقين">⚔️</button>
       <button class="btn btn-success btn-sm" onclick="showPodium()">المنصة</button>
       <button class="btn btn-purple btn-sm" onclick="showView('credits')">الشكر</button>
       <button class="btn btn-ghost btn-sm" onclick="goToAdmin()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg> التحكم</button>
@@ -4066,6 +4162,49 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   </div>
 </div>
 
+
+<!-- ═══ WINNER CERTIFICATE MODAL ═══ -->
+<div id="modal-certificate" class="modal-overlay hidden" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal('modal-certificate')" style="padding:16px;align-items:flex-start;overflow-y:auto;z-index:7000;background:rgba(0,0,0,.75);backdrop-filter:blur(8px)">
+  <div style="width:100%;max-width:600px;margin:auto;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)">
+    <div id="certificate-content" style="background:linear-gradient(160deg,#fffdf5 0%,#fff8dc 60%,#fef3b0 100%);border:5px solid #f5c842;border-bottom:none;border-radius:20px 20px 0 0;padding:clamp(20px,5vw,44px) clamp(16px,5vw,48px);text-align:center;position:relative;font-family:'Cairo',sans-serif;color:#1a1000;overflow:hidden">
+      <!-- Decorative orbs -->
+      <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.18),transparent 70%);top:-50px;right:-50px;pointer-events:none"></div>
+      <div style="position:absolute;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,.12),transparent 70%);bottom:-50px;left:-50px;pointer-events:none"></div>
+      <!-- Header -->
+      <div style="position:relative;z-index:1">
+        <div style="font-size:clamp(1.8rem,5vw,3rem);margin-bottom:6px">🏆</div>
+        <div style="font-size:clamp(1.1rem,3.5vw,1.9rem);font-weight:900;color:#b8860b;letter-spacing:.03em;margin-bottom:3px">شهادة تفوق وتميّز</div>
+        <div style="font-size:.78rem;color:#999;margin-bottom:14px;letter-spacing:.07em">تُمنح هذه الشهادة لـ</div>
+        <!-- Avatar -->
+        <div id="cert-avatar-wrap" style="width:76px;height:76px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;border:4px solid #f5c842;box-shadow:0 0 20px rgba(245,200,66,.5),0 4px 16px rgba(0,0,0,.15);overflow:hidden;flex-shrink:0">
+          <span id="cert-avatar-letter" style="font-size:1.8rem;font-weight:900;color:#fff"></span>
+        </div>
+        <!-- Winner name -->
+        <div id="cert-winner-name" style="font-size:clamp(1.4rem,4.5vw,2.4rem);font-weight:900;color:#7a5800;margin-bottom:10px;line-height:1.2;word-break:break-word"></div>
+        <!-- Competition info -->
+        <div style="font-size:.82rem;color:#888;margin-bottom:3px">لتحقيقه المركز الأول في مسابقة</div>
+        <div id="cert-comp-name" style="font-size:clamp(.95rem,2.5vw,1.4rem);font-weight:900;color:#b8860b;margin-bottom:8px;word-break:break-word"></div>
+        <div id="cert-score-row" style="font-size:.84rem;color:#888;margin-bottom:16px;padding:5px 14px;background:rgba(184,134,20,.08);border-radius:20px;display:inline-block"></div>
+        <!-- Footer -->
+        <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(184,134,20,.25);padding-top:12px;font-size:.73rem;color:#aaa;margin-top:4px">
+          <span id="cert-date" style="line-height:1.5;text-align:right"></span>
+          <span style="font-size:1.3rem">🌟</span>
+        </div>
+        <!-- Custom logo -->
+        <div id="cert-logo-area" style="position:absolute;top:10px;left:10px;width:48px;height:48px;display:none">
+          <img id="cert-logo-img" style="width:100%;height:100%;object-fit:contain;border-radius:8px" src="" alt="شعار">
+        </div>
+      </div>
+    </div>
+    <!-- Action bar -->
+    <div style="display:flex;gap:8px;justify-content:center;padding:12px 16px;background:#1a1200;border:5px solid #f5c842;border-top:none;border-radius:0 0 20px 20px;flex-wrap:wrap">
+      <label class="btn btn-ghost btn-sm" for="cert-logo-input" style="cursor:pointer">🖼️ شعار</label>
+      <input type="file" id="cert-logo-input" accept="image/*" class="hidden" onchange="loadCertLogo(this)">
+      <button class="btn btn-primary btn-sm" onclick="printCertificate()">🖨️ طباعة</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-certificate')">إغلاق</button>
+    </div>
+  </div>
+</div>
 </div><!-- #app -->
 
 
@@ -4119,8 +4258,9 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   <div class="podium-stage" id="podium-stage"></div>
   <div class="podium-rest" id="podium-rest"></div>
   <div class="podium-actions" style="margin-top:24px">
-    <button class="btn btn-primary btn-lg" onclick="launchPodiumConfetti()"> احتفال!</button>
+    <button class="btn btn-primary btn-lg" onclick="launchPodiumConfetti()">🎉 احتفال!</button>
     <button class="btn btn-ghost btn-lg" onclick="showView('teamstats')">الإحصاءات</button>
+    <button class="btn btn-gold btn-lg" onclick="openWinnerCertificate()">🎖️ شهادة الفائز</button>
     <button class="btn btn-accent btn-lg" onclick="resetForNewGame()">مسابقة جديدة</button>
   </div>
 </div>
@@ -4172,6 +4312,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <div class="qtype-tab" onclick="setQType('math')">∑ رياضي</div>
         <div class="qtype-tab" onclick="setQType('tf')">صح/خطأ</div>
         <div class="qtype-tab" onclick="setQType('order')">📝 ترتيب</div>
+        <div class="qtype-tab" onclick="setQType('fitb')">___ فراغ</div>
+        <div class="qtype-tab" onclick="setQType('quran')">📖 قرآن</div>
       </div>
     </div>
     <!-- True/False Section -->
@@ -4187,7 +4329,101 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       </div>
       <input type="hidden" id="tf-correct-answer" value="true">
     </div>
-    <div class="form-group"><label class="form-label">نص السؤال</label><textarea id="q-text-input" class="form-textarea" rows="3" placeholder="أدخل نص السؤال..." dir="auto" oninput="if(_currentQType==='math')debouncePreviewMath()"></textarea>
+
+    <!-- ── FITB Section ── -->
+    <div id="qtype-fitb-section" class="qtype-section" style="display:none">
+      <div style="background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.25);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:.82rem;line-height:1.8;direction:rtl">
+        <div style="font-weight:900;color:var(--accent2);margin-bottom:6px">📝 كيفية إنشاء سؤال الفراغ</div>
+        <div>1️⃣ اكتب نص السؤال في حقل "نص السؤال" بالأسفل</div>
+        <div>2️⃣ ضع <code dir="ltr" style="background:var(--bg-surface);padding:1px 6px;border-radius:4px;font-size:.9em">[___]</code> في موضع الكلمة المطلوبة</div>
+        <div>3️⃣ أدخل الإجابة الصحيحة في الحقل أدناه — لإضافة إجابات بديلة افصل بينها بـ <code>|</code></div>
+        <div style="color:var(--text-muted);font-size:.77rem;margin-top:4px">مثال: <em>عاصمة المملكة العربية السعودية هي [___]</em> ← الإجابة: الرياض | رياض</div>
+        <div style="color:var(--text-muted);font-size:.77rem">✅ المقارنة تتجاهل التشكيل والحروف المتشابهة تلقائياً</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">الإجابة الصحيحة <span style="font-size:.72rem;color:var(--text-muted)">(إجابات بديلة مفصولة بـ |)</span></label>
+        <input type="text" id="fitb-answer-input" class="form-input" dir="rtl" placeholder="مثال: الرياض | رياض | الرياض السعودية" oninput="document.getElementById('fitb-ans-preview').textContent=this.value">
+        <div id="fitb-ans-preview" style="font-size:.75rem;color:var(--text-muted);margin-top:4px;padding:4px 8px;background:var(--bg-panel);border-radius:5px;min-height:22px;direction:rtl"></div>
+      </div>
+    </div>
+
+    <!-- ── QURAN Section ── -->
+    <div id="qtype-quran-section" class="qtype-section" style="display:none">
+      <div style="background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.25);border-radius:10px;padding:12px 14px;margin-bottom:10px;font-size:.82rem;line-height:1.9;direction:rtl">
+        <div style="font-weight:900;color:var(--accent1);margin-bottom:6px">📖 كيفية إنشاء سؤال قرآني</div>
+        <div>1️⃣ أدخل اسم السورة أو رقمها (1-114) واختر رقم الآية</div>
+        <div>2️⃣ اختر القارئ المفضل ثم اضغط 🔍 <strong>جلب</strong></div>
+        <div>3️⃣ اختر نوع السؤال: اسم السورة / أكمل الآية / رقم الآية...</div>
+        <div>4️⃣ اختر طريقة العرض: نص فقط / صوت / كلاهما</div>
+        <div>5️⃣ اضغط <strong>⬇ تنزيل</strong> لحفظ المقطع الصوتي للاستخدام بدون إنترنت</div>
+        <div style="color:var(--text-muted);font-size:.76rem;margin-top:4px">✅ مقارنة "أكمل الآية" تتجاهل التشكيل تلقائياً</div>
+      </div>
+      <div class="form-row" style="grid-template-columns:1fr 1fr auto auto;align-items:flex-end;gap:8px">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">السورة (اسم أو رقم 1-114)</label>
+          <input type="text" id="quran-surah-input" class="form-input" dir="rtl" placeholder="الفاتحة أو 1" list="quran-surah-list">
+          <datalist id="quran-surah-list"></datalist>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">رقم الآية</label>
+          <input type="number" id="quran-ayah-input" class="form-input" min="1" placeholder="1" value="1">
+        </div>
+        <button class="btn btn-accent" onclick="fetchQuranVerse()" id="quran-fetch-btn" style="height:38px;white-space:nowrap">🔍 جلب</button>
+        <button class="btn btn-ghost btn-sm" onclick="downloadQuranAudio()" id="quran-download-btn" style="height:38px;display:none" title="تحميل المقطع للاستخدام بدون إنترنت">⬇ تنزيل</button>
+      </div>
+      <div class="form-row" style="grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+        <div class="form-group" style="margin:0">
+          <label class="form-label">القارئ</label>
+          <select id="quran-reader-select" class="form-select" onchange="updateSetting('quranReader',this.value)">
+            <option value="ar.alafasy">مشاري العفاسي</option>
+            <option value="ar.abdulbasitmurattal">عبد الباسط (مرتّل)</option>
+            <option value="ar.abdulbasit">عبد الباسط (مجوّد)</option>
+            <option value="ar.husary">محمود خليل الحصري</option>
+            <option value="ar.minshawi">محمد صديق المنشاوي</option>
+            <option value="ar.abdurrahmaansudais">عبد الرحمن السديس</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin:0">
+          <label class="form-label">نوع السؤال</label>
+          <select id="quran-mode-select" class="form-select" onchange="_updateQuranModeHint()">
+            <option value="full">اسم السورة (4 خيارات)</option>
+            <option value="complete">أكمل الآية (فراغ نصي)</option>
+            <option value="number">رقم الآية في السورة</option>
+            <option value="surah_number">رقم السورة في المصحف</option>
+            <option value="juz">رقم الجزء</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:10px">
+        <label class="form-label">طريقة عرض الآية للمتسابق</label>
+        <select id="quran-display-mode" class="form-select">
+          <option value="both" selected>نص + صوت (إن توفّر)</option>
+          <option value="text">نص فقط</option>
+          <option value="audio">صوت فقط (الإجابة بعد الاستماع)</option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+        <input type="checkbox" id="quran-hide-meta" style="width:15px;height:15px;accent-color:var(--accent1)">
+        <label for="quran-hide-meta" class="text-sm text-muted" style="cursor:pointer">إخفاء تفاصيل الآية (اسم السورة والآية والجزء) في شاشة العرض</label>
+      </div>
+      <div id="quran-preview-box" style="display:none;margin-top:10px;padding:14px 16px;background:var(--bg-surface);border:1px solid var(--border);border-radius:10px;direction:rtl;text-align:center;font-family:'Amiri','Noto Naskh Arabic',serif;font-size:1.1rem;line-height:2"></div>
+      <div id="quran-answer-hint" style="display:none;margin-top:6px;font-size:.78rem;color:var(--text-muted);padding:6px 10px;background:var(--bg-panel);border-radius:6px;direction:rtl"></div>
+      <input type="hidden" id="quran-audio-url" value="">
+      <input type="hidden" id="quran-surah-num" value="">
+    </div>
+
+    <div id="qtype-options-hint" style="display:none;font-size:.8rem;color:var(--accent2);padding:8px 12px;background:rgba(0,212,255,.07);border-radius:8px;border:1px solid rgba(0,212,255,.2);margin-bottom:8px;direction:rtl"></div>
+    <div class="form-group">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+        <label class="form-label" style="margin:0">نص السؤال</label>
+        <div style="display:flex;gap:4px;margin-right:auto">
+          <button type="button" class="q-font-btn active" data-font="cairo" onclick="setQFont('cairo',this)" style="font-size:.72rem;padding:3px 8px;border:1.5px solid var(--border);border-radius:5px;background:var(--bg-panel);color:var(--text-secondary);cursor:pointer;font-family:'Cairo',sans-serif;transition:all .15s">Cairo</button>
+          <button type="button" class="q-font-btn" data-font="amiri" onclick="setQFont('amiri',this)" style="font-size:.72rem;padding:3px 8px;border:1.5px solid var(--border);border-radius:5px;background:var(--bg-panel);color:var(--text-secondary);cursor:pointer;font-family:'Amiri',serif;transition:all .15s">عربي قرآني</button>
+        </div>
+      </div>
+      <textarea id="q-text-input" class="form-textarea" rows="3" placeholder="أدخل نص السؤال..." dir="auto" oninput="if(_currentQType==='math')debouncePreviewMath()" style="font-family:'Cairo',sans-serif"></textarea>
+      <input type="hidden" id="q-text-font" value="cairo">
+    </div>
       <div id="math-hint" class="math-hint-box" style="display:none;margin-top:10px">
 
         <!-- Quick insert toolbar -->
@@ -4600,6 +4836,35 @@ const CREDIT_CATS={
 // ════════════════════════════════════════════════════════
 //  STATE
 // ════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+//  SAFE ACCESSORS — always use these in runtime paths
+//  Returns null instead of crashing if index is out of range
+// ════════════════════════════════════════════════════════════════
+function getCurrentCat(){
+  if(!state.currentCatId)return null;
+  return state.categories.find(c=>c.id===state.currentCatId)||null;
+}
+function getCurrentQuestion(){
+  const cat=getCurrentCat();
+  if(!cat||state.currentQIndex==null)return null;
+  const q=cat.questions[state.currentQIndex];
+  return(q&&typeof q==='object')?q:null;
+}
+function getCurrentTeam(){
+  const idx=state.currentTeamIndex;
+  if(idx==null||idx<0||idx>=state.teams.length)return null;
+  return state.teams[idx]||null;
+}
+// Safe DOM getter — returns null instead of throwing
+function $el(id){return document.getElementById(id)||null;}
+// Safe text/html setter
+function $setText(id,text){const el=$el(id);if(el)el.textContent=text;}
+function $setHTML(id,h){const el=$el(id);if(el)el.innerHTML=h;}
+// Safe visibility helper
+function $show(id,show){const el=$el(id);if(el)el.style.display=show==null?'':show?'':'none';}
+// Safe class toggle
+function $cls(id,cls,add){const el=$el(id);if(el)el.classList[add?'add':'remove'](cls);}
+
 let state={
   settings:{
     name:'مسابقة المعرفة الكبرى',password:'1234',
@@ -4612,7 +4877,7 @@ let state={
     // إضافات جديدة
     customMusicData:null,customCorrectData:null,customWrongData:null,
     progressiveReveal:false,progressiveRevealMode:'manual',confirmAnswer:false,
-    hideStartInSeq:true,showManualPoint:true,timerStartDelay:0,tenseMusicType:'builtin',tenseEnabled:true,tenseMusicVol:70,showShuffleBadge:false,nextWithoutAnswerMode:'warn',revealDuration:1000,teamCardHeight:'auto',
+    hideStartInSeq:true,showManualPoint:true,timerStartDelay:0,seqKeyboard:true,tenseMusicType:'builtin',tenseEnabled:true,tenseMusicVol:70,showShuffleBadge:false,nextWithoutAnswerMode:'warn',revealDuration:1000,teamCardHeight:'auto',
     fontScale:100,
     autoTransition:true,
     autoTransitionDelay:0,
@@ -4671,6 +4936,9 @@ let state={
 //  PERSISTENCE
 // ════════════════════════════════════════════════════════
 function saveState(){
+  // Guard: if IDB hasn't finished loading, queue the save and skip LS write
+  // to prevent overwriting fresh IDB data with stale LS data
+  if(!_idbLoadDone){_pendingSaveNeeded=true;return;}
   // Don't save large media data in main quiz_v4 key (save separately per question)
   const settingsClean={...state.settings};
   // Save audio file data separately to avoid quota issues
@@ -4714,6 +4982,13 @@ function saveState(){
   try{localStorage.setItem('quiz_v4_audio',JSON.stringify(audioData))}catch(e){}
 }
 
+// Debounced version of saveGameProgress — prevents excessive LS writes
+let _sgpTimer=null;
+function saveGameProgressDebounced(){
+  clearTimeout(_sgpTimer);
+  _sgpTimer=setTimeout(saveGameProgress,500);
+}
+
 function saveGameProgress(){
   if(!state.gameActive)return;
   const prog={
@@ -4736,6 +5011,9 @@ function loadGameProgress(){
 function clearGameProgress(){
   localStorage.removeItem('quiz_v4_progress');
 }
+let _idbLoadDone=false;   // true after IDB phase completes
+let _pendingSaveNeeded=false; // saveState was called before IDB finished
+
 function loadState(){
   try{
     const raw=localStorage.getItem('quiz_v4')||localStorage.getItem('quiz_v3')||localStorage.getItem('quiz_platform_v2');
@@ -4781,10 +5059,15 @@ function loadState(){
     }
     // Apply font scale
     try{applyFontScale(state.settings.fontScale||100)}catch(e){}
-    try{MediaDB.loadAllMedia().then(function(){try{renderAdmin();}catch(e){}}).catch(function(){});}catch(e){}
+    try{MediaDB.loadAllMedia().then(function(){
+      try{renderAdmin();}catch(e){}
+      // IDB load complete — flush any pending save
+      _idbLoadDone=true;
+      if(_pendingSaveNeeded){_pendingSaveNeeded=false;saveState();}
+    }).catch(function(){_idbLoadDone=true;});}catch(e){_idbLoadDone=true;}
     try{applyCatCardScale(state.settings.catCardSize||100)}catch(e){}
     try{_applyTeamCardHeight()}catch(e){}
-  }catch(e){}
+  }catch(e){_idbLoadDone=true;}
 }
 
 // ════════════════════════════════════════════════════════
@@ -4883,8 +5166,20 @@ function showView(name){
   const ticker=document.getElementById('score-ticker');
   if(ticker)ticker.classList.toggle('hidden',!allPresViews.includes(name)||!state.teams.length);
   if(name!=='question'){
-    if(window._qAudioEl){try{window._qAudioEl.pause()}catch(e){}}
+    // Clean up question resources when leaving question screen
+    if(window._qAudioEl){try{window._qAudioEl.pause();window._qAudioEl.src='';}catch(e){}}
+    if(window._quranAudio){try{window._quranAudio.pause();}catch(e){}}
     stopEffectSound();
+    // Cancel auto-reveal and transition timers when navigating away
+    if(state._autoRevInterval){clearInterval(state._autoRevInterval);state._autoRevInterval=null;}
+    // Remove any orphaned overlays
+    const txBadge=$el('transition-countdown');if(txBadge)txBadge.remove();
+    const tuOv=$el('timeup-overlay');if(tuOv)tuOv.remove();
+    // Clear confetti canvas to avoid stale pixels
+    if(!_confAF){
+      const _cc=$el('confetti-canvas');
+      if(_cc)try{_cc.getContext('2d').clearRect(0,0,_cc.width,_cc.height);}catch(_){}
+    }
   }
   // Stop podium music when leaving podium screen
   if(name!=='podium' && window._podiumMusicPlaying){
@@ -5025,7 +5320,13 @@ function renderAdmin(){
   const ccs=document.getElementById('s-cat-card-size');if(ccs)ccs.value=s.catCardSize||100;
   applyCatCardScale(s.catCardSize||100);
   const csl=document.getElementById('s-cat-switcher-location');if(csl)csl.value=s.catSwitcherLocation||'both';
-  const spm=document.getElementById('s-presentation-mode');if(spm)spm.value=s.presentationMode||'direct';
+  const spm=document.getElementById('s-presentation-mode');
+  if(spm){
+    spm.value=s.presentationMode||'direct';
+    const seqWrap=document.getElementById('seq-options-wrap');
+    if(seqWrap)seqWrap.style.display=(s.presentationMode&&s.presentationMode!=='direct')?'block':'none';
+  }
+  const skEl=document.getElementById('s-seq-keyboard');if(skEl)skEl.checked=!!s.seqKeyboard;
   // Sync volume slider
   document.getElementById('s-music-vol').value=s.musicVol||40;
   document.getElementById('vol-display').textContent=(s.musicVol||40)+'%';
@@ -5143,7 +5444,7 @@ function renderQuestionsAdmin(catId){
       <div class="question-num">${i+1}</div>
       <div class="question-body">
         <div class="question-text">
-          ${q.type==='image'?'<span class="q-type-badge q-type-img">🖼️ صوري</span>':q.type==='audio'?'<span class="q-type-badge q-type-audio">🎧 صوتي</span>':q.type==='math'?'<span class="q-type-badge q-type-math">∑ رياضي</span>':q.type==='tf'?'<span class="q-type-badge" style="background:rgba(0,230,118,.12);color:var(--success);border:1px solid rgba(0,230,118,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">✓✗ صح/خطأ</span>':''}
+          ${q.type==='image'?'<span class="q-type-badge q-type-img">🖼️ صوري</span>':q.type==='audio'?'<span class="q-type-badge q-type-audio">🎧 صوتي</span>':q.type==='math'?'<span class="q-type-badge q-type-math">∑ رياضي</span>':q.type==='tf'?'<span class="q-type-badge" style="background:rgba(0,230,118,.12);color:var(--success);border:1px solid rgba(0,230,118,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">✓✗ صح/خطأ</span>':q.type==='fitb'?'<span class="q-type-badge" style="background:rgba(0,212,255,.1);color:var(--accent2);border:1px solid rgba(0,212,255,.25);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">___ فراغ</span>':q.type==='quran'?'<span class="q-type-badge" style="background:rgba(245,200,66,.12);color:var(--accent1);border:1px solid rgba(245,200,66,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">📖 قرآن</span>':q.type==='order'?'<span class="q-type-badge" style="background:rgba(167,139,250,.1);color:#a78bfa;border:1px solid rgba(167,139,250,.25);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">📋 ترتيب</span>':''}
           ${q.text}
         </div>
         ${q.type==='image'&&q.mediaData?`<div style="margin-top:5px"><img src="${q.mediaData}" style="max-height:48px;max-width:120px;border-radius:6px;border:1px solid var(--border);object-fit:cover" alt=""></div>`:''}
@@ -5232,6 +5533,11 @@ function openQuestionModal(catId=null,qId=null){
     document.getElementById('q-hostnote-input').value=q.hostNote||'';
     // Update correct row highlight
     setTimeout(updateOptRowState, 50);
+    // Restore text font
+    const savedFont=q.textFont||'cairo';
+    document.getElementById('q-text-font').value=savedFont;
+    document.getElementById('q-text-input').style.fontFamily=savedFont==='amiri'?"'Amiri',serif":"'Cairo',sans-serif";
+    document.querySelectorAll('.q-font-btn').forEach(b=>{b.style.borderColor=b.dataset.font===savedFont?'var(--accent1)':'var(--border)';b.style.color=b.dataset.font===savedFont?'var(--accent1)':'var(--text-secondary)';});
     // Restore type
     const qtype=q.type||'text';
     setQType(qtype);
@@ -5240,6 +5546,33 @@ function openQuestionModal(catId=null,qId=null){
       const tfVal=q.correct===1?'true':'false';
       document.getElementById('tf-correct-answer').value=tfVal;
       selectTFAnswer(tfVal);
+    }
+    // Restore FITB answer
+    if(qtype==='fitb'){
+      const fitbEl=document.getElementById('fitb-answer-input');
+      if(fitbEl){fitbEl.value=q.fitbAnswer||'';const prev=document.getElementById('fitb-ans-preview');if(prev)prev.textContent=q.fitbAnswer||'';}
+    }
+    // Restore Quran fields
+    if(qtype==='quran'){
+      const meta=q.quranMeta||{};
+      window._lastQuranMeta=meta;
+      const surahEl=document.getElementById('quran-surah-input');if(surahEl)surahEl.value=meta.surah||'';
+      const ayahEl=document.getElementById('quran-ayah-input');if(ayahEl)ayahEl.value=meta.ayah||1;
+      const modeEl=document.getElementById('quran-mode-select');if(modeEl)modeEl.value=q.quranMode||'full';
+      const dispEl=document.getElementById('quran-display-mode');if(dispEl)dispEl.value=q.quranDisplayMode||'both';
+      const hideMetaEl=document.getElementById('quran-hide-meta');if(hideMetaEl)hideMetaEl.checked=!!q.quranHideMeta;
+      const audioEl=document.getElementById('quran-audio-url');if(audioEl)audioEl.value=q.quranAudio||'';
+      const dlBtn=document.getElementById('quran-download-btn');if(dlBtn)dlBtn.style.display=q.quranAudio?'':'none';
+      // Show preview of saved verse
+      const prev=document.getElementById('quran-preview-box');
+      if(prev&&q.text){
+        prev.style.display='block';
+        const d=document.createElement('div');d.style.cssText="font-family:'Amiri',serif;font-size:1.1rem;line-height:2.2;direction:rtl";d.textContent=q.text;
+        const m=document.createElement('div');m.style.cssText='font-size:.76rem;color:var(--text-muted);margin-top:4px';
+        m.textContent=(meta.surah||'')+(meta.ayah?' — الآية '+meta.ayah:'')+(meta.juz?' — الجزء '+meta.juz:'');
+        prev.innerHTML='';prev.appendChild(d);prev.appendChild(m);
+      }
+      setTimeout(_updateQuranModeHint,50);
     }
     if(q.mediaData){
       _qMediaDataTemp={type:q.type==='image'?'image':'audio',data:q.mediaData};
@@ -5260,25 +5593,52 @@ function openQuestionModal(catId=null,qId=null){
   openModal('modal-question');
 }
 function saveQuestion(){
+  const qtype=_currentQType||'text';
   const text=document.getElementById('q-text-input').value.trim();
-  if(!text){toast('أدخل نص السؤال','danger');return}
-  const options=[0,1,2,3].map(i=>document.getElementById(`q-opt-${i}`).value.trim());
-  // Validate: each option must have text OR image (or both)
-  const optionImages=[..._optImages];
-  const validCount=options.filter((o,i)=>o||optionImages[i]).length;
-  if(validCount<2){toast('أدخل خيارين على الأقل (نص أو صورة)','danger');return}
-  const correct=+document.getElementById('q-correct-input').value;
+  const cat=state.categories.find(c=>c.id===state.currentCatId);
   const difficulty=document.getElementById('q-difficulty-input').value;
   const time=+document.getElementById('q-time-input').value||state.settings.defaultTime;
   const explanation=document.getElementById('q-explanation-input').value.trim();
   const hostNote=document.getElementById('q-hostnote-input').value.trim();
-  const qtype=_currentQType||'text';
+
+  // ── FITB ──
+  if(qtype==='fitb'){
+    if(!text||!text.includes('[___]')){toast('النص يجب أن يحتوي على [___] للفراغ','danger');return}
+    const ans=document.getElementById('fitb-answer-input').value.trim();
+    if(!ans){toast('أدخل الإجابة الصحيحة للفراغ','danger');return}
+    const qObj={id:uid(),text,type:'fitb',fitbAnswer:ans,difficulty,time,explanation,hostNote,options:[],optionImages:[],correct:0,mediaData:null};
+    if(state.editingQId){const q=cat.questions.find(q=>q.id===state.editingQId);Object.assign(q,qObj);q.id=state.editingQId;}
+    else cat.questions.push(qObj);
+    _qMediaDataTemp=null;resetOptEditor();
+    saveState();closeModal('modal-question');renderQuestionsAdmin(state.currentCatId);renderStatsGrid();toast('تم الحفظ ✓','success');return;
+  }
+  // ── QURAN ──
+  if(qtype==='quran'){
+    if(!text){toast('اجلب الآية أولاً بزر 🔍','danger');return}
+    const qObj={id:uid(),text,type:'quran',
+      quranMode:document.getElementById('quran-mode-select').value,
+      quranDisplayMode:document.getElementById('quran-display-mode').value,
+      quranAudio:document.getElementById('quran-audio-url').value||'',
+      quranMeta:window._lastQuranMeta||{},
+      difficulty,time,explanation,hostNote,options:[],optionImages:[],correct:0,mediaData:null};
+    if(state.editingQId){const q=cat.questions.find(q=>q.id===state.editingQId);Object.assign(q,qObj);q.id=state.editingQId;}
+    else cat.questions.push(qObj);
+    _qMediaDataTemp=null;resetOptEditor();
+    saveState();closeModal('modal-question');renderQuestionsAdmin(state.currentCatId);renderStatsGrid();toast('تم الحفظ ✓','success');return;
+  }
+
+  // ── Standard (text/image/audio/math/tf/order) ──
+  if(!text){toast('أدخل نص السؤال','danger');return}
+  const options=[0,1,2,3].map(i=>document.getElementById(`q-opt-${i}`).value.trim());
+  const optionImages=[..._optImages];
+  const validCount=options.filter((o,i)=>o||optionImages[i]).length;
+  if(validCount<2){toast('أدخل خيارين على الأقل (نص أو صورة)','danger');return}
+  const correct=+document.getElementById('q-correct-input').value;
   const mediaData=_qMediaDataTemp?.data||null;
-  const cat=state.categories.find(c=>c.id===state.currentCatId);
   if(state.editingQId){
-    const q=cat.questions.find(q=>q.id===state.editingQId);
+    const q=cat.questions.find(qq=>qq.id===state.editingQId);
     q.text=text;q.options=options;q.optionImages=optionImages;
-    q.correct=correct;q.difficulty=difficulty;q.time=time;q.explanation=explanation;
+    q.correct=correct;q.difficulty=difficulty;q.time=time;q.explanation=explanation;q.hostNote=hostNote;
     q.type=qtype;
     if(mediaData)q.mediaData=mediaData;
     else if(!_qMediaDataTemp)q.mediaData=null;
@@ -5735,7 +6095,7 @@ function renderTeamsSlide(){
 // ════════════════════════════════════════════════════════
 function renderCatsSlide(){
   document.getElementById('cats-comp-name').textContent='🏆 '+state.settings.name;
-  const team=state.teams[state.currentTeamIndex];
+  const team=getCurrentTeam();
   const banner=document.getElementById('cats-turn-banner');
   if(team){
     banner.innerHTML=`<span style="color:${team.color}">🎯 دور فريق: ${team.name}</span>`;
@@ -6167,6 +6527,7 @@ function resumeCompetition(){
 }
 
 function newCompetition(){
+  _earlyWinnerShown=false;
   closeModal('modal-resume');
   clearGameProgress();
   if(!state.categories.length){toast('أضف أقساماً وأسئلة أولاً','danger');return}
@@ -6237,10 +6598,10 @@ function _showSeqOverlay(show){
       ov.id='seq-nav-overlay';
       ov.style.cssText='position:fixed;bottom:calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 16px);left:50%;transform:translateX(-50%);z-index:300;display:flex;gap:10px;align-items:center;background:var(--bg-card);border:2px solid var(--border-light);border-radius:16px;padding:8px 16px;box-shadow:0 8px 32px rgba(0,0,0,.6);backdrop-filter:blur(12px);animation:float-up .4s ease';
       ov.innerHTML=`
-        <button class="btn btn-ghost btn-sm" onclick="seqPrev()" id="seq-prev-btn" style="gap:6px;padding:8px 16px;border-radius:12px;font-size:.85rem">→ السابق</button>
-        <span id="seq-step-label" style="font-size:.8rem;font-weight:700;color:var(--text-secondary);min-width:60px;text-align:center">1 / 4</span>
-        <button class="btn btn-primary btn-sm" onclick="seqNext()" id="seq-next-btn" style="gap:6px;padding:8px 20px;border-radius:12px">التالي ←</button>
-        <button class="btn btn-ghost btn-sm" onclick="seqSkipAll()" style="font-size:.75rem;padding:6px 12px">تخطي</button>`;
+        <button class="btn btn-ghost btn-sm" onclick="seqPrev()" id="seq-prev-btn" style="gap:6px;padding:8px 14px;border-radius:12px;font-size:.85rem">← السابق</button>
+        <div id="seq-dots" style="display:flex;gap:6px;align-items:center"></div>
+        <button class="btn btn-primary btn-sm" onclick="seqNext()" id="seq-next-btn" style="gap:6px;padding:8px 20px;border-radius:12px">التالي →</button>
+        <button class="btn btn-ghost btn-sm" onclick="seqSkipAll()" style="font-size:.72rem;padding:6px 10px;opacity:.7">تخطي</button>`;
       document.body.appendChild(ov);
     }
     ov.style.display='flex';
@@ -6253,17 +6614,36 @@ function _showSeqScreen(idx){
   _seqStep=idx;
   clearTimeout(_seqTimer);
   if(idx>=_seqScreens.length){
-    // Sequence done
+    // Sequence complete — hide overlay and start competition
     _showSeqOverlay(false);
     _removeSeqWelcome();
+    startCompetition();
     return;
   }
   const screen=_seqScreens[idx];
-  // Update step label
-  const lbl=document.getElementById('seq-step-label');
-  if(lbl) lbl.textContent=(idx+1)+' / '+_seqScreens.length;
+  const isLast=(idx===_seqScreens.length-1);
+
+  // Update dot indicators
+  const dotsEl=document.getElementById('seq-dots');
+  if(dotsEl){
+    dotsEl.innerHTML=_seqScreens.map((_,i)=>
+      `<div style="width:${i===idx?18:8}px;height:8px;border-radius:4px;background:${i===idx?'var(--accent1)':i<idx?'var(--accent2)':'var(--border-light)'};transition:all .3s"></div>`
+    ).join('');
+  }
+
+  // Update next button
   const nextBtn=document.getElementById('seq-next-btn');
-  if(nextBtn) nextBtn.textContent=idx===_seqScreens.length-1?'ابدأ المسابقة':'التالي ←';
+  if(nextBtn){
+    if(isLast){
+      nextBtn.textContent='▶ ابدأ المسابقة';
+      nextBtn.style.background='linear-gradient(135deg,#00a854,var(--success))';
+      nextBtn.style.color='#001a0e';
+      nextBtn.style.padding='10px 22px';
+    }else{
+      nextBtn.textContent='التالي →';
+      nextBtn.style.background='';nextBtn.style.color='';nextBtn.style.padding='8px 20px';
+    }
+  }
   _updateSeqNavButtons();
 
   if(screen==='seq-welcome'){
@@ -6273,8 +6653,8 @@ function _showSeqScreen(idx){
     showView(screen);
   }
 
-  // Auto-advance only in auto-sequence mode
-  if(state.settings.presentationMode==='sequence'){
+  // Auto-advance only in auto mode — NOT on the last screen (categories)
+  if(state.settings.presentationMode==='sequence'&&!isLast){
     const delay=screen==='seq-welcome'?5000:4500;
     _seqTimer=setTimeout(()=>_showSeqScreen(idx+1),delay);
   }
@@ -6282,8 +6662,13 @@ function _showSeqScreen(idx){
 
 function seqNext(){
   clearTimeout(_seqTimer);_seqTimer=null;
-  // Stop any ongoing animations or audio
   try{stopEffectSound();}catch(e){}
+  // On last screen, start competition directly
+  if(_seqStep>=_seqScreens.length-1){
+    _showSeqOverlay(false);_removeSeqWelcome();
+    startCompetition();
+    return;
+  }
   _showSeqScreen(_seqStep+1);
 }
 
@@ -6296,8 +6681,8 @@ function seqPrev(){
 
 function seqSkipAll(){
   clearTimeout(_seqTimer);_seqTimer=null;
-  _showSeqOverlay(false);
-  _removeSeqWelcome();
+  _seqStep=0;
+  _showSeqOverlay(false);_removeSeqWelcome();
   showView('categories');
 }
 
@@ -6549,14 +6934,20 @@ function loadQuestionFromQueue(){
 }
 
 function loadQuestion(catId,qIdx,teamIdx){
+  // ── Phase 1: clean previous question state ──
   clearTimer();
-  cancelTransition(false);           // cancel any running countdown
+  clearQuestionState();
+  cancelTransition(false);
   _transitionInProgress=false;
-  restoreNextButton();               // restore "التالي" if manual-mode changed it
-  state.answered=false;state.currentCatId=catId;state.currentQIndex=qIdx;
+  restoreNextButton();
+  // ── Phase 2: validate inputs ──
   const cat=state.categories.find(c=>c.id===catId);
+  if(!cat){console.warn('loadQuestion: catId not found:',catId);return;}
   const q=cat.questions[qIdx];
-  const team=state.teams[teamIdx];
+  if(!q||typeof q!=='object'){console.warn('loadQuestion: qIdx out of range:',qIdx,'/ len:',cat.questions.length);return;}
+  const team=state.teams[teamIdx]||null;
+  // ── Phase 3: update state ──
+  state.currentCatId=catId;state.currentQIndex=qIdx;
   // Difficulty badge
   const diff=q.difficulty||'medium';
   document.getElementById('q-diff-badge').innerHTML=`<span class="diff-badge ${DIFF_CLASS[diff]}">${DIFF_LABELS[diff]}</span>`;
@@ -6597,6 +6988,10 @@ function loadQuestion(catId,qIdx,teamIdx){
   // ── Text / Math rendering ──
   const textEl=document.getElementById('q-text-main');
   textEl.textContent=q.text;
+  // Apply question text font (Cairo default or Amiri for Quranic text)
+  textEl.style.fontFamily=q.textFont==='amiri'?"'Amiri','Noto Naskh Arabic',serif":"'Cairo',sans-serif";
+  textEl.style.fontSize=q.textFont==='amiri'?'calc(clamp(1.2rem,3.5vw,2rem)*var(--fs))':'';
+  textEl.style.lineHeight=q.textFont==='amiri'?'2.2':'';
   if(q.type==='math'&&window.renderMathInElement){
     try{
       renderMathInElement(textEl,{
@@ -6699,15 +7094,128 @@ function loadQuestion(catId,qIdx,teamIdx){
   // Explanation
   document.getElementById('q-explanation-box').classList.add('hidden');
   document.getElementById('q-explanation-box').innerHTML='';
+  // ── FITB: fill-in-the-blank ──
+  if(q.type==='fitb'){
+    document.getElementById('reveal-options-bar').style.display='none';
+    const textEl=document.getElementById('q-text-main');
+    // Replace [___] with a styled input
+    textEl.innerHTML=q.text.replace(/\[___\]/g,
+      '<span class="fitb-blank-wrap"><input class="fitb-input" id="fitb-player-input" type="text" dir="auto" placeholder="اكتب إجابتك..." autocomplete="off" spellcheck="false"></span>');
+    const fitbInput=document.getElementById('fitb-player-input');
+    if(fitbInput){
+      fitbInput.addEventListener('keydown',e=>{if(e.key==='Enter')checkFitbAnswer();});
+      setTimeout(()=>fitbInput.focus(),200);
+    }
+    document.getElementById('q-options-grid').innerHTML=
+      '<div style="text-align:center;margin-top:14px">'+
+      '<button class="btn btn-primary" style="padding:12px 36px;font-size:1rem" onclick="checkFitbAnswer()">✅ تحقق من الإجابة</button></div>';
+  }
+  // ── QURAN: verse display ──
+  if(q.type==='quran'){
+    document.getElementById('reveal-options-bar').style.display='none';
+    const meta=q.quranMeta||{};
+    const displayMode=q.quranDisplayMode||'both';
+    const mode=q.quranMode||'full';
+    const isComplete=(mode==='complete');
+    const textEl=document.getElementById('q-text-main');
+    // For complete mode: show first half, blank for second
+    const halfIdx=meta.halfIdx||Math.ceil(q.text.length/2);
+    // For complete mode: show the first half with a styled gap indicator
+    const displayText=isComplete
+      ?q.text.slice(0,halfIdx)+
+       '<span style="display:inline-block;border-bottom:2px dashed var(--accent1);min-width:80px;margin:0 8px;opacity:.6;vertical-align:middle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>'+
+       '<span style="color:var(--text-muted);font-size:.8em"> ﴾ أكمل الآية ﴿</span>'
+      :q.text;
+    if(displayMode!=='audio'){
+      const _metaBadge=q.quranHideMeta?'':
+        '<div style="text-align:center;margin-top:4px"><span class="quran-meta-badge">'+
+        (meta.surah||'')+(meta.ayah?' — الآية '+meta.ayah:'')+(meta.juz?' — الجزء '+meta.juz:'')+
+        '</span></div>';
+      textEl.innerHTML='<div class="quran-verse-display">'+displayText+'</div>'+_metaBadge;
+    } else {
+      textEl.innerHTML='<div style="text-align:center;color:var(--text-muted);font-size:.95rem;padding:16px">🔊 استمع للتلاوة ثم أجب</div>';
+    }
+    // Audio button
+    const audioWrap=document.getElementById('q-media-area');
+    audioWrap.innerHTML='';audioWrap.style.display='none';
+    if(q.quranAudio&&(displayMode==='audio'||displayMode==='both')){
+      const _qaBtn=document.createElement('button');
+      _qaBtn.className='q-media-audio-btn';_qaBtn.id='quran-audio-btn';
+      _qaBtn.innerHTML='<div class="audio-wave"><span></span><span></span><span></span><span></span><span></span></div><span id="quran-audio-lbl">\u25b6 \u0627\u0633\u062a\u0645\u0639 \u0644\u0644\u062a\u0644\u0627\u0648\u0629</span>';
+      _qaBtn.addEventListener('click',()=>toggleQuranAudio(q.quranAudio));
+      audioWrap.innerHTML='';audioWrap.appendChild(_qaBtn);
+      audioWrap.style.display='block';
+      if(displayMode==='audio')setTimeout(()=>toggleQuranAudio(q.quranAudio),800);
+    }
+    // Options grid
+    const optGrid=document.getElementById('q-options-grid');
+    if(isComplete){
+      const _complDiv=document.createElement('div');_complDiv.style.cssText='text-align:center;margin-top:16px;display:flex;flex-direction:column;align-items:center;gap:12px';
+      const _complInp=document.createElement('input');
+      _complInp.type='text';_complInp.id='fitb-player-input';_complInp.dir='rtl';
+      _complInp.placeholder='أكمل الآية الكريمة...';
+      _complInp.style.cssText="max-width:500px;width:100%;font-family:'Amiri','Noto Naskh Arabic',serif;font-size:1.1rem;text-align:center;padding:10px 14px;border:2px solid var(--border);border-radius:10px;background:var(--bg-surface);color:var(--text-primary);direction:rtl";
+      _complInp.addEventListener('keydown',e=>{if(e.key==='Enter')checkFitbAnswer();});
+      const _complBtn=document.createElement('button');
+      _complBtn.className='btn btn-primary';_complBtn.style.cssText='padding:12px 36px;font-size:1rem';
+      _complBtn.textContent='✅ تحقق من الإجابة';_complBtn.addEventListener('click',checkFitbAnswer);
+      // Presenter judge buttons
+      const _judgeRow=document.createElement('div');_judgeRow.style.cssText='display:flex;gap:8px;margin-top:4px';
+      const _jOk=document.createElement('button');_jOk.className='btn btn-success btn-sm';_jOk.textContent='✅ صحيح';_jOk.addEventListener('click',()=>presenterJudge(true));
+      const _jNo=document.createElement('button');_jNo.className='btn btn-danger btn-sm';_jNo.textContent='❌ خطأ';_jNo.addEventListener('click',()=>presenterJudge(false));
+      _judgeRow.appendChild(_jOk);_judgeRow.appendChild(_jNo);
+      const _judgeHint=document.createElement('div');_judgeHint.style.cssText='font-size:.7rem;color:var(--text-muted)';_judgeHint.textContent='أو يحكم المقدم مباشرةً';
+      _complDiv.appendChild(_complInp);_complDiv.appendChild(_complBtn);_complDiv.appendChild(_judgeRow);_complDiv.appendChild(_judgeHint);
+      optGrid.innerHTML='';optGrid.appendChild(_complDiv);
+      // Store correct answer for checking
+      // For complete mode: the correct answer is the second half of the verse
+      // We store raw (with tashkeel) but compare after stripping
+      const rawSecondHalf=q.text.slice(halfIdx).trim();
+      state._fitbCorrect=rawSecondHalf;
+      state._fitbCorrectDisplay=rawSecondHalf; // shown to user after wrong answer
+    } else if(mode==='number'){
+      const n=+(meta.ayah||1);
+      const pool=[];for(let d=-8;d<=8;d++){if(d!==0&&n+d>0)pool.push(String(n+d));}
+      const choices=shuffleArray([String(n),...shuffleArray(pool).slice(0,3)]);
+      const ci=choices.indexOf(String(n));state._quranCorrectIdx=ci;state._quranChoices=choices;
+      optGrid.innerHTML=choices.map((s,i)=>'<button class="option-btn" id="opt-btn-'+i+'" onclick="handleQuranChoice('+i+')"><div class="opt-btn-letter">'+LETTERS[i]+'</div><div class="opt-btn-content"><div class="opt-btn-text">الآية '+s+'</div></div></button>').join('');
+    } else if(mode==='surah_number'){
+      const n=+(meta.surahNum||1);
+      const pool=[];for(let d=-8;d<=8;d++){if(d!==0&&n+d>=1&&n+d<=114)pool.push(String(n+d));}
+      const choices=shuffleArray([String(n),...shuffleArray(pool).slice(0,3)]);
+      const ci=choices.indexOf(String(n));state._quranCorrectIdx=ci;state._quranChoices=choices;
+      optGrid.innerHTML=choices.map((s,i)=>'<button class="option-btn" id="opt-btn-'+i+'" onclick="handleQuranChoice('+i+')"><div class="opt-btn-letter">'+LETTERS[i]+'</div><div class="opt-btn-content"><div class="opt-btn-text">السورة رقم '+s+'</div></div></button>').join('');
+    } else if(mode==='juz'){
+      const n=+(meta.juz||1);
+      const pool=[];for(let d=-5;d<=5;d++){if(d!==0&&n+d>=1&&n+d<=30)pool.push(String(n+d));}
+      const choices=shuffleArray([String(n),...shuffleArray(pool).slice(0,3)]);
+      const ci=choices.indexOf(String(n));state._quranCorrectIdx=ci;state._quranChoices=choices;
+      optGrid.innerHTML=choices.map((s,i)=>'<button class="option-btn" id="opt-btn-'+i+'" onclick="handleQuranChoice('+i+')"><div class="opt-btn-letter">'+LETTERS[i]+'</div><div class="opt-btn-content"><div class="opt-btn-text">الجزء '+s+'</div></div></button>').join('');
+    } else {
+      // Default: surah name
+      const correct=meta.surah||'';
+      const dist=shuffleArray(QURAN_SURAHS.filter(s=>s!==correct)).slice(0,3);
+      const choices=shuffleArray([correct,...dist]);
+      const ci=choices.indexOf(correct);state._quranCorrectIdx=ci;state._quranChoices=choices;
+      optGrid.innerHTML=choices.map((s,i)=>'<button class="option-btn" id="opt-btn-'+i+'" onclick="handleQuranChoice('+i+')"><div class="opt-btn-letter">'+LETTERS[i]+'</div><div class="opt-btn-content"><div class="opt-btn-text" dir="rtl">'+s+'</div></div></button>').join('');
+    }
+  }
   // ── ORDER: drag-to-sort UI ──
   if(q.type==='order'){
     document.getElementById('reveal-options-bar').style.display='none';
     var orderOpts=q.options.filter(function(o){return o}).map(function(o,i){return{text:o,origIdx:i}});
     var shuffled=[].concat(orderOpts).sort(function(){return Math.random()-.5});
     state._orderItems=shuffled;state._orderCorrect=orderOpts.map(function(o){return o.origIdx});
-    document.getElementById('q-options-grid').innerHTML='<div id="order-items-container" style="display:flex;flex-direction:column;gap:10px;max-width:500px;margin:0 auto;width:100%">'+
-      shuffled.map(function(item,i){return '<div class="order-option-item" data-order-idx="'+i+'" draggable="true" ondragstart="onOrderDragStart(event,'+i+')" ondragover="onOrderDragOver(event,'+i+')" ondrop="onOrderDrop(event,'+i+')" ondragend="onOrderDragEnd(event)"><div class="order-num">'+(i+1)+'</div><div class="order-text" dir="auto">'+item.text+'</div><div class="order-drag" data-touch-drag="order">⠿</div></div>'}).join('')+
-      '</div><div style="text-align:center"><button class="btn btn-primary" style="margin-top:16px;padding:12px 32px;font-size:1rem" onclick="checkOrderAnswer()">✅ تحقق من الإجابة</button></div>';
+    state._fitbCorrect=null;state._fitbCorrectDisplay=null; // clear any quran complete state
+    document.getElementById('q-options-grid').innerHTML=
+      '<div id="order-items-container" style="display:flex;flex-direction:column;gap:8px;max-width:540px;margin:0 auto;width:100%"></div>'+
+      '<div style="text-align:center;margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:8px">'+
+      '<div class="text-sm text-muted" style="font-size:.75rem">💡 اسحب العناصر لترتيبها أو استخدم أزرار ↑↓</div>'+
+      '<button class="btn btn-primary" style="padding:12px 32px;font-size:1rem" onclick="checkOrderAnswer()">✅ تحقق من الترتيب</button>'+
+      '<div style="display:flex;gap:8px;margin-top:2px"><button class="btn btn-success btn-sm" onclick="presenterJudge(true)">✅ صحيح</button><button class="btn btn-danger btn-sm" onclick="presenterJudge(false)">❌ خطأ</button></div>'+
+      '<div style="font-size:.7rem;color:var(--text-muted)">أو يحكم المقدم مباشرةً بدلاً من التحقق</div>'+
+      '</div>';
+    _renderOrderItems();
     _initOrderTouchDrag();
   }
     // ── T/F: replace options grid with special UI ──
@@ -6836,8 +7344,8 @@ function buildScoreBtns(){
 //  GAMEPLAY
 // ════════════════════════════════════════════════════════
 function handleOptionClick(origIdx){
-  // origIdx is already the original question option index (set at render time via id="opt-btn-${origIdx}")
   if(state.answered)return;
+  if(!getCurrentQuestion()){console.warn('handleOptionClick: no current question');return;}
   const btn=document.getElementById(`opt-btn-${origIdx}`);
   if(btn&&btn.classList.contains('hidden-option')){
     // Reveal all then select
@@ -6878,6 +7386,7 @@ function revealAllOptions(){
   setTimeout(()=>{document.getElementById('reveal-options-bar').style.display='none'},state.totalOptionsToReveal*120+400);
 }
 function revealNextOption(){
+  if(state.answered)return; // stop auto-reveal once answered
   if(state.optionsRevealed>=state.totalOptionsToReveal)return;
   // Find the next hidden option btn
   let revealed=0;
@@ -6903,15 +7412,15 @@ function revealNextOption(){
 
 function selectOption(idx){
   if(state.answered)return;
+  const cat=getCurrentCat();
+  const q=getCurrentQuestion();
+  if(!cat||!q){console.warn('selectOption: no active question');return;}
   state.answered=true;_timerPaused=false;clearTimer();
-  // Make sure all options are visible before revealing correct/wrong
   document.querySelectorAll('.option-btn.hidden-option').forEach(b=>{
     b.classList.remove('hidden-option');b.classList.add('reveal-anim');
   });
-  document.getElementById('reveal-options-bar').style.display='none';
-  document.getElementById('answer-confirm-panel').classList.add('hidden');
-  const cat=state.categories.find(c=>c.id===state.currentCatId);
-  const q=cat.questions[state.currentQIndex];
+  $show('reveal-options-bar',false);
+  $cls('answer-confirm-panel','hidden',true);
   const isCorrect=idx===q.correct;
   // Use button id to get origIdx — safe whether options are shuffled or not
   document.querySelectorAll('.option-btn').forEach(btn=>{
@@ -6948,7 +7457,7 @@ function selectOption(idx){
     }else if(team){ state.teamStreaks[team.id]=(state.teamStreaks[team.id]||0)+1; }
     const totalPts=pts+streakBonus;
     toast(`✅ إجابة صحيحة! ${totalPts>1?'✦ '+totalPts+' نقطة':''}${streakBonus>0?' 🔥 مكافأة تسلسل!':''}`,'success');
-    if(team){team.score=(team.score||0)+totalPts;recordScoreHistoryV5(team.id,totalPts);saveState();saveGameProgress();floatScore(team,'+'+totalPts);}
+    if(team){team.score=(team.score||0)+totalPts;recordScoreHistoryV5(team.id,totalPts);saveState();saveGameProgress();floatScore(team,'+'+totalPts);_checkEarlyWinner(team);}
     recordAnswer(teamIdx<state.teams.length?team?.id:null,true,timeUsed);
     updateStreakDisplay(team);
   }else{
@@ -6988,8 +7497,9 @@ function revealAnswer(){
   });
   document.getElementById('reveal-options-bar').style.display='none';
   document.getElementById('answer-confirm-panel').classList.add('hidden');
-  const cat=state.categories.find(c=>c.id===state.currentCatId);
-  const q=cat.questions[state.currentQIndex];
+  const cat=getCurrentCat();
+  const q=getCurrentQuestion();
+  if(!cat||!q){return;} // guard already checked at entry
   // Use button id to get origIdx — safe with shuffled options
   document.querySelectorAll('.option-btn').forEach(btn=>{
     btn.classList.remove('pending-answer');
@@ -7030,7 +7540,7 @@ function skipQuestion(){
 // Score history for undo (V5 - uses state)
 function recordScoreHistoryV5(teamId,delta){
   state.scoreHistory.push({teamId,delta,ts:Date.now()});
-  if(state.scoreHistory.length>20)state.scoreHistory.shift();
+  if(state.scoreHistory.length>200)state.scoreHistory=state.scoreHistory.slice(-150);
   updateUndoBtn();
 }
 function updateUndoBtn(){
@@ -7070,7 +7580,7 @@ function givePoint(teamId){
 }
 
 function _showNextConfirmDialog(withDeduct){
-  const team=state.teams[state.currentTeamIndex];
+  const team=getCurrentTeam();
   const teamName=team?team.name:'الفريق';
   const negVal=state.settings.negMarkValue||1;
   let msg='لم تتم الإجابة بعد. هل تريد الانتقال للسؤال التالي؟';
@@ -7091,7 +7601,7 @@ function _confirmNextNoDeduct(){
 }
 function _confirmNextWithDeduct(){
   closeModal('modal-generic');
-  const team=state.teams[state.currentTeamIndex];
+  const team=getCurrentTeam();
   if(team){
     const neg=state.settings.negMarkValue||1;
     team.score=Math.max(0,team.score-neg);
@@ -7117,14 +7627,15 @@ function nextQuestion(){
     // mode==='silent': proceed without confirmation
   }
   state._nextConfirmBypass=false;
-  // Guard: prevent double-call (e.g. from 'التالي' button + auto-transition)
-  cancelTransition(false); // cancel any pending countdown first
+  cancelTransition(false);
   _transitionInProgress=false;
+  // Cancel auto-reveal if still running
+  if(state._autoRevInterval){clearInterval(state._autoRevInterval);state._autoRevInterval=null;}
   saveGameProgress();
   stopEffectSound();
-  document.getElementById('q-explanation-box').classList.add('hidden');
-  document.getElementById('answer-confirm-panel').classList.add('hidden');
-  document.getElementById('reveal-options-bar').style.display='none';
+  $cls('q-explanation-box','hidden',true);
+  $cls('answer-confirm-panel','hidden',true);
+  $show('reveal-options-bar',false);
   if(state.settings.compMode==='full_cat'){
     state.fullCatQueuePos++;
     if(state.fullCatQueuePos<state.fullCatQueue.length)loadQuestionFromQueue();
@@ -7136,7 +7647,10 @@ function nextQuestion(){
 }
 
 function transitionToCategories(){
-  if(_transitionInProgress)return; // already transitioning
+  if(_transitionInProgress)return;
+  // Guard: only transition if we're currently on the question screen
+  const qView=$el('view-question');
+  if(qView&&qView.classList.contains('hidden'))return;
   const auto=state.settings.autoTransition!==false;
   const delay=+(state.settings.autoTransitionDelay||0);
   if(!auto){
@@ -7204,7 +7718,7 @@ function goBackFromQuestion(){
 function updateTicker(){
   const ticker=document.getElementById('score-ticker');
   if(!state.teams.length){ticker.classList.add('hidden');return}
-  const curTeam=state.teams[state.currentTeamIndex];
+  const curTeam=getCurrentTeam();
   ticker.innerHTML=state.teams.map(t=>{
     const isActive=t.id===curTeam?.id;
     const dotHtml=t.teamImage
@@ -7249,29 +7763,49 @@ function togglePauseTimer(){
   if(pauseBtn)pauseBtn.textContent=_timerPaused?'▶':'⏸';
   toast(_timerPaused?'⏸ العداد متوقف — انقر للمتابعة':'▶ العداد يعمل','info');
 }
-function startTimer(seconds){
+let _timerDelayCountdown=null; // countdown interval during delay phase
+function startTimer(seconds,_bypassDelay){
+  // Guard: don't start timer if question already answered
+  if(state.answered){return;}
+  // Guard: validate seconds
+  if(!seconds||isNaN(seconds)||seconds<=0){
+    console.warn('startTimer: invalid seconds',seconds);return;
+  }
+  // Clear any running timer or delay countdown first
+  if(state.timerInterval){clearInterval(state.timerInterval);state.timerInterval=null;}
+  if(_timerDelayCountdown){clearInterval(_timerDelayCountdown);_timerDelayCountdown=null;}
   _timerPaused=false;
   document.getElementById('timer-wrapper').classList.remove('paused');
   const pauseBtn=document.querySelector('.pause-timer-btn');
   if(pauseBtn)pauseBtn.textContent='⏸';
   state.timeLeft=seconds;
-  state.timerTotal=seconds;           // ← store original total
+  state.timerTotal=seconds;
   updateTimerDisplay(seconds,seconds);
-  // Timer start delay
-  const _timerDelay=(state.settings.timerStartDelay||0)*1000;
-  if(_timerDelay>0&&!state._timerDelayDone){
-    state._timerDelayDone=true;
-    updateTimerDisplay(state.timeLeft,state.timerTotal);
+  // Timer start delay — only on first call, not on recursive restart
+  const _delaySecs=(!_bypassDelay)?(state.settings.timerStartDelay||0):0;
+  if(_delaySecs>0){
+    // Show countdown indicator
     const delayEl=document.getElementById('timer-delay-indicator');
-    if(delayEl){delayEl.style.display='flex';delayEl.textContent='يبدأ العداد بعد '+(state.settings.timerStartDelay)+' ثانية...';}
+    let remaining=_delaySecs;
+    if(delayEl){
+      delayEl.style.display='flex';
+      delayEl.textContent='يبدأ العداد بعد '+remaining+' ثانية...';
+    }
+    _timerDelayCountdown=setInterval(()=>{
+      remaining--;
+      if(delayEl){
+        if(remaining>0) delayEl.textContent='يبدأ العداد بعد '+remaining+' ثانية...';
+        else{delayEl.textContent='ابدأ!';delayEl.style.fontWeight='900';}
+      }
+    },1000);
     setTimeout(()=>{
-      state._timerDelayDone=false;
-      if(delayEl)delayEl.style.display='none';
-      if(!state.answered)startTimer(state.timeLeft);
-    },_timerDelay);
+      clearInterval(_timerDelayCountdown);_timerDelayCountdown=null;
+      if(delayEl){delayEl.style.display='none';delayEl.style.fontWeight='';}
+      // Start the actual timer with bypass so delay doesn't re-trigger
+      if(!state.answered) startTimer(seconds,true);
+    },_delaySecs*1000);
     return;
   }
-  state._timerDelayDone=false;
   state.timerInterval=setInterval(()=>{
     if(_timerPaused)return;
     state.timeLeft--;
@@ -7330,10 +7864,64 @@ function showTimeUpOverlay(){
   clearTimeout(_timeUpTimer);
   _timeUpTimer=setTimeout(()=>{const el=document.getElementById('timeup-overlay');if(el)el.remove();},2500);
 }
+
+// ════════════════════════════════════════════════════════════════
+//  clearQuestionState — call at start of every loadQuestion
+//  Resets ALL per-question runtime state to a clean slate
+// ════════════════════════════════════════════════════════════════
+function clearQuestionState(){
+  // ── 1. Stop ALL running media ──
+  [window._qAudioEl,window._quranAudio,window._tenseAudioEl]
+    .forEach(a=>{if(a){try{a.pause();a.src='';a.load();}catch(e){}}});
+  window._tenseMusicActive=false; // also reset this flag
+  // ── 2. Cancel all running timers/intervals ──
+  if(typeof _timerDelayCountdown!=='undefined'&&_timerDelayCountdown){
+    clearInterval(_timerDelayCountdown);_timerDelayCountdown=null;
+  }
+  // Cancel auto progressive-reveal interval
+  if(state._autoRevInterval){clearInterval(state._autoRevInterval);state._autoRevInterval=null;}
+  // Cancel auto-transition countdown
+  if(typeof _transitionTimer!=='undefined'&&_transitionTimer){
+    clearInterval(_transitionTimer);_transitionTimer=null;
+  }
+  if(typeof _transitionInProgress!=='undefined')_transitionInProgress=false;
+  // Remove transition badge if present
+  const txBadge=$el('transition-countdown');if(txBadge)txBadge.remove();
+  // ── 3. Reset per-question state fields ──
+  state.answered=false;
+  state.pendingAnswer=-1;
+  state.timeLeft=0;
+  state.timerTotal=0;
+  state.optionsRevealed=0;
+  state._fitbCorrect=null;
+  state._fitbCorrectDisplay=null;
+  state._quranCorrectIdx=null;
+  state._quranChoices=null;
+  state._orderItems=null;
+  state._orderCorrect=null;
+  state._tenseMusicActive=false;
+  state._nextConfirmBypass=false;
+  // ── 4. Clean transient UI ──
+  const ov=$el('timeup-overlay');if(ov)ov.remove();
+  const dlInd=$el('timer-delay-indicator');
+  if(dlInd){dlInd.style.display='none';dlInd.style.fontWeight='';}
+  $cls('answer-confirm-panel','hidden',true);
+  $cls('q-explanation-box','hidden',true);
+  $show('reveal-options-bar',false);
+}
+
 function clearTimer(){
-  if(state.timerInterval){clearInterval(state.timerInterval);state.timerInterval=null;}_stopTenseAudio();
+  // Stop main interval
+  if(state.timerInterval){clearInterval(state.timerInterval);state.timerInterval=null;}
+  // Also cancel delay countdown (prevents "ghost" delay continuing after clearTimer)
+  if(typeof _timerDelayCountdown!=='undefined'&&_timerDelayCountdown){
+    clearInterval(_timerDelayCountdown);_timerDelayCountdown=null;
+    const dlInd=$el('timer-delay-indicator');
+    if(dlInd){dlInd.style.display='none';dlInd.style.fontWeight='';}
+  }
+  _stopTenseAudio();
   _timerPaused=false;
-  const wrap=document.getElementById('timer-wrapper');
+  const wrap=$el('timer-wrapper');
   if(wrap){wrap.classList.remove('paused');const pb=wrap.querySelector('.pause-timer-btn');if(pb)pb.textContent='⏸';}
 }
 function updateTimerDisplay(left,total){
@@ -7697,25 +8285,67 @@ function resetOptEditor(){
 }
 function setQType(type){
   _currentQType=type;
+  const allTypes=['text','image','audio','math','tf','order','fitb','quran'];
   document.querySelectorAll('.qtype-tab').forEach((t,i)=>{
-    const types=['text','image','audio','math','tf'];
-    t.classList.toggle('active',types[i]===type);
+    t.classList.toggle('active',allTypes[i]===type);
   });
   document.getElementById('qtype-image-section').style.display=type==='image'?'block':'none';
   document.getElementById('qtype-audio-section').style.display=type==='audio'?'block':'none';
   document.getElementById('qtype-tf-section').style.display=type==='tf'?'block':'none';
-  // Hide options editor for T/F
+  const fitbSec=document.getElementById('qtype-fitb-section');
+  if(fitbSec)fitbSec.style.display=type==='fitb'?'block':'none';
+  const quranSec=document.getElementById('qtype-quran-section');
+  if(quranSec)quranSec.style.display=type==='quran'?'block':'none';
+  // Hide options editor for types that don't need MC options
+  // 'order' NEEDS the options editor but hides the "correct answer" row
+  const hideOptsEditor=['tf','fitb','quran'];
+  const hideCorrectRow=['tf','order','fitb','quran'];
   const optEditor=document.querySelector('.options-editor');
   const correctRow=document.getElementById('q-correct-input')?.closest('.form-row');
-  if(optEditor)optEditor.style.display=type==='tf'?'none':'flex';
-  if(correctRow)correctRow.style.display=type==='tf'?'none':'grid';
-  // When switching to math: run preview if text exists
+  if(optEditor)optEditor.style.display=hideOptsEditor.includes(type)?'none':'flex';
+  if(correctRow)correctRow.style.display=hideCorrectRow.includes(type)?'none':'grid';
+  // For order: update placeholders and labels to show "العنصر N"
+  const _letters=['أ','ب','ج','د'];
+  if(type==='order'){
+    [0,1,2,3].forEach(i=>{
+      const inp=document.getElementById('q-opt-'+i);
+      if(inp)inp.placeholder='العنصر '+(i+1)+' (الترتيب الصحيح)';
+      const badge=document.getElementById('opt-letter-badge-'+i);
+      if(badge)badge.textContent=(i+1)+'';
+    });
+  }else{
+    [0,1,2,3].forEach(i=>{
+      const inp=document.getElementById('q-opt-'+i);
+      if(inp)inp.placeholder='';
+      const badge=document.getElementById('opt-letter-badge-'+i);
+      if(badge)badge.textContent=_letters[i]||'';
+    });
+  }
+  // Handle text input
+  const textEl=document.getElementById('q-text-input');
+  if(textEl){
+    textEl.readOnly=(type==='quran');
+    textEl.placeholder=type==='fitb'?'مثال: عاصمة المملكة هي [___]':
+      type==='quran'?'سيُملأ تلقائياً بعد جلب الآية...':'أدخل نص السؤال...';
+  }
   if(type==='math'){setTimeout(previewMath,100);}
   else{
     const prev=document.getElementById('math-live-preview');
     if(prev)prev.innerHTML='<span style="color:var(--text-muted);font-size:.85rem">اكتب معادلة وستظهر هنا...</span>';
   }
   document.getElementById('math-hint').style.display=type==='math'?'block':'none';
+  if(type==='quran')_initQuranDatalist();
+  // Show type-specific hints in the options editor area
+  const optHint=document.getElementById('qtype-options-hint');
+  if(optHint){
+    const hints={
+      text:'',image:'',audio:'',math:'',tf:'',
+      order:'💡 أدخل عناصر الجواب بالترتيب الصحيح في حقول "العنصر 1، 2، 3..." أدناه — ستظهر للمتسابق بترتيب عشوائي عليه إعادة ترتيبها',
+      fitb:'',quran:''
+    };
+    optHint.textContent=hints[type]||'';
+    optHint.style.display=hints[type]?'block':'none';
+  }
 }
 
 function selectTFAnswer(val){
@@ -7852,21 +8482,24 @@ function playDescend(ctx){const o=_trackEffectNode(ctx.createOscillator()),g=ctx
 // ════════════════════════════════════════════════════════
 //  CONFETTI
 // ════════════════════════════════════════════════════════
-let confettiP=[];
+let confettiP=[];let _confAF=null;
+const MAX_CONFETTI=350;
 function launchConfetti(count=120){
-  const canvas=document.getElementById('confetti-canvas');canvas.width=innerWidth;canvas.height=innerHeight;
+  const canvas=document.getElementById('confetti-canvas');
+  canvas.width=innerWidth;canvas.height=innerHeight;
   const colors=['#f5c842','#00d4ff','#ff6b35','#00e676','#ff3b5c','#a78bfa'];
-  for(let i=0;i<count;i++)confettiP.push({x:Math.random()*canvas.width,y:-20,w:7+Math.random()*8,h:5+Math.random()*6,color:colors[~~(Math.random()*colors.length)],vx:(Math.random()-.5)*6,vy:3+Math.random()*5,rot:Math.random()*360,rotV:(Math.random()-.5)*8,life:1});
-  if(!animFrame)animConf();
+  const toAdd=Math.min(count,MAX_CONFETTI);
+  if(confettiP.length+toAdd>MAX_CONFETTI)confettiP=confettiP.slice(confettiP.length+toAdd-MAX_CONFETTI);
+  for(let i=0;i<toAdd;i++)confettiP.push({x:Math.random()*canvas.width,y:-20,w:7+Math.random()*8,h:5+Math.random()*6,color:colors[~~(Math.random()*colors.length)],vx:(Math.random()-.5)*6,vy:3+Math.random()*5,rot:Math.random()*360,rotV:(Math.random()-.5)*8,life:1});
+  if(!_confAF)_animConf();
 }
-let animFrame=null;
-function animConf(){
+function _animConf(){
   const canvas=document.getElementById('confetti-canvas'),ctx=canvas.getContext('2d');
   ctx.clearRect(0,0,canvas.width,canvas.height);
   confettiP=confettiP.filter(p=>p.life>0);
   confettiP.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.rot+=p.rotV;p.vy+=.1;if(p.y>canvas.height)p.life=0;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.color;ctx.globalAlpha=Math.min(1,p.life);ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});
-  if(confettiP.length)animFrame=requestAnimationFrame(animConf);
-  else{animFrame=null;ctx.clearRect(0,0,canvas.width,canvas.height)}
+  if(confettiP.length)_confAF=requestAnimationFrame(_animConf);
+  else{_confAF=null;ctx.clearRect(0,0,canvas.width,canvas.height)}
 }
 
 // ════════════════════════════════════════════════════════
@@ -8099,9 +8732,21 @@ function _sanitize(str){
 
 // Prevent accidental refresh during competition
 window.addEventListener('beforeunload',e=>{
+  // ── Resource cleanup (no await here — sync only) ──
+  // Close BroadcastChannel so other windows know this tab closed
+  if(typeof _remoteChannel!=='undefined'&&_remoteChannel){
+    try{_remoteChannel.postMessage({action:'host_closed'});_remoteChannel.close();}catch(_){}
+  }
+  // Cancel running animation frames
+  if(typeof _confAF!=='undefined'&&_confAF){cancelAnimationFrame(_confAF);_confAF=null;}
+  if(typeof _podiumConfAF!=='undefined'&&_podiumConfAF){cancelAnimationFrame(_podiumConfAF);_podiumConfAF=null;}
+  // Pause all audio
+  [window._qAudioEl,window._quranAudio,window._tenseAudioEl,window._customMusicEl,window._podiumAudioEl]
+    .forEach(a=>{if(a){try{a.pause();a.src='';}catch(_){}}});
+  // Warn only if game is active
   if(state.gameActive){
     e.preventDefault();
-    e.returnValue='المسابقة جارية — هل تريد المغادرة وقد يضيع التقدم؟';
+    e.returnValue='المسابقة جارية — هل تريد المغادرة؟';
     return e.returnValue;
   }
 });
@@ -8169,6 +8814,18 @@ document.addEventListener('keydown',e=>{
     }
   }
   if((e.key==='ArrowRight'||e.key==='ArrowLeft')&&state.answered)nextQuestion();
+  // Sequence keyboard navigation (skip if inside text input)
+  if(state.settings.seqKeyboard&&(e.key==='ArrowLeft'||e.key==='ArrowRight')&&!state.answered){
+    const _activeTag=(document.activeElement?.tagName||'').toLowerCase();
+    const _inInput=_activeTag==='input'||_activeTag==='textarea'||_activeTag==='select';
+    if(!_inInput){
+      const seqOv=$el('seq-nav-overlay');
+      if(seqOv&&seqOv.style.display!=='none'){
+        if(e.key==='ArrowLeft')seqNext();
+        else if(e.key==='ArrowRight')seqPrev();
+      }
+    }
+  }
   // Escape to undo pending answer
   if(e.key==='Escape'&&state.pendingAnswer>=0){e.preventDefault();undoAnswer();}
   const keys={'1':0,'2':1,'3':2,'4':3,'أ':0,'ب':1,'ج':2,'د':3};
@@ -8539,6 +9196,15 @@ function restoreCustomThemeVars(){
 // ════════════════════════════════════════════════════════
 window.addEventListener('load',()=>{
   loadState();
+  // Safety: ensure _idbLoadDone becomes true within 3s max
+  // Prevents saveState being blocked if IDB fails silently
+  setTimeout(()=>{
+    if(!_idbLoadDone){
+      _idbLoadDone=true;
+      console.warn('IDB load timeout — saves now enabled');
+      if(_pendingSaveNeeded){_pendingSaveNeeded=false;}
+    }
+  },3000);
   document.body.setAttribute('data-theme',state.settings.theme||'space');
   applyFontScale(state.settings.fontScale||100);
   document.title='منصة المسابقات التفاعلية — '+(state.settings.name||'');
@@ -8579,12 +9245,14 @@ function restoreV5Settings(){
   const hsisEl=document.getElementById('s-hide-start-in-seq');if(hsisEl)hsisEl.checked=s.hideStartInSeq!==false;
   const smpEl=document.getElementById('s-show-manual-point');if(smpEl)smpEl.checked=s.showManualPoint!==false;
   const tsdEl=document.getElementById('s-timer-start-delay');if(tsdEl)tsdEl.value=s.timerStartDelay||0;
+  const ewEl=document.getElementById('s-early-winner');if(ewEl){ewEl.checked=!!s.earlyWinnerEnabled;const eww=document.getElementById('early-winner-wrap');if(eww)eww.style.display=s.earlyWinnerEnabled?'flex':'none';}
+  const ewsEl=document.getElementById('s-early-winner-score');if(ewsEl)ewsEl.value=s.earlyWinnerScore||10;
   const teEl=document.getElementById('s-tense-enabled');if(teEl){teEl.checked=s.tenseEnabled!==false;const tow=document.getElementById('tense-options-wrap');if(tow)tow.style.display=teEl.checked?'block':'none';}
   const tmtEl=document.getElementById('s-tense-music-type');if(tmtEl){tmtEl.value=s.tenseMusicType||'builtin';const tw=document.getElementById('tense-custom-audio-wrap');if(tw)tw.style.display=tmtEl.value==='custom'?'block':'none';}
   const tvEl=document.getElementById('s-tense-vol');if(tvEl){tvEl.value=s.tenseMusicVol||70;const tvd=document.getElementById('tense-vol-display');if(tvd)tvd.textContent=(s.tenseMusicVol||70)+'%';}
   const ssbEl=document.getElementById('s-show-shuffle-badge');if(ssbEl)ssbEl.checked=!!s.showShuffleBadge;
   const nnaEl=document.getElementById('s-next-no-answer');if(nnaEl)nnaEl.value=s.nextWithoutAnswerMode||'warn';
-  const rdEl=document.getElementById('s-reveal-duration');if(rdEl){rdEl.value=s.revealDuration||1000;const rdd=document.getElementById('reveal-dur-display');if(rdd)rdd.textContent=((s.revealDuration||1000)/1000).toFixed(1)+'s';}
+  const rdEl=document.getElementById('s-reveal-duration');if(rdEl){const rdv=s.revealDuration||1000;rdEl.value=rdv;const rdd=document.getElementById('reveal-dur-display');if(rdd)rdd.textContent=(rdv/1000).toFixed(1);const rdn=document.getElementById('s-reveal-duration-num');if(rdn)rdn.value=(rdv/1000).toFixed(1);}
   const tchEl=document.getElementById('s-team-card-height');if(tchEl)tchEl.value=s.teamCardHeight||'auto';
   const ctdEl=document.getElementById('custom-tense-name');if(ctdEl)ctdEl.textContent=s.customTenseData?'✅ ملف محمّل':'لم يختر بعد';
   const prmEl=document.getElementById('s-progressive-reveal-mode');if(prmEl){prmEl.value=s.progressiveRevealMode||'manual';const pw=document.getElementById('progressive-mode-wrap');if(pw)pw.style.display=s.progressiveReveal?'block':'none';}
@@ -8887,35 +9555,41 @@ function updatePodiumMusicBtn(){
   if(window._podiumMusicPlaying){btn.style.borderColor='var(--accent2)';btn.style.color='var(--accent2)';}
   else{btn.style.borderColor='';btn.style.color='';}
 }
+let _podiumConfAF=null;
 function launchPodiumConfetti(){
   const canvas=document.getElementById('podium-confetti');
   if(!canvas)return;
+  if(_podiumConfAF){cancelAnimationFrame(_podiumConfAF);_podiumConfAF=null;}
   canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-  const ctx=canvas.getContext('2d');
+  const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);
   const pieces=[];
   const colors=['#f5c842','#00d4ff','#ff6b35','#00e676','#a78bfa','#f472b6'];
-  for(let i=0;i<180;i++){
+  for(let i=0;i<200;i++){
     pieces.push({
-      x:Math.random()*canvas.width,y:-20-Math.random()*100,
+      x:Math.random()*canvas.width,y:-20-Math.random()*120,
       w:6+Math.random()*8,h:10+Math.random()*10,
       color:colors[Math.floor(Math.random()*colors.length)],
-      vx:(Math.random()-0.5)*4,vy:2+Math.random()*4,
+      vx:(Math.random()-0.5)*5,vy:2+Math.random()*4,
       rot:Math.random()*360,vrot:(Math.random()-0.5)*6,op:1
     });
   }
   let frame=0;
-  function draw(){
+  function drawPodium(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
+    let alive=0;
     pieces.forEach(p=>{
+      if(p.op<=0)return;
       ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);
       ctx.globalAlpha=p.op;ctx.fillStyle=p.color;
       ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
-      p.x+=p.vx;p.y+=p.vy;p.rot+=p.vrot;p.vy+=0.06;
-      if(p.y>canvas.height+20)p.op=0;
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.vrot;p.vy+=0.07;
+      if(p.y>canvas.height+20)p.op=0;else alive++;
     });
-    frame++;if(frame<220)requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height);
+    frame++;
+    if(frame<260&&alive>0)_podiumConfAF=requestAnimationFrame(drawPodium);
+    else{_podiumConfAF=null;ctx.clearRect(0,0,canvas.width,canvas.height);}
   }
-  draw();
+  _podiumConfAF=requestAnimationFrame(drawPodium);
 }
 function resetForNewGame(){
   confirmAction('بدء مسابقة جديدة؟ (يُصفّر نقاط الفرق إذا كان الإعداد مفعّلاً)',()=>{
@@ -9240,14 +9914,53 @@ function _swapOptionRows(a,b){
 // ── HOST HINTS ──
 // ═══ ORDER QUESTION FUNCTIONS ═══
 var _orderDragIdx=null;
-function onOrderDragStart(e,idx){_orderDragIdx=idx;e.currentTarget.style.opacity='.5';}
-function onOrderDragOver(e,idx){e.preventDefault();document.querySelectorAll('.order-option-item').forEach(function(el){el.style.borderColor=''});if(idx!==_orderDragIdx)e.currentTarget.style.borderColor='var(--accent2)';}
-function onOrderDrop(e,dropIdx){e.preventDefault();if(_orderDragIdx===null||_orderDragIdx===dropIdx)return;var items=state._orderItems;var m=items.splice(_orderDragIdx,1)[0];items.splice(dropIdx,0,m);_renderOrderItems();_orderDragIdx=null;}
-function onOrderDragEnd(e){_orderDragIdx=null;e.currentTarget.style.opacity='';document.querySelectorAll('.order-option-item').forEach(function(el){el.style.borderColor=''});}
+function onOrderDragStart(e,idx){
+  _orderDragIdx=idx;
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed='move';
+  e.dataTransfer.setData('text/plain',String(idx));
+}
+function onOrderDragOver(e,idx){
+  e.preventDefault();e.dataTransfer.dropEffect='move';
+  document.querySelectorAll('.order-option-item').forEach(function(el){el.classList.remove('drag-over');});
+  if(idx!==_orderDragIdx)e.currentTarget.classList.add('drag-over');
+}
+function onOrderDrop(e,dropIdx){
+  e.preventDefault();
+  document.querySelectorAll('.order-option-item').forEach(function(el){el.classList.remove('drag-over','dragging');});
+  if(_orderDragIdx===null||_orderDragIdx===dropIdx){_orderDragIdx=null;return;}
+  var items=state._orderItems;var m=items.splice(_orderDragIdx,1)[0];items.splice(dropIdx,0,m);
+  _orderDragIdx=null;
+  _renderOrderItems();
+}
+function onOrderDragEnd(e){
+  _orderDragIdx=null;
+  document.querySelectorAll('.order-option-item').forEach(function(el){el.classList.remove('dragging','drag-over');});
+}
 function _renderOrderItems(){
   var c=document.getElementById('order-items-container');if(!c)return;
-  c.innerHTML=state._orderItems.map(function(item,i){return '<div class="order-option-item" data-order-idx="'+i+'" draggable="true" ondragstart="onOrderDragStart(event,'+i+')" ondragover="onOrderDragOver(event,'+i+')" ondrop="onOrderDrop(event,'+i+')" ondragend="onOrderDragEnd(event)"><div class="order-num">'+(i+1)+'</div><div class="order-text" dir="auto">'+item.text+'</div><div class="order-drag" data-touch-drag="order">⠿</div></div>'}).join('');
+  var n=state._orderItems.length;
+  c.innerHTML=state._orderItems.map(function(item,i){
+    return '<div class="order-option-item" data-order-idx="'+i+'" draggable="true"'+
+      ' ondragstart="onOrderDragStart(event,'+i+')" ondragover="onOrderDragOver(event,'+i+')'+'"'+
+      ' ondrop="onOrderDrop(event,'+i+')" ondragend="onOrderDragEnd(event)">'+
+      '<div class="order-num">'+(i+1)+'</div>'+
+      '<div class="order-text" dir="auto">'+item.text+'</div>'+
+      '<div style="display:flex;flex-direction:column;gap:2px;margin-right:2px">'+
+        '<button style="width:26px;height:22px;border:1px solid var(--border);border-radius:4px;background:var(--bg-surface);color:var(--text-primary);cursor:pointer;font-size:.75rem;line-height:1;padding:0;display:flex;align-items:center;justify-content:center" '+(i===0?'disabled style="opacity:.3;pointer-events:none"':'')+' onclick="onOrderMove('+i+',-1)">▲</button>'+
+        '<button style="width:26px;height:22px;border:1px solid var(--border);border-radius:4px;background:var(--bg-surface);color:var(--text-primary);cursor:pointer;font-size:.75rem;line-height:1;padding:0;display:flex;align-items:center;justify-content:center" '+(i===n-1?'disabled style="opacity:.3;pointer-events:none"':'')+' onclick="onOrderMove('+i+',1)">▼</button>'+
+      '</div>'+
+      '<div class="order-drag" data-touch-drag="order" style="font-size:1.2rem;cursor:grab;padding:0 4px">⠿</div>'+
+    '</div>';
+  }).join('');
   _initOrderTouchDrag();
+}
+function onOrderMove(idx,dir){
+  var items=state._orderItems;
+  var ni=idx+dir;
+  if(ni<0||ni>=items.length)return;
+  var tmp=items[idx];items[idx]=items[ni];items[ni]=tmp;
+  _renderOrderItems();
 }
 function _initOrderTouchDrag(){
   var _ti=null,_tsy=0,_tm=false;
@@ -9261,15 +9974,42 @@ function _initOrderTouchDrag(){
     _ti=null;_tm=false;};
 }
 function checkOrderAnswer(){
-  if(state.answered)return;var correct=state._orderCorrect;var current=state._orderItems.map(function(x){return x.origIdx});
-  var isCorrect=correct.every(function(v,i){return v===current[i]});
+  if(state.answered)return;
+  if(!state._orderCorrect||!state._orderItems){
+    toast('خطأ: بيانات الترتيب غير موجودة','danger');return;
+  }
+  const correct=state._orderCorrect;
+  const current=state._orderItems.map(x=>x.origIdx);
+  const isCorrect=correct.every((v,i)=>v===current[i]);
   state.answered=true;clearTimer();_stopTenseAudio();
-  document.querySelectorAll('.order-option-item').forEach(function(el,i){el.classList.add(current[i]===correct[i]?'correct-pos':'wrong-pos');});
-  state.usedQuestions[state.currentCatId].add(state.currentQIndex);
-  var team=state.teams[state.currentTeamIndex];
-  if(isCorrect){playSound('correct');if(team){var cat=state.categories.find(function(c){return c.id===state.currentCatId});var q=cat.questions[state.currentQIndex];var pts=q.difficulty==='hard'?(state.settings.hardPoints||2):1;team.score+=pts;recordScoreHistory(team.id,pts);}toast('🎉 إجابة صحيحة!','success');launchConfetti(50);}
-  else{playSound('wrong');if(team&&state.settings.negativeMarking){var neg=state.settings.negMarkValue||1;team.score=Math.max(0,team.score-neg);recordScoreHistory(team.id,-neg);}toast('❌ الترتيب غير صحيح','danger');}
-  saveState();updateTicker();
+  document.querySelectorAll('.order-option-item').forEach((el,i)=>{el.classList.add(current[i]===correct[i]?'correct-pos':'wrong-pos');});
+  state.usedQuestions[state.currentCatId]?.add(state.currentQIndex);
+  const team=getCurrentTeam();
+  const cat=state.categories.find(c=>c.id===state.currentCatId);
+  const q=cat?.questions[state.currentQIndex];
+  const timeUsed=(state.timerTotal||30)-Math.max(0,state.timeLeft);
+  if(isCorrect){
+    playSound('correct');launchConfetti(80);
+    if(team){const pts=q?.difficulty==='hard'?(state.settings.hardPoints||2):1;team.score=(team.score||0)+pts;recordScoreHistoryV5(team.id,pts);saveState();saveGameProgress();floatScore(team,'+'+pts);_checkEarlyWinner(team);}
+    toast('🎉 الترتيب صحيح!','success');recordAnswer(team?.id,true,timeUsed);
+  }else{
+    playSound('wrong');
+    if(team&&state.settings.negativeMarking){const neg=state.settings.negMarkValue||1;team.score=Math.max(0,(team.score||0)-neg);recordScoreHistoryV5(team.id,-neg);saveState();saveGameProgress();floatScore(team,'-'+neg,'minus');}
+    // Show the correct order after a wrong answer
+    const correctOrderEl=document.createElement('div');
+    correctOrderEl.style.cssText='margin-top:12px;padding:10px 14px;background:rgba(0,230,118,.08);border:1px solid var(--success);border-radius:10px;font-size:.82rem;direction:rtl;text-align:right';
+    correctOrderEl.innerHTML='<div style="font-weight:900;color:var(--success);margin-bottom:6px">✅ الترتيب الصحيح:</div>'+
+      state._orderCorrect.map((origIdx,pos)=>{
+        const item=(state._orderItems||[]).find(x=>x.origIdx===origIdx)||(q?.options||[])[origIdx];
+        const text=typeof item==='object'?item.text:item;
+        return '<div style="padding:3px 0"><span style="color:var(--accent2);font-weight:700;margin-left:6px">'+(pos+1)+'.</span>'+(text||'—')+'</div>';
+      }).join('');
+    const grid=document.getElementById('q-options-grid');
+    if(grid)grid.appendChild(correctOrderEl);
+    toast('❌ الترتيب غير صحيح','danger');recordAnswer(team?.id,false,timeUsed);
+  }
+  if(q?.explanation){const eb=document.getElementById('q-explanation-box');if(eb){eb.innerHTML='<span>💡</span> '+_sanitize(q.explanation);eb.classList.remove('hidden');}}
+  updateTicker();updateUndoBtn();
 }
 
 // ═══ SEARCH/JUMP DURING PLAY ═══
@@ -9291,22 +10031,184 @@ function filterPlaySearch(term){
   }).join('')||'<div class="text-sm text-muted" style="padding:12px;text-align:center">لا توجد نتائج</div>';
 }
 
-// ═══ REMOTE CONTROL (BroadcastChannel) ═══
+// ═══════════════════════════════════════════════════════════════
+//  REMOTE CONTROL — Enhanced (BroadcastChannel + window.open)
+// ═══════════════════════════════════════════════════════════════
 var _remoteChannel=null;
+var _remoteWin=null;
+var _remotePingTimer=null;
+
 function initRemoteControl(){
   if(!('BroadcastChannel' in window)){toast('المتصفح لا يدعم هذه الميزة','danger');return;}
+  if(_remoteChannel){try{_remoteChannel.close();}catch(e){}}
   _remoteChannel=new BroadcastChannel('quiz_remote_v1');
-  _remoteChannel.onmessage=function(e){var m=e.data;if(!m||!m.action)return;
-    if(m.action==='next')nextQuestion();else if(m.action==='reveal')revealAnswer();
-    else if(m.action==='categories')showView('categories');else if(m.action==='scores')showView('scores');
-    else if(m.action==='podium')showPodium();else if(m.action==='timer')toggleTimer();else if(m.action==='music')toggleMusic();};
-  toast('📡 التحكم عن بُعد مفعّل','success');
+  _remoteChannel.onmessage=function(e){
+    const m=e.data;if(!m||!m.action)return;
+    if(m.action==='next')nextQuestion();
+    else if(m.action==='reveal')revealAnswer();
+    else if(m.action==='categories')showView('categories');
+    else if(m.action==='scores')showView('scores');
+    else if(m.action==='podium')showPodium();
+    else if(m.action==='timer')toggleTimer();
+    else if(m.action==='music')toggleMusic();
+    else if(m.action==='ping'){
+      // respond with current state snapshot
+      _remoteChannel.postMessage({action:'state_update',payload:_buildRemoteState()});
+    }
+  };
 }
+
+function _buildRemoteState(){
+  const teams=(state.teams||[]).map(t=>({name:t.name,score:t.score||0,color:t.color||'#888'}));
+  const cat=state.categories.find(c=>c.id===state.currentCatId);
+  const q=cat?.questions[state.currentQIndex];
+  return {
+    teams,
+    currentTeam:getCurrentTeam()?.name||'',
+    currentQ:q?q.text.slice(0,60):'',
+    answered:!!state.answered,
+    timeLeft:state.timeLeft||0,
+    timerTotal:state.timerTotal||30,
+    musicPlaying:!!state.musicPlaying,
+    gameActive:!!state.gameActive,
+  };
+}
+
 function showRemotePanel(){
   if(!_remoteChannel)initRemoteControl();
-  openGenericModal('📡 التحكم عن بُعد','<div style="text-align:center;padding:16px"><div style="font-size:3rem;margin-bottom:12px">📱</div><p style="font-size:.9rem;color:var(--text-secondary);margin-bottom:16px">افتح هذه الصفحة في نافذة أخرى واستخدم الأزرار للتحكم</p><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:320px;margin:0 auto"><button class="btn btn-primary" onclick="_sendRemote(\'next\')">التالي ←</button><button class="btn btn-accent" onclick="_sendRemote(\'reveal\')">🔍 كشف</button><button class="btn btn-ghost" onclick="_sendRemote(\'categories\')">📂 الأقسام</button><button class="btn btn-ghost" onclick="_sendRemote(\'scores\')">🏆 النتائج</button><button class="btn btn-ghost" onclick="_sendRemote(\'timer\')">⏱ العداد</button><button class="btn btn-ghost" onclick="_sendRemote(\'music\')">🎵 الموسيقى</button><button class="btn btn-success" style="grid-column:1/-1" onclick="_sendRemote(\'podium\')">🎊 المنصة</button></div></div>');
+  // Build the remote window HTML inline
+  const remoteHTML=_buildRemoteWindowHTML();
+  if(_remoteWin&&!_remoteWin.closed){_remoteWin.focus();return;}
+  _remoteWin=window.open('','quiz_remote_panel','width=440,height=680,resizable=yes,scrollbars=yes');
+  if(!_remoteWin){toast('تعذّر فتح نافذة التحكم — تحقق من إعدادات النوافذ المنبثقة','danger');return;}
+  _remoteWin.document.open();
+  _remoteWin.document.write(remoteHTML);
+  _remoteWin.document.close();
+  // Start ping loop — push state every 3s
+  clearInterval(_remotePingTimer);
+  _remotePingTimer=setInterval(()=>{
+    if(_remoteWin&&_remoteWin.closed){clearInterval(_remotePingTimer);return;}
+    if(_remoteChannel) _remoteChannel.postMessage({action:'state_update',payload:_buildRemoteState()});
+  },3000);
+  toast('📡 نافذة التحكم مفتوحة','success');
 }
-function _sendRemote(action){if(!_remoteChannel)initRemoteControl();if(_remoteChannel)_remoteChannel.postMessage({action:action,ts:Date.now()});toast('📡 '+action,'info');}
+
+function _buildRemoteWindowHTML(){
+  return `<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>📡 لوحة التحكم عن بُعد</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:#09091f;color:#e0e0ff;direction:rtl;min-height:100vh;display:flex;flex-direction:column}
+.rc-header{background:#0e0e2e;padding:12px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #2a2a5a}
+.rc-title{font-size:1rem;font-weight:900;color:#00e8d0}
+.rc-status{width:10px;height:10px;border-radius:50%;background:#00e676;box-shadow:0 0 8px #00e676;animation:blink 2s ease infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.rc-scores{display:grid;gap:6px;padding:12px 14px}
+.rc-score-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:#13133a;border:1px solid #2a2a5a}
+.rc-score-row.leader{border-color:#f5c842;background:#1a1508}
+.rc-team-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.rc-team-name{flex:1;font-size:.85rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rc-team-score{font-size:1.05rem;font-weight:900;color:#00e8d0;min-width:36px;text-align:left}
+.rc-divider{height:1px;background:#2a2a5a;margin:0 14px}
+.rc-current{padding:10px 14px;font-size:.78rem;color:#8888cc}
+.rc-q-text{padding:0 14px 8px;font-size:.82rem;color:#aaa;line-height:1.5;max-height:52px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.rc-timer-bar{height:4px;background:#2a2a5a;margin:0 14px 10px;border-radius:2px;overflow:hidden}
+.rc-timer-fill{height:100%;background:#00e8d0;border-radius:2px;transition:width .9s linear}
+.rc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 14px}
+.rc-btn{padding:10px 8px;border-radius:10px;border:1.5px solid #2a2a5a;background:#13133a;color:#e0e0ff;font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px}
+.rc-btn:hover{background:#1e1e5a;border-color:#00e8d0;transform:translateY(-1px)}
+.rc-btn:active{transform:translateY(0)}
+.rc-btn.wide{grid-column:1/-1}
+.rc-btn.primary{background:linear-gradient(135deg,#1a3a8a,#2d5be3);border-color:#2d5be3;color:#fff}
+.rc-btn.accent{background:linear-gradient(135deg,#004a5a,#00e8d0);border-color:#00e8d0;color:#001a1f}
+.rc-btn.success{background:linear-gradient(135deg,#004a20,#00e676);border-color:#00e676;color:#001a0e}
+.rc-btn.danger{background:linear-gradient(135deg,#5a0010,#ff3b5c);border-color:#ff3b5c;color:#fff}
+.rc-btn .ic{font-size:1.2rem}
+.rc-footer{padding:8px 14px;font-size:.68rem;color:#555;text-align:center;margin-top:auto;border-top:1px solid #2a2a5a}
+</style>
+</head><body>
+<div class="rc-header">
+  <div class="rc-status" id="rc-dot"></div>
+  <div class="rc-title">📡 لوحة التحكم عن بُعد</div>
+</div>
+<div class="rc-scores" id="rc-scores">
+  <div style="color:#555;font-size:.78rem;text-align:center;padding:8px">في انتظار بيانات المسابقة...</div>
+</div>
+<div class="rc-divider"></div>
+<div class="rc-current" id="rc-current">الشاشة الحالية: —</div>
+<div class="rc-q-text" id="rc-q-text"></div>
+<div class="rc-timer-bar"><div class="rc-timer-fill" id="rc-timer-fill" style="width:100%"></div></div>
+<div class="rc-grid">
+  <button class="rc-btn primary" onclick="send('next')"><span class="ic">⏭</span>التالي</button>
+  <button class="rc-btn accent" onclick="send('reveal')"><span class="ic">🔍</span>كشف الإجابة</button>
+  <button class="rc-btn" onclick="send('categories')"><span class="ic">📂</span>الأقسام</button>
+  <button class="rc-btn" onclick="send('scores')"><span class="ic">🏆</span>النتائج</button>
+  <button class="rc-btn" onclick="send('timer')"><span class="ic">⏱</span>تشغيل/إيقاف العداد</button>
+  <button class="rc-btn" onclick="send('music')" id="rc-music-btn"><span class="ic">🎵</span>الموسيقى</button>
+  <button class="rc-btn success wide" onclick="send('podium')"><span class="ic">🎊</span>الانتقال للمنصة</button>
+</div>
+<div class="rc-footer">يُغلق تلقائياً عند إغلاق نافذة المسابقة</div>
+<script>
+  var ch=null;
+  function init(){
+    if(!('BroadcastChannel' in window)){document.body.innerHTML='<div style="padding:24px;color:red">المتصفح لا يدعم هذه الميزة</div>';return;}
+    ch=new BroadcastChannel('quiz_remote_v1');
+    ch.onmessage=function(e){
+      var m=e.data;
+      if(!m)return;
+      if(m.action==='state_update'&&m.payload) updateUI(m.payload);
+      if(m.action==='host_closed'){
+        document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px;font-family:Cairo,sans-serif;color:#e0e0ff;background:#09091f;text-align:center;direction:rtl"><div style="font-size:2.5rem">📴</div><div style="font-weight:700;font-size:1.1rem">أُغلقت نافذة المسابقة</div><div style="font-size:.85rem;color:#666">يمكن إغلاق هذه النافذة</div></div>';
+        try{ch.close();}catch(_){}
+      }
+    };
+    // ping for state
+    ch.postMessage({action:'ping'});
+    setInterval(function(){ch.postMessage({action:'ping'});},4000);
+  }
+  function send(action){
+    if(!ch)return;
+    ch.postMessage({action:action,ts:Date.now()});
+    var dot=document.getElementById('rc-dot');
+    if(dot){dot.style.background='#f5c842';setTimeout(function(){dot.style.background='#00e676';},600);}
+  }
+  function updateUI(s){
+    // Scores
+    var box=document.getElementById('rc-scores');
+    if(s.teams&&s.teams.length){
+      var sorted=[].concat(s.teams).sort(function(a,b){return b.score-a.score;});
+      var maxScore=sorted[0].score;
+      box.innerHTML=sorted.map(function(t){
+        return '<div class="rc-score-row'+(t.score===maxScore?' leader':'')+'">'
+          +'<div class="rc-team-dot" style="background:'+t.color+'"></div>'
+          +'<div class="rc-team-name">'+t.name+'</div>'
+          +'<div class="rc-team-score">'+t.score+'</div></div>';
+      }).join('');
+    }
+    // Current info
+    var cur=document.getElementById('rc-current');
+    if(cur&&s.currentTeam) cur.textContent='الدور: '+s.currentTeam+(s.answered?' — ✅ تمت الإجابة':'');
+    var qt=document.getElementById('rc-q-text');
+    if(qt) qt.textContent=s.currentQ||'';
+    // Timer bar
+    var fill=document.getElementById('rc-timer-fill');
+    if(fill&&s.timerTotal>0) fill.style.width=Math.max(0,Math.round(s.timeLeft/s.timerTotal*100))+'%';
+    // Music btn
+    var mb=document.getElementById('rc-music-btn');
+    if(mb) mb.style.opacity=s.musicPlaying?'1':'.55';
+  }
+  init();
+<\/script>
+</body></html>`;
+}
+
+function _sendRemote(action){
+  if(!_remoteChannel)initRemoteControl();
+  if(_remoteChannel)_remoteChannel.postMessage({action:action,ts:Date.now()});
+}
+
 
 function showHostHint(){
   const cat=state.categories.find(c=>c.id===state.currentCatId);
@@ -9323,6 +10225,7 @@ function toggleWhiteboard(){
   if(_whiteboardActive){
     if(wb)wb.remove();
     _whiteboardActive=false;
+    if(window._wbResizeHandler){window.removeEventListener('resize',window._wbResizeHandler);window._wbResizeHandler=null;}
     toast('تم إغلاق السبورة','info');return;
   }
   _whiteboardActive=true;
@@ -9349,6 +10252,9 @@ function toggleWhiteboard(){
   canvas.addEventListener('pointermove',e=>{if(!window._wbDrawing)return;ctx.lineTo(e.clientX,e.clientY);ctx.stroke();});
   canvas.addEventListener('pointerup',()=>{window._wbDrawing=false;});
   canvas.addEventListener('pointerleave',()=>{window._wbDrawing=false;});
+  let _wbResizeTimer=null;
+  window._wbResizeHandler=()=>{clearTimeout(_wbResizeTimer);_wbResizeTimer=setTimeout(()=>{if(_whiteboardActive){toggleWhiteboard();toast('⚠️ أُغلقت السبورة تلقائياً','info');}},300);};
+  window.addEventListener('resize',window._wbResizeHandler,{passive:true});
   toast('🖊️ السبورة مفعّلة — ارسم على الشاشة','success');
 }
 function wbSetColor(c){if(window._wbCtx)window._wbCtx.strokeStyle=c;}
@@ -9595,6 +10501,732 @@ function hideLoading(){
 // The IIFE was removed because it was blocking access to many
 // inline onclick/oninput/onchange handlers in the HTML.
 // ────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+//  FITB ANSWER CHECK
+// ═══════════════════════════════════════════════════════
+function checkFitbAnswer(){
+  if(state.answered)return;
+  const input=$el('fitb-player-input');
+  if(!input||!input.value.trim()){toast('اكتب إجابتك في الفراغ','info');return;}
+  const cat=getCurrentCat();
+  const q=getCurrentQuestion();
+  if(!cat||!q){toast('خطأ: لا يوجد سؤال نشط','danger');return;}
+  const userAns=_normalizeArabic(input.value);
+  // Support multiple accepted answers separated by | 
+  // Compare after stripping tashkeel — user may type with or without diacritics
+  const storedAns=(q.fitbAnswer||(state._fitbCorrect||'')).trim();
+  const accepted=storedAns.split('|').map(a=>_normalizeArabic(a));
+  const isCorrect=accepted.some(a=>a===userAns||a.includes(userAns)||userAns.includes(a)&&userAns.length>=a.length*.85);
+  state.answered=true;clearTimer();_stopTenseAudio();
+  state.usedQuestions[state.currentCatId]?.add(state.currentQIndex);
+  input.disabled=true;
+  if(isCorrect){
+    input.style.borderBottomColor='var(--success)';
+    input.style.color='var(--success)';
+  } else {
+    input.style.borderBottomColor='var(--danger)';
+    const hint=document.createElement('div');
+    hint.className='fitb-correct-hint';
+    const cleanAns=(state._fitbCorrectDisplay||storedAns.split('|')[0]).trim();
+    const isQuran=state.categories.find(c=>c.id===state.currentCatId)?.questions[state.currentQIndex]?.type==='quran';
+    hint.innerHTML='✅ الإجابة الصحيحة: <strong dir="rtl" style="font-family: '+(isQuran?'Amiri, ':'Cairo, ')+' serif; font-size: '+(isQuran?'1.2em':'1em')+'">'+cleanAns+'</strong>';
+    const wrap=input.closest('.fitb-blank-wrap');
+    if(wrap)wrap.insertAdjacentElement('afterend',hint);else input.parentNode.appendChild(hint);
+  }
+  if(q.explanation){
+    const ebox=document.getElementById('q-explanation-box');
+    ebox.innerHTML='<span style="font-size:1rem">💡</span> '+_sanitize(q.explanation);
+    ebox.classList.remove('hidden');
+  }
+  const teamIdx=state.currentTeamIndex;
+  const team=state.teams[teamIdx];
+  const timeUsed=(state.timerTotal||30)-Math.max(0,state.timeLeft);
+  if(isCorrect){
+    playSound('correct');launchConfetti();
+    const pts=q.difficulty==='hard'?(state.settings.hardPoints||2):1;
+    if(team){team.score=(team.score||0)+pts;recordScoreHistoryV5(team.id,pts);saveState();saveGameProgress();floatScore(team,'+'+pts);}
+    toast('✅ إجابة صحيحة!','success');
+    recordAnswer(team?.id,true,timeUsed);
+  }else{
+    playSound('wrong');
+    if(team&&state.settings.negativeMarking){const neg=state.settings.negMarkValue||1;team.score=Math.max(0,(team.score||0)-neg);recordScoreHistoryV5(team.id,-neg);saveState();saveGameProgress();floatScore(team,'-'+neg,'minus');}
+    toast('❌ إجابة خاطئة!','danger');
+    recordAnswer(team?.id,false,timeUsed);
+  }
+  updateTicker();updateUndoBtn();
+}
+
+// ═══════════════════════════════════════════════════════
+//  QURAN OPTION CLICK
+// ═══════════════════════════════════════════════════════
+function handleQuranChoice(idx){
+  if(state.answered)return;
+  if(state._quranCorrectIdx==null){toast('خطأ: لا تتوفر بيانات السؤال القرآني','danger');return;}
+  const isCorrect=(idx===state._quranCorrectIdx);
+  for(let i=0;i<(state._quranChoices||[]).length;i++){
+    const btn=$el('opt-btn-'+i);
+    if(!btn)continue;
+    btn.classList.add('revealed');
+    if(i===state._quranCorrectIdx)btn.classList.add('correct-answer');
+    else if(i===idx&&!isCorrect)btn.classList.add('wrong-answer');
+  }
+  const cat=getCurrentCat();
+  const q=getCurrentQuestion();
+  if(!cat||!q){toast('خطأ: لا يوجد سؤال نشط','danger');return;}
+  state.answered=true;clearTimer();_stopTenseAudio();
+  state.usedQuestions[state.currentCatId]?.add(state.currentQIndex);
+  if(q.explanation){const ebox=document.getElementById('q-explanation-box');ebox.innerHTML='<span style="font-size:1rem">💡</span> '+_sanitize(q.explanation);ebox.classList.remove('hidden');}
+  const teamIdx=state.currentTeamIndex;const team=state.teams[teamIdx];
+  const timeUsed=(state.timerTotal||30)-Math.max(0,state.timeLeft);
+  if(isCorrect){
+    playSound('correct');launchConfetti();
+    const pts=q.difficulty==='hard'?(state.settings.hardPoints||2):1;
+    if(team){team.score=(team.score||0)+pts;recordScoreHistoryV5(team.id,pts);saveState();saveGameProgress();floatScore(team,'+'+pts);_checkEarlyWinner(team);}
+    toast('✅ إجابة صحيحة!','success');recordAnswer(team?.id,true,timeUsed);
+  }else{
+    playSound('wrong');
+    if(team&&state.settings.negativeMarking){const neg=state.settings.negMarkValue||1;team.score=Math.max(0,(team.score||0)-neg);recordScoreHistoryV5(team.id,-neg);saveState();saveGameProgress();floatScore(team,'-'+neg,'minus');}
+    toast('❌ إجابة خاطئة!','danger');recordAnswer(team?.id,false,timeUsed);
+  }
+  updateTicker();updateUndoBtn();
+}
+
+// ═══════════════════════════════════════════════════════
+//  QURAN AUDIO TOGGLE
+// ═══════════════════════════════════════════════════════
+function toggleQuranAudio(url){
+  if(!url)return;
+  if(window._quranAudio&&!window._quranAudio.paused){
+    window._quranAudio.pause();
+    const lbl=document.getElementById('quran-audio-lbl');if(lbl)lbl.textContent='▶ استمع للتلاوة';
+    return;
+  }
+  if(window._quranAudio){try{window._quranAudio.pause();window._quranAudio.src='';}catch(e){}}
+  window._quranAudio=new Audio(url);
+  window._quranAudio.volume=Math.min(1,(state.settings.musicVol||40)/100);
+  window._quranAudio.play().catch(()=>toast('تعذّر تشغيل التلاوة','danger'));
+  const lbl=document.getElementById('quran-audio-lbl');if(lbl)lbl.textContent='⏸ إيقاف التلاوة';
+  window._quranAudio.onended=()=>{const l2=document.getElementById('quran-audio-lbl');if(l2)l2.textContent='▶ استمع للتلاوة';};
+}
+
+// ═══════════════════════════════════════════════════════
+//  QURAN FETCH + DOWNLOAD
+// ═══════════════════════════════════════════════════════
+const QURAN_SURAHS=['الفاتحة','البقرة','آل عمران','النساء','المائدة','الأنعام','الأعراف','الأنفال','التوبة','يونس','هود','يوسف','الرعد','إبراهيم','الحجر','النحل','الإسراء','الكهف','مريم','طه','الأنبياء','الحج','المؤمنون','النور','الفرقان','الشعراء','النمل','القصص','العنكبوت','الروم','لقمان','السجدة','الأحزاب','سبأ','فاطر','يس','الصافات','ص','الزمر','غافر','فصلت','الشورى','الزخرف','الدخان','الجاثية','الأحقاف','محمد','الفتح','الحجرات','ق','الذاريات','الطور','النجم','القمر','الرحمن','الواقعة','الحديد','المجادلة','الحشر','الممتحنة','الصف','الجمعة','المنافقون','التغابن','الطلاق','التحريم','الملك','القلم','الحاقة','المعارج','نوح','الجن','المزمل','المدثر','القيامة','الإنسان','المرسلات','النبأ','النازعات','عبس','التكوير','الانفطار','المطففين','الانشقاق','البروج','الطارق','الأعلى','الغاشية','الفجر','البلد','الشمس','الليل','الضحى','الشرح','التين','العلق','القدر','البينة','الزلزلة','العاديات','القارعة','التكاثر','العصر','الهمزة','الفيل','قريش','الماعون','الكوثر','الكافرون','النصر','المسد','الإخلاص','الفلق','الناس'];
+const QURAN_SURAH_NUMS=Object.fromEntries(QURAN_SURAHS.map((n,i)=>[n,i+1]));
+
+// Strip Arabic diacritics/tashkeel for fuzzy comparison
+function _stripTashkeel(s){
+  if(!s)return'';
+  // Remove: fathah, dammah, kasrah, sukun, shadda, tanwin forms, superscript alef, tatweel
+  return s.replace(/[ً-ٰٟـ]/g,'')
+          .replace(/آ/g,'ا')   // أ → ا (alef with madda)
+          .replace(/أ/g,'ا')   // أ → ا
+          .replace(/إ/g,'ا')   // إ → ا
+          .replace(/ٱ/g,'ا')   // ٱ → ا (alef wasla)
+          .trim();
+}
+function _normalizeArabic(s){
+  if(!s)return'';
+  return _stripTashkeel(s).replace(/\s+/g,' ').toLowerCase();
+}
+
+// Offline fallback — Juz Amma + key verses embedded
+const QURAN_OFFLINE={'1:1':'بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ','1:2':'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ','1:3':'ٱلرَّحْمَٰنِ ٱلرَّحِيمِ','1:4':'مَٰلِكِ يَوْمِ ٱلدِّينِ','1:5':'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ','1:6':'ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ','1:7':'صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ','2:255':'ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌ وَلَا نَوْمٌ','2:256':'لَآ إِكْرَاهَ فِى ٱلدِّينِ ۖ قَد تَّبَيَّنَ ٱلرُّشْدُ مِنَ ٱلْغَىِّ','2:285':'ءَامَنَ ٱلرَّسُولُ بِمَآ أُنزِلَ إِلَيْهِ مِن رَّبِّهِۦ وَٱلْمُؤْمِنُونَ','2:286':'لَا يُكَلِّفُ ٱللَّهُ نَفْسًا إِلَّا وُسْعَهَا','112:1':'قُلْ هُوَ ٱللَّهُ أَحَدٌ','112:2':'ٱللَّهُ ٱلصَّمَدُ','112:3':'لَمْ يَلِدْ وَلَمْ يُولَدْ','112:4':'وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ','113:1':'قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ','113:2':'مِن شَرِّ مَا خَلَقَ','114:1':'قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ','114:2':'مَلِكِ ٱلنَّاسِ','114:3':'إِلَٰهِ ٱلنَّاسِ','96:1':'ٱقْرَأْ بِٱسْمِ رَبِّكَ ٱلَّذِى خَلَقَ','96:2':'خَلَقَ ٱلْإِنسَٰنَ مِنْ عَلَقٍ','97:1':'إِنَّآ أَنزَلْنَٰهُ فِى لَيْلَةِ ٱلْقَدْرِ','103:1':'وَٱلْعَصْرِ','103:2':'إِنَّ ٱلْإِنسَٰنَ لَفِى خُسْرٍ','108:1':'إِنَّآ أَعْطَيْنَٰكَ ٱلْكَوْثَرَ','108:2':'فَصَلِّ لِرَبِّكَ وَٱنْحَرْ','109:1':'قُلْ يَٰٓأَيُّهَا ٱلْكَٰفِرُونَ','110:1':'إِذَا جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ','67:1':'تَبَٰرَكَ ٱلَّذِى بِيَدِهِ ٱلْمُلْكُ وَهُوَ عَلَىٰ كُلِّ شَىْءٍ قَدِيرٌ','36:1':'يس','36:2':'وَٱلْقُرْءَانِ ٱلْحَكِيمِ','55:1':'ٱلرَّحْمَٰنُ','55:2':'عَلَّمَ ٱلْقُرْءَانَ','55:13':'فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ'};
+
+window._lastQuranMeta={};
+
+function _initQuranDatalist(){
+  const dl=document.getElementById('quran-surah-list');
+  if(!dl||dl.children.length)return;
+  QURAN_SURAHS.forEach((name,i)=>{const opt=document.createElement('option');opt.value=name;opt.label=(i+1)+' — '+name;dl.appendChild(opt);});
+}
+
+function _updateQuranModeHint(){
+  const mode=document.getElementById('quran-mode-select')?.value;
+  const meta=window._lastQuranMeta;
+  const hint=document.getElementById('quran-answer-hint');
+  if(!hint||!meta?.surah)return;
+  const labels={
+    full:'اسم السورة — 4 خيارات للاختيار',
+    complete:'أكمل الآية — يكتب المتسابق النصف الثاني',
+    number:'رقم الآية في السورة — الإجابة: '+meta.ayah,
+    surah_number:'رقم السورة — الإجابة: '+meta.surahNum,
+    juz:'رقم الجزء — الإجابة: '+meta.juz
+  };
+  hint.innerHTML='<strong>نوع السؤال: </strong>'+(labels[mode]||'');
+  hint.style.display='block';
+}
+
+async function fetchQuranVerse(){
+  const raw=document.getElementById('quran-surah-input').value.trim();
+  const ayah=+document.getElementById('quran-ayah-input').value;
+  if(!raw){toast('أدخل اسم السورة أو رقمها','danger');return;}
+  if(!ayah||ayah<1){toast('أدخل رقم الآية','danger');return;}
+  let surah=parseInt(raw);
+  if(isNaN(surah)||surah<1){surah=QURAN_SURAH_NUMS[raw]||0;if(!surah){toast('اسم السورة غير معروف — جرب الرقم','danger');return;}}
+  if(surah<1||surah>114){toast('رقم السورة بين 1 و 114','danger');return;}
+  const btn=document.getElementById('quran-fetch-btn');
+  btn.disabled=true;btn.textContent='⏳';
+  const reader=document.getElementById('quran-reader-select').value||'ar.alafasy';
+  let fetchedText='',fetchedAudio='',fetchedSurahName=QURAN_SURAHS[surah-1]||'',fetchedAyah=ayah,online=false;
+  try{
+    const ctrl=new AbortController();
+    const tid=setTimeout(()=>ctrl.abort(),8000);
+    const r=await fetch('https://api.alquran.cloud/v1/ayah/'+surah+':'+ayah+'/editions/quran-uthmani,'+reader,{signal:ctrl.signal});
+    clearTimeout(tid);
+    const data=await r.json();
+    if(data.code===200&&Array.isArray(data.data)&&data.data.length>=2){
+      fetchedText=data.data[0].text;fetchedAudio=data.data[1].audio||'';
+      fetchedSurahName=data.data[0].surah?.name||QURAN_SURAHS[surah-1];
+      fetchedAyah=data.data[0].numberInSurah||ayah;online=true;
+    }
+  }catch(e){}
+  // Offline fallback
+  if(!fetchedText){
+    const key=surah+':'+ayah;
+    if(QURAN_OFFLINE[key]){fetchedText=QURAN_OFFLINE[key];fetchedSurahName=QURAN_SURAHS[surah-1]||'';toast('📴 بيانات مدمجة (لا يوجد صوت)','info');}
+    else{toast('تعذّر جلب الآية — تحقق من الاتصال أو تأكد من صحة الرقم','danger');btn.disabled=false;btn.textContent='🔍 جلب';return;}
+  }
+  // Compute juz (approximate)
+  const juz=_getApproxJuz(surah,ayah);
+  // Split at word boundary near midpoint — avoids cutting inside a word
+  const _words=fetchedText.trim().split(' ');
+  const _totalWords=_words.length;
+  const _halfWords=Math.max(1,Math.ceil(_totalWords/2));
+  const halfByWord=_words.slice(0,_halfWords).join(' ').length;
+  const halfIdx=halfByWord;
+  window._lastQuranMeta={surah:fetchedSurahName,surahNum:surah,ayah:fetchedAyah,juz,halfIdx,totalWords:_totalWords};
+  // Fill question text field
+  const textEl=document.getElementById('q-text-input');
+  textEl.value=fetchedText;textEl.readOnly=false;
+  document.getElementById('quran-audio-url').value=fetchedAudio;
+  document.getElementById('quran-surah-num').value=surah;
+  // Show download button if audio available
+  const dlBtn=document.getElementById('quran-download-btn');
+  if(dlBtn)dlBtn.style.display=fetchedAudio?'':'none';
+  // Show preview
+  const prev=document.getElementById('quran-preview-box');
+  prev.style.display='block';
+  prev.style.display='block';
+  const _prvFirst=fetchedText.slice(0,halfIdx),_prvSecond=fetchedText.slice(halfIdx);
+  const _prvMode=document.getElementById('quran-mode-select')?.value||'full';
+  const _prvDiv=document.createElement('div');
+  _prvDiv.style.cssText="font-family:'Amiri',serif;font-size:1.12rem;line-height:2.2;direction:rtl;margin-bottom:4px";
+  if(_prvMode==='complete'){
+    _prvDiv.innerHTML='<span>'+_prvFirst+'</span><span style="border-bottom:2px dashed var(--accent1);color:var(--text-muted);margin:0 6px;padding:0 8px">'+_prvSecond+'</span>';
+  }else{_prvDiv.textContent=fetchedText;}
+  const _metaDiv=document.createElement('div');
+  _metaDiv.style.cssText='font-size:.76rem;color:var(--text-muted);margin-top:4px';
+  _metaDiv.textContent=fetchedSurahName+' — الآية '+fetchedAyah+' — الجزء '+juz;
+  prev.innerHTML='';prev.appendChild(_prvDiv);prev.appendChild(_metaDiv);
+  if(_prvMode==='complete'){const _cDiv=document.createElement('div');_cDiv.style.cssText='font-size:.72rem;color:var(--accent2);margin-top:2px';_cDiv.textContent='🔵 الخط المنقط = بداية الإجابة المطلوبة';prev.appendChild(_cDiv);}
+  if(fetchedAudio){const _aBtn=document.createElement('button');_aBtn.className='btn btn-ghost btn-sm';_aBtn.style.marginTop='8px';_aBtn.textContent='▶ استمع';_aBtn.addEventListener('click',()=>toggleQuranAudio(fetchedAudio));prev.appendChild(_aBtn);}
+  toast(online?'✅ تم جلب الآية':'📴 بيانات محلية','success');
+  btn.disabled=false;btn.textContent='🔍 جلب';
+}
+
+function _getApproxJuz(surah,ayah){
+  const juzMap=[[1,1],[2,142],[2,253],[3,92],[4,24],[4,148],[5,82],[6,111],[7,88],[8,41],[9,93],[11,6],[12,53],[15,1],[17,1],[18,75],[21,1],[23,1],[25,21],[27,56],[29,46],[33,31],[36,28],[39,32],[41,47],[46,1],[51,31],[58,1],[67,1],[78,1]];
+  let juz=1;
+  for(let j=juzMap.length-1;j>=0;j--){
+    const[s,a]=juzMap[j];
+    if(surah>s||(surah===s&&ayah>=a)){juz=j+1;break;}
+  }
+  return juz;
+}
+
+function downloadQuranAudio(){
+  const url=document.getElementById('quran-audio-url').value;
+  if(!url){toast('لا يوجد مقطع صوتي للتنزيل','info');return;}
+  const meta=window._lastQuranMeta||{};
+  const name='quran_'+meta.surah+'_ayah'+meta.ayah+'.mp3';
+  const a=document.createElement('a');a.href=url;a.download=name;a.target='_blank';a.click();
+  toast('⬇ جاري التنزيل...','success');
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  TRAINING MODE
+// ═══════════════════════════════════════════════════════════════
+let _trainingState={catId:null,qIdx:0,order:[],revealed:false};
+
+function openTrainingMode(){
+  if(!state.categories.length){toast('لا توجد أقسام','info');return;}
+  const catOpts=state.categories.map(c=>`<option value="${c.id}">${c.icon||'📂'} ${c.name} (${(c.questions||[]).length} سؤال)</option>`).join('');
+  openGenericModal('🎓 وضع التدريب',`
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="form-group">
+        <label class="form-label">القسم</label>
+        <select class="form-select" id="training-cat-sel">${catOpts}</select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ترتيب الأسئلة</label>
+        <select class="form-select" id="training-order-sel">
+          <option value="seq">تسلسلي</option>
+          <option value="random">عشوائي</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="padding:12px" onclick="startTrainingMode()">▶ ابدأ التدريب</button>
+    </div>`);
+}
+
+function startTrainingMode(){
+  const catId=document.getElementById('training-cat-sel').value;
+  const order=document.getElementById('training-order-sel').value;
+  const cat=state.categories.find(c=>c.id===catId);
+  if(!cat||!cat.questions.length){toast('لا توجد أسئلة في هذا القسم','info');return;}
+  let idxArr=cat.questions.map((_,i)=>i);
+  if(order==='random')idxArr=shuffleArray(idxArr);
+  _trainingState={catId,qIdx:0,order:idxArr,revealed:false};
+  closeModal('modal-generic');
+  setTimeout(_renderTrainingQ,80);
+}
+
+function _renderTrainingQ(){
+  const {catId,qIdx,order}=_trainingState;
+  const cat=state.categories.find(c=>c.id===catId);
+  if(!cat)return;
+  const total=order.length;
+  if(qIdx>=total){
+    openGenericModal('🎓 انتهى التدريب!',`<div style="text-align:center;padding:20px">
+      <div style="font-size:3rem;margin-bottom:12px">🏁</div>
+      <div style="font-size:1.1rem;font-weight:700;margin-bottom:16px">أتممت ${total} سؤالاً في قسم «${cat.name}»</div>
+      <div style="display:flex;gap:8px;justify-content:center">
+        <button class="btn btn-primary" onclick="startTrainingMode();closeModal('modal-generic')">إعادة</button>
+        <button class="btn btn-ghost" onclick="closeModal('modal-generic')">إغلاق</button>
+      </div></div>`);
+    return;
+  }
+  const realIdx=order[qIdx];
+  const q=cat.questions[realIdx];
+  _trainingState.revealed=false;
+
+  // Build options HTML
+  let optsHtml='';
+  if(q.type==='tf'){
+    optsHtml=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div id="tr-opt-0" style="padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg-surface);text-align:center;font-weight:700">✅ صحيح</div>
+      <div id="tr-opt-1" style="padding:10px;border-radius:8px;border:1px solid var(--border);background:var(--bg-surface);text-align:center;font-weight:700">❌ خطأ</div>
+    </div>`;
+  } else if(q.type==='fitb'){
+    optsHtml=`<div style="font-size:.85rem;color:var(--text-muted)">سؤال أكمل الفراغ — الإجابة مخفية</div>
+      <div id="tr-fitb-ans" style="display:none;padding:10px 14px;background:rgba(0,230,118,.1);border:1px solid var(--success);border-radius:8px;color:var(--success);font-weight:700;margin-top:6px">${q.fitbAnswer||'—'}</div>`;
+  } else if(q.type==='quran'){
+    optsHtml=`<div style="font-size:.85rem;color:var(--text-muted)">سؤال قرآني (${q.quranMode||'full'})</div>`;
+  } else if(q.type==='order'){
+    const items=(q.options||[]).filter(o=>o);
+    optsHtml=items.map((o,i)=>`<div style="padding:8px 12px;border-radius:7px;border:1px solid var(--border);background:var(--bg-surface);margin-bottom:5px"><span style="color:var(--accent2);font-weight:700;margin-left:6px">${i+1}.</span>${o}</div>`).join('');
+  } else {
+    optsHtml=(q.options||[]).filter(o=>o).map((o,i)=>`<div id="tr-opt-${i}" style="padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--bg-surface);margin-bottom:6px;cursor:default"><span style="color:var(--accent2);font-weight:700;width:22px;display:inline-block">${LETTERS[i]}</span>${o}</div>`).join('');
+  }
+
+  // Correct answer label
+  let correctLabel='';
+  if(q.type==='tf')correctLabel=q.correct===1?'✅ صحيح':'❌ خطأ';
+  else if(q.type==='fitb')correctLabel=q.fitbAnswer||'';
+  else if(q.type==='quran')correctLabel=(q.quranMeta?.surah||'')+' الآية '+(q.quranMeta?.ayah||'');
+  else if(q.type==='order')correctLabel=(q.options||[]).filter(o=>o).join(' ← ');
+  else correctLabel=q.options?.[q.correct]||'';
+
+  const progressDots=order.map((_,i)=>`<div style="width:${i===qIdx?16:6}px;height:6px;border-radius:3px;background:${i===qIdx?'var(--accent1)':i<qIdx?'var(--accent2)':'var(--border)'};transition:all .2s"></div>`).join('');
+
+  openGenericModal(`🎓 تدريب — ${qIdx+1} / ${total}`,`
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap">${progressDots}</div>
+      <div style="font-size:.72rem;color:var(--text-muted)">${cat.icon||'📂'} ${cat.name}</div>
+      <div style="font-size:1rem;font-weight:700;line-height:1.6;direction:rtl;padding:10px 12px;background:var(--bg-surface);border-radius:8px;border:1px solid var(--border)">${q.text}</div>
+      <div id="tr-opts-wrap">${optsHtml}</div>
+      <div id="tr-reveal-box" style="display:none;padding:10px 14px;background:rgba(0,230,118,.1);border:1px solid var(--success);border-radius:8px;color:var(--success);font-weight:700;direction:rtl">✅ ${correctLabel}</div>
+      ${q.explanation?`<div id="tr-explain" style="display:none;font-size:.82rem;color:var(--text-muted);padding:8px 12px;background:var(--bg-panel);border-radius:6px">💡 ${q.explanation}</div>`:''}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+        <button class="btn btn-accent btn-sm" onclick="_trainingReveal()">👁 كشف الإجابة</button>
+        ${qIdx>0?`<button class="btn btn-ghost btn-sm" onclick="_trainingNav(-1)">← السابق</button>`:''}
+        <button class="btn btn-primary btn-sm" onclick="_trainingNav(1)">${qIdx<total-1?'التالي →':'إنهاء التدريب'}</button>
+      </div>
+    </div>`);
+}
+
+function _trainingReveal(){
+  if(_trainingState.revealed)return;
+  _trainingState.revealed=true;
+  const box=document.getElementById('tr-reveal-box');
+  if(box)box.style.display='block';
+  const explain=document.getElementById('tr-explain');
+  if(explain)explain.style.display='block';
+  const fitbAns=document.getElementById('tr-fitb-ans');
+  if(fitbAns)fitbAns.style.display='block';
+  // Highlight correct option
+  const cat=state.categories.find(c=>c.id===_trainingState.catId);
+  const q=cat?.questions[_trainingState.order[_trainingState.qIdx]];
+  if(q&&(q.type==='text'||q.type==='image'||q.type==='audio'||q.type==='math')){
+    const correct=document.getElementById('tr-opt-'+q.correct);
+    if(correct){correct.style.background='rgba(0,230,118,.15)';correct.style.borderColor='var(--success)';correct.style.color='var(--success)';}
+  }
+  if(q?.type==='tf'){
+    const idx=q.correct===1?0:1; // tf: correct=1→true(opt0), correct=0→false(opt1)
+    const tfAnswerIsTrue=(q.tfAnswer==='true'||q.correct===1);
+    const trueBtn=document.getElementById('tr-opt-0');
+    const falseBtn=document.getElementById('tr-opt-1');
+    if(tfAnswerIsTrue&&trueBtn){trueBtn.style.background='rgba(0,230,118,.15)';trueBtn.style.borderColor='var(--success)';trueBtn.style.color='var(--success)';}
+    else if(!tfAnswerIsTrue&&falseBtn){falseBtn.style.background='rgba(0,230,118,.15)';falseBtn.style.borderColor='var(--success)';falseBtn.style.color='var(--success)';}
+  }
+}
+
+function _trainingNav(dir){
+  _trainingState.qIdx+=dir;
+  if(_trainingState.qIdx<0)_trainingState.qIdx=0;
+  closeModal('modal-generic');
+  setTimeout(_renderTrainingQ,80);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  WINNER CERTIFICATE
+// ═══════════════════════════════════════════════════════════════
+function openWinnerCertificate(){
+  const sorted=[...state.teams].sort((a,b)=>(b.score||0)-(a.score||0));
+  const winner=sorted[0];
+  if(!winner){toast('لا توجد فرق','info');return;}
+  document.getElementById('cert-winner-name').textContent=winner.name;
+  document.getElementById('cert-comp-name').textContent=state.settings.name||'المسابقة';
+  document.getElementById('cert-score-row').textContent='بمجموع '+winner.score+' نقطة';
+  const certLetter=document.getElementById('cert-avatar-letter');
+  certLetter.textContent=winner.name.charAt(0);
+  certLetter.style.color='#fff';
+  certLetter.style.textShadow='0 1px 4px rgba(0,0,0,.4)';
+  const certWrap=document.getElementById('cert-avatar-wrap');
+  certWrap.style.background=winner.color||'#00d4ff';
+  // Hijri + Gregorian date
+  const now=new Date();
+  const greg=now.toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric',calendar:'gregory'});
+  const hijri=now.toLocaleDateString('ar-SA',{year:'numeric',month:'long',day:'numeric',calendar:'islamic'});
+  document.getElementById('cert-date').textContent=greg+' — '+hijri;
+  // Team image if available
+  if(winner.teamImage){
+    const img=document.getElementById('cert-avatar-letter');
+    const wrap=document.getElementById('cert-avatar-wrap');
+    wrap.innerHTML=`<img src="${winner.teamImage}" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
+  }
+  document.getElementById('modal-certificate').classList.remove('hidden');
+}
+
+function loadCertLogo(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const logoArea=document.getElementById('cert-logo-area');
+    const logoImg=document.getElementById('cert-logo-img');
+    if(logoImg)logoImg.src=e.target.result;
+    if(logoArea)logoArea.style.display='block';
+  };
+  reader.readAsDataURL(file);
+  input.value='';
+}
+
+function printCertificate(){
+  const certEl=document.getElementById('certificate-content');
+  const bgColor=certEl.style.background||'linear-gradient(160deg,#fffdf5 0%,#fff8dc 60%,#fef3b0 100%)';
+  const content=certEl.innerHTML;
+  const w=window.open('','_blank','width=820,height=640');
+  if(!w){toast('تعذّر فتح نافذة الطباعة — تحقق من إعدادات النوافذ المنبثقة','danger');return;}
+  w.document.write('<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8">'+
+    '<title>شهادة الفائز</title>'+
+    '<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">'+
+    '<style>'+
+    '*{margin:0;padding:0;box-sizing:border-box}'+
+    'body{background:#f5f0dd;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Cairo,sans-serif;padding:20px}'+
+    '.cert-wrap{width:min(680px,100%);padding:44px 48px;background:'+bgColor+';border:5px solid #f5c842;border-radius:20px;text-align:center;position:relative;color:#1a1000;overflow:hidden;direction:rtl}'+
+    '@media print{body{background:#fff;padding:0}@page{size:A4 landscape;margin:.8cm}.cert-wrap{width:100%;border-radius:0;padding:32px 40px}}'+
+    '</style></head><body>'+
+    '<div class="cert-wrap">'+content+'</div>'+
+    '<script>setTimeout(function(){window.print();},500);<\/script>'+
+    '</body></html>');
+  w.document.close();
+}
+
+
+
+// ═══════════════════════════════════════════════════════════════
+//  EARLY WINNER SYSTEM
+// ═══════════════════════════════════════════════════════════════
+let _earlyWinnerShown=false;
+
+function _checkEarlyWinner(team){
+  if(!state.settings.earlyWinnerEnabled)return;
+  if(_earlyWinnerShown)return;
+  const target=state.settings.earlyWinnerScore||10;
+  if(!team||(team.score||0)<target)return;
+  _earlyWinnerShown=true;
+  // Flash big overlay
+  const ov=document.createElement('div');
+  ov.id='early-winner-overlay';
+  ov.style.cssText='position:fixed;inset:0;z-index:6000;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);text-align:center;padding:24px;animation:float-up .5s ease';
+  ov.innerHTML=`<div style="font-size:clamp(3rem,10vw,6rem);margin-bottom:16px;animation:scale-in .6s ease">🏆</div>
+    <div style="font-size:clamp(1.2rem,4vw,2.2rem);font-weight:900;color:var(--accent1);text-shadow:var(--glow1);margin-bottom:8px">🎉 الفائز المبكر!</div>
+    <div style="font-size:clamp(1.6rem,6vw,3.5rem);font-weight:900;color:${team.color};margin-bottom:12px;text-shadow:0 0 40px ${team.color}66">${team.name}</div>
+    <div style="font-size:1rem;color:var(--text-secondary);margin-bottom:28px">وصل إلى ${target} نقطة أولاً</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+      <button class="btn btn-success btn-lg" onclick="document.getElementById('early-winner-overlay').remove();showPodium()">🎊 المنصة</button>
+      <button class="btn btn-ghost btn-lg" onclick="_dismissEarlyWinner()">متابعة اللعب</button>
+    </div>`;
+  document.body.appendChild(ov);
+  launchConfetti(200);
+  playSound('correct');
+}
+
+function _dismissEarlyWinner(){
+  const ov=document.getElementById('early-winner-overlay');
+  if(ov){ov.style.opacity='0';setTimeout(()=>ov.remove(),400);}
+  _earlyWinnerShown=false; // allow re-trigger if another team reaches target
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  1v1 TEAM COMPARISON
+// ═══════════════════════════════════════════════════════════════
+function openCompare1v1(){
+  if(state.teams.length<2){toast('يجب وجود فريقين على الأقل','info');return;}
+  const opts=state.teams.map((t,i)=>`<option value="${i}">${t.name}</option>`).join('');
+  openGenericModal('⚔️ مقارنة فريقين',`
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="form-row" style="grid-template-columns:1fr auto 1fr;align-items:center;gap:10px">
+        <select class="form-select" id="cmp-team-a">${opts}</select>
+        <div style="font-weight:900;color:var(--accent2);font-size:1.1rem">⚔️</div>
+        <select class="form-select" id="cmp-team-b">${opts.replace('<option value="0"','<option value="0" disabled').replace('<option value="1"','<option value="1" selected')}</select>
+      </div>
+      <button class="btn btn-primary" onclick="_renderCompare1v1()">▶ عرض المقارنة</button>
+    </div>`);
+}
+
+function _renderCompare1v1(){
+  const idxA=+document.getElementById('cmp-team-a').value;
+  const idxB=+document.getElementById('cmp-team-b').value;
+  if(idxA===idxB){toast('اختر فريقين مختلفين','info');return;}
+  const a=state.teams[idxA],b=state.teams[idxB];
+  const scoreA=a.score||0,scoreB=b.score||0;
+  const total=Math.max(scoreA+scoreB,1);
+  const pctA=Math.round(scoreA/total*100);
+  const pctB=100-pctA;
+  const winner=scoreA>scoreB?a:scoreB>scoreA?b:null;
+  // Session stats
+  const statsA=_getTeamSessionStats(a.id),statsB=_getTeamSessionStats(b.id);
+  closeModal('modal-generic');
+  // Show comparison view (use full-screen generic modal with wider content)
+  const body=`<div style="display:flex;flex-direction:column;gap:18px;min-width:min(500px,90vw)">
+    <!-- Score bars -->
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center">
+      <div style="text-align:right">
+        <div style="font-size:1.1rem;font-weight:900;color:${a.color}">${a.name}</div>
+        <div style="font-size:2rem;font-weight:900;color:${a.color}">${scoreA}</div>
+      </div>
+      <div style="font-size:1.4rem;color:var(--text-muted)">⚔️</div>
+      <div style="text-align:left">
+        <div style="font-size:1.1rem;font-weight:900;color:${b.color}">${b.name}</div>
+        <div style="font-size:2rem;font-weight:900;color:${b.color}">${scoreB}</div>
+      </div>
+    </div>
+    <!-- Progress bar -->
+    <div style="height:12px;border-radius:6px;overflow:hidden;display:flex;background:var(--bg-surface)">
+      <div style="width:${pctA}%;background:${a.color};transition:width 1s ease;border-radius:6px 0 0 6px"></div>
+      <div style="width:${pctB}%;background:${b.color};transition:width 1s ease;border-radius:0 6px 6px 0"></div>
+    </div>
+    <!-- Winner badge -->
+    ${winner?`<div style="text-align:center;padding:10px;background:rgba(245,200,66,.1);border:1px solid var(--accent1);border-radius:10px;color:var(--accent1);font-weight:900">🏆 ${winner.name} متصدر</div>`:'<div style="text-align:center;color:var(--text-muted);font-size:.9rem">تعادل!</div>'}
+    <!-- Stats table -->
+    <table style="width:100%;border-collapse:collapse;font-size:.82rem">
+      <thead><tr>
+        <th style="padding:6px;color:${a.color};text-align:right">${a.name}</th>
+        <th style="padding:6px;color:var(--text-muted);text-align:center">الإحصاء</th>
+        <th style="padding:6px;color:${b.color};text-align:left">${b.name}</th>
+      </tr></thead>
+      <tbody>
+        ${[
+          ['النقاط الإجمالية',scoreA,scoreB],
+          ['الإجابات الصحيحة',statsA.correct,statsB.correct],
+          ['الإجابات الخاطئة',statsA.wrong,statsB.wrong],
+          ['الأسئلة المُجابة',statsA.total,statsB.total],
+          ['دقة الإجابات',(statsA.total?Math.round(statsA.correct/statsA.total*100):0)+'%',(statsB.total?Math.round(statsB.correct/statsB.total*100):0)+'%'],
+        ].map(([label,va,vb])=>`<tr style="border-top:1px solid var(--border)">
+          <td style="padding:7px;text-align:right;font-weight:700;color:${+va>(+vb||0)?'var(--success)':'var(--text-primary)'}">${va}</td>
+          <td style="padding:7px;text-align:center;color:var(--text-muted)">${label}</td>
+          <td style="padding:7px;text-align:left;font-weight:700;color:${+vb>(+va||0)?'var(--success)':'var(--text-primary)'}">${vb}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  </div>`;
+  openGenericModal('⚔️ مقارنة — '+a.name+' vs '+b.name,body);
+}
+
+function _getTeamSessionStats(teamId){
+  // Pull from session stats if available
+  const s=state.sessionStats||{};
+  const ts=s[teamId]||{correct:0,wrong:0};
+  return{correct:ts.correct||0,wrong:ts.wrong||0,total:(ts.correct||0)+(ts.wrong||0)};
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  EXPORT RESULTS AS CSV
+// ═══════════════════════════════════════════════════════════════
+function exportResultsCSV(){
+  const sorted=[...state.teams].sort((a,b)=>(b.score||0)-(a.score||0));
+  if(!sorted.length){toast('لا توجد فرق','info');return;}
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('ar-SA',{calendar:'gregory',year:'numeric',month:'2-digit',day:'2-digit'});
+  const timeStr=now.toLocaleTimeString('ar-SA',{hour:'2-digit',minute:'2-digit'});
+  const rows=[
+    ['الترتيب','اسم الفريق','النقاط','الإجابات الصحيحة','الإجابات الخاطئة','الدقة'],
+    ...sorted.map((t,i)=>{
+      const stats=_getTeamSessionStats(t.id);
+      const pct=stats.total?Math.round(stats.correct/stats.total*100):0;
+      return[i+1,t.name,t.score||0,stats.correct,stats.wrong,pct+'%'];
+    }),
+    [],
+    ['المسابقة:',state.settings.name||'—'],
+    ['التاريخ:',dateStr+' '+timeStr],
+  ];
+  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const bom='﻿'; // UTF-8 BOM for Excel Arabic support
+  const blob=new Blob([bom+csv],{type:'text/csv;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='نتائج_'+(state.settings.name||'المسابقة')+'_'+dateStr.replace(/\//g,'-')+'.csv';
+  a.click();URL.revokeObjectURL(url);
+  toast('✅ تم تصدير النتائج','success');
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+//  PRESENTER JUDGE — manual correct/wrong for fitb/order/quran
+// ═══════════════════════════════════════════════════════════════
+function presenterJudge(isCorrect){
+  if(state.answered)return;
+  state.answered=true;
+  clearTimer();_stopTenseAudio();
+  const cat=state.categories.find(c=>c.id===state.currentCatId);
+  const q=cat?.questions[state.currentQIndex];
+  state.usedQuestions[state.currentCatId]?.add(state.currentQIndex);
+  const team=getCurrentTeam();
+  const timeUsed=(state.timerTotal||30)-Math.max(0,state.timeLeft);
+
+  if(isCorrect){
+    playSound('correct');launchConfetti();
+    const pts=q?.difficulty==='hard'?(state.settings.hardPoints||2):1;
+    if(team){
+      team.score=(team.score||0)+pts;
+      recordScoreHistoryV5(team.id,pts);
+      saveState();saveGameProgress();
+      floatScore(team,'+'+pts);
+      _checkEarlyWinner(team);
+    }
+    toast('✅ المقدم: إجابة صحيحة!','success');
+    recordAnswer(team?.id,true,timeUsed);
+    // Visual feedback on any visible input
+    const inp=document.getElementById('fitb-player-input');
+    if(inp){inp.style.borderColor='var(--success)';inp.style.color='var(--success)';}
+  } else {
+    playSound('wrong');
+    if(team&&state.settings.negativeMarking){
+      const neg=state.settings.negMarkValue||1;
+      team.score=Math.max(0,(team.score||0)-neg);
+      recordScoreHistoryV5(team.id,-neg);
+      saveState();saveGameProgress();
+      floatScore(team,'-'+neg,'minus');
+    }
+    toast('❌ المقدم: إجابة خاطئة!','danger');
+    recordAnswer(team?.id,false,timeUsed);
+    const inp=document.getElementById('fitb-player-input');
+    if(inp){inp.style.borderColor='var(--danger)';}
+  }
+  if(q?.explanation){
+    const eb=document.getElementById('q-explanation-box');
+    if(eb){eb.innerHTML='<span>💡</span> '+_sanitize(q.explanation);eb.classList.remove('hidden');}
+  }
+  updateTicker();updateUndoBtn();
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  QUESTION FONT TOGGLE (Cairo / Amiri Quranic)
+// ═══════════════════════════════════════════════════════════════
+function setQFont(font,btn){
+  document.getElementById('q-text-font').value=font;
+  const ta=document.getElementById('q-text-input');
+  if(ta){
+    ta.style.fontFamily=font==='amiri'?"'Amiri','Noto Naskh Arabic',serif":"'Cairo',sans-serif";
+    ta.style.fontSize=font==='amiri'?'1.05rem':'';
+    ta.style.lineHeight=font==='amiri'?'2.1':'';
+    ta.style.direction='rtl';
+  }
+  document.querySelectorAll('.q-font-btn').forEach(b=>{
+    const active=(b.dataset.font===font);
+    b.style.borderColor=active?'var(--accent1)':'var(--border)';
+    b.style.color=active?'var(--accent1)':'var(--text-secondary)';
+    b.style.background=active?'rgba(0,232,208,.08)':'var(--bg-panel)';
+    b.style.fontWeight=active?'900':'400';
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  GLOBAL ERROR SAFETY NET
+// ═══════════════════════════════════════════════════════════════
+window.addEventListener('error', function(ev){
+  if(!ev.error)return; // resource load failures — ignore
+  console.error('[Quiz Runtime Error]', ev.error);
+  // Show toast max once per 3s to avoid spam
+  const now=Date.now();
+  if(!window._lastErrToast||now-window._lastErrToast>3000){
+    window._lastErrToast=now;
+    if(typeof toast==='function'){
+      toast('⚠️ حدث خطأ داخلي — إذا استمر يُنصح بإعادة تحميل الصفحة','danger');
+    }
+  }
+}, true);
+
+window.addEventListener('unhandledrejection', function(ev){
+  if(!ev.reason)return;
+  const msg=String(ev.reason?.message||ev.reason||'');
+  // Suppress known non-critical async errors
+  if(msg.includes('IndexedDB')||msg.includes('IDB')||
+     msg.includes('fetch')||msg.includes('network')||
+     msg.includes('abort')||msg.includes('QuotaExceeded'))return;
+  console.warn('[Quiz Unhandled Promise]', ev.reason);
+});
+
+// ═══════════════════════════════════════════════════════════════
+//  applyScore — UNIFIED scoring helper
+//  Reduces 5+ duplicate score patterns to one call.
+//  opts: { silent: bool }  — suppress sounds/confetti if true
+// ═══════════════════════════════════════════════════════════════
+function applyScore(team, delta, opts){
+  if(!team||delta===0)return false;
+  opts=opts||{};
+  const isPos=(delta>0);
+  team.score=isPos?(team.score||0)+delta:Math.max(0,(team.score||0)+delta);
+  recordScoreHistoryV5(team.id,delta);
+  saveState();
+  saveGameProgress();
+  floatScore(team,(isPos?'+':'')+delta,isPos?undefined:'minus');
+  if(isPos)_checkEarlyWinner(team);
+  if(!opts.silent){
+    if(isPos){playSound('correct');launchConfetti();}
+    else playSound('wrong');
+  }
+  return true;
+}
+
+// ── Tab visibility change: pause/resume timer when tab is hidden/shown ──
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){
+    // Tab went to background — pause timer if running
+    if(state.timerInterval&&!_timerPaused&&!state.answered){
+      _timerPaused=true;
+      const wrap=$el('timer-wrapper');
+      if(wrap)wrap.classList.add('paused');
+    }
+  } else {
+    // Tab back in focus — optionally auto-resume (user can also click pause btn)
+    // We just update the display; user resumes manually for fairness
+  }
+});
+
 </script>
 </body>
 </html>
