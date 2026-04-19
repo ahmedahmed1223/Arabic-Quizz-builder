@@ -253,19 +253,82 @@ html,body{overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
    Clean white · Strong navy blue · Vivid teal
    Best for: well-lit classrooms, daytime events ── */
 [data-theme="light"]{
-  --bg-deep:#f0f4fa;--bg-card:#ffffff;--bg-panel:#e8eef8;--bg-surface:#dde6f5;
-  --accent1:#1455d4;--accent1-light:#4d80f0;--accent1-dark:#0c3ea0;
-  --accent2:#0098b0;--success:#0a9960;--danger:#cc1a1a;
-  --text-primary:#0a1428;--text-secondary:#3a5070;--text-muted:#8898b0;
-  --border:#b8cce8;--border-light:#d0dff4;
-  --glow1:0 0 28px rgba(20,85,212,.22);--glow2:0 0 22px rgba(0,152,176,.18);
-  --option-hover:rgba(20,85,212,.06);
+  --bg-deep:#f0f5ff;--bg-card:#ffffff;--bg-panel:#eaf0fc;--bg-surface:#dce7f8;
+  --accent1:#1a56e8;--accent1-light:#4d80f0;--accent1-dark:#0c3ea0;
+  --accent2:#0089a8;--success:#0a8f58;--danger:#d01a1a;
+  --text-primary:#040e28;--text-secondary:#2c4268;--text-muted:#7a8aaa;
+  --border:#b0c8e8;--border-light:#cdddf8;
+  --glow1:0 0 28px rgba(26,86,232,.18);--glow2:0 0 22px rgba(0,137,168,.14);
+  --option-hover:rgba(26,86,232,.05);
   --bg-particles:
-    radial-gradient(ellipse at 30% 20%,rgba(20,85,212,.06) 0%,transparent 55%),
-    radial-gradient(ellipse at 70% 80%,rgba(0,152,176,.05) 0%,transparent 55%),
-    radial-gradient(ellipse at 50% 50%,rgba(240,244,250,.99) 0%,#f0f4fa 100%);
-  --grid-color:rgba(100,140,200,.14);
-  --header-blur:rgba(240,244,250,.97);
+    radial-gradient(ellipse at 20% 10%,rgba(26,86,232,.07) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 90%,rgba(0,137,168,.05) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(245,248,255,.99) 0%,#f0f5ff 100%);
+  --grid-color:rgba(80,120,200,.12);
+  --header-blur:rgba(240,245,255,.97);
+  --bg-deep-start:#f0f5ff;--bg-card-glow:rgba(26,86,232,.04);
+}
+/* Light theme — component overrides */
+[data-theme="light"] body{color:#040e28}
+[data-theme="light"] .pres-header-bar{background:rgba(240,245,255,.97);border-bottom:1px solid #cdddf8;box-shadow:0 2px 20px rgba(26,86,232,.08)}
+[data-theme="light"] .category-card{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+[data-theme="light"] .option-btn{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+[data-theme="light"] .question-text-main{color:#040e28;text-shadow:none}
+[data-theme="light"] .score-ticker-bar{background:rgba(240,245,255,.98);border-bottom:1px solid #cdddf8}
+[data-theme="light"] .modal{background:#ffffff;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+
+/* ── SUNRISE — شروق الشمس (light warm)
+   Warm white · Vibrant orange · Coral pink ── */
+[data-theme="sunrise"]{
+  --bg-deep:#fff8f0;--bg-card:#ffffff;--bg-panel:#fff0e0;--bg-surface:#ffe4c8;
+  --accent1:#e86c1a;--accent1-light:#f09450;--accent1-dark:#b84a00;
+  --accent2:#e03060;--success:#1a9050;--danger:#c01020;
+  --text-primary:#1a0800;--text-secondary:#4a2010;--text-muted:#9a6050;
+  --border:#f0c898;--border-light:#fde0c0;
+  --glow1:0 0 40px rgba(232,108,26,.3);--glow2:0 0 30px rgba(224,48,96,.2);
+  --option-hover:rgba(232,108,26,.06);
+  --bg-particles:
+    radial-gradient(ellipse at 20% 10%,rgba(232,108,26,.12) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 85%,rgba(224,48,96,.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%,rgba(255,250,245,.99) 0%,#fff8f0 100%);
+  --grid-color:rgba(220,140,60,.18);
+  --header-blur:rgba(255,248,240,.97);
+}
+
+/* ── EMERALD — الزمرد (rich green)
+   Forest deep · Vivid emerald · Bright lime ── */
+[data-theme="emerald"]{
+  --bg-deep:#021a0c;--bg-card:#061e10;--bg-panel:#0c2a16;--bg-surface:#13381e;
+  --accent1:#00c868;--accent1-light:#60ffa0;--accent1-dark:#009848;
+  --accent2:#a0ff40;--success:#50e080;--danger:#ff4040;
+  --text-primary:#e8fff0;--text-secondary:#88d8a8;--text-muted:#508860;
+  --border:#184828;--border-light:#246030;
+  --glow1:0 0 55px rgba(0,200,104,.6);--glow2:0 0 40px rgba(160,255,64,.4);
+  --option-hover:rgba(0,200,104,.09);
+  --bg-particles:
+    radial-gradient(ellipse at 30% 20%,rgba(0,200,104,.16) 0%,transparent 55%),
+    radial-gradient(ellipse at 70% 80%,rgba(160,255,64,.1) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 50%,rgba(6,30,16,.97) 0%,#021a0c 100%);
+  --grid-color:rgba(40,160,80,.22);
+  --header-blur:rgba(2,26,12,.94);
+}
+
+/* ── RUBY — الياقوت (deep red luxury)
+   Dark crimson · Bright red · Vivid gold ── */
+[data-theme="ruby"]{
+  --bg-deep:#120006;--bg-card:#1e0008;--bg-panel:#2a0010;--bg-surface:#36001a;
+  --accent1:#ff2050;--accent1-light:#ff7090;--accent1-dark:#c80030;
+  --accent2:#ffc030;--success:#40c080;--danger:#ff0040;
+  --text-primary:#fff0f4;--text-secondary:#d08090;--text-muted:#886070;
+  --border:#500020;--border-light:#700030;
+  --glow1:0 0 55px rgba(255,32,80,.6);--glow2:0 0 40px rgba(255,192,48,.4);
+  --option-hover:rgba(255,32,80,.09);
+  --bg-particles:
+    radial-gradient(ellipse at 25% 20%,rgba(255,32,80,.18) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 80%,rgba(255,192,48,.1) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 50%,rgba(30,0,8,.97) 0%,#120006 100%);
+  --grid-color:rgba(180,0,60,.25);
+  --header-blur:rgba(18,0,6,.94);
 }
 
 /* ══ 11. COFFEE HOUSE — بيت القهوة الفاخر
@@ -1185,8 +1248,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   .teamstat-body{padding:10px 14px;gap:7px}
   .teamstats-wrapper{padding:calc(var(--header-h)+14px) clamp(10px,2vw,20px) 60px}
   /* Mobile: ensure views fit viewport — use height with overflow */
-  #view-intro,#view-teams,#view-categories,#view-scores,
-  #view-credits,#view-podium,#view-teamstats{
+  #view-intro,#view-teams,#view-categories,#view-scores,#view-podium,
+  #view-credits,#view-teamstats{
     padding-top:calc(var(--header-h) + 8px);
     padding-bottom:calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 8px);
     min-height:100svh;
@@ -1196,7 +1259,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   .opt-editor-row{flex-wrap:wrap;gap:6px}
   .opt-side-btns{flex-direction:row}
   /* Podium on mobile — allow scroll when needed */
-  #view-podium{height:auto;min-height:100svh;overflow-y:auto;overflow-x:hidden;padding-top:calc(var(--header-h) + 6px);padding-bottom:calc(clamp(44px,6vh,56px) + env(safe-area-inset-bottom,0) + 6px)}
+  #view-podium,#view-teamstats{height:100svh;min-height:unset;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;padding-top:calc(var(--header-h) + 4px);padding-bottom:calc(env(safe-area-inset-bottom,0) + 8px);box-sizing:border-box}
   .podium-title{font-size:clamp(1.2rem,4vw,2rem);margin-bottom:clamp(4px,1vh,10px)}
   .podium-stage{flex-wrap:nowrap;gap:6px;margin-bottom:clamp(6px,1.5vh,14px)}
   .podium-place{transform:scale(.8);transform-origin:bottom center}
@@ -1211,7 +1274,16 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   /* Cat display modes on mobile */
   .cats-mode-switcher{gap:4px}
   .cats-mode-btn{padding:5px 9px;font-size:.72rem}
-  .cats-jeopardy-board{gap:5px}
+  .cats-grid-improved{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(180px,45vw),1fr));gap:16px;width:100%;padding:8px 0}
+.cats-list-row{display:flex;align-items:center;gap:14px;padding:12px 18px;background:var(--bg-card);border:1.5px solid var(--border);border-radius:14px;cursor:pointer;transition:all .2s;margin-bottom:8px;width:100%;box-sizing:border-box}
+.cats-list-row:hover{border-color:var(--accent2);background:var(--option-hover);transform:translateX(-3px)}
+.cats-list-row-icon{font-size:1.8rem;min-width:2.2rem;text-align:center}
+.cats-list-row-info{flex:1;text-align:right}
+.cats-list-row-name{font-weight:800;font-size:1rem;color:var(--text-primary)}
+.cats-list-row-count{font-size:.75rem;color:var(--text-muted);margin-top:2px}
+.cats-list-row-pts{min-width:64px;text-align:center}
+.cats-list-row-pts-num{font-size:1.2rem;font-weight:900;color:var(--accent1)}
+.cats-jeopardy-board{gap:5px}
   .jeopardy-col{min-width:70px}
   .jeopardy-pts{font-size:1rem}
   .cats-hidden-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))}
@@ -3073,6 +3145,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   #view-teams{height:auto;min-height:100svh;overflow-y:auto}
   .team-pres-card{min-height:var(--team-card-h-mobile,260px)}
 }
+
 </style>
 </head>
 <body>
@@ -3203,12 +3276,12 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <div class="alert alert-info">اختر الطريقة الافتراضية لعرض الأقسام عند بدء المسابقة — يمكن التبديل بينها في أي وقت أثناء اللعب</div>
         <div class="form-group">
           <label class="form-label">الطريقة الافتراضية</label>
-          <select id="s-cat-display-mode" class="form-select" onchange="updateSetting('catDisplayMode',this.value)">
+          <select id="s-cat-display-mode" class="form-select" onchange="updateSetting('catDisplayMode',this.value);document.getElementById('jeopardy-controls-wrap').style.display=this.value==='jeopardy'?'block':'none'">
             <option value="grid">⊞ شبكة البطاقات — العرض الكلاسيكي</option>
             <option value="wheel">عجلة الحظ — تدوير عشوائي للاختيار</option>
             <option value="hidden">🃏 بطاقات مخفية — كشف تدريجي للأقسام</option>
             <option value="list">☰ قائمة — عرض مفصّل مع شريط التقدم</option>
-            <option value="jeopardy">جيوباردي — لوحة بنقاط حسب الصعوبة</option>
+            <option value="jeopardy">لوحة المعرفة (جيوباردي) — بنقاط حسب الصعوبة</option>
           </select>
         </div>
         <div class="form-row" style="grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px">
@@ -3224,8 +3297,24 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='list';updateSetting('catDisplayMode','list')">
             <div style="font-size:1.4rem;margin-bottom:4px">☰</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">قائمة</div>
           </div>
-          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='jeopardy';updateSetting('catDisplayMode','jeopardy')">
-            <div style="font-size:1.4rem;margin-bottom:4px">🎯</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">جيوباردي</div>
+          <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" onclick="document.getElementById('s-cat-display-mode').value='jeopardy';updateSetting('catDisplayMode','jeopardy');document.getElementById('jeopardy-controls-wrap').style.display='block'">
+            <div style="font-size:1.4rem;margin-bottom:4px">🎯</div><div style="font-size:.7rem;font-weight:700;color:var(--text-secondary)">المعرفة</div>
+          </div>
+        </div>
+        <!-- ═ Jeopardy Controls ═ -->
+        <div id="jeopardy-controls-wrap" style="display:none;margin-top:12px;padding:12px 14px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:10px">
+          <div style="font-weight:700;font-size:.82rem;color:var(--accent2);margin-bottom:10px">⚙️ إعدادات لوحة المعرفة (جيوباردي)</div>
+          <div class="form-row" style="gap:10px;grid-template-columns:repeat(5,1fr)">
+            <div class="form-group" style="margin:0"><label class="form-label" style="font-size:.72rem">م ١</label><input type="number" id="s-jep-pts1" class="form-input" value="100" min="10" max="9999" step="10" oninput="updateSetting('jepPts1',+this.value)"></div>
+            <div class="form-group" style="margin:0"><label class="form-label" style="font-size:.72rem">م ٢</label><input type="number" id="s-jep-pts2" class="form-input" value="200" min="10" max="9999" step="10" oninput="updateSetting('jepPts2',+this.value)"></div>
+            <div class="form-group" style="margin:0"><label class="form-label" style="font-size:.72rem">م ٣</label><input type="number" id="s-jep-pts3" class="form-input" value="300" min="10" max="9999" step="10" oninput="updateSetting('jepPts3',+this.value)"></div>
+            <div class="form-group" style="margin:0"><label class="form-label" style="font-size:.72rem">م ٤</label><input type="number" id="s-jep-pts4" class="form-input" value="400" min="10" max="9999" step="10" oninput="updateSetting('jepPts4',+this.value)"></div>
+            <div class="form-group" style="margin:0"><label class="form-label" style="font-size:.72rem">م ٥</label><input type="number" id="s-jep-pts5" class="form-input" value="500" min="10" max="9999" step="10" oninput="updateSetting('jepPts5',+this.value)"></div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px">
+            <label style="display:flex;align-items:center;gap:7px;cursor:pointer"><input type="checkbox" id="s-jep-award-pts" checked style="width:15px;height:15px;accent-color:var(--accent1)" onchange="updateSetting('jepAwardPts',this.checked)"><span class="text-sm text-muted">منح النقاط تلقائياً عند الصحة</span></label>
+            <label style="display:flex;align-items:center;gap:7px;cursor:pointer"><input type="checkbox" id="s-jep-deduct-wrong" style="width:15px;height:15px;accent-color:var(--danger)" onchange="updateSetting('jepDeductWrong',this.checked)"><span class="text-sm text-muted">خصم النقاط عند الخطأ</span></label>
+            <label style="display:flex;align-items:center;gap:7px;cursor:pointer"><input type="checkbox" id="s-jep-show-pts-in-q" checked style="width:15px;height:15px;accent-color:var(--accent2)" onchange="updateSetting('jepShowPtsInQ',this.checked)"><span class="text-sm text-muted">إظهار قيمة النقاط في السؤال</span></label>
           </div>
         </div>
         <div class="form-group" style="margin-top:16px">
@@ -3275,41 +3364,37 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
         <!-- ─── أصوات الإجابة ─── -->
         <div style="font-size:.74rem;font-weight:700;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px">أصوات الإجابة<span style="flex:1;height:1px;background:var(--border)"></span></div>
-        <div class="form-row" style="margin-bottom:16px">
+        <div class="form-row" style="margin-bottom:12px">
           <div class="form-group">
-            <label class="form-label">صوت الإجابة الصحيحة (مدمج)</label>
-            <select id="s-sound-correct" class="form-select" onchange="updateSetting('soundCorrect',this.value)">
-              <option value="applause">تصفيق 👏</option><option value="chime">رنين 🎵</option><option value="fanfare">نفير 🎺</option><option value="none">بدون صوت</option>
+            <label class="form-label">صوت الإجابة الصحيحة</label>
+            <select id="s-sound-correct" class="form-select" onchange="updateSetting('soundCorrect',this.value);document.getElementById('custom-correct-wrap').style.display=this.value==='custom'?'block':'none'">
+              <option value="applause">تصفيق 👏</option><option value="chime">رنين 🎵</option><option value="fanfare">نفير 🎺</option><option value="none">بدون صوت</option><option value="custom">ملف خارجي 📂</option>
             </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">صوت الإجابة الخاطئة (مدمج)</label>
-            <select id="s-sound-wrong" class="form-select" onchange="updateSetting('soundWrong',this.value)">
-              <option value="buzz">خطأ 🔴</option><option value="descend">هبوط 📉</option><option value="none">بدون صوت</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-row" style="margin-bottom:16px">
-          <div class="form-group">
-            <label class="form-label">صوت صحيحة مخصص (ملف خارجي)</label>
-            <div class="audio-file-row">
-              <label class="audio-file-label" for="custom-correct-input">اختر</label>
-              <input type="file" id="custom-correct-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customCorrectData','custom-correct-name')">
-              <span class="audio-file-name" id="custom-correct-name">مدمج</span>
-              <button class="audio-test-btn" id="test-btn-customCorrectData" onclick="testCustomAudio('customCorrectData','test-btn-customCorrectData')">تشغيل</button>
-              <button class="audio-stop-btn hidden" id="stop-btn-customCorrectData" onclick="stopCustomAudioTest('customCorrectData','test-btn-customCorrectData')">إيقاف</button>
-              <button class="audio-clear-btn" onclick="clearCustomAudio('customCorrectData','custom-correct-name')">✕</button>
+            <div id="custom-correct-wrap" style="display:none;margin-top:8px">
+              <div class="audio-file-row">
+                <label class="audio-file-label" for="custom-correct-input">اختر ملفاً</label>
+                <input type="file" id="custom-correct-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customCorrectData','custom-correct-name')">
+                <span class="audio-file-name" id="custom-correct-name">لم يُختر</span>
+                <button class="audio-test-btn" id="test-btn-customCorrectData" onclick="testCustomAudio('customCorrectData','test-btn-customCorrectData')">تشغيل</button>
+                <button class="audio-stop-btn hidden" id="stop-btn-customCorrectData" onclick="stopCustomAudioTest('customCorrectData','test-btn-customCorrectData')">إيقاف</button>
+                <button class="audio-clear-btn" onclick="clearCustomAudio('customCorrectData','custom-correct-name')">✕</button>
+              </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">صوت خاطئة مخصص (ملف خارجي)</label>
-            <div class="audio-file-row">
-              <label class="audio-file-label" for="custom-wrong-input">اختر</label>
-              <input type="file" id="custom-wrong-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customWrongData','custom-wrong-name')">
-              <span class="audio-file-name" id="custom-wrong-name">مدمج</span>
-              <button class="audio-test-btn" id="test-btn-customWrongData" onclick="testCustomAudio('customWrongData','test-btn-customWrongData')">تشغيل</button>
-              <button class="audio-stop-btn hidden" id="stop-btn-customWrongData" onclick="stopCustomAudioTest('customWrongData','test-btn-customWrongData')">إيقاف</button>
-              <button class="audio-clear-btn" onclick="clearCustomAudio('customWrongData','custom-wrong-name')">✕</button>
+            <label class="form-label">صوت الإجابة الخاطئة</label>
+            <select id="s-sound-wrong" class="form-select" onchange="updateSetting('soundWrong',this.value);document.getElementById('custom-wrong-wrap').style.display=this.value==='custom'?'block':'none'">
+              <option value="buzz">خطأ 🔴</option><option value="descend">هبوط 📉</option><option value="none">بدون صوت</option><option value="custom">ملف خارجي 📂</option>
+            </select>
+            <div id="custom-wrong-wrap" style="display:none;margin-top:8px">
+              <div class="audio-file-row">
+                <label class="audio-file-label" for="custom-wrong-input">اختر ملفاً</label>
+                <input type="file" id="custom-wrong-input" accept="audio/*" class="hidden" onchange="loadCustomAudio(this,'customWrongData','custom-wrong-name')">
+                <span class="audio-file-name" id="custom-wrong-name">لم يُختر</span>
+                <button class="audio-test-btn" id="test-btn-customWrongData" onclick="testCustomAudio('customWrongData','test-btn-customWrongData')">تشغيل</button>
+                <button class="audio-stop-btn hidden" id="stop-btn-customWrongData" onclick="stopCustomAudioTest('customWrongData','test-btn-customWrongData')">إيقاف</button>
+                <button class="audio-clear-btn" onclick="clearCustomAudio('customWrongData','custom-wrong-name')">✕</button>
+              </div>
             </div>
           </div>
         </div>
@@ -3429,7 +3514,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
         <div class="form-group">
           <label class="form-label">حجم الخط في شاشة السؤال</label>
           <div class="font-scale-row">
-            <input type="range" id="s-font-scale" min="70" max="150" value="100" style="flex:1" oninput="updateFontScale(+this.value)">
+            <input type="range" id="s-font-scale" min="70" max="300" value="100" style="flex:1" oninput="updateFontScale(+this.value)">
             <span class="font-scale-preview" id="font-scale-display">100%</span>
           </div>
         </div>
@@ -3460,6 +3545,13 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
                 </div>
                 <div class="text-sm text-muted mt-3">الفترة الزمنية بين كشف كل خيار — من 0.5 إلى 6 ثوانٍ</div>
               </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">أسئلة الترتيب</label>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:4px">
+              <input type="checkbox" id="s-order-show-tf" checked onchange="updateSetting('orderShowTF',this.checked)" style="width:18px;height:18px;accent-color:var(--accent1)">
+              <span class="text-sm text-muted">عرض زر صح/خطأ في أسئلة الترتيب (بدلاً من التحقق التلقائي)</span>
             </div>
           </div>
           <div class="form-group">
@@ -3504,6 +3596,10 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
               <div style="display:flex;align-items:center;gap:8px">
                 <input type="checkbox" id="s-seq-keyboard" style="width:16px;height:16px;accent-color:var(--accent2)" onchange="updateSetting('seqKeyboard',this.checked)">
                 <span class="text-sm text-muted">التحكم بالأسهم ← → في لوحة المفاتيح أثناء العرض التسلسلي</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <input type="checkbox" id="s-hide-nav-on-cats" checked style="width:16px;height:16px;accent-color:var(--accent1)" onchange="updateSetting('hideNavOnCats',this.checked)">
+                <span class="text-sm text-muted">إخفاء أزرار التنقل والتحكم اليدوي في شاشة الأقسام (مفعّل افتراضياً)</span>
               </div>
               <div style="display:flex;align-items:center;gap:8px">
                 <label class="form-label" style="margin:0;white-space:nowrap;min-width:fit-content">تأخير بدء العداد</label>
@@ -3553,11 +3649,30 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           </div>
           <div class="form-group">
             <label class="form-label">عند الضغط على "التالي" بدون إجابة</label>
-            <select id="s-next-no-answer" class="form-select" onchange="updateSetting('nextWithoutAnswerMode',this.value)">
+            <select id="s-next-no-answer" class="form-select" onchange="updateSetting('nextWithoutAnswerMode',this.value);document.getElementById('no-ans-pts-wrap').style.display=this.value==='add_deduct'?'flex':'none'">
               <option value="warn">تنبيه بدون خصم — يسأل المستخدم</option>
               <option value="deduct">خيار الخصم — يعرض زر للخصم أيضاً</option>
+              <option value="add_deduct">إضافة/خصم نقاط — يتيح الخيارين</option>
               <option value="silent">انتقال صامت — بدون أي تنبيه</option>
             </select>
+            <div id="no-ans-pts-wrap" style="display:none;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap">
+              <div class="form-group" style="margin:0;flex:1;min-width:120px">
+                <label class="form-label" style="font-size:.75rem">نقاط الإضافة</label>
+                <div class="number-stepper" style="max-width:100px">
+                  <button onclick="stepValue('s-no-ans-add',-1)">−</button>
+                  <input type="number" id="s-no-ans-add" value="1" min="0" max="50" oninput="updateSetting('noAnsAddVal',+this.value)">
+                  <button onclick="stepValue('s-no-ans-add',1)">+</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0;flex:1;min-width:120px">
+                <label class="form-label" style="font-size:.75rem">نقاط الخصم</label>
+                <div class="number-stepper" style="max-width:100px">
+                  <button onclick="stepValue('s-no-ans-deduct',-1)">−</button>
+                  <input type="number" id="s-no-ans-deduct" value="1" min="0" max="50" oninput="updateSetting('noAnsDeductVal',+this.value)">
+                  <button onclick="stepValue('s-no-ans-deduct',1)">+</button>
+                </div>
+              </div>
+            </div>
             <div class="text-sm text-muted mt-3">يحدد سلوك زر "التالي" عند عدم الإجابة على السؤال</div>
           </div>
           <div class="form-group">
@@ -4023,7 +4138,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <button class="cats-mode-btn"        data-mode="wheel"   onclick="setCatDisplayMode('wheel',this)"  title="عجلة الحظ">عجلة</button>
     <button class="cats-mode-btn"        data-mode="hidden"  onclick="setCatDisplayMode('hidden',this)" title="بطاقات مخفية">🃏 مخفي</button>
     <button class="cats-mode-btn"        data-mode="list"    onclick="setCatDisplayMode('list',this)"   title="عرض قائمة">☰ قائمة</button>
-    <button class="cats-mode-btn"        data-mode="jeopardy" onclick="setCatDisplayMode('jeopardy',this)" title="لوحة جيوباردي">جيوباردي</button>
+    <button class="cats-mode-btn"        data-mode="jeopardy" onclick="setCatDisplayMode('jeopardy',this)" title="لوحة المعرفة (جيوباردي)">🎯 المعرفة</button>
   </div>
   <div id="cats-pres-grid" style="width:100%;max-width:1200px;display:flex;flex-direction:column;align-items:center;flex:1"></div>
 </div>
@@ -4038,6 +4153,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
       <button class="btn btn-ghost btn-sm" onclick="showHostHint()" title="تلميح المضيف" id="host-hint-btn" style="display:none">💡</button>
       <button class="btn btn-ghost btn-sm" onclick="showPlaySearch()" title="انتقل لسؤال">🔍</button>
       <button class="btn btn-ghost btn-sm" onclick="showRemotePanel()" title="التحكم عن بُعد">📡</button>
+      <button class="btn btn-ghost btn-sm" onclick="openBuzzerMode()" title="وضع المُسرِّع 🔔" style="color:var(--accent1)">🔔</button>
       <button class="btn btn-ghost btn-sm" onclick="toggleWhiteboard()" title="السبورة البيضاء">🖊️</button>
       <button class="btn btn-ghost btn-sm" onclick="showAudiencePoll()" title="استطلاع الجمهور">📊</button>
       <button class="btn btn-ghost btn-sm" onclick="goBackFromQuestion()">← الأقسام</button>
@@ -4133,7 +4249,8 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
   <div class="pres-header-bar">
     <div class="pres-header-logo">الشكر والتقدير</div>
     <div class="pres-header-actions">
-      <button class="btn btn-ghost btn-sm" onclick="showView('scores')"></button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('categories')">← الأقسام</button>
+      <button class="btn btn-ghost btn-sm" onclick="showView('scores')">النتائج</button>
       <button class="btn btn-ghost btn-sm" onclick="showView('intro')">الرئيسية</button>
       <button class="btn btn-ghost btn-sm" onclick="goToAdmin()"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg> التحكم</button>
     </div>
@@ -4164,7 +4281,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
 
 
 <!-- ═══ WINNER CERTIFICATE MODAL ═══ -->
-<div id="modal-certificate" class="modal-overlay hidden" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal('modal-certificate')" style="padding:16px;align-items:flex-start;overflow-y:auto;z-index:7000;background:rgba(0,0,0,.75);backdrop-filter:blur(8px)">
+<div id="modal-certificate" class="modal-overlay hidden" role="dialog" aria-modal="true" onclick="if(event.target===this)closeModal('modal-certificate')" style="padding:16px;align-items:flex-start;overflow-y:auto;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(8px)">
   <div style="width:100%;max-width:600px;margin:auto;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6)">
     <div id="certificate-content" style="background:linear-gradient(160deg,#fffdf5 0%,#fff8dc 60%,#fef3b0 100%);border:5px solid #f5c842;border-bottom:none;border-radius:20px 20px 0 0;padding:clamp(20px,5vw,44px) clamp(16px,5vw,48px);text-align:center;position:relative;font-family:'Cairo',sans-serif;color:#1a1000;overflow:hidden">
       <!-- Decorative orbs -->
@@ -4261,6 +4378,7 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
     <button class="btn btn-primary btn-lg" onclick="launchPodiumConfetti()">🎉 احتفال!</button>
     <button class="btn btn-ghost btn-lg" onclick="showView('teamstats')">الإحصاءات</button>
     <button class="btn btn-gold btn-lg" onclick="openWinnerCertificate()">🎖️ شهادة الفائز</button>
+    <button class="btn btn-ghost btn-lg" onclick="showView('categories')">← الأقسام</button>
     <button class="btn btn-accent btn-lg" onclick="resetForNewGame()">مسابقة جديدة</button>
   </div>
 </div>
@@ -4528,7 +4646,6 @@ input[type="range"]{width:100%;accent-color:var(--accent1)}
           </div>
         </div>
       </div>
-    </div>
     <!-- Image Section -->
     <div id="qtype-image-section" class="qtype-section" style="display:none">
       <div class="form-group">
@@ -4822,7 +4939,10 @@ const THEMES=[
   {id:'formal',  name:'الياقوت الملكي 🏛️',bg:'#030818', accent:'#4da6ff', accent2:'#b090ff',  desc:'أزرق ملكي + لافندر — الفعاليات الرسمية والتعليمية'},
   {id:'occasion',name:'ليلة احتفالية 🎉', bg:'#080412', accent:'#ffb800', accent2:'#f050e0',  desc:'ذهبي + وردي احتفالي — رمضان والمناسبات الكبرى'},
   {id:'mocha',   name:'بيت القهوة ☕',    bg:'#0e0700', accent:'#e89840', accent2:'#d4a020',  desc:'عنبر دافئ + ذهبي — الفعاليات الفاخرة'},
-  {id:'light',   name:'قاعة مضاءة ☀️',   bg:'#f0f4fa', accent:'#1455d4', accent2:'#0098b0',  desc:'أزرق داكن + خلفية فاتحة — للقاعات المضاءة'},
+  {id:'light',   name:'نهاري كلاسيكي ☀️', bg:'#f0f5ff', accent:'#1a56e8', accent2:'#0089a8',  desc:'أزرق ملكي + خلفية بيضاء — للقاعات المضاءة'},
+  {id:'sunrise', name:'شروق الشمس 🌅',     bg:'#fff8f0', accent:'#e86c1a', accent2:'#e03060',  desc:'برتقالي حار + وردي مرجاني — النهار الدافئ'},
+  {id:'emerald', name:'الزمرد 💚',           bg:'#021a0c', accent:'#00c868', accent2:'#a0ff40',  desc:'أخضر زمردي + ليموني نيون — الطبيعة والبيئة'},
+  {id:'ruby',    name:'الياقوت 💎',          bg:'#120006', accent:'#ff2050', accent2:'#ffc030',  desc:'أحمر ياقوتي + ذهبي — الفعاليات الفاخرة'},
   {id:'custom',  name:'مخصص 🎨',          bg:'#08091a', accent:'#00e8d0', accent2:'#a259ff',  desc:'صمّم ثيمك الخاص'},
 ];
 const CREDIT_CATS={
@@ -4870,7 +4990,7 @@ let state={
     name:'مسابقة المعرفة الكبرى',password:'1234',
     welcomeMessage:'أهلاً وسهلاً بكم في مسابقتنا التفاعلية',
     defaultTime:30,compMode:'turns',hardPoints:2,
-    soundCorrect:'applause',soundWrong:'buzz',
+    soundCorrect:'applause',soundWrong:'buzz',hideNavOnCats:true,orderShowTF:true,
     musicType:'none',musicVol:40,tenseSeconds:10,
     theme:'space',closingMessage:'شكراً لجميع المشاركين والحضور الكريم',
     llFifty:1,llTime:1,llSkip:1,
@@ -5128,6 +5248,19 @@ function goToAdmin(){
 }
 
 function showView(name){
+  // Hide/show cat nav buttons in sequential manual mode
+  if(name==='categories'){
+    const _seqManual=state.settings.presentationMode==='manual';
+    const _hideNav=state.settings.hideNavOnCats!==false;
+    const _catActions=document.querySelector('#view-categories .pres-header-actions');
+    if(_catActions){
+      _catActions.style.transition='opacity .3s';
+      _catActions.style.opacity=(_seqManual&&_hideNav)?'0':'1';
+      _catActions.style.pointerEvents=(_seqManual&&_hideNav)?'none':'';
+    }
+    const _modeSwitcher=document.getElementById('cats-mode-switcher');
+    if(_modeSwitcher){_modeSwitcher.style.display=(_seqManual&&_hideNav)?'none':'';}
+  }
   try{
   // Reset transition state on any navigation
   if(name!=='question'){
@@ -5270,7 +5403,10 @@ function renderAdmin(){
   document.getElementById('s-default-time').value=s.defaultTime;
   document.getElementById('s-hard-pts').value=s.hardPoints||2;
   document.getElementById('s-sound-correct').value=s.soundCorrect;
+  if(s.soundCorrect==='custom')document.getElementById('custom-correct-wrap').style.display='block';
+  if(s.soundWrong==='custom')document.getElementById('custom-wrong-wrap').style.display='block';
   document.getElementById('s-sound-wrong').value=s.soundWrong;
+  const _hncEl=document.getElementById('s-hide-nav-on-cats');if(_hncEl)_hncEl.checked=s.hideNavOnCats!==false;
   document.getElementById('s-music-type').value=s.musicType||'none';
   document.getElementById('s-music-vol').value=s.musicVol||40;
   document.getElementById('vol-display').textContent=(s.musicVol||40)+'%';
@@ -6133,7 +6269,7 @@ function renderCatsSlide(){
   switch(mode){
     case 'wheel':    renderCatsWheel();    break;
     case 'hidden':   renderCatsHidden();   break;
-    case 'list':     renderCatsList();     break;
+    case 'list':     renderCatsListImproved();     break;
     case 'jeopardy': renderCatsJeopardy(); break;
     default:         renderCatsGrid();     break;
   }
@@ -6169,6 +6305,28 @@ function renderCatsGrid(){
 }
 
 // ─── MODE 2: LIST ─────────────────────────────────────────────────
+function renderCatsListImproved(){
+  const grid=document.getElementById('cats-pres-grid');
+  grid.className='';grid.style.display='block';grid.style.width='100%';grid.style.maxWidth='700px';
+  const cats=state.categories.map(cat=>{
+    const used=state.usedQuestions[cat.id]||new Set();
+    const rem=cat.questions.length-used.size;
+    const dep=rem===0;
+    return {cat,rem,dep};
+  });
+  grid.innerHTML=`<div style="width:100%;padding:8px 0">`+cats.map(({cat,rem,dep})=>{
+    return `<div class="cats-list-row${dep?' depleted':''}" onclick="${dep?'':'selectCatAndStart(\''+cat.id+'\')' }" style="${dep?'opacity:.45;cursor:default':''}">
+      <div class="cats-list-row-icon">${dep?'✅':cat.catImage?`<img src="${cat.catImage}" style="width:2.2rem;height:2.2rem;border-radius:8px;object-fit:cover">`:cat.icon||'📂'}</div>
+      <div class="cats-list-row-info">
+        <div class="cats-list-row-name" style="color:${cat.color}">${cat.name}</div>
+        <div class="cats-list-row-count">${dep?'اكتملت الأسئلة':rem+' سؤال متبقٍّ من '+cat.questions.length}</div>
+      </div>
+      <div class="cats-list-row-pts">
+        ${dep?'<span style="color:var(--success);font-size:1.4rem">✅</span>':`<div class="cats-list-row-pts-num">${cat.points||1}×</div><div style="font-size:.65rem;color:var(--text-muted)">نقطة</div>`}
+      </div>
+    </div>`;
+  }).join('')+'</div>';
+}
 function renderCatsList(){
   const grid=document.getElementById('cats-pres-grid');
   grid.className='';grid.style.display='flex';grid.style.flexDirection='column';grid.style.alignItems='center';
@@ -6204,11 +6362,16 @@ function renderCatsList(){
 function renderCatsHidden(){
   const grid=document.getElementById('cats-pres-grid');
   grid.className='';grid.style.display='block';grid.style.width='100%';
+  // Shuffle categories display order (once per game, stored in state)
+  if(!state._hiddenCatOrder||state._hiddenCatOrder.length!==state.categories.length){
+    state._hiddenCatOrder=[...state.categories.map(c=>c.id)].sort(()=>Math.random()-.5);
+  }
+  const orderedCats=state._hiddenCatOrder.map(id=>state.categories.find(c=>c.id===id)).filter(Boolean);
   const activeCats=state.categories.filter(c=>{
     const used=state.usedQuestions[c.id]||new Set();
     return c.questions.length>used.size;
   });
-  grid.innerHTML=`<div class="cats-hidden-grid">`+state.categories.map(cat=>{
+  grid.innerHTML=`<div class="cats-hidden-grid">` + orderedCats.map(cat=>{
     const used=state.usedQuestions[cat.id]||new Set();
     const rem=cat.questions.length-used.size;
     const dep=rem===0;
@@ -6239,6 +6402,10 @@ function flipCatCard(catId, divId){
   const wrap=document.getElementById('flip-'+divId);
   if(!wrap)return;
   if(!wrap.classList.contains('flipped')){
+    // Close any other flipped card first (one active at a time)
+    document.querySelectorAll('.cat-flip-wrap.flipped').forEach(el=>{
+      if(el!==wrap){el.classList.remove('flipped');const id=el.id.replace('flip-','');delete _flipReady[id];}
+    });
     // First click: flip to reveal
     wrap.classList.add('flipped');
     _flipReady[catId]=true;
@@ -6253,12 +6420,15 @@ function renderCatsJeopardy(){
   const grid=document.getElementById('cats-pres-grid');
   grid.className='';grid.style.display='flex';grid.style.flexDirection='column';grid.style.alignItems='center';
   // Point tiers and difficulty mapping
+  const s_jep=state.settings;
+  const _toAr=n=>{const ar=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];return String(n).replace(/[0-9]/g,d=>ar[d]);};
+  const jp1=s_jep.jepPts1||100,jp2=s_jep.jepPts2||200,jp3=s_jep.jepPts3||300,jp4=s_jep.jepPts4||400,jp5=s_jep.jepPts5||500;
   const TIERS=[
-    {pts:100, diff:'easy',  label:'١٠٠', color:'var(--success)'},
-    {pts:200, diff:'medium',label:'٢٠٠', color:'var(--accent1)'},
-    {pts:300, diff:'hard',  label:'٣٠٠', color:'var(--danger)'},
-    {pts:400, diff:'hard',  label:'٤٠٠', color:'#a78bfa'},
-    {pts:500, diff:'hard',  label:'٥٠٠', color:'var(--accent2)'},
+    {pts:jp1, diff:'easy',  label:_toAr(jp1), color:'var(--success)'},
+    {pts:jp2, diff:'medium',label:_toAr(jp2), color:'var(--accent1)'},
+    {pts:jp3, diff:'hard',  label:_toAr(jp3), color:'var(--danger)'},
+    {pts:jp4, diff:'hard',  label:_toAr(jp4), color:'#a78bfa'},
+    {pts:jp5, diff:'hard',  label:_toAr(jp5), color:'var(--accent2)'},
   ];
   const DIFF_COLORS={easy:'var(--success)',medium:'var(--accent1)',hard:'var(--danger)'};
 
@@ -6309,8 +6479,26 @@ function selectCatJeopardy(catId, qIdx){
   if(!state.usedQuestions[catId])state.usedQuestions[catId]=new Set();
   state.usedQuestions[catId].add(qIdx);
   state.currentQIndex=qIdx;
+  // Determine jeopardy points for this slot
+  const cat=state.categories.find(c=>c.id===catId);
+  const q=cat&&cat.questions[qIdx];
+  if(q&&state.settings.jeopardy_mode){
+    // stored when rendering
+  }
+  state._jeopardyCurrentPts=_getJeopardyPtsForQ(catId,qIdx);
   showView('question');
+  if(state.settings.jepShowPtsInQ!==false&&state._jeopardyCurrentPts){
+    setTimeout(()=>{const nl=document.getElementById('q-number-label');if(nl)nl.textContent=nl.textContent+' — 🎯 '+state._jeopardyCurrentPts+' نقطة';},400);
+  }
   showTurnOverlay(state.currentTeamIndex,()=>loadQuestion(catId,qIdx,state.currentTeamIndex));
+}
+function _getJeopardyPtsForQ(catId,qIdx){
+  if(state.settings.catDisplayMode!=='jeopardy')return 0;
+  const cat=state.categories.find(c=>c.id===catId);if(!cat)return 0;
+  const q=cat.questions[qIdx];if(!q)return 0;
+  const jp1=state.settings.jepPts1||100,jp2=state.settings.jepPts2||200,jp3=state.settings.jepPts3||300,jp4=state.settings.jepPts4||400,jp5=state.settings.jepPts5||500;
+  const diffMap={easy:jp1,medium:jp2,hard:jp3};
+  return diffMap[q.difficulty||'medium']||jp2;
 }
 
 // ─── MODE 5: FORTUNE WHEEL ────────────────────────────────────────
@@ -6324,6 +6512,8 @@ function renderCatsWheel(){
   const grid=document.getElementById('cats-pres-grid');
   grid.className='';
   // Collect non-depleted categories
+  // Reset recently used if all cats used
+  if(!state._wheelRecentlyUsed)state._wheelRecentlyUsed=[];
   _wheelCats=state.categories.filter(cat=>{
     const used=state.usedQuestions[cat.id]||new Set();
     return cat.questions.length>used.size;
@@ -6406,6 +6596,16 @@ function drawWheel(rotAngle){
     ctx.restore();
   });
 
+  // Pointer triangle at top
+  ctx.save();
+  ctx.fillStyle='#fff';
+  ctx.shadowColor='rgba(0,0,0,.55)';ctx.shadowBlur=10;
+  ctx.beginPath();
+  ctx.moveTo(cx,cy-R-4);
+  ctx.lineTo(cx-12,cy-R+18);
+  ctx.lineTo(cx+12,cy-R+18);
+  ctx.closePath();ctx.fill();
+  ctx.restore();
   // Center circle
   ctx.beginPath();
   ctx.arc(cx,cy,R*0.16,0,2*Math.PI);
@@ -6424,22 +6624,34 @@ function spinWheel(){
   document.getElementById('wheel-spin-btn').disabled=true;
   document.getElementById('wheel-result-panel').style.display='none';
 
-  // Decide winner first (weighted random)
-  const winIdx=Math.floor(Math.random()*_wheelCats.length);
+  // Decide winner — avoid recently used categories
+  const allIdxs=_wheelCats.map((_,i)=>i);
+  const nonRecent=allIdxs.filter(i=>!state._wheelRecentlyUsed.includes(_wheelCats[i].id));
+  const pickPool=nonRecent.length?nonRecent:allIdxs;
+  const winIdx=pickPool[Math.floor(Math.random()*pickPool.length)];
+  // Track recently used (keep last N-1)
+  state._wheelRecentlyUsed.push(_wheelCats[winIdx].id);
+  if(state._wheelRecentlyUsed.length>=_wheelCats.length)state._wheelRecentlyUsed=[];
   const n=_wheelCats.length;
   const sliceAngle=(2*Math.PI)/n;
 
   // How many full rotations + land on winner
-  const extraSpins=(5+Math.floor(Math.random()*4))*2*Math.PI;
-  // Target angle: the winning slice's center should be at top (angle=0 from top = -PI/2)
-  const winCenterAngle=winIdx*sliceAngle; // offset of winner slice center from start
-  // We want: rotAngle + winCenterAngle = -PI/2 (pointing up) mod 2*PI
-  // So: rotAngle = -PI/2 - winCenterAngle
-  const targetRotBase=-Math.PI/2-winCenterAngle;
-  // Normalize to [0, 2PI]
-  const targetRot=(targetRotBase%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
-  const totalRot=extraSpins+targetRot-(_wheelAngle%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
-  const finalAngle=_wheelAngle+totalRot+extraSpins;
+  const extraSpins=(6+Math.floor(Math.random()*5))*2*Math.PI;
+  // The wheel draws starting from _wheelAngle, each slice i occupies [i*sliceAngle, (i+1)*sliceAngle]
+  // The pointer is at the TOP of the canvas (canvas center pointing up).
+  // When the wheel has rotated by angle R, the slice at angular position (offset from 0) that ends up at top
+  // satisfies: (offset + R) mod 2PI ≈ 3PI/2  (because canvas draws from 3PI/2 = "12 o'clock" equivalent)
+  // Actually drawWheel starts slices from (i*sliceAngle + _wheelAngle - PI/2) in canvas arc calls
+  // So winner center at top: winIdx*sliceAngle + finalAngle - PI/2 ≡ -PI/2 (mod 2PI)
+  // => finalAngle ≡ -winIdx*sliceAngle (mod 2PI)
+  const winCenterOffset = winIdx * sliceAngle + sliceAngle/2;
+  const targetBase = -winCenterOffset;
+  const targetRot = (targetBase%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
+  const currentNorm=(_wheelAngle%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
+  let delta=targetRot-currentNorm;
+  if(delta<=0)delta+=2*Math.PI;
+  const totalRot=extraSpins+delta;
+  const finalAngle=_wheelAngle+totalRot;
 
   const duration=4200+Math.random()*800;
   const startAngle=_wheelAngle;
@@ -6463,6 +6675,7 @@ function spinWheel(){
       _wheelAngle=finalAngle;
       _wheelWinnerIdx=winIdx;
       drawWheel(_wheelAngle);
+      stopMusic();
       playSound('correct');
       showWheelResult(_wheelCats[winIdx]);
     }
@@ -7211,9 +7424,8 @@ function loadQuestion(catId,qIdx,teamIdx){
       '<div id="order-items-container" style="display:flex;flex-direction:column;gap:8px;max-width:540px;margin:0 auto;width:100%"></div>'+
       '<div style="text-align:center;margin-top:14px;display:flex;flex-direction:column;align-items:center;gap:8px">'+
       '<div class="text-sm text-muted" style="font-size:.75rem">💡 اسحب العناصر لترتيبها أو استخدم أزرار ↑↓</div>'+
-      '<button class="btn btn-primary" style="padding:12px 32px;font-size:1rem" onclick="checkOrderAnswer()">✅ تحقق من الترتيب</button>'+
-      '<div style="display:flex;gap:8px;margin-top:2px"><button class="btn btn-success btn-sm" onclick="presenterJudge(true)">✅ صحيح</button><button class="btn btn-danger btn-sm" onclick="presenterJudge(false)">❌ خطأ</button></div>'+
-      '<div style="font-size:.7rem;color:var(--text-muted)">أو يحكم المقدم مباشرةً بدلاً من التحقق</div>'+
+      (state.settings.orderShowTF!==false?'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:340px;margin:8px auto 0"><button class="option-btn" onclick="presenterJudge(true)" style="border-color:var(--success);min-height:70px"><div class="opt-btn-letter" style="background:rgba(0,230,118,.15);border-color:var(--success)">✅</div><div class="opt-btn-content" style="font-size:.95rem">صحيح</div></button><button class="option-btn" onclick="presenterJudge(false)" style="border-color:var(--danger);min-height:70px"><div class="opt-btn-letter" style="background:rgba(255,59,92,.12);border-color:var(--danger)">❌</div><div class="opt-btn-content" style="font-size:.95rem">خطأ</div></button></div>':'<button class="btn btn-primary" style="padding:12px 32px;font-size:1rem" onclick="checkOrderAnswer()">✅ تحقق من الترتيب</button><div style="display:flex;gap:8px;margin-top:2px"><button class="btn btn-success btn-sm" onclick="presenterJudge(true)">✅ صحيح</button><button class="btn btn-danger btn-sm" onclick="presenterJudge(false)">❌ خطأ</button></div>')+
+      '<div style="font-size:.7rem;color:var(--text-muted);margin-top:4px">يحكم المقدم بصحة الترتيب</div>'+
       '</div>';
     _renderOrderItems();
     _initOrderTouchDrag();
@@ -7584,6 +7796,20 @@ function _showNextConfirmDialog(withDeduct){
   const teamName=team?team.name:'الفريق';
   const negVal=state.settings.negMarkValue||1;
   let msg='لم تتم الإجابة بعد. هل تريد الانتقال للسؤال التالي؟';
+  if(mode==='add_deduct'){
+    const addVal=state.settings.noAnsAddVal||1;
+    const dedVal=state.settings.noAnsDeductVal||1;
+    const _tn=(state.teams[state.currentTeamIndex]||{}).name||'الفريق';
+    const _html='<div style="padding:8px 0;text-align:center"><div style="font-size:2rem;margin-bottom:10px">⚠️</div>'
+      +'<div style="font-size:.9rem;line-height:1.7;margin-bottom:16px">لم تتم الإجابة — اختر إجراءً لـ <strong>'+_tn+'</strong>:</div>'
+      +'<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">'
+      +'<button class="btn btn-success btn-sm" style="padding:8px 16px" onclick="closeModal(\'modal-generic\');_noAnsAward('+addVal+')">➕ إضافة '+addVal+' نقطة</button>'
+      +'<button class="btn btn-danger btn-sm" style="padding:8px 16px" onclick="closeModal(\'modal-generic\');_noAnsDeduct('+dedVal+')">➖ خصم '+dedVal+' نقطة</button>'
+      +'<button class="btn btn-ghost btn-sm" style="padding:8px 16px" onclick="closeModal(\'modal-generic\');advanceQuestion()">⏭ تخطي</button>'
+      +'</div></div>';
+    openGenericModal('عند عدم الإجابة',_html);
+    return;
+  }
   let extraBtn='';
   if(withDeduct&&team){
     msg='لم تتم الإجابة بعد.<br>هل تريد الانتقال للسؤال التالي مع <strong style="color:var(--danger)">خصم '+negVal+' نقطة</strong> من فريق '+teamName+'؟';
@@ -7615,6 +7841,22 @@ function _confirmNextWithDeduct(){
   nextQuestion();
 }
 
+function _noAnsAward(pts){
+  const team=state.teams[state.currentTeamIndex];
+  if(team){team.score=(team.score||0)+pts;recordScoreHistoryV5(team.id,pts);floatScore(team,'+'+pts,'plus');saveState();updateTicker();toast('✅ إضافة '+pts+' نقطة','success');}
+  advanceQuestion();
+}
+function _noAnsDeduct(pts){
+  const team=state.teams[state.currentTeamIndex];
+  if(team){team.score=Math.max(0,(team.score||0)-pts);recordScoreHistoryV5(team.id,-pts);floatScore(team,'-'+pts,'minus');saveState();updateTicker();toast('🔴 خصم '+pts+' نقطة','danger');}
+  advanceQuestion();
+}
+function advanceQuestion(){
+  state._nextConfirmBypass=true;
+  state.usedQuestions[state.currentCatId]?.add(state.currentQIndex);
+  state.answered=true;
+  nextQuestion();
+}
 function nextQuestion(){
   // ── CONFIRM dialog for unanswered questions ──
   if(!state.answered && !state._nextConfirmBypass){
@@ -8453,7 +8695,10 @@ function playSound(type){
       return;
     }
     const ctx=getAudioCtx();
-    const s=type==='correct'?state.settings.soundCorrect:state.settings.soundWrong;
+    const _sd=type==='correct'?state.settings.soundCorrect:state.settings.soundWrong;
+  // If custom, use customCorrectData / customWrongData
+  if(_sd==='custom'){const _key=type==='correct'?'customCorrectData':'customWrongData';const _cd=state.settings[_key];if(_cd){const _a=new Audio(_cd);_a.volume=.8;_a.play().catch(()=>{});return;}return;}
+  const s=_sd;
     if(s==='none')return;
     if(type==='correct'){
       if(s==='applause')playApplause(ctx);
@@ -9251,11 +9496,25 @@ function restoreV5Settings(){
   const tmtEl=document.getElementById('s-tense-music-type');if(tmtEl){tmtEl.value=s.tenseMusicType||'builtin';const tw=document.getElementById('tense-custom-audio-wrap');if(tw)tw.style.display=tmtEl.value==='custom'?'block':'none';}
   const tvEl=document.getElementById('s-tense-vol');if(tvEl){tvEl.value=s.tenseMusicVol||70;const tvd=document.getElementById('tense-vol-display');if(tvd)tvd.textContent=(s.tenseMusicVol||70)+'%';}
   const ssbEl=document.getElementById('s-show-shuffle-badge');if(ssbEl)ssbEl.checked=!!s.showShuffleBadge;
-  const nnaEl=document.getElementById('s-next-no-answer');if(nnaEl)nnaEl.value=s.nextWithoutAnswerMode||'warn';
   const rdEl=document.getElementById('s-reveal-duration');if(rdEl){const rdv=s.revealDuration||1000;rdEl.value=rdv;const rdd=document.getElementById('reveal-dur-display');if(rdd)rdd.textContent=(rdv/1000).toFixed(1);const rdn=document.getElementById('s-reveal-duration-num');if(rdn)rdn.value=(rdv/1000).toFixed(1);}
   const tchEl=document.getElementById('s-team-card-height');if(tchEl)tchEl.value=s.teamCardHeight||'auto';
   const ctdEl=document.getElementById('custom-tense-name');if(ctdEl)ctdEl.textContent=s.customTenseData?'✅ ملف محمّل':'لم يختر بعد';
   const prmEl=document.getElementById('s-progressive-reveal-mode');if(prmEl){prmEl.value=s.progressiveRevealMode||'manual';const pw=document.getElementById('progressive-mode-wrap');if(pw)pw.style.display=s.progressiveReveal?'block':'none';}
+  // ── New v5.2 settings ──
+  const nnaEl2=document.getElementById('s-next-no-answer');if(nnaEl2){nnaEl2.value=s.nextWithoutAnswerMode||'warn';const napw=document.getElementById('no-ans-pts-wrap');if(napw)napw.style.display=s.nextWithoutAnswerMode==='add_deduct'?'flex':'none';}
+  const snaAdd=document.getElementById('s-no-ans-add');if(snaAdd)snaAdd.value=s.noAnsAddVal||1;
+  const snaDed=document.getElementById('s-no-ans-deduct');if(snaDed)snaDed.value=s.noAnsDeductVal||1;
+  const sotfEl=document.getElementById('s-order-show-tf');if(sotfEl)sotfEl.checked=s.orderShowTF!==false;
+  const jcw=document.getElementById('jeopardy-controls-wrap');if(jcw)jcw.style.display=(s.catDisplayMode==='jeopardy')?'block':'none';
+  const jp1El=document.getElementById('s-jep-pts1');if(jp1El)jp1El.value=s.jepPts1||100;
+  const jp2El=document.getElementById('s-jep-pts2');if(jp2El)jp2El.value=s.jepPts2||200;
+  const jp3El=document.getElementById('s-jep-pts3');if(jp3El)jp3El.value=s.jepPts3||300;
+  const jp4El=document.getElementById('s-jep-pts4');if(jp4El)jp4El.value=s.jepPts4||400;
+  const jp5El=document.getElementById('s-jep-pts5');if(jp5El)jp5El.value=s.jepPts5||500;
+  const japEl=document.getElementById('s-jep-award-pts');if(japEl)japEl.checked=s.jepAwardPts!==false;
+  const jdwEl=document.getElementById('s-jep-deduct-wrong');if(jdwEl)jdwEl.checked=!!s.jepDeductWrong;
+  const jspEl=document.getElementById('s-jep-show-pts-in-q');if(jspEl)jspEl.checked=s.jepShowPtsInQ!==false;
+  const hncEl2=document.getElementById('s-hide-nav-on-cats');if(hncEl2)hncEl2.checked=s.hideNavOnCats!==false;
 }
 
 // ════════════════════════════════════════════════════════
@@ -10231,35 +10490,107 @@ function toggleWhiteboard(){
   _whiteboardActive=true;
   wb=document.createElement('div');wb.id='whiteboard-overlay';
   wb.style.cssText='position:fixed;inset:0;z-index:5000;cursor:crosshair;touch-action:none';
+  window._wbMode='pen'; window._wbShapeStart=null;
   wb.innerHTML=`<canvas id="wb-canvas" style="width:100%;height:100%"></canvas>
-    <div style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:5001;display:flex;gap:8px;background:var(--bg-card);border:2px solid var(--border-light);border-radius:16px;padding:8px 14px;box-shadow:0 8px 32px rgba(0,0,0,.6)">
-      <button onclick="wbSetColor('#ffffff')" style="width:28px;height:28px;border-radius:50%;background:#fff;border:2px solid #666;cursor:pointer"></button>
-      <button onclick="wbSetColor('#ff3d5a')" style="width:28px;height:28px;border-radius:50%;background:#ff3d5a;border:none;cursor:pointer"></button>
-      <button onclick="wbSetColor('#00e8d0')" style="width:28px;height:28px;border-radius:50%;background:#00e8d0;border:none;cursor:pointer"></button>
-      <button onclick="wbSetColor('#ffe23d')" style="width:28px;height:28px;border-radius:50%;background:#ffe23d;border:none;cursor:pointer"></button>
-      <button onclick="wbSetWidth(3)" style="width:28px;height:28px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--border);cursor:pointer;font-size:.65rem;font-weight:900;color:var(--text-primary)">رفيع</button>
-      <button onclick="wbSetWidth(8)" style="width:28px;height:28px;border-radius:50%;background:var(--bg-panel);border:1px solid var(--border);cursor:pointer;font-size:.65rem;font-weight:900;color:var(--text-primary)">عريض</button>
-      <button onclick="wbClear()" style="padding:4px 12px;border-radius:10px;background:var(--danger);border:none;color:#fff;cursor:pointer;font-size:.75rem;font-weight:700">مسح</button>
-      <button onclick="toggleWhiteboard()" style="padding:4px 12px;border-radius:10px;background:var(--bg-surface);border:1px solid var(--border);color:var(--text-primary);cursor:pointer;font-size:.75rem;font-weight:700">إغلاق</button>
+    <canvas id="wb-preview-canvas" style="width:100%;height:100%;position:absolute;inset:0;pointer-events:none"></canvas>
+    <div id="wb-toolbar" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:5001;display:flex;flex-wrap:wrap;gap:6px;background:rgba(15,15,30,.95);border:1.5px solid rgba(255,255,255,.15);border-radius:18px;padding:10px 14px;box-shadow:0 8px 40px rgba(0,0,0,.8);max-width:95vw;justify-content:center">
+      <div style="display:flex;gap:4px;align-items:center;border-right:1px solid rgba(255,255,255,.15);padding-right:8px;margin-right:2px">
+        <button id="wb-btn-pen" onclick="wbSetMode('pen')" title="قلم" style="width:32px;height:32px;border-radius:8px;background:var(--accent2);border:none;cursor:pointer;font-size:.95rem">✏️</button>
+        <button id="wb-btn-eraser" onclick="wbSetMode('eraser')" title="ممحاة" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer;font-size:.95rem">🧹</button>
+      </div>
+      <div style="display:flex;gap:4px;align-items:center;border-right:1px solid rgba(255,255,255,.15);padding-right:8px;margin-right:2px">
+        <button id="wb-btn-rect" onclick="wbSetMode('rect')" title="مستطيل" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer;font-size:.85rem">▭</button>
+        <button id="wb-btn-circle" onclick="wbSetMode('circle')" title="دائرة" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer;font-size:.85rem">⭕</button>
+        <button id="wb-btn-triangle" onclick="wbSetMode('triangle')" title="مثلث" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer;font-size:.85rem">△</button>
+        <button id="wb-btn-line" onclick="wbSetMode('line')" title="خط" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer;font-size:.85rem">╱</button>
+      </div>
+      <div style="display:flex;gap:4px;align-items:center;border-right:1px solid rgba(255,255,255,.15);padding-right:8px;margin-right:2px">
+        <button onclick="wbSetColor('#ffffff')" style="width:24px;height:24px;border-radius:50%;background:#fff;border:2px solid #888;cursor:pointer" title="أبيض"></button>
+        <button onclick="wbSetColor('#ff3d5a')" style="width:24px;height:24px;border-radius:50%;background:#ff3d5a;border:none;cursor:pointer" title="أحمر"></button>
+        <button onclick="wbSetColor('#00e8d0')" style="width:24px;height:24px;border-radius:50%;background:#00e8d0;border:none;cursor:pointer" title="فيروزي"></button>
+        <button onclick="wbSetColor('#ffe23d')" style="width:24px;height:24px;border-radius:50%;background:#ffe23d;border:none;cursor:pointer" title="أصفر"></button>
+        <button onclick="wbSetColor('#4ade80')" style="width:24px;height:24px;border-radius:50%;background:#4ade80;border:none;cursor:pointer" title="أخضر"></button>
+        <button onclick="wbSetColor('#a78bfa')" style="width:24px;height:24px;border-radius:50%;background:#a78bfa;border:none;cursor:pointer" title="بنفسجي"></button>
+      </div>
+      <div style="display:flex;gap:4px;align-items:center;border-right:1px solid rgba(255,255,255,.15);padding-right:8px;margin-right:2px">
+        <button onclick="wbSetWidth(2)" style="padding:4px 8px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:.7rem">رفيع</button>
+        <button onclick="wbSetWidth(6)" style="padding:4px 8px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:.7rem">وسط</button>
+        <button onclick="wbSetWidth(14)" style="padding:4px 8px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:.7rem">سميك</button>
+      </div>
+      <button onclick="wbUndo()" style="padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:.75rem;font-weight:700">↩ تراجع</button>
+      <button onclick="wbClear()" style="padding:4px 10px;border-radius:10px;background:var(--danger);border:none;color:#fff;cursor:pointer;font-size:.75rem;font-weight:700">🗑 مسح الكل</button>
+      <button onclick="toggleWhiteboard()" style="padding:4px 10px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;cursor:pointer;font-size:.75rem;font-weight:700">✕ إغلاق</button>
     </div>`;
   document.body.appendChild(wb);
   const canvas=document.getElementById('wb-canvas');
+  const previewCanvas=document.getElementById('wb-preview-canvas');
   canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  previewCanvas.width=window.innerWidth;previewCanvas.height=window.innerHeight;
   const ctx=canvas.getContext('2d');
+  const pCtx=previewCanvas.getContext('2d');
   ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#ffffff';ctx.lineWidth=3;
-  window._wbCtx=ctx;window._wbDrawing=false;
-  canvas.addEventListener('pointerdown',e=>{window._wbDrawing=true;ctx.beginPath();ctx.moveTo(e.clientX,e.clientY);});
-  canvas.addEventListener('pointermove',e=>{if(!window._wbDrawing)return;ctx.lineTo(e.clientX,e.clientY);ctx.stroke();});
-  canvas.addEventListener('pointerup',()=>{window._wbDrawing=false;});
-  canvas.addEventListener('pointerleave',()=>{window._wbDrawing=false;});
+  window._wbCtx=ctx;window._wbPCtx=pCtx;window._wbDrawing=false;
+  window._wbHistory=[];
+  function wbSaveSnapshot(){const imgData=ctx.getImageData(0,0,canvas.width,canvas.height);window._wbHistory.push(imgData);if(window._wbHistory.length>20)window._wbHistory.shift();}
+  canvas.addEventListener('pointerdown',e=>{
+    e.preventDefault();
+    const x=e.clientX,y=e.clientY;
+    wbSaveSnapshot();
+    if(window._wbMode==='pen'){window._wbDrawing=true;ctx.beginPath();ctx.moveTo(x,y);}
+    else if(window._wbMode==='eraser'){window._wbDrawing=true;ctx.globalCompositeOperation='destination-out';ctx.lineWidth=(window._wbLineWidth||3)*5;ctx.beginPath();ctx.moveTo(x,y);}
+    else{window._wbDrawing=true;window._wbShapeStart={x,y};}
+  },{passive:false});
+  canvas.addEventListener('pointermove',e=>{
+    e.preventDefault();
+    const x=e.clientX,y=e.clientY;
+    if(!window._wbDrawing)return;
+    if(window._wbMode==='pen'||window._wbMode==='eraser'){ctx.lineTo(x,y);ctx.stroke();}
+    else if(window._wbShapeStart){
+      pCtx.clearRect(0,0,previewCanvas.width,previewCanvas.height);
+      pCtx.strokeStyle=ctx.strokeStyle;pCtx.lineWidth=ctx.lineWidth;pCtx.lineCap='round';pCtx.lineJoin='round';
+      const sx=window._wbShapeStart.x,sy=window._wbShapeStart.y;
+      pCtx.beginPath();
+      if(window._wbMode==='rect'){pCtx.strokeRect(sx,sy,x-sx,y-sy);}
+      else if(window._wbMode==='circle'){const rx=(x-sx)/2,ry=(y-sy)/2;pCtx.ellipse(sx+rx,sy+ry,Math.abs(rx),Math.abs(ry),0,0,2*Math.PI);pCtx.stroke();}
+      else if(window._wbMode==='triangle'){pCtx.moveTo((sx+x)/2,sy);pCtx.lineTo(x,y);pCtx.lineTo(sx,y);pCtx.closePath();pCtx.stroke();}
+      else if(window._wbMode==='line'){pCtx.moveTo(sx,sy);pCtx.lineTo(x,y);pCtx.stroke();}
+    }
+  },{passive:false});
+  function finishShape(x,y){
+    if(!window._wbDrawing)return;
+    window._wbDrawing=false;
+    pCtx.clearRect(0,0,previewCanvas.width,previewCanvas.height);
+    if(window._wbMode==='eraser'){ctx.globalCompositeOperation='source-over';ctx.lineWidth=window._wbLineWidth||3;return;}
+    if(!window._wbShapeStart)return;
+    const sx=window._wbShapeStart.x,sy=window._wbShapeStart.y;
+    ctx.beginPath();
+    if(window._wbMode==='rect'){ctx.strokeRect(sx,sy,x-sx,y-sy);}
+    else if(window._wbMode==='circle'){const rx=(x-sx)/2,ry=(y-sy)/2;ctx.ellipse(sx+rx,sy+ry,Math.abs(rx),Math.abs(ry),0,0,2*Math.PI);ctx.stroke();}
+    else if(window._wbMode==='triangle'){ctx.moveTo((sx+x)/2,sy);ctx.lineTo(x,y);ctx.lineTo(sx,y);ctx.closePath();ctx.stroke();}
+    else if(window._wbMode==='line'){ctx.moveTo(sx,sy);ctx.lineTo(x,y);ctx.stroke();}
+    window._wbShapeStart=null;
+  }
+  canvas.addEventListener('pointerup',e=>finishShape(e.clientX,e.clientY));
+  canvas.addEventListener('pointerleave',e=>finishShape(e.clientX,e.clientY));
   let _wbResizeTimer=null;
   window._wbResizeHandler=()=>{clearTimeout(_wbResizeTimer);_wbResizeTimer=setTimeout(()=>{if(_whiteboardActive){toggleWhiteboard();toast('⚠️ أُغلقت السبورة تلقائياً','info');}},300);};
   window.addEventListener('resize',window._wbResizeHandler,{passive:true});
   toast('🖊️ السبورة مفعّلة — ارسم على الشاشة','success');
 }
-function wbSetColor(c){if(window._wbCtx)window._wbCtx.strokeStyle=c;}
-function wbSetWidth(w){if(window._wbCtx)window._wbCtx.lineWidth=w;}
-function wbClear(){const c=document.getElementById('wb-canvas');if(c){const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);}}
+function wbSetColor(c){if(window._wbCtx){window._wbCtx.strokeStyle=c;window._wbPCtx&&(window._wbPCtx.strokeStyle=c);}}
+function wbSetWidth(w){window._wbLineWidth=w;if(window._wbCtx){window._wbCtx.lineWidth=w;window._wbPCtx&&(window._wbPCtx.lineWidth=w);}}
+function wbClear(){const c=document.getElementById('wb-canvas');if(c){const ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);}window._wbHistory=[];}
+function wbUndo(){if(!window._wbHistory||!window._wbHistory.length)return;const c=document.getElementById('wb-canvas');if(!c)return;const ctx=c.getContext('2d');const snap=window._wbHistory.pop();ctx.putImageData(snap,0,0);}
+function wbSetMode(mode){
+  window._wbMode=mode;
+  if(window._wbCtx){window._wbCtx.globalCompositeOperation='source-over';window._wbCtx.lineWidth=window._wbLineWidth||3;}
+  ['pen','eraser','rect','circle','triangle','line'].forEach(m=>{
+    const btn=document.getElementById('wb-btn-'+m);
+    if(btn)btn.style.background=m===mode?'var(--accent2)':'rgba(255,255,255,.08)';
+  });
+  if(mode==='eraser'&&window._wbCtx){window._wbCtx.globalCompositeOperation='destination-out';}
+  document.getElementById('wb-canvas').style.cursor=mode==='eraser'?'cell':'crosshair';
+}
 
 // ── AUDIENCE POLL (Simulated) ──
 function showAudiencePoll(){
@@ -11109,7 +11440,10 @@ function presenterJudge(isCorrect){
 
   if(isCorrect){
     playSound('correct');launchConfetti();
-    const pts=q?.difficulty==='hard'?(state.settings.hardPoints||2):1;
+    // In jeopardy mode, award tile points instead of standard points
+    const _isJep=state.settings.catDisplayMode==='jeopardy'&&state.settings.jepAwardPts!==false;
+    const _jepPts=_isJep?(_getJeopardyPtsForQ(state.currentCatId,state.currentQIndex)||0):0;
+    const pts=_isJep&&_jepPts?_jepPts:(q?.difficulty==='hard'?(state.settings.hardPoints||2):1);
     if(team){
       team.score=(team.score||0)+pts;
       recordScoreHistoryV5(team.id,pts);
@@ -11124,7 +11458,10 @@ function presenterJudge(isCorrect){
     if(inp){inp.style.borderColor='var(--success)';inp.style.color='var(--success)';}
   } else {
     playSound('wrong');
-    if(team&&state.settings.negativeMarking){
+    if(state.settings.catDisplayMode==='jeopardy'&&state.settings.jepDeductWrong){
+      const _jdp=_getJeopardyPtsForQ(state.currentCatId,state.currentQIndex)||0;
+      if(_jdp>0&&team){team.score=Math.max(0,(team.score||0)-_jdp);recordScoreHistoryV5(team.id,-_jdp);saveState();floatScore(team,'-'+_jdp,'minus');}
+    } else if(team&&state.settings.negativeMarking){
       const neg=state.settings.negMarkValue||1;
       team.score=Math.max(0,(team.score||0)-neg);
       recordScoreHistoryV5(team.id,-neg);
