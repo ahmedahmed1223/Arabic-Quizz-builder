@@ -10,8 +10,8 @@ We welcome all kinds of contributions, including bug fixes, feature requests, do
 
 1. Fork the repository
 2. Clone your fork:
-   ```bash
-   git clone https://github.com/your-username/your-repo.git
+   ```bashgit clone https://github.com/ahmedahmed1223/Arabic-Quizz-builder.git
+cd Arabic-Quizz-builder
 
 3. Create a new branch:
 
