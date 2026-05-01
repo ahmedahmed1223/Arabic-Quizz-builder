@@ -1,0 +1,2134 @@
+{
+  "version": "8",
+  "settings": {},
+  "categories": [
+    {
+      "id": "19de43fa3027yh7g",
+      "name": "القرآن الكريم",
+      "icon": "📖",
+      "color": "#f5c842",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302nleif",
+          "text": "أكمل الآية الكريمة: {بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَـٰلَمِينَ}",
+          "type": "quran",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "سورة الفاتحة - الآية 2",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "quranMode": "complete",
+          "quranDisplayMode": "both",
+          "quranAudio": "",
+          "quranMeta": {
+            "surah": "الفاتحة",
+            "surahNum": 1,
+            "ayah": 2,
+            "juz": 1,
+            "halfIdx": 30,
+            "totalWords": 4
+          },
+          "quranHideMeta": false
+        },
+        {
+          "id": "19de43fa302f5h3e",
+          "text": "كم عدد سور القرآن الكريم؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "عدد سور القرآن الكريم 114 سورة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "111",
+            "112",
+            "113",
+            "114"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
+        },
+        {
+          "id": "19de43fa302qt4sr",
+          "text": "سورة البقرة هي أطول سورة في القرآن الكريم",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، سورة البقرة هي أطول سورة في القرآن الكريم بـ 286 آية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302a2bbf",
+          "text": "أطول آية في القرآن الكريم هي آية [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "آية الدّين هي أطول آية في القرآن الكريم، وهي الآية 282 من سورة البقرة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الدّين|الدين"
+        },
+        {
+          "id": "19de43fa302zyysi",
+          "text": "رتّب السور التالية حسب ترتيبها في المصحف من البداية",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "ترتيب السور: الفاتحة (1)، البقرة (2)، آل عمران (3)، النساء (4)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الفاتحة",
+            "البقرة",
+            "آل عمران",
+            "النساء"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302wnxdv",
+          "text": "وصّل السورة بعدد آياتها",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 40,
+          "explanation": "الفاتحة 7، الإخلاص 4، الكوثر 3، الناس 6",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "الفاتحة",
+              "right": "7 آيات"
+            },
+            {
+              "left": "الإخلاص",
+              "right": "4 آيات"
+            },
+            {
+              "left": "الكوثر",
+              "right": "3 آيات"
+            },
+            {
+              "left": "الناس",
+              "right": "6 آيات"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa3026bi0z",
+          "text": "ما السورة التي تسمى قلب القرآن؟",
+          "type": "quran",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "سورة يس تسمى قلب القرآن",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "quranMode": "full",
+          "quranDisplayMode": "text",
+          "quranAudio": "",
+          "quranMeta": {
+            "surah": "يس",
+            "surahNum": 36,
+            "ayah": 1,
+            "juz": 22,
+            "halfIdx": 0,
+            "totalWords": 2
+          },
+          "quranHideMeta": false
+        },
+        {
+          "id": "19de43fa302smh64",
+          "text": "ما هي السورة التي لا تبدأ ببسملة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "سورة التوبة هي السورة الوحيدة التي لا تبدأ ببسملة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "التوبة",
+            "الأنفال",
+            "النساء",
+            "المائدة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302uupn6",
+          "text": "سورة الكوثر هي أقصر سورة في القرآن الكريم",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "سورة الكوثر ليست الأقصر، بل أقصر سور القرآن هي سورة العصر أو الكوثر (كلاهما 3 آيات)، لكن بعض العلماء يعدّون الكوثر 3 آيات والعصر 3 آيات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302qddyq",
+          "text": "السورة التي تعدل ثلث القرآن هي سورة [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "سورة الإخلاص تعدل ثلث القرآن كما جاء في الحديث الشريف",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الإخلاص|إخلاص"
+        }
+      ]
+    },
+    {
+      "id": "19de43fa302sqaws",
+      "name": "السنة النبوية",
+      "icon": "🕌",
+      "color": "#00d4ff",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302lzt2e",
+          "text": "من هو جامع صحيح البخاري؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الإمام محمد بن إسماعيل البخاري هو صاحب أصح كتاب بعد كتاب الله",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الإمام البخاري",
+            "الإمام مسلم",
+            "الإمام الترمذي",
+            "الإمام النسائي"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302e3w8g",
+          "text": "صحيح مسلم يُعد ثاني أصح كتاب بعد صحيح البخاري",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، صحيح مسلم هو ثاني أصح الكتب بعد صحيح البخاري",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302ar887",
+          "text": "أول حديث في صحيح البخاري: إنما الأعمال [___]",
+          "type": "fitb",
+          "difficulty": "hard",
+          "time": 25,
+          "explanation": "أول حديث في صحيح البخاري: إنما الأعمال بالنيات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "بالنّيّات|بالنيات"
+        },
+        {
+          "id": "19de43fa302fhowy",
+          "text": "رتّب كتب الحديث التالية حسب قوة صحتها",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "ترتيب الكتب الستة حسب الصحة: البخاري، مسلم، الترمذي، أبو داود",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "صحيح البخاري",
+            "صحيح مسلم",
+            "سنن الترمذي",
+            "سنن أبي داود"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302611op",
+          "text": "وصّل العالم الكريم بكنيته",
+          "type": "match",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "كنى أئمة الحديث المشهورين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "الإمام البخاري",
+              "right": "أبو عبد الله"
+            },
+            {
+              "left": "الإمام مسلم",
+              "right": "أبو الحسين"
+            },
+            {
+              "left": "الإمام الترمذي",
+              "right": "أبو عيسى"
+            },
+            {
+              "left": "الإمام النسائي",
+              "right": "أبو عبد الرحمن"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa3024o2f1",
+          "text": "كم عدد الأحاديث في صحيح البخاري تقريباً؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "يحتوي صحيح البخاري على حوالي 7000 حديث بالمكرر و5274 بدون تكرار",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "7000",
+            "5274",
+            "3033",
+            "4000"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302h6dt7",
+          "text": "كتاب رياض الصالحين من تأليف الإمام النووي",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، رياض الصالحين من تأليف الإمام النووي رحمه الله",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa3021yet4",
+          "text": "ما معنى الحديث الحسن؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "الحسن: ما رواه عدل خف ضبطه متصلاً من غير شذوذ ولا علة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "حديث ضعيف",
+            "حديث رواه عدل تام الضبط",
+            "حديث رواه عدل خفيف الضبط",
+            "حديث موضوع"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "19de43fa302d7vgc",
+          "text": "الكتب الستة في الحديث تُسمى [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "تسمى الكتب الستة بالأمهات لأنها أمهات كتب الحديث",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الأمّهات|الأمهات|الأمّات"
+        },
+        {
+          "id": "19de43fa3029ugxd",
+          "text": "وصّل الكتاب بمؤلفه",
+          "type": "match",
+          "difficulty": "hard",
+          "time": 45,
+          "explanation": "كتب حديث مشهورة ومؤلفوها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "المستدرك",
+              "right": "الحاكم النيسابوري"
+            },
+            {
+              "left": "مجمع الزوائد",
+              "right": "الهيثمي"
+            },
+            {
+              "left": "التاريخ الكبير",
+              "right": "البخاري"
+            },
+            {
+              "left": "السنن الكبرى",
+              "right": "البيهقي"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "19de43fa3027ukxx",
+      "name": "العقيدة الإسلامية",
+      "icon": "☪️",
+      "color": "#ff6b35",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302r9l3g",
+          "text": "ما هي أركان الإيمان؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "أركان الإيمان ستة: الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر خيره وشره",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "خمسة",
+            "ستة",
+            "سبعة",
+            "أربعة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa3023ehwn",
+          "text": "الإيمان بالقدر خيره وشره هو أحد أركان الإيمان",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الإيمان بالقدر خيره وشره هو الركن السادس من أركان الإيمان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302piisw",
+          "text": "أول ما خلق الله هو [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "أول ما خلق الله القلم، كما جاء في الحديث: إن أول ما خلق الله القلم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "القلم|القلمَ"
+        },
+        {
+          "id": "19de43fa302id678",
+          "text": "رتّب أركان الإيمان بالترتيب الصحيح",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "ترتيب أركان الإيمان: بالله ثم ملائكته ثم كتبه ثم رسله ثم اليوم الآخر ثم القدر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الإيمان بالله",
+            "الإيمان بالملائكة",
+            "الإيمان بالكتب",
+            "الإيمان بالرسل"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302ojqcu",
+          "text": "وصّل الكتاب السماوي بالرسول الذي أُنزل عليه",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "الكتب السماوية والرسل الذين أُنزلت عليهم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "التوراة",
+              "right": "موسى عليه السلام"
+            },
+            {
+              "left": "الإنجيل",
+              "right": "عيسى عليه السلام"
+            },
+            {
+              "left": "الزبور",
+              "right": "داود عليه السلام"
+            },
+            {
+              "left": "القرآن",
+              "right": "محمد ﷺ"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa302tw9tg",
+          "text": "ما معنى التوحيد في الإسلام؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "التوحيد هو إفراد الله تعالى بالربوبية والألوهية والأسماء والصفات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "تعدد الآلهة",
+            "إفراد الله بالعبادة",
+            "الشرك بالله",
+            "عبادة الأصنام"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302sux9x",
+          "text": "الشرك الأصغر هو الذي لا يُغفر إلا بالتوبة",
+          "type": "tf",
+          "difficulty": "hard",
+          "time": 25,
+          "explanation": "الشرك الأصغر لا يُغفر إلا بالتوبة، أما الشرك الأكبر فهو الذي لا يغفر الله إلا بالتوبة منه أيضاً. الشرك الأكبر لا يغفر لمن مات عليه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302ujj0r",
+          "text": "كم عدد الكتب السماوية المذكورة في القرآن صراحة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الكتب المذكورة: التوراة والإنجيل والزبور والقرآن، وبعض العلماء يضيفون صحف إبراهيم وموسى",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "ثلاثة",
+            "أربعة",
+            "خمسة",
+            "ستة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302pclse",
+          "text": "الركن السادس من أركان الإيمان هو الإيمان بالقدر خيره و[___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الإيمان بالقدر خيره وشره من الله تعالى",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "شرّه|شره"
+        },
+        {
+          "id": "19de43fa302bb45l",
+          "text": "ما هي أقسام التوحيد؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "أقسام التوحيد ثلاثة: توحيد الربوبية، وتوحيد الألوهية، وتوحيد الأسماء والصفات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "توحيد الربوبية والألوهية والأسماء والصفات",
+            "توحيد الألوهية فقط",
+            "توحيد الربوبية فقط",
+            "توحيد الأسماء فقط"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        }
+      ]
+    },
+    {
+      "id": "19de43fa302kgwy8",
+      "name": "الفقه والعبادات",
+      "icon": "🤲",
+      "color": "#00e676",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa3026utuz",
+          "text": "كم عدد أركان الإسلام؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "أركان الإسلام خمسة: الشهادتان، الصلاة، الزكاة، صوم رمضان، وحج البيت",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أربعة",
+            "خمسة",
+            "ستة",
+            "ثلاثة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302ibncp",
+          "text": "الوضوء شرط لصحة الصلاة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الوضوء شرط لصحة الصلاة ولا تصح الصلاة بدونه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302vbjxg",
+          "text": "عدد ركعات صلاة الظهر [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "صلاة الظهر أربع ركعات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "أربع|4|أربعة"
+        },
+        {
+          "id": "19de43fa3024cxds",
+          "text": "رتّب الصلوات الخمس حسب ترتيبها في اليوم",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 25,
+          "explanation": "ترتيب الصلوات: الفجر ثم الظهر ثم العصر ثم المغرب ثم العشاء",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الفجر",
+            "الظهر",
+            "العصر",
+            "المغرب"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302j58dv",
+          "text": "وصّل العبادة بحكمها",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "أحكام العبادات في الفقه الإسلامي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "الصلاة",
+              "right": "فرض عين"
+            },
+            {
+              "left": "الحج",
+              "right": "فرض عين مرة في العمر"
+            },
+            {
+              "left": "صلاة الجنازة",
+              "right": "فرض كفاية"
+            },
+            {
+              "left": "الأضحية",
+              "right": "سنة مؤكدة"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa3022ln8l",
+          "text": "ما هو نصاب الزكاة في الذهب؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "نصاب الذهب 85 غراماً (20 مثقالاً)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "80 غراماً",
+            "85 غراماً",
+            "90 غراماً",
+            "100 غرام"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa3027p54x",
+          "text": "يجوز للمسافر قصر الصلاة الرباعية",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، يجوز للمسافر قصر الصلاة الرباعية إلى ركعتين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa3023uw37",
+          "text": "كم عدد المذاهب الفقهية السنية المشهورة؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المذاهب الأربعة: الحنفي والمالكي والشافعي والحنبلي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "ثلاثة",
+            "أربعة",
+            "خمسة",
+            "ستة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302k7ffc",
+          "text": "ركن الإسلام الأول هو [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "الركن الأول من أركان الإسلام هو الشهادتان: أشهد أن لا إله إلا الله وأشهد أن محمداً رسول الله",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الشهادتان|الشهادة"
+        },
+        {
+          "id": "19de43fa3029fk4s",
+          "text": "وصّل المذهب الفقهي بإمامه",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "أئمة المذاهب الفقهية الأربعة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "المذهب الحنفي",
+              "right": "أبو حنيفة النعمان"
+            },
+            {
+              "left": "المذهب المالكي",
+              "right": "مالك بن أنس"
+            },
+            {
+              "left": "المذهب الشافعي",
+              "right": "محمد بن إدريس الشافعي"
+            },
+            {
+              "left": "المذهب الحنبلي",
+              "right": "أحمد بن حنبل"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "19de43fa302ebchb",
+      "name": "السيرة النبوية",
+      "icon": "🌙",
+      "color": "#a78bfa",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302z1fg3",
+          "text": "أين وُلد النبي محمد ﷺ؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "وُلد النبي ﷺ في مكة المكرمة عام الفيل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المدينة المنورة",
+            "مكة المكرمة",
+            "الطائف",
+            "القدس"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302bc0mj",
+          "text": "هاجر النبي ﷺ من مكة إلى المدينة في السنة الثالثة عشرة من البعثة",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، كانت الهجرة في السنة الثالثة عشرة من البعثة النبوية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302azt2x",
+          "text": "اسم زوجة النبي ﷺ التي لُقبت بأم المساكين هي [___]",
+          "type": "fitb",
+          "difficulty": "hard",
+          "time": 25,
+          "explanation": "زينب بنت خزيمة رضي الله عنها لُقبت بأم المساكين لكثرة إطعامها للمحتاجين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "زينب بنت خزيمة|زينب"
+        },
+        {
+          "id": "19de43fa302mf91j",
+          "text": "رتّب الغزوات حسب الترتيب الزمني",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "بدر (2هـ)، أحد (3هـ)، الخندق (5هـ)، فتح مكة (8هـ)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "غزوة بدر",
+            "غزوة أحد",
+            "غزوة الخندق",
+            "فتح مكة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302mtymn",
+          "text": "وصّل الغزوة بسنتها",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "تواريخ الغزوات وال أحداث المهمة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "غزوة بدر",
+              "right": "السنة 2 هجرية"
+            },
+            {
+              "left": "غزوة أحد",
+              "right": "السنة 3 هجرية"
+            },
+            {
+              "left": "غزوة الخندق",
+              "right": "السنة 5 هجرية"
+            },
+            {
+              "left": "صلح الحديبية",
+              "right": "السنة 6 هجرية"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa302nlj7j",
+          "text": "كم كان عمر النبي ﷺ حين بُعث بالرسالة؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "بُعث النبي ﷺ وعمره 40 سنة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "25 سنة",
+            "30 سنة",
+            "35 سنة",
+            "40 سنة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
+        },
+        {
+          "id": "19de43fa302l1aak",
+          "text": "نزل الوحي أول مرة في غار حراء",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، نزل الوحي أول مرة في غار حراء على جبل النور",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa3020pjmt",
+          "text": "من هو الصحابي الذي آخاه النبي ﷺ معه في المدينة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "آخى النبي ﷺ بين المهاجرين والأنصار، وآخى بين علي بن أبي طالب ونفسه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أبو بكر الصديق",
+            "عمر بن الخطاب",
+            "علي بن أبي طالب",
+            "سعد بن معاذ"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "19de43fa3025sjo9",
+          "text": "عام الحزن هو العام الذي توفيت فيه خديجة وأبو [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "عام الحزن: السنة العاشرة من البعثة، توفيت خديجة وأبو طالب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "طالب|طالبٌ"
+        },
+        {
+          "id": "19de43fa302da620",
+          "text": "ما هي أول غزوة في الإسلام؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 25,
+          "explanation": "سرية عبد الله بن جحش هي أول سرية عسكرية في الإسلام، قبل غزوة بدر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "غزوة بدر",
+            "غزوة أحد",
+            "سرية عبد الله بن جحش",
+            "غزوة الخندق"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": "19de43fa3026s49b",
+      "name": "التاريخ الإسلامي",
+      "icon": "🏛️",
+      "color": "#f472b6",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302ygvxs",
+          "text": "من هو أول خليفة في الإسلام؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "أبو بكر الصديق رضي الله عنه هو أول خليفة راشدي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "عمر بن الخطاب",
+            "أبو بكر الصديق",
+            "عثمان بن عفان",
+            "علي بن أبي طالب"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302swjkl",
+          "text": "الدولة الأموية عاصمتها دمشق",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، كانت دمشق عاصمة الدولة الأموية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302yd4nk",
+          "text": "المعركة التي فتحت بها الأندلس هي معركة [___]",
+          "type": "fitb",
+          "difficulty": "hard",
+          "time": 25,
+          "explanation": "معركة وادي برباط (وادي لكة) عام 92هـ فتحت الأندلس",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "وادي برباط|برباط|وادي لكة"
+        },
+        {
+          "id": "19de43fa302gh1fm",
+          "text": "رتّب الخلفاء الراشدين بالترتيب",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 25,
+          "explanation": "ترتيب الخلفاء الراشدين: أبو بكر ثم عمر ثم عثمان ثم علي رضي الله عنهم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أبو بكر الصديق",
+            "عمر بن الخطاب",
+            "عثمان بن عفان",
+            "علي بن أبي طالب"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa3025gjl7",
+          "text": "وصّل الدولة بعاصمتها",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "عواصم الدول الإسلامية الكبرى",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "الدولة الأموية",
+              "right": "دمشق"
+            },
+            {
+              "left": "الدولة العباسية",
+              "right": "بغداد"
+            },
+            {
+              "left": "الدولة الفاطمية",
+              "right": "القاهرة"
+            },
+            {
+              "left": "الدولة العثمانية",
+              "right": "إسطنبول"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa302jl4j3",
+          "text": "في أي عام فتحت القسطنطينية على يد محمد الفاتح؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "فتح محمد الفاتح القسطنطينية عام 1453م",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1453م",
+            "1492م",
+            "1517م",
+            "1421م"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302i0awr",
+          "text": "صلاح الدين الأيوبي حرر القدس من الصليبيين",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، حرر صلاح الدين القدس عام 1187م (583هـ) بعد معركة حطين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa30286cq0",
+          "text": "من هو مؤسس الدولة العباسية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "أبو العباس السفاح هو أول خلفاء بني العباس ومؤسس الدولة العباسية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أبو العباس السفاح",
+            "هارون الرشيد",
+            "أبو جعفر المنصور",
+            "المأمون"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302cu481",
+          "text": "أول جامع أُسس في الإسلام هو مسجد [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "مسجد قباء هو أول مسجد أُسس في الإسلام",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "قباء"
+        },
+        {
+          "id": "19de43fa302auki9",
+          "text": "من هو القائد الذي فتح مصر؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "عمرو بن العاص فتح مصر عام 20هـ في عهد عمر بن الخطاب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "خالد بن الوليد",
+            "عمرو بن العاص",
+            "طارق بن زياد",
+            "عقبة بن نافع"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "19de43fa302k9szk",
+      "name": "اللغة العربية",
+      "icon": "✍️",
+      "color": "#fb923c",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302y1n89",
+          "text": "ما هو جمع كلمة «كتاب»؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "جمع كتاب: كتب (جمع تكسير)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "كتابات",
+            "كُتّاب",
+            "كتب",
+            "كتائب"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "19de43fa3028nohd",
+          "text": "الفعل المضارع يدل على حدث يقع في الوقت الحاضر",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الفعل المضارع يدل على حدث يقع في الحاضر أو المستقبل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa30205lwz",
+          "text": "المفعول به هو اسم وقع عليه فعل [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "المفعول به هو اسم نُصب يدل على من وقع عليه فعل الفاعل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الفاعل|فاعل"
+        },
+        {
+          "id": "19de43fa302a11uv",
+          "text": "رتّب الكلمات التالية لتكوين جملة صحيحة",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الجملة الصحيحة: ذهب الطالب إلى المدرسة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "ذهب",
+            "الطالب",
+            "إلى",
+            "المدرسة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa3027ko0v",
+          "text": "وصّل الكلمة بمرادفها",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "مرادفات الكلمات العربية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "جليل",
+              "right": "عظيم"
+            },
+            {
+              "left": "حصيف",
+              "right": "ذكي"
+            },
+            {
+              "left": "وهّاب",
+              "right": "كريم"
+            },
+            {
+              "left": "صبور",
+              "right": "حليم"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa302dgd7j",
+          "text": "ما هو نوع الفعل «كتبَ»؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "كتبَ فعل ماضٍ لأنه يدل على حدث وقع في الزمن الماضي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فعل ماضٍ",
+            "فعل مضارع",
+            "فعل أمر",
+            "اسم فاعل"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302dvyp9",
+          "text": "الهمزة والتنوين من الحروف العربية",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "الهمزة والتنوين ليسا من الحروف العربية، فالحروف 28 والهمزة والتنوين علامات لا حروف",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa3026ow0d",
+          "text": "ما هي أنواع الجملة في اللغة العربية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الجملة في العربية نوعان: اسمية تبدأ باسم وفعلية تبدأ بفعل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "اسمية وفعلية فقط",
+            "اسمية وفعلية وظرفية",
+            "اسمية فقط",
+            "فعلية فقط"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302rn92j",
+          "text": "عدد حروف اللغة العربية [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "عدد حروف اللغة العربية 28 حرفاً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "28|ثمانية وعشرون"
+        },
+        {
+          "id": "19de43fa302lqukd",
+          "text": "وصّل الكلمة بضدها (العكس)",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "الأضداد في اللغة العربية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "النور",
+              "right": "الظلام"
+            },
+            {
+              "left": "السعادة",
+              "right": "الشقاء"
+            },
+            {
+              "left": "القوة",
+              "right": "الضعف"
+            },
+            {
+              "left": "الجمال",
+              "right": "القبح"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "19de43fa302gmyfg",
+      "name": "العلوم والمعرفة",
+      "icon": "🔬",
+      "color": "#34d399",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302tdv2j",
+          "text": "ما هو الكوكب الأقرب إلى الشمس؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "عطارد هو الكوكب الأقرب إلى الشمس",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الزهرة",
+            "عطارد",
+            "الأرض",
+            "المريخ"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302v9h5t",
+          "text": "الماء يتكون من ذرتي هيدروجين وذرة أكسجين",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، صيغة الماء H₂O أي ذرتا هيدروجين وذرة أكسجين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302k697a",
+          "text": "أكبر كوكب في المجموعة الشمسية هو [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "المشتري هو أكبر كواكب المجموعة الشمسية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "المشتري|مشتري"
+        },
+        {
+          "id": "19de43fa302z9rkz",
+          "text": "رتّب الكواكب حسب قربها من الشمس",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "ترتيب الكواكب: عطارد، الزهرة، الأرض، المريخ، المشتري، زحل، أورانوس، نبتون",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "عطارد",
+            "الزهرة",
+            "الأرض",
+            "المريخ"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa3021xwk2",
+          "text": "وصّل العالم باكتشافه",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "علماء المسلمين وإنجازاتهم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "ابن سينا",
+              "right": "الطب (القانون)"
+            },
+            {
+              "left": "الخوارزمي",
+              "right": "الجبر"
+            },
+            {
+              "left": "ابن الهيثم",
+              "right": "البصريات"
+            },
+            {
+              "left": "الرازي",
+              "right": "الكيمياء والطب"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa3020jq1r",
+          "text": "ما ناتج $15 \\times 8$؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "15 × 8 = 120",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "$110$",
+            "$120$",
+            "$130$",
+            "$125$"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302ejm4o",
+          "text": "الضوء يسافر أسرع من الصوت",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، سرعة الضوء حوالي 300,000 كم/ث بينما سرعة الصوت حوالي 340 م/ث",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302dc69x",
+          "text": "ما هو العنصر الأكثر وفرة في الغلاف الجوي للأرض؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "النيتروجين يشكل حوالي 78% من الغلاف الجوي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الأكسجين",
+            "النيتروجين",
+            "الهيدروجين",
+            "ثاني أكسيد الكربون"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302guqrt",
+          "text": "وحدة قياس القوة هي [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "وحدة قياس القوة في النظام الدولي هي النيوتن (N)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "نيوتن|النيوتن"
+        },
+        {
+          "id": "19de43fa302lg5ki",
+          "text": "ما قيمة $\\sqrt{144}$؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الجذر التربيعي لـ 144 هو 12",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "$10$",
+            "$12$",
+            "$14$",
+            "$11$"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "19de43fa3023mn2h",
+      "name": "الثقافة العامة",
+      "icon": "🌍",
+      "color": "#60a5fa",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302c2i9o",
+          "text": "ما هي أكبر دولة عربية من حيث المساحة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "الجزائر هي أكبر دولة عربية من حيث المساحة (2.38 مليون كم²)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "مصر",
+            "الجزائر",
+            "السعودية",
+            "السودان"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa3022k9qx",
+          "text": "عدد دول جامعة الدول العربية 22 دولة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، عدد أعضاء جامعة الدول العربية 22 دولة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa3027uqbz",
+          "text": "أطول نهر في العالم هو نهر [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نهر النيل هو أطول أنهار العالم بطول حوالي 6,650 كم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "النيل|نيل"
+        },
+        {
+          "id": "19de43fa3028ysdg",
+          "text": "رتّب قارات العالم من الأكبر للأصغر",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "القارات بالترتيب: آسيا، أفريقيا، أمريكا الشمالية، أمريكا الجنوبية، أنتاركتيكا، أوروبا، أستراليا",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "آسيا",
+            "أفريقيا",
+            "أمريكا الشمالية",
+            "أمريكا الجنوبية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa30290i15",
+          "text": "وصّل الدولة بعاصمتها",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "عواصم الدول العربية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "مصر",
+              "right": "القاهرة"
+            },
+            {
+              "left": "المغرب",
+              "right": "الرباط"
+            },
+            {
+              "left": "تونس",
+              "right": "تونس"
+            },
+            {
+              "left": "الأردن",
+              "right": "عمّان"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa3028mjpr",
+          "text": "ما هي العملة الرسمية لليابان؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "الين الياباني هو العملة الرسمية لليابان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "اليوان",
+            "الين",
+            "الوون",
+            "الروبية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302fskmp",
+          "text": "سور الصين العظيم يُعد من عجائب الدنيا السبع الجديدة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، سور الصين العظيم من عجائب الدنيا السبع الجديدة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302wc0im",
+          "text": "كم عدد ألوان قوس قزح؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "ألوان قوس قزح سبعة: أحمر، برتقالي، أصفر، أخضر، أزرق، نيلي، بنفسجي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "19de43fa302d26r6",
+          "text": "أكبر محيط في العالم هو المحيط [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "المحيط الهادئ هو أكبر محيطات العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الهادئ|الهادي"
+        },
+        {
+          "id": "19de43fa302lsdbp",
+          "text": "في أي قارة تقع مصر؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "مصر تقع في قارة أفريقيا (وشبه جزيرة سيناء في آسيا)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "آسيا",
+            "أفريقيا",
+            "أوروبا",
+            "أمريكا"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "19de43fa302pwwkc",
+      "name": "English Section",
+      "icon": "🇬🇧",
+      "color": "#fbbf24",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "19de43fa302pdxbf",
+          "text": "What is the capital of Australia?",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "Canberra is the capital of Australia, not Sydney as many think",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Sydney",
+            "Melbourne",
+            "Canberra",
+            "Brisbane"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "19de43fa302dh5qz",
+          "text": "The Sun is a star, not a planet",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "Yes, the Sun is a star — a massive ball of hot plasma",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302u216v",
+          "text": "The largest ocean on Earth is the [___] Ocean",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "Pacific"
+        },
+        {
+          "id": "19de43fa302tjf9b",
+          "text": "Put the planets in order from the Sun",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "Order: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Mercury",
+            "Venus",
+            "Earth",
+            "Mars"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302yh0tg",
+          "text": "Match the country with its capital",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "European countries and their capitals",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "France",
+              "right": "Paris"
+            },
+            {
+              "left": "Germany",
+              "right": "Berlin"
+            },
+            {
+              "left": "Italy",
+              "right": "Rome"
+            },
+            {
+              "left": "Spain",
+              "right": "Madrid"
+            }
+          ]
+        },
+        {
+          "id": "19de43fa3020jmdz",
+          "text": "Which language has the most native speakers worldwide?",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "Mandarin Chinese has the most native speakers (over 900 million)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "English",
+            "Spanish",
+            "Mandarin Chinese",
+            "Hindi"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "19de43fa302590p1",
+          "text": "Water boils at 100 degrees Celsius at sea level",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "Yes, water boils at 100°C (212°F) at standard atmospheric pressure",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "19de43fa302jfwf2",
+          "text": "What is the value of $2^{10}$?",
+          "type": "math",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "2^10 = 1024",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "$512$",
+            "$1024$",
+            "$2048$",
+            "$256$"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "19de43fa302uy1x0",
+          "text": "The chemical symbol for gold is [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "Au comes from the Latin word 'Aurum' meaning gold",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "Au"
+        },
+        {
+          "id": "19de43fa302po9a7",
+          "text": "Match the inventor with the invention",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "Famous inventors and their groundbreaking inventions",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "Thomas Edison",
+              "right": "Light Bulb"
+            },
+            {
+              "left": "Alexander Graham Bell",
+              "right": "Telephone"
+            },
+            {
+              "left": "Wright Brothers",
+              "right": "Airplane"
+            },
+            {
+              "left": "Johannes Gutenberg",
+              "right": "Printing Press"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "teams": [],
+  "credits": []
+}
