@@ -212,6 +212,206 @@
           "optionImages": [],
           "correct": 0,
           "fitbAnswer": "الإخلاص|إخلاص"
+        },
+        {
+          "id": "ql_4yuv9csh",
+          "text": "ما هي السورة التي تسمى عروس القرآن؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "سورة الرحمن تسمى عروس القرآن لجمالها وبيانها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الرحمن",
+            "النجم",
+            "يس",
+            "الواقعة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_9magd9a7",
+          "text": "سورة الملك تسمى المانعة والمنجية",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، سورة الملك تسمى المانعة والمنجية من عذاب القبر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_fgtm4n2c",
+          "text": "أقصر آية في القرآن الكريم هي [___]",
+          "type": "fitb",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "أقصر آية في القرآن هي آية واحدة من حرفين مثل طه ويس",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "طه|يس"
+        },
+        {
+          "id": "ql_csq42x2j",
+          "text": "كم عدد أجزاء القرآن الكريم؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "عدد أجزاء القرآن الكريم 30 جزءاً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "25",
+            "30",
+            "28",
+            "32"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_h713rxdl",
+          "text": "رتّب السور التالية حسب ترتيبها في المصحف",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "ترتيب السور: النحل (16)، الإسراء (17)، الكهف (18)، مريم (19)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "النحل",
+            "الإسراء",
+            "الكهف",
+            "مريم"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_wrq5puom",
+          "text": "وصّل السورة بلقبها",
+          "type": "match",
+          "difficulty": "hard",
+          "time": 45,
+          "explanation": "ألقاب سور القرآن الكريم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "سورة البقرة",
+              "right": "سنام القرآن"
+            },
+            {
+              "left": "سورة التوبة",
+              "right": "الفاضحة"
+            },
+            {
+              "left": "سورة النساء",
+              "right": "سورة النساء الكبرى"
+            },
+            {
+              "left": "سورة الأنفال",
+              "right": "سورة بدر"
+            }
+          ]
+        },
+        {
+          "id": "ql_1cacin5w",
+          "text": "سورة الأنفال وسورة التوبة متصلتان بدون بسملة بينهما",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، سورة التوبة هي الوحيدة التي لا تبدأ ببسملة ولذلك هي متصلة بسورة الأنفال بدون بسملة فاصلة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_cggiqeos",
+          "text": "كم عدد آيات سورة البقرة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "سورة البقرة تحتوي على 286 آية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "256",
+            "286",
+            "266",
+            "276"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_cwsm7wc7",
+          "text": "السورة التي فيها سجدتان هي سورة [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "سورة الحج هي السورة الوحيدة التي فيها سجدتان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الحج|ال حج"
+        },
+        {
+          "id": "ql_t2l0fjlx",
+          "text": "ما هي أطول كلمة في القرآن الكريم؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "أطول كلمة في القرآن هي 'فأسقيناكموه' في سورة الحجر الآية 22",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فأسقيناكموه",
+            "فسيكفيكهم",
+            "أنلزمكموها",
+            "أفاستسقينا"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
         }
       ]
     },
@@ -429,6 +629,206 @@
               "right": "البيهقي"
             }
           ]
+        },
+        {
+          "id": "ql_o72s5nff",
+          "text": "من هو صاحب المسند الأشهر بين كتب الحديث؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الإمام أحمد بن حنبل هو صاحب المسند الأشهر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الإمام أحمد",
+            "الإمام مالك",
+            "الإمام الشافعي",
+            "الإمام البخاري"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_jw3bb81i",
+          "text": "الحديث الموضوع هو الحديث المكذوب على النبي ﷺ",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الحديث الموضوع هو المكذوب والمختلق على النبي ﷺ",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_epvnqxqr",
+          "text": "أكبر كتب الحديث جامعاً هو مسند الإمام [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "مسند الإمام أحمد هو أكبر كتب الحديث جامعاً لأحاديث الصحابة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "أحمد|أحمد بن حنبل"
+        },
+        {
+          "id": "ql_trock8rg",
+          "text": "ما هو الحديث المتواتر؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "المتواتر: ما رواه جمع كثير عن جمع كثير يستحيل تواطؤهم على الكذب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "ما رواه واحد",
+            "ما رواه جمع يستحيل تواطؤهم على الكذب",
+            "ما رواه ثلاثة",
+            "الحديث الضعيف"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_utb6mg6e",
+          "text": "رتّب مراتب الحديث من الأقوى",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "مراتب الحديث: صحيح ثم حسن ثم ضعيف ثم موضوع",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "صحيح",
+            "حسن",
+            "ضعيف",
+            "موضوع"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_j7lb868l",
+          "text": "وصّل المصطلح الحديثي بمعناه",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 40,
+          "explanation": "مصطلحات علم الحديث",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "الإسناد",
+              "right": "سلسلة الرواة"
+            },
+            {
+              "left": "المتن",
+              "right": "نص الحديث"
+            },
+            {
+              "left": "الصحابي",
+              "right": "من لقي النبي ومات على الإسلام"
+            },
+            {
+              "left": "التابعي",
+              "right": "من لقي الصحابي"
+            }
+          ]
+        },
+        {
+          "id": "ql_io4clncn",
+          "text": "الحديث القدسي هو كلام الله تعالى بمعنى النبي ﷺ",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الحديث القدسي هو ما يرويه النبي ﷺ عن ربه بمعناه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_lru4h4x9",
+          "text": "كم عدد الكتب في صحيح البخاري؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "يحتوي صحيح البخاري على 97 كتاباً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "97 كتاباً",
+            "87 كتاباً",
+            "107 كتب",
+            "77 كتاباً"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_t08qmzx9",
+          "text": "الحديث الذي رواه عدل تام الضبط متصل السند هو حديث [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الحديث الصحيح: ما رواه عدل تام الضبط متصل السند",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "صحيح|الصحيح"
+        },
+        {
+          "id": "ql_ur8rtbzo",
+          "text": "من هو الإمام مالك بن أنس؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الإمام مالك بن أنس صاحب كتاب الموطأ",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "صاحب الصحيح",
+            "صاحب الموطأ",
+            "صاحب المسند",
+            "صاحب السنن"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
         }
       ]
     },
@@ -638,6 +1038,206 @@
             null
           ],
           "correct": 0
+        },
+        {
+          "id": "ql_72quw40o",
+          "text": "ما هو الإيمان بالملائكة؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الإيمان بالملائكة هو الاعتقاد الجازم بوجودهم وأنهم مخلوقات نورانية لا يعصون الله",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الاعتقاد بوجودهم فقط",
+            "الاعتقاد بوجودهم وأنهم مخلوقات نورانية",
+            "رؤيتهم في المنام",
+            "الشك في وجودهم"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_worcnut6",
+          "text": "الملائكة يأكلون ويشربون",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "الملائكة لا يأكلون ولا يشربون، هم مخلوقات نورانية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_7hmr92o6",
+          "text": "المَلَك الموكل بالوحي هو [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الملاك جبريل عليه السلام هو الموكل بالوحي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "جبريل|جبرائيل"
+        },
+        {
+          "id": "ql_nnuxj11t",
+          "text": "كم عدد أركان الإيمان؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "أركان الإيمان ستة كما جاء في حديث جبريل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "5",
+            "6",
+            "7",
+            "4"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_whqbp815",
+          "text": "رتّب الكتب السماوية حسب ترتيب نزولها",
+          "type": "order",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "ترتيب النزول: صحف إبراهيم ثم التوراة ثم الزبور ثم الإنجيل ثم القرآن",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "صحف إبراهيم",
+            "التوراة",
+            "الزبور",
+            "الإنجيل"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_nxr8r28r",
+          "text": "وصّل المَلَك بمهمته",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "مهمات الملائكة الكرام",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "جبريل",
+              "right": "الوحي"
+            },
+            {
+              "left": "ميكائيل",
+              "right": "الرزق والمطر"
+            },
+            {
+              "left": "إسرافيل",
+              "right": "النفخ في الصور"
+            },
+            {
+              "left": "عزرائيل",
+              "right": "قبض الأرواح"
+            }
+          ]
+        },
+        {
+          "id": "ql_46o02bdw",
+          "text": "اليوم الآخر هو أحد أركان الإيمان الستة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الإيمان باليوم الآخر هو الركن الخامس من أركان الإيمان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_foiw3rlo",
+          "text": "ما معنى الإيمان بالقضاء والقدر؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الإيمان بالقدر يعني الإيمان بأن كل شيء بقضاء الله وقدره مع الأخذ بالأسباب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الإيمان بأن كل شيء بقضاء الله وقدره",
+            "الكسل وترك العمل",
+            "إنكار علم الله",
+            "لا شيء مما سبق"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_n9p5735i",
+          "text": "الشرك الأكبر لا يُغفر لمن مات [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "إن الله لا يغفر أن يشرك به ويغفر ما دون ذلك لمن يشاء",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "عليه|عليهِ"
+        },
+        {
+          "id": "ql_a9k911gm",
+          "text": "ما الفرق بين القضاء والقدر؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "القدر هو التقدير السابق والقضاء هو التنفيذ الفعلي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "لا فرق",
+            "القدر: التقدير والقضاء: التنفيذ",
+            "القضاء أقدم من القدر",
+            "القدر للمؤمن والقضاء للكافر"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
         }
       ]
     },
@@ -855,6 +1455,206 @@
               "right": "أحمد بن حنبل"
             }
           ]
+        },
+        {
+          "id": "ql_t4kvwvd8",
+          "text": "كم عدد ركعات صلاة الجمعة؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "صلاة الجمعة ركعتان يخطبهما الإمام",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "2",
+            "4",
+            "3",
+            "1"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_u9da035p",
+          "text": "يجوز الجمع بين الظهر والعصر للمسافر",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، يجوز للمسافر الجمع بين الظهر والعصر وبين المغرب والعشاء",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_6vbvltas",
+          "text": "نسبة الزكاة في الأموال هي [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "نسبة الزكاة في الأموال 2.5% أي ربع العشر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "2.5%|2.5|ربع العشر"
+        },
+        {
+          "id": "ql_hij12zxg",
+          "text": "ما هو ركن الصلاة الأعظم؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "القيام ركن أعظم في الصلاة المفروضة لمن يستطيعه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الركوع",
+            "القيام",
+            "السجود",
+            "تكبيرة الإحرام"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_iw26kic9",
+          "text": "رتّب أركان الصلاة بالترتيب",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "أركان الصلاة: تكبيرة الإحرام ثم القيام ثم الركوع ثم السجود",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "تكبيرة الإحرام",
+            "القيام",
+            "الركوع",
+            "السجود"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_ykomndu5",
+          "text": "وصّل العبادة بعدد ركعاتها",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "عدد ركعات الصلوات الخمس",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "الفجر",
+              "right": "ركعتان"
+            },
+            {
+              "left": "الظهر",
+              "right": "أربع ركعات"
+            },
+            {
+              "left": "المغرب",
+              "right": "ثلاث ركعات"
+            },
+            {
+              "left": "العشاء",
+              "right": "أربع ركعات"
+            }
+          ]
+        },
+        {
+          "id": "ql_25u0g0j1",
+          "text": "صلاة التراويح سنة مؤكدة في رمضان",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، صلاة التراويح سنة مؤكدة في رمضان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_9tp0a2ew",
+          "text": "ما هو نصاب الزكاة في الفضة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "نصاب الفضة 200 درهم أي ما يعادل 595 غراماً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "200 درهم (595 غرام)",
+            "85 غرام",
+            "100 درهم",
+            "500 درهم"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_niae13c5",
+          "text": "شهر الصيام في الإسلام هو شهر [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "صيام شهر رمضان هو الركن الرابع من أركان الإسلام",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "رمضان|رمضانَ"
+        },
+        {
+          "id": "ql_02t8thug",
+          "text": "ما حكم زكاة الفطر؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "زكاة الفطر فرض عين على كل مسلم يجد ما يزيد عن قوته وقوت عياله يوم العيد",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سنة مستحبة",
+            "فرض عين",
+            "فرض كفاية",
+            "مكروهة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
         }
       ]
     },
@@ -1064,6 +1864,206 @@
             null
           ],
           "correct": 2
+        },
+        {
+          "id": "ql_x27atunh",
+          "text": "ما اسم أم النبي ﷺ؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "أم النبي ﷺ هي آمنة بنت وهب رضي الله عنها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "آمنة بنت وهب",
+            "خديجة بنت خويلد",
+            "فاطمة بنت أسد",
+            "هالة بنت خويلد"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_ku1ypvx6",
+          "text": "النبي ﷺ كُفّ بصره في آخر حياته",
+          "type": "tf",
+          "difficulty": "hard",
+          "time": 25,
+          "explanation": "لم يُكفّ بصر النبي ﷺ بل توفي وبصره سليم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_4ja3wd24",
+          "text": "اسم مرضع النبي ﷺ هو [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "حليمة السعدية رضي الله عنها هي مرضع النبي ﷺ",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "حليمة السعدية|حليمة"
+        },
+        {
+          "id": "ql_rtn33lf7",
+          "text": "كم سنة استمرت الدعوة السرية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "استمرت الدعوة السرية ثلاث سنوات قبل الجهر بها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سنة واحدة",
+            "سنتان",
+            "ثلاث سنوات",
+            "خمس سنوات"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_xcfz36cq",
+          "text": "رتّب أحداث السيرة بالترتيب",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "أحداث السيرة: البعثة ثم الدعوة السرية ثم الجهرية ثم الهجرة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "البعثة النبوية",
+            "الدعوة السرية",
+            "الدعوة الجهرية",
+            "الهجرة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_85wjfyqw",
+          "text": "وصّل الصحابي بلقبه",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "ألقاب الصحابة الكرام",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "أبو بكر",
+              "right": "الصديق"
+            },
+            {
+              "left": "عمر",
+              "right": "الفاروق"
+            },
+            {
+              "left": "عثمان",
+              "right": "ذي النورين"
+            },
+            {
+              "left": "علي",
+              "right": "أسد الله"
+            }
+          ]
+        },
+        {
+          "id": "ql_00ku448v",
+          "text": "غزوة بدر وقعت في السنة الثانية للهجرة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، وقعت غزوة بدر الكبرى في 17 رمضان السنة الثانية للهجرة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_a26br8mi",
+          "text": "من هو أول من أسلم من الرجال؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "أبو بكر الصديق هو أول من أسلم من الرجال الأحرار، وعلي بن أبي طالب أول من أسلم من الصبيان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "عمر بن الخطاب",
+            "أبو بكر الصديق",
+            "علي بن أبي طالب",
+            "عثمان بن عفان"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_mueqws6w",
+          "text": "أول مسجد بُني في الإسلام هو مسجد [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "مسجد قبا هو أول مسجد بُني في الإسلام",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "قبا|قباء"
+        },
+        {
+          "id": "ql_g1bwsdbo",
+          "text": "كم كان عمر النبي ﷺ حين توفي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "توفي النبي ﷺ وعمره 63 سنة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "60 سنة",
+            "63 سنة",
+            "65 سنة",
+            "70 سنة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
         }
       ]
     },
@@ -1265,6 +2265,206 @@
             "عمرو بن العاص",
             "طارق بن زياد",
             "عقبة بن نافع"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_b53a3kyu",
+          "text": "من هو مؤسس الدولة العباسية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "أبو العباس السفاح هو أول خليفة عباسي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "هارون الرشيد",
+            "أبو العباس السفاح",
+            "المأمون",
+            "المنصور"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_j1hxrsl0",
+          "text": "الأندلس سقطت من أيدي المسلمين عام 1492م",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، سقطت غرناطة آخر معاقل الأندلس عام 1492م",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_m51ofzjh",
+          "text": "فاتح الأندلس هو القائد [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "طارق بن زياد هو قائد الفتح الإسلامي للأندلس عام 92 هجري",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "طارق بن زياد|طارق"
+        },
+        {
+          "id": "ql_e7l6hgc6",
+          "text": "ما هي أطول دولة إسلامية عمراً؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الدولة العثمانية استمرت أكثر من 600 عام (1299-1922)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الدولة الأموية",
+            "الدولة العباسية",
+            "الدولة العثمانية",
+            "الدولة الفاطمية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_cdz4dgks",
+          "text": "رتّب الدول الإسلامية حسب الترتيب الزمني",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "ترتيب الدول: الراشدون ثم الأمويون ثم العباسيون ثم العثمانيون",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الخلافة الراشدة",
+            "الدولة الأموية",
+            "الدولة العباسية",
+            "الدولة العثمانية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_eyedghhn",
+          "text": "وصّل القائد بفتحه",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 40,
+          "explanation": "قادة الفتوحات الإسلامية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "طارق بن زياد",
+              "right": "الأندلس"
+            },
+            {
+              "left": "عمرو بن العاص",
+              "right": "مصر"
+            },
+            {
+              "left": "خالد بن الوليد",
+              "right": "الشام"
+            },
+            {
+              "left": "عقبة بن نافع",
+              "right": "المغرب الأقصى"
+            }
+          ]
+        },
+        {
+          "id": "ql_cceykefm",
+          "text": "الدولة الفاطمية أسستها سلالة شيعية",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، الدولة الفاطمية أسستها سلالة شيعية إسماعيلية في المغرب ومصر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_qc18bblz",
+          "text": "في أي عام سقطت بغداد على يد المغول؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "سقطت بغداد عام 1258م على يد هولاكو",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1258م",
+            "1200م",
+            "1300م",
+            "1187م"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_7w0186wy",
+          "text": "القائد الذي فتح القسطنطينية هو محمد [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "السلطان محمد الفاتح فتح القسطنطينية عام 1453م",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الفاتح|الفاتح الثاني"
+        },
+        {
+          "id": "ql_8faudd4n",
+          "text": "من هو صلاح الدين الأيوبي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "صلاح الدين الأيوبي حرر القدس من الصليبيين عام 1187م",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "مؤسس الدولة العباسية",
+            "محرر القدس من الصليبيين",
+            "فاتح الأندلس",
+            "قائد معركة عين جالوت"
           ],
           "optionImages": [
             null,
@@ -1490,6 +2690,206 @@
               "right": "القبح"
             }
           ]
+        },
+        {
+          "id": "ql_xwwrwfq4",
+          "text": "ما هو جمع كلمة 'كتاب'؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "جمع كلمة كتاب هو كتب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "كتابات",
+            "كتب",
+            "كاتبات",
+            "مكاتب"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_xmdbu56q",
+          "text": "الفعل الماضي لا يُتصرف في الأزمنة",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "الفعل الماضي يدل على الزمن الماضي فقط لكن يُتصرف بالإسناد والعدد والجنس",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_szxbsme2",
+          "text": "اسم الفاعل من الفعل 'كتب' هو [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "اسم الفاعل من كتب هو كاتب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "كاتب|الكاتب"
+        },
+        {
+          "id": "ql_yg2knhbh",
+          "text": "كم عدد أقسام الكلمة في اللغة العربية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "أقسام الكلمة ثلاثة: اسم وفعل وحرف",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "قسمان",
+            "ثلاثة أقسام",
+            "أربعة أقسام",
+            "خمسة أقسام"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_f3qznxk6",
+          "text": "رتّب الكلمات حسب ترتيبها في المعجم",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "ترتيب المعجم: علم ثم عمر ثم عنق ثم عين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "علم",
+            "عمر",
+            "عنق",
+            "عين"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_4fef4xz5",
+          "text": "وصّل الفعل بوزنه",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 40,
+          "explanation": "أوزان الأفعال في اللغة العربية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "كتب",
+              "right": "فَعَلَ"
+            },
+            {
+              "left": "أكرم",
+              "right": "أَفْعَلَ"
+            },
+            {
+              "left": "علّم",
+              "right": "فَعَّلَ"
+            },
+            {
+              "left": "انكسر",
+              "right": "اِنْفَعَلَ"
+            }
+          ]
+        },
+        {
+          "id": "ql_lcwp82d4",
+          "text": "الهمزة من حروف المد",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "الهمزة ليست من حروف المد، حروف المد هي الألف والواو والياء",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_xtv4nj98",
+          "text": "ما هو المبتدأ في النحو العربي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "المبتدأ هو اسم مرفوع يبدأ به الكلام ويخبر عنه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "خبر الجملة",
+            "اسم مرفوع يبدأ به الكلام",
+            "فعل ماض",
+            "حرف عطف"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_464zhvbs",
+          "text": "حروف المد الثلاثة هي الألف والواو و[___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "حروف المد هي الألف والواو والياء الساكنة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الياء|ياء"
+        },
+        {
+          "id": "ql_jh7yx9bo",
+          "text": "ما هو نوع الفعل 'يَكتبُ'؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "يَكتبُ فعل مضارع يدل على الحال أو الاستقبال",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فعل ماض",
+            "فعل مضارع",
+            "فعل أمر",
+            "اسم فاعل"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
         }
       ]
     },
@@ -1699,6 +3099,206 @@
             null
           ],
           "correct": 1
+        },
+        {
+          "id": "ql_7ajurf32",
+          "text": "ما هو العنصر الأكثر وفرة في الغلاف الجوي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "النيتروجين يشكل حوالي 78% من الغلاف الجوي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الأكسجين",
+            "النيتروجين",
+            "الهيدروجين",
+            "ثاني أكسيد الكربون"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_pcg84he0",
+          "text": "الماء يتكون من ذرتي هيدروجين وذرة أكسجين",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، جزيء الماء H2O يتكون من ذرتي هيدروجين وذرة أكسجين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_sc50jlbg",
+          "text": "الكوكب الأقرب إلى الشمس هو [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "عطارد هو الكوكب الأقرب إلى الشمس",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "عطارد|Mercury"
+        },
+        {
+          "id": "ql_wbvf7qom",
+          "text": "ما هو أكبر كوكب في المجموعة الشمسية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المشتري هو أكبر كوكب في المجموعة الشمسية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "زحل",
+            "المشتري",
+            "أورانوس",
+            "نبتون"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_3so4630m",
+          "text": "رتّب الكواكب حسب قربها من الشمس",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "ترتيب الكواكب الداخلية: عطارد ثم الزهرة ثم الأرض ثم المريخ",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "عطارد",
+            "الزهرة",
+            "الأرض",
+            "المريخ"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_xclgd1r0",
+          "text": "وصّل العالم باكتشافه",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 40,
+          "explanation": "علماء المسلمين واختراعاتهم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "ابن سينا",
+              "right": "الطب"
+            },
+            {
+              "left": "الخوارزمي",
+              "right": "الجبر"
+            },
+            {
+              "left": "ابن الهيثم",
+              "right": "البصريات"
+            },
+            {
+              "left": "البيروني",
+              "right": "الفلك والجغرافيا"
+            }
+          ]
+        },
+        {
+          "id": "ql_j1ubdpnz",
+          "text": "الضوء يسير بسرعة 300 ألف كم في الثانية تقريباً",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، سرعة الضوء حوالي 300,000 كم/ثانية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_f5v3fwnw",
+          "text": "ما هو العضو المسؤول عن تنقية الدم في جسم الإنسان؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الكلية هي المسؤولة عن تنقية الدم من الفضلات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "القلب",
+            "الكبد",
+            "الكلية",
+            "الرئة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_b9o4e0px",
+          "text": "الغاز الذي تحتاجه النباتات للبناء الضوئي هو ثاني أكسيد [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "تحتاج النباتات ثاني أكسيد الكربون لعملية البناء الضوئي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الكربون|CO2|co2"
+        },
+        {
+          "id": "ql_rzbvfdb4",
+          "text": "كم عدد العظام في جسم الإنسان البالغ؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "عدد العظام في جسم الإنسان البالغ 206 عظمة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "186",
+            "206",
+            "226",
+            "256"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
         }
       ]
     },
@@ -1900,6 +3500,206 @@
             "أفريقيا",
             "أوروبا",
             "أمريكا"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_ar0yzcrs",
+          "text": "ما هي أكبر دولة عربية من حيث المساحة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الجزائر هي أكبر دولة عربية من حيث المساحة بعد انفصال جنوب السودان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المملكة العربية السعودية",
+            "الجزائر",
+            "السودان",
+            "ليبيا"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_29adp7rp",
+          "text": "نهر النيل هو أطول أنهار العالم",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، نهر النيل هو أطول أنهار العالم بطول حوالي 6650 كم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_w3fbz7zc",
+          "text": "عاصمة مصر هي مدينة [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "القاهرة هي عاصمة جمهورية مصر العربية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "القاهرة|القاهره"
+        },
+        {
+          "id": "ql_it2303ra",
+          "text": "كم عدد الدول العربية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "عدد الدول العربية الأعضاء في جامعة الدول العربية 22 دولة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "20",
+            "22",
+            "24",
+            "18"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_df42fus0",
+          "text": "رتّب دول الخليج العربي حسب المساحة من الأكبر",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "ترتيب دول الخليج: السعودية ثم عُمان ثم الإمارات ثم البحرين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "السعودية",
+            "عُمان",
+            "الإمارات",
+            "البحرين"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_1addv2bs",
+          "text": "وصّل الدولة بعاصمتها",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "عواصم الدول العربية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "المغرب",
+              "right": "الرباط"
+            },
+            {
+              "left": "تونس",
+              "right": "تونس"
+            },
+            {
+              "left": "الأردن",
+              "right": "عمّان"
+            },
+            {
+              "left": "لبنان",
+              "right": "بيروت"
+            }
+          ]
+        },
+        {
+          "id": "ql_gb0new7q",
+          "text": "البحر الأحمر يفصل بين أفريقيا وآسيا",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، البحر الأحمر يفصل بين أفريقيا وشبه الجزيرة العربية في آسيا",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_2f8o82fw",
+          "text": "ما هو أعلى جبل في العالم العربي؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "جبل طوبقال في المغرب هو أعلى قمة في العالم العربي بارتفاع 4167 متر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "جبل طوبقال",
+            "جبل الشيخ",
+            "جبل النبي شعيب",
+            "جبل عمان"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_26zgsk3l",
+          "text": "أكبر صحراء رملية متصلة في العالم هي صحراء [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "صحراء الربع الخالي في السعودية هي أكبر صحراء رملية متصلة في العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الربع الخالي|الربع الخاليّ"
+        },
+        {
+          "id": "ql_150uipet",
+          "text": "أين يقع مضيق هرمز؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "مضيق هرمز يقع بين إيران وشبه الجزيرة العربية (عُمان)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "بين مصر والسعودية",
+            "بين إيران وعُمان",
+            "بين المغرب وإسبانيا",
+            "بين اليمن وجيبوتي"
           ],
           "optionImages": [
             null,
@@ -2125,6 +3925,3646 @@
               "right": "Printing Press"
             }
           ]
+        },
+        {
+          "id": "ql_jmyupbg5",
+          "text": "What is the currency of Japan?",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "The Japanese Yen is the official currency of Japan",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Yen",
+            "Won",
+            "Yuan",
+            "Ringgit"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_xtshvwnq",
+          "text": "The United Nations was founded in 1945",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "Yes, the UN was founded on October 24, 1945",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_7t4qom8k",
+          "text": "The largest ocean on Earth is the [___] Ocean",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "The Pacific Ocean is the largest and deepest ocean on Earth",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "Pacific"
+        },
+        {
+          "id": "ql_icof5xcn",
+          "text": "Who invented the telephone?",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "Alexander Graham Bell is credited with inventing the telephone in 1876",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Thomas Edison",
+            "Alexander Graham Bell",
+            "Nikola Tesla",
+            "Isaac Newton"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_14snmakr",
+          "text": "Arrange the days of the week in order",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "Days of the week: Monday, Tuesday, Wednesday, Thursday",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_u0wmrtnn",
+          "text": "Match the country with its official language",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "Countries and their official languages",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "France",
+              "right": "French"
+            },
+            {
+              "left": "Germany",
+              "right": "German"
+            },
+            {
+              "left": "Italy",
+              "right": "Italian"
+            },
+            {
+              "left": "Spain",
+              "right": "Spanish"
+            }
+          ]
+        },
+        {
+          "id": "ql_e6e61blc",
+          "text": "The Eiffel Tower is located in London",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "The Eiffel Tower is located in Paris, France, not London",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_gi08ceb0",
+          "text": "What is the largest continent by area?",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "Asia is the largest continent by both area and population",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Africa",
+            "North America",
+            "Asia",
+            "Europe"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_5s4dmqk0",
+          "text": "The first person to walk on the Moon was [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "Neil Armstrong walked on the Moon on July 20, 1969",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "Neil Armstrong|Armstrong"
+        },
+        {
+          "id": "ql_j3vllzj5",
+          "text": "How many colors are in a rainbow?",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "A rainbow has 7 colors: red, orange, yellow, green, blue, indigo, violet",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": "ql_vb9smmt4",
+      "name": "التقنية والبرمجة",
+      "icon": "💻",
+      "color": "#6366f1",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "ql_6606xlcf",
+          "text": "ما هي لغة البرمجة الأكثر استخداماً في تطوير الويب من جانب العميل؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "JavaScript هي لغة الويب الأساسية من جانب العميل (المتصفح)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "JavaScript",
+            "Python",
+            "Java",
+            "C++"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_zduoeufs",
+          "text": "HTML هي لغة برمجة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "HTML ليست لغة برمجة بل هي لغة توصيف لتشكيل صفحات الويب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_g7yz8zkx",
+          "text": "الاختصار HTML يعني HyperText [___] Language",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "HTML = HyperText Markup Language أي لغة توصيف النص الفائق",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "Markup|مارك أب"
+        },
+        {
+          "id": "ql_pmt2wpqu",
+          "text": "ما هو نظام التشغيل مفتوح المصدر الأشهر؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "Linux هو نظام تشغيل مفتوح المصدر الأشهر في العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Windows",
+            "macOS",
+            "Linux",
+            "iOS"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_utmdrdm6",
+          "text": "رتّب مستويات لغات البرمجة من الأعلى مستوى",
+          "type": "order",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "ترتيب من الأعلى مستوى: Python ثم Java ثم C ثم Assembly",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Python",
+            "Java",
+            "C",
+            "Assembly"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_9ik90dav",
+          "text": "وصّل لغة البرمجة بمجال استخدامها الأشهر",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 40,
+          "explanation": "لغات البرمجة ومجالاتها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "Python",
+              "right": "الذكاء الاصطناعي"
+            },
+            {
+              "left": "Swift",
+              "right": "تطبيقات آيفون"
+            },
+            {
+              "left": "PHP",
+              "right": "تطوير الويب"
+            },
+            {
+              "left": "R",
+              "right": "التحليل الإحصائي"
+            }
+          ]
+        },
+        {
+          "id": "ql_0d513bmw",
+          "text": "الذكاء الاصطناعي يمكنه التعلم ذاتياً من البيانات",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، تقنيات التعلم العميق تمكّن الذكاء الاصطناعي من التعلم من البيانات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_qcsjc7xt",
+          "text": "ما هو البلوكتشين (Blockchain)؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "البلوكتشين هي تقنية سجل موزع مشفر لتسجيل المعاملات بشكل آمن",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نوع من الفيروسات",
+            "سلسلة كتل مشفرة لتسجيل المعاملات",
+            "لغة برمجة",
+            "محرك بحث"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_7whvt3ld",
+          "text": "الشخص الذي يكتب البرامج يسمى [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المبرمج أو المطور هو الشخص الذي يكتب البرامج",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "مبرمج|المبرمج|مطور"
+        },
+        {
+          "id": "ql_vy71bf8a",
+          "text": "ما معنى API؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "API = Application Programming Interface أي واجهة برمجة التطبيقات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "برمجة متقدمة",
+            "واجهة برمجة التطبيقات",
+            "تطبيق آلي",
+            "ذكاء اصطناعي"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_cj3olloz",
+          "text": "كم بت يحتاج لتمثيل رقم من 0 إلى 255؟",
+          "type": "math",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "8 بت = 2^8 = 256 قيمة (0-255)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "4 بت",
+            "6 بت",
+            "8 بت",
+            "16 بت"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_i9hsj81q",
+          "text": "الخوارزمية هي مجموعة من الخطوات المنظمة لحل مشكلة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الخوارزمية هي مجموعة خطوات محددة ومنظمة لحل مشكلة ما",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_jitgphtt",
+          "text": "ما هي قاعدة البيانات الأكثر استخداماً في تطبيقات الويب؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "MySQL من أشهر وأكثر قواعد البيانات العلائقية استخداماً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "MongoDB",
+            "MySQL",
+            "Redis",
+            "SQLite"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_vakh6su2",
+          "text": "أول حاسوب إلكتروني في العالم هو [___]",
+          "type": "fitb",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "حاسوب ENIAC هو أول حاسوب إلكتروني عام 1946",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "ENIAC|إينياك"
+        },
+        {
+          "id": "ql_jbh8u3ja",
+          "text": "رتّب أجيال الحاسوب بالترتيب",
+          "type": "order",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "أجيال الحاسوب: صمامات ثم ترانزستورات ثم دوائر متكاملة ثم معالجات دقيقة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الصمامات المفرغة",
+            "الترانزستور",
+            "الدوائر المتكاملة",
+            "المعالجات الدقيقة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_ugqf85ga",
+          "text": "وصّل الاختصار بمعناه",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "اختصارات القطع الحاسوبية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "CPU",
+              "right": "وحدة المعالجة المركزية"
+            },
+            {
+              "left": "RAM",
+              "right": "الذاكرة العشوائية"
+            },
+            {
+              "left": "GPU",
+              "right": "وحدة معالجة الرسوميات"
+            },
+            {
+              "left": "SSD",
+              "right": "قرص الحالة الصلبة"
+            }
+          ]
+        },
+        {
+          "id": "ql_7zgvs33g",
+          "text": "الفيروسات يمكنها إصابة الهواتف الذكية",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، يمكن للفيروسات والبرمجيات الخبيثة إصابة الهواتف الذكية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_joozazvm",
+          "text": "ما هو الحوسبة السحابية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الحوسبة السحابية هي استخدام موارد الحوسبة عبر الإنترنت بدلاً من الأجهزة المحلية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "حوسبة في طائرة",
+            "تخزين ومعالجة البيانات عبر الإنترنت",
+            "حاسوب محمول",
+            "برنامج حماية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_a0faxrpn",
+          "text": "إذا كان حجم ملف 2 جيجابايت، كم يساوي بالميجابايت؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "1 جيجابايت = 1024 ميجابايت، فـ 2 جيجابايت = 2048 ميجابايت",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "200 ميجا",
+            "1024 ميجا",
+            "2048 ميجا",
+            "512 ميجا"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_8hznzehz",
+          "text": "لغة البرمجة التي طوّرها جيمس غوسلينغ هي [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "جيمس غوسلينغ طوّر لغة Java عام 1995 في شركة Sun Microsystems",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "Java|جافا"
+        }
+      ]
+    },
+    {
+      "id": "ql_8s2qo9q1",
+      "name": "الرياضة",
+      "icon": "⚽",
+      "color": "#22c55e",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "ql_mv1922qg",
+          "text": "كم عدد لاعبي فريق كرة القدم؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "فريق كرة القدم يتكون من 11 لاعباً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_i5y6wqfi",
+          "text": "كأس العالم تقام كل أربع سنوات",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، بطولة كأس العالم FIFA تقام كل أربع سنوات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_ay05i9kh",
+          "text": "الدولة التي فازت بأكثر عدد من كؤوس العالم هي [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "البرازيل فازت بكأس العالم 5 مرات (1958، 1962، 1970، 1994، 2002)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "البرازيل|برازيل"
+        },
+        {
+          "id": "ql_4jbrxwpn",
+          "text": "ما هي رياضة الملاكمة؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الملاكمة رياضة قتالية تعتمد على اللكمات بين خصمين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "رياضة كرة",
+            "رياضة قتالية بالأيدي",
+            "رياضة سباق",
+            "رياضة مائية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_8efmx9en",
+          "text": "رتّب أشهر بطولات التنس بالأهمية",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "بطولات التنس الأربع الكبرى",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "ويمبلدون",
+            "رولان غاروس",
+            "أستراليا المفتوحة",
+            "أمريكا المفتوحة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_2ab07qoo",
+          "text": "وصّل الرياضة بأدواتها",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "الأدوات الرياضية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "كرة القدم",
+              "right": "حذاء مسمّر"
+            },
+            {
+              "left": "التنس",
+              "right": "مضرب"
+            },
+            {
+              "left": "الجولف",
+              "right": "عصا وعرة"
+            },
+            {
+              "left": "السباحة",
+              "right": "نظارة وغطاء"
+            }
+          ]
+        },
+        {
+          "id": "ql_tdgsbh4f",
+          "text": "المغرب هو أول فريق عربي وإفريقي يصل لنصف نهائي كأس العالم 2022",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، المغرب هو أول فريق عربي وإفريقي يصل لنصف نهائي كأس العالم 2022",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_7cxrdl1g",
+          "text": "من هو اللاعب الأكثر تسجيلاً في تاريخ كرة القدم؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "كريستيانو رونالدو هو الهداف التاريخي لكرة القدم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "ليونيل ميسي",
+            "كريستيانو رونالدو",
+            "بيليه",
+            "دييغو مارادونا"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_2dghowjz",
+          "text": "ملعب كرة القدم يجب أن يكون طوله بين 90 و[___] متر",
+          "type": "fitb",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "أبعاد ملعب كرة القدم: الطول 90-120 متر والعرض 45-90 متر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "120|مائة وعشرين"
+        },
+        {
+          "id": "ql_44rcz10t",
+          "text": "ما هي رياضة الفورمولا 1؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الفورمولا 1 هي بطولة سباق السيارات الأعلى فئة في العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سباق الدراجات",
+            "سباق السيارات",
+            "رياضة مائية",
+            "رياضة شتوية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_6l6v9t08",
+          "text": "في مباراة كرة سلة انتهت بنتيجة 98-82، كم الفارق بين الفريقين؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الفرق = 98 - 82 = 16 نقطة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "14",
+            "16",
+            "18",
+            "20"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_nme250ql",
+          "text": "كرة السلة تلعب بفرق من 5 لاعبين",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، فريق كرة السلة يتكون من 5 لاعبين على الملعب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_6gyccf0g",
+          "text": "من هو صاحب أكثر ميداليات ذهبية أولمبية في التاريخ؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "مايكل فيلبس السباح الأمريكي صاحب 23 ميدالية ذهبية أولمبية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أوسين بولت",
+            "مايكل فيلبس",
+            "كارل لويس",
+            "محمد علي"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_zt7pdgit",
+          "text": "أول دورة أولمبية حديثة أُقيمت في أثينا عام [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "أول دورة أولمبية حديثة أُقيمت في أثينا عام 1896م",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "1896"
+        },
+        {
+          "id": "ql_08ik5id7",
+          "text": "رتّب كؤوس العالم من الأقدم",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "تواريخ كؤوس العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1930 الأوروغواي",
+            "1966 إنجلترا",
+            "1994 أمريكا",
+            "2022 قطر"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_gsu9p45u",
+          "text": "وصّل اللاعب ببلده",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "نجوم كرة القدم وبلدانهم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "محمد صلاح",
+              "right": "مصر"
+            },
+            {
+              "left": "رياض محرز",
+              "right": "الجزائر"
+            },
+            {
+              "left": "حكيم زياش",
+              "right": "المغرب"
+            },
+            {
+              "left": "ساديو ماني",
+              "right": "السنغال"
+            }
+          ]
+        },
+        {
+          "id": "ql_8m2qcgjc",
+          "text": "الألعاب الأولمبية تقام كل سنتين متناوبة بين صيفية وشتوية",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، تقام الألعاب الأولمبية كل سنتين بالتناوب بين الصيفية والشتوية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_nz0c9zre",
+          "text": "ما هي كرة اليد؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "كرة اليد رياضة جماعية تلعب بتمرير الكرة باليد وتسجيلها في مرمى الخصم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "رياضة بلوح",
+            "رياضة جماعية بالكرة باليد",
+            "رياضة فردية",
+            "رياضة مائية"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_cspsdebl",
+          "text": "اللاعب البرازيلي الشهير الملقب بالبليدة هو [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "رونالدو نازاريو دي ليما الملقب بالبليدة (O Fenômeno)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "رونالدو|رونالدو نازاريو"
+        },
+        {
+          "id": "ql_n8gzr2nq",
+          "text": "كم دقيقة تستمر مباراة كرة القدم؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "مباراة كرة القدم تتكون من شوطين كل منهما 45 دقيقة = 90 دقيقة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "60 دقيقة",
+            "80 دقيقة",
+            "90 دقيقة",
+            "120 دقيقة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": "ql_iaa53lpo",
+      "name": "الفنون والموسيقى",
+      "icon": "🎵",
+      "color": "#ec4899",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "ql_92mig2re",
+          "text": "ما هي الآلة الموسيقية التي تسمى ملكة الآلات؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "البيانو تسمى ملكة الآلات الموسيقية لاتساع طبقاتها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "البيانو",
+            "الكمان",
+            "القيثارة",
+            "الناي"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_wys5jrg1",
+          "text": "المقامات الموسيقية العربية ثمانية فقط",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "المقامات العربية أكثر من ثمانية، والمعروف منها حوالي 12-16 مقاماً أساسياً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_z7xunmd8",
+          "text": "الآلة الموسيقية الوترية العربية الشهيرة هي ال[___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "العود هو الآلة الوترية العربية الأشهر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "عود|عودِ"
+        },
+        {
+          "id": "ql_h7zyqai8",
+          "text": "من هو الملحن العربي الأشهر في القرن العشرين؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "محمد عبد الوهاب يُعد من أعظم الملحنين العرب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فيروز",
+            "أم كلثوم",
+            "محمد عبد الوهاب",
+            "رياض السنباطي"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_013p3yqe",
+          "text": "رتّب المقامات الموسيقية العربية المشهيرة",
+          "type": "order",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "المقامات العربية الأربعة الأشهر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الراست",
+            "البياتي",
+            "الحجاز",
+            "النهاوند"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_2hqnj5d1",
+          "text": "وصّل الفنان بأشهر أعماله",
+          "type": "match",
+          "difficulty": "medium",
+          "time": 40,
+          "explanation": "فنانون عرب وأعمالهم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "أم كلثوم",
+              "right": "ألف ليلة وليلة"
+            },
+            {
+              "left": "فيروز",
+              "right": "نايف السلماني"
+            },
+            {
+              "left": "محمد عبد الوهاب",
+              "right": "أنت عمري"
+            },
+            {
+              "left": "عبد الحليم حافظ",
+              "right": "أهواك"
+            }
+          ]
+        },
+        {
+          "id": "ql_vb1kxelr",
+          "text": "الخط العربي يُعد من الفنون الإسلامية",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الخط العربي من أرقى الفنون الإسلامية وأقدمها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_3tnhphwy",
+          "text": "ما هو فن الموشحات؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "الموشحات فن شعري غنائي نشأ في الأندلس وابتكره العرب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فن الرسم",
+            "فن شعري غنائي أندلسي",
+            "فن النحت",
+            "فن العمارة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_46gufyyj",
+          "text": "الآلة الموسيقية التي تعزف بالنفخ تسمى آلة [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الآلات الهوائية (النفخ) مثل الناي والمزمار",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "نفخ|هوائية"
+        },
+        {
+          "id": "ql_xx5hhsow",
+          "text": "كم عدد أوتار العود العربي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "العود العربي له 5 أوتار مزدوجة (أي 10 أوتار فردية)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "4 أوتار",
+            "5 أوتار مزدوجة",
+            "6 أوتار",
+            "8 أوتار"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_n0909brc",
+          "text": "إذا كان للعود 5 أوتار مزدوجة، كم عدد الأوتار الفردية؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "5 أوتار مزدوجة × 2 = 10 أوتار فردية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "5",
+            "8",
+            "10",
+            "12"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_vy2e4rg5",
+          "text": "المسرح العربي بدأ في القرن التاسع عشر",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، المسرح العربي الحديث بدأ في النصف الثاني من القرن التاسع عشر مع مارون النقاش",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_zi1i5vi6",
+          "text": "من هو رائد المسرح العربي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "مارون النقاش هو رائد المسرح العربي الحديث",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أحمد شوقي",
+            "مارون النقاش",
+            "توفيق الحكيم",
+            "سعد الله ونوس"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_g0wt0fce",
+          "text": "فن الأرابيسك يعتمد على الزخارف [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "فن الأرابيسك الإسلامي يعتمد على الزخارف النباتية والهندسية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "النباتية|هندسية|نباتية وهندسية"
+        },
+        {
+          "id": "ql_2ntouybg",
+          "text": "رتّب الفنون الإسلامية حسب الأقدم",
+          "type": "order",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "تطور الفنون الإسلامية عبر العصور",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الخط العربي",
+            "الأرابيسك",
+            "المنمنمات",
+            "فن الخزف"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_sgo7kgon",
+          "text": "وصّل الآلة الموسيقية بنوعها",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "أنواع الآلات الموسيقية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "العود",
+              "right": "وترية"
+            },
+            {
+              "left": "الناي",
+              "right": "هوائية"
+            },
+            {
+              "left": "الدف",
+              "right": "إيقاعية"
+            },
+            {
+              "left": "القانون",
+              "right": "وترية نقرية"
+            }
+          ]
+        },
+        {
+          "id": "ql_uzst3wnv",
+          "text": "السولفيج هو علم قراءة النوتات الموسيقية",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، السولفيج هو تدريب على قراءة الغناء من النوتات الموسيقية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_tla23dqd",
+          "text": "ما هو الفن الذي يجمع بين الشعر والغناء؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الموشحات تجمع بين الشعر والغناء والموسيقى",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الرسم",
+            "النحت",
+            "الموشحات",
+            "الخط"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_alp9s7hp",
+          "text": "أشهر أنواع الغناء العربي هو الغناء [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الغناء الشرقي العربي هو الأشهر في الموسيقى العربية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الشرقي|العربي"
+        },
+        {
+          "id": "ql_f9re5nwo",
+          "text": "ما هي ألوان الفنون البصرية الأساسية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الألوان الأساسية في الفنون البصرية: أحمر، أصفر، أزرق",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أحمر، أخضر، أزرق",
+            "أحمر، أصفر، أزرق",
+            "برتقالي، بنفسجي، أخضر",
+            "أسود، أبيض، رمادي"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "ql_0bsqyacy",
+      "name": "الرياضيات والمنطق",
+      "icon": "🧮",
+      "color": "#f59e0b",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "ql_sswc20m6",
+          "text": "ما ناتج 15 × 12؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "15 × 12 = 180",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "160",
+            "170",
+            "180",
+            "190"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_tbdbedlp",
+          "text": "الصفر هو أصغر عدد صحيح",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "الصفر ليس أصغر عدد صحيح، فالأعداد السالبة أصغر منه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_dgczf5xk",
+          "text": "ناتج 144 ÷ 12 = [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "144 ÷ 12 = 12",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "12|اثنا عشر"
+        },
+        {
+          "id": "ql_sr3fo12o",
+          "text": "ما هو الجذر التربيعي لـ 169؟",
+          "type": "math",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "√169 = 13",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "11",
+            "12",
+            "13",
+            "14"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_kwrrdnvn",
+          "text": "رتّب الأعداد من الأصغر",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "ترتيب الأعداد: -5 < -2 < 0 < 3",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "-5",
+            "-2",
+            "0",
+            "3"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_a9vpf4zs",
+          "text": "وصّل الشكل الهندسي بعدد أضلاعه",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "الأشكال الهندسية وأضلاعها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "المثلث",
+              "right": "3 أضلاع"
+            },
+            {
+              "left": "المربع",
+              "right": "4 أضلاع"
+            },
+            {
+              "left": "الخماسي",
+              "right": "5 أضلاع"
+            },
+            {
+              "left": "السداسي",
+              "right": "6 أضلاع"
+            }
+          ]
+        },
+        {
+          "id": "ql_o3i814xv",
+          "text": "عدد باي (π) يساوي تقريباً 3.14",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، π ≈ 3.14159",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_bl6hodnh",
+          "text": "ما مساحة مستطيل طوله 8 وعرضه 5؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المساحة = الطول × العرض = 8 × 5 = 40",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "30",
+            "35",
+            "40",
+            "45"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_fdry50wk",
+          "text": "العالم المسلم الذي يُعد أبو الجبر هو [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الخوارزمي هو صاحب كتاب الجبر والمقابلة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الخوارزمي|محمد بن موسى الخوارزمي"
+        },
+        {
+          "id": "ql_wids2h2u",
+          "text": "إذا كان x + 7 = 15، فما قيمة x؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "x = 15 - 7 = 8",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_wlif4u76",
+          "text": "ما هو المضاعف المشترك الأصغر للعددين 4 و6؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "المضاعف المشترك الأصغر لـ 4 و6 هو 12",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "8",
+            "10",
+            "12",
+            "24"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_79mhdnpr",
+          "text": "كل مربع هو مستطيل",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، كل مربع هو مستطيل لأنه رباعي أضلاع متساوية وزوايا قائمة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_9evkd38o",
+          "text": "ما محيط دائرة نصف قطرها 7 سم؟ (π≈22/7)",
+          "type": "math",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "المحيط = 2πr = 2 × 22/7 × 7 = 44 سم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "22 سم",
+            "33 سم",
+            "44 سم",
+            "88 سم"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_c7sdhcfn",
+          "text": "ناتج 2 أس 10 = [___]",
+          "type": "fitb",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "2^10 = 1024",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "1024|ألف وأربعة وعشرون"
+        },
+        {
+          "id": "ql_yrwyqv2a",
+          "text": "رتّب الأعداد التالية من الأكبر",
+          "type": "order",
+          "difficulty": "easy",
+          "time": 30,
+          "explanation": "ترتيب تنازلي: 1000 > 999 > 998 > 997",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1000",
+            "999",
+            "998",
+            "997"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_ydbf2u4m",
+          "text": "وصّل العملية الرياضية بناتجها",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "عمليات الضرب ونتائجها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "7 × 8",
+              "right": "56"
+            },
+            {
+              "left": "9 × 6",
+              "right": "54"
+            },
+            {
+              "left": "12 × 5",
+              "right": "60"
+            },
+            {
+              "left": "15 × 4",
+              "right": "60"
+            }
+          ]
+        },
+        {
+          "id": "ql_ov4m5it2",
+          "text": "العدد الأولي هو القابل للقسمة على 1 وعلى نفسه فقط",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، العدد الأولي هو العدد الطبيعي الأكبر من 1 الذي لا يقبل القسمة إلا على 1 وعلى نفسه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_ei448a6i",
+          "text": "ما حجم مكعب حرفته 5 سم؟",
+          "type": "math",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الحجم = الحرفة³ = 5³ = 125 سم³",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "75 سم³",
+            "100 سم³",
+            "125 سم³",
+            "150 سم³"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "ql_tikvk22f",
+          "text": "الزوايا في المثلث مجموعها [___] درجة",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "مجموع زوايا المثلث = 180 درجة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "180|مائة وثمانون"
+        },
+        {
+          "id": "ql_o368gr23",
+          "text": "ما هو الفرق بين المحيط والمساحة؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المحيط يقيس طول حدود الشكل والمساحة تقيس المساحة الداخلية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "لا فرق",
+            "المحيط هو طول الحدود والمساحة هي القياس الداخلي",
+            "المساحة هي المحيط",
+            "المحيط أكبر دائماً"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "ql_pwvp761s",
+      "name": "البيئة والطبيعة",
+      "icon": "🌿",
+      "color": "#10b981",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "ql_165yw6wt",
+          "text": "ما هي أكبر غابة مطيرة في العالم؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "غابة الأمازون في أمريكا الجنوبية هي أكبر غابة مطيرة في العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "غابة الكونغو",
+            "غابة الأمازون",
+            "غابة تايغا",
+            "غابة دينتري"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_w3k2efzd",
+          "text": "الأوزون يحمي الأرض من الأشعة فوق البنفسجية",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، طبقة الأوزون تمتص الأشعة فوق البنفسجية الضارة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_l8ifyto0",
+          "text": "الحيوان الذي يسمى سفينة الصحراء هو [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الجمل يسمى سفينة الصحراء لقدرته على تحمل العطش والسفر الطويل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الجمل|جمل"
+        },
+        {
+          "id": "ql_01z8z01r",
+          "text": "ما هو الاحتباس الحراري؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الاحتباس الحراري هو ارتفاع حرارة الأرض بسبب تراكم غازات الدفيئة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "تبريد الأرض",
+            "ارتفاع درجة حرارة الأرض بسبب الغازات",
+            "تساقط الأمطار",
+            "هبوب الرياح"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_sndu95he",
+          "text": "رتّب مصادر الطاقة من الأكثر نظافة",
+          "type": "order",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "ترتيب مصادر الطاقة من الأنظف: شمس ثم رياح ثم غاز ثم فحم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الشمس",
+            "الرياح",
+            "الغاز الطبيعي",
+            "الفحم"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_vgsmuy5u",
+          "text": "وصّل الحيوان ببيئته",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "الحيوانات وبيئاتها الطبيعية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "الجمل",
+              "right": "الصحراء"
+            },
+            {
+              "left": "الدب القطبي",
+              "right": "القطب الشمالي"
+            },
+            {
+              "left": "القرد",
+              "right": "الغابة الاستوائية"
+            },
+            {
+              "left": "البطريق",
+              "right": "القارة الجنوبية"
+            }
+          ]
+        },
+        {
+          "id": "ql_hw2ng6x6",
+          "text": "إزالة الغابات تساهم في زيادة ثاني أكسيد الكربون",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "نعم، إزالة الغاطق تقلل النباتات الماصة لثاني أكسيد الكربون",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_kw402gfs",
+          "text": "ما هو التلوث البيئي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "التلوث هو إضافة مواد ضارة أو سامة للبيئة تضر بالكائنات الحية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "تنظيف البيئة",
+            "إضافة مواد ضارة للبيئة",
+            "زراعة الأشجار",
+            "حماية الحيوانات"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_pw2n66ia",
+          "text": "الغاز الذي تمتصه النباتات من الجو هو ثاني أكسيد [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "تمتص النباتات ثاني أكسيد الكربون في عملية البناء الضوئي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الكربون|كربون"
+        },
+        {
+          "id": "ql_9gu7gw3g",
+          "text": "كم نسبة الماء العذب من إجمالي مياه الأرض؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 30,
+          "explanation": "الماء العذب يشكل حوالي 2.5-3% فقط من إجمالي مياه الأرض",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "حوالي 3%",
+            "حوالي 10%",
+            "حوالي 25%",
+            "حوالي 50%"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_70z8zch4",
+          "text": "إذا كانت نسبة الغابات في دولة ما 30% من مساحتها البالغة 100,000 كم²، كم مساحة الغابات؟",
+          "type": "math",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "30% × 100,000 = 30,000 كم²",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "20,000",
+            "30,000",
+            "40,000",
+            "50,000"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_kty5crut",
+          "text": "الشمس مصدر رئيسي للطاقة المتجددة",
+          "type": "tf",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "نعم، الشمس من أهم مصادر الطاقة المتجددة والنظيفة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "ql_mr859vs1",
+          "text": "ما هو الانقراض؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الانقراض هو اختفاء نوع من الكائنات الحية من الأرض نهائياً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "زيادة أعداد الحيوانات",
+            "اختفاء نوع من الكائنات الحية نهائياً",
+            "هجرة الحيوانات",
+            "تكاثر النباتات"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "ql_2s4ieblo",
+          "text": "أكبر كتلة مرجانية في العالم تقع في [___]",
+          "type": "fitb",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الحاجز المرجاني العظيم في أستراليا هو أكبر كتلة مرجانية في العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "أستراليا|استراليا|الحاجز المرجاني"
+        },
+        {
+          "id": "ql_2fvrvrj5",
+          "text": "رتّب مصادر المياه من الأكثر حجمًا على الأرض",
+          "type": "order",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "توزيع المياه: محيطات 97% ثم جليد 2% ثم جوفية ثم أنهار وبحيرات",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المحيطات والبحار",
+            "الجليد والأنهار الجليدية",
+            "المياه الجوفية",
+            "الأنهار والبحيرات"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_bs8nfs8e",
+          "text": "وصّل المشكلة البيئية بالحل المناسب",
+          "type": "match",
+          "difficulty": "easy",
+          "time": 35,
+          "explanation": "مشكلات بيئية وحلولها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "matchPairs": [
+            {
+              "left": "تلوث الهواء",
+              "right": "تقليل انبعاثات المصانع"
+            },
+            {
+              "left": "نقص المياه",
+              "right": "الترشيد والتحلية"
+            },
+            {
+              "left": "إزالة الغابات",
+              "right": "التشجير والزراعة"
+            },
+            {
+              "left": "النفايات",
+              "right": "إعادة التدوير"
+            }
+          ]
+        },
+        {
+          "id": "ql_6lyfvr9k",
+          "text": "الطاقة النووية هي مصدر طاقة متجددة",
+          "type": "tf",
+          "difficulty": "medium",
+          "time": 20,
+          "explanation": "الطاقة النووية ليست متجددة لأنها تعتمد على اليورانيوم وهو مورد محدود",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "ql_mgqjwozm",
+          "text": "ما هو التصحر؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "التصحر هو تحول الأراضي الخصبة إلى أراضٍ جافة بفعل التغير المناخي والنشاط البشري",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "تحول الأراضي الخصبة إلى صحراء",
+            "زراعة الصحراء",
+            "سقوط الأمطار في الصحراء",
+            "بناء المدن في الصحراء"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "ql_ip5iwpzw",
+          "text": "أكبر محيطات العالم هو المحيط [___]",
+          "type": "fitb",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المحيط الهادئ هو أكبر محيطات العالم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [],
+          "optionImages": [],
+          "correct": 0,
+          "fitbAnswer": "الهادئ|الهادي"
+        },
+        {
+          "id": "ql_u7r5ai38",
+          "text": "ما هي عملية البناء الضوئي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "البناء الضوئي هو تحويل الطاقة الضوئية والماء وCO2 إلى غلوكوز وأكسجين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "تنفس النبات",
+            "تحويل النبات للضوء والماء وCO2 إلى غلوكوز وأكسجين",
+            "تبخر الماء",
+            "هطول الأمطار"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "cat_geo_countries",
+      "name": "الجغرافيا والبلدان",
+      "icon": "🌍",
+      "color": "#2196F3",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "lib_q_d67fba418056",
+          "text": "ما هي أكبر دولة في العالم من حيث المساحة؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "روسيا هي أكبر دولة في العالم بمساحة تزيد عن 17 مليون كيلومتر مربع",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "روسيا",
+            "كندا",
+            "الصين",
+            "الولايات المتحدة"
+          ],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "lib_q_7b061a1a59e5",
+          "text": "ما هي عاصمة اليابان؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "طوكيو هي عاصمة اليابان وأكبر مدنها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أوساكا",
+            "طوكيو",
+            "كيوتو",
+            "يوكوهاما"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_77940893f542",
+          "text": "نهر النيل هو أطول أنهار العالم",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "نهر النيل هو أطول أنهار العالم بطول يقارب 6650 كيلومتر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نهر الأمازون",
+            "نهر النيل",
+            "نهر المسيسيبي",
+            "نهر اليانغتسي"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_b0ce436357f2",
+          "text": "في أي قارة تقع صحراء الربع الخالي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "صحراء الربع الخالي تقع في شبه الجزيرة العربية في قارة آسيا",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أفريقيا",
+            "آسيا",
+            "أمريكا الجنوبية",
+            "أستراليا"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_e41ffcfc2dd5",
+          "text": "ما هي أكبر صحراء في العالم؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الصحراء الكبرى في أفريقيا هي أكبر صحراء حارة في العالم بمساحة 9.2 مليون كيلومتر مربع",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "صحراء الربع الخالي",
+            "صحراء غوبي",
+            "الصحراء الكبرى",
+            "صحراء كلهاري"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_f8b486e40d7a",
+          "text": "ما هي أصغر دولة في العالم من حيث المساحة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "دولة الفاتيكان هي أصغر دولة في العالم بمساحة 0.44 كيلومتر مربع",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "موناكو",
+            "سان مارينو",
+            "الفاتيكان",
+            "ليختنشتاين"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_0dea7f589998",
+          "text": "كم عدد قارات العالم؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "قارات العالم سبع: آسيا وأفريقيا وأمريكا الشمالية وأمريكا الجنوبية وأنتاركتيكا وأوروبا وأستراليا",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_e686e4ab275d",
+          "text": "ما هي أعلى قمة جبلية في العالم؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "قمة إيفرست هي أعلى قمة في العالم بارتفاع 8848 متراً فوق سطح البحر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "قمة كليمنجارو",
+            "قمة إيفرست",
+            "جبل بلانش",
+            "قمة K2"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_deefd55cf80c",
+          "text": "أي محيط هو الأكبر بين محيطات العالم؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "المحيط الهادئ هو أكبر محيطات العالم بمساحة تقارب 165 مليون كيلومتر مربع",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المحيط الأطلسي",
+            "المحيط الهندي",
+            "المحيط الهادئ",
+            "المحيط المتجمد الشمالي"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_d841bb4adbac",
+          "text": "ما هي عاصمة أستراليا؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "كانبرا هي عاصمة أستراليا وليست سيدني أو ملبورن كما يعتقد البعض",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سيدني",
+            "ملبورن",
+            "كانبرا",
+            "بريزبان"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_4af66ae7835e",
+          "text": "في أي قارة تقع جزيرة مدغشقر؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "جزيرة مدغشقر تقع في المحيط الهندي قبالة الساحل الشرقي لأفريقيا",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "آسيا",
+            "أفريقيا",
+            "أوقيانوسيا",
+            "أمريكا الجنوبية"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_2c41a8c0552a",
+          "text": "ما هو أعمق نقطة في المحيطات؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "خندق ماريانا في المحيط الهادئ هو أعمق نقطة في المحيطات بعمق يقارب 11034 متراً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "خندق تونغا",
+            "خندق ماريانا",
+            "خندق اليابان",
+            "خندق بورتوريكو"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_95f8e213ad1c",
+          "text": "ما هي الدولة الوحيدة التي تمر بها خط الاستواء وخط غرينتش؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "غانا هي الدولة التي يمر بها خط الاستواء وخط غرينتش تقريباً في منطقة خليج غينيا",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "غانا",
+            "البرازيل",
+            "الغابون",
+            "الكونغو"
+          ],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "lib_q_c004ba32a2fe",
+          "text": "كم عدد دول العالم تقريباً؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "يبلغ عدد الدول الأعضاء في الأمم المتحدة 193 دولة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "150",
+            "193",
+            "210",
+            "175"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_f2fbdaa55c3f",
+          "text": "أي بحر يفصل بين أوروبا وأفريقيا عند مضيق جبل طارق؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "البحر الأبيض المتوسط يفصل بين أوروبا وأفريقيا عند مضيق جبل طارق",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "البحر الأحمر",
+            "البحر الأبيض المتوسط",
+            "البحر الأسود",
+            "بحر العرب"
+          ],
+          "optionImages": [],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "cat_medicine_health",
+      "name": "الطب والصحة",
+      "icon": "🏥",
+      "color": "#e91e63",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "lib_q_fd5d8d04d393",
+          "text": "كم عدد العظام في جسم الإنسان البالغ؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "يحتوي جسم الإنسان البالغ على 206 عظمة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "196",
+            "206",
+            "216",
+            "256"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_78cf10b40f1b",
+          "text": "ما هو أكبر عضو في جسم الإنسان؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الجلد هو أكبر عضو في جسم الإنسان من حيث المساحة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الكبد",
+            "الجلد",
+            "الرئة",
+            "القلب"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_6de77434fbb6",
+          "text": "كم لتر دم يوجد في جسم الإنسان البالغ تقريباً؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "يحتوي جسم الإنسان البالغ على حوالي 5 لترات من الدم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "3 لترات",
+            "5 لترات",
+            "7 لترات",
+            "10 لترات"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_21010b01bb4f",
+          "text": "ما هي الفيتامين الذي يُسمى فيتامين الشمس؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "فيتامين د يُسمى فيتامين الشمس لأن الجسم ينتجه عند التعرض لأشعة الشمس",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فيتامين أ",
+            "فيتامين ج",
+            "فيتامين د",
+            "فيتامين ب"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_b46a2082f5bb",
+          "text": "ما هو العضو المسؤول عن تنقية الدم في جسم الإنسان؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الكليتان هما المسؤولتان عن تنقية الدم من الفضلات والسموم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الكبد",
+            "الكلية",
+            "الرئة",
+            "الطحال"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_af0ca9bb3bd4",
+          "text": "كم مرة ينبض قلب الإنسان البالغ في الدقيقة تقريباً؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "ينبض قلب الإنسان البالغ من 60 إلى 100 نبضة في الدقيقة بمعدل 72 نبضة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "30-40",
+            "60-100",
+            "120-150",
+            "150-200"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_ad6e5a7753a4",
+          "text": "ما هو المرض الذي تسببه بكتيريا الملاريا؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الملاريا تسببها طفيليات البلازموديوم وليست بكتيريا، وتنتقل عن طريق البعوض",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "البلازموديوم",
+            "السالمونيلا",
+            "المكورات العنقودية",
+            "الإشريكية القولونية"
+          ],
+          "optionImages": [],
+          "correct": 0
+        },
+        {
+          "id": "lib_q_c70fc2c20afa",
+          "text": "ما هو أطول عظم في جسم الإنسان؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "عظم الفخذ هو أطول عظم في جسم الإنسان ويشكل حوالي ربع طول الجسم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "عظم الساق",
+            "عظم الفخذ",
+            "عظم العضد",
+            "عظم الظهر"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_de7dd4d3fa0c",
+          "text": "كم عدد الكروموسومات في الخلية البشرية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "تحتوي الخلية البشرية على 46 كروموسوماً (23 زوجاً)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "23",
+            "44",
+            "46",
+            "48"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_326ffc8e02db",
+          "text": "ما هو الفيتامين المسؤول عن تجلط الدم؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "فيتامين كيه (K) ضروري لعملية تجلط الدم بشكل طبيعي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فيتامين أ",
+            "فيتامين سي",
+            "فيتامين كيه",
+            "فيتامين إي"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_fdb42b3e3478",
+          "text": "ما هو الجزء من الدماغ المسؤول عن التوازن وتنسيق الحركات؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "المخيخ هو الجزء المسؤول عن التوازن وتنسيق الحركات الإرادية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المخ",
+            "المخيخ",
+            "جذع الدماغ",
+            "تحت المهاد"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_701a6611d44b",
+          "text": "ما هي فصيلة الدم الأكثر شيوعاً في العالم؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "فصيلة الدم O+ هي الأكثر شيوعاً في العالم بنسبة حوالي 38%",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "A+",
+            "B+",
+            "O+",
+            "AB+"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_4ba0f2b55faf",
+          "text": "ما هو الهرمون المسؤول عن تنظيم مستوى السكر في الدم والذي يفرزه البنكرياس؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الأنسولين هو الهرمون الذي يفرزه البنكرياس لتنظيم مستوى الجلوكوز في الدم",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الأدرينالين",
+            "الأنسولين",
+            "الجلوكاغون",
+            "الثيروكسين"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_a6139519da00",
+          "text": "كم يبلغ عدد الأسنان في فم الإنسان البالغ؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "يبلغ عدد الأسنان في فم الإنسان البالغ 32 سناً بما فيها أضراس العقل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "28",
+            "30",
+            "32",
+            "34"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_17e0c5d6f9d1",
+          "text": "ما هو مرض السكري من النوع الأول؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "السكري من النوع الأول هو مرض مناعي ذاتي تدمر فيه خلايا بيتا في البنكرياس فلا ينتج الأنسولين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "مرض فيروسي",
+            "مرض مناعي ذاتي",
+            "مرض بكتيري",
+            "مرض وراثي فقط"
+          ],
+          "optionImages": [],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "cat_economics_business",
+      "name": "الاقتصاد والأعمال",
+      "icon": "💼",
+      "color": "#ff9800",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "lib_q_7df503d43dda",
+          "text": "ما هي العملة الرسمية لليابان؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الين الياباني هو العملة الرسمية لليابان",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "اليوان",
+            "الين",
+            "الوون",
+            "الروبية"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_783cb60b6807",
+          "text": "ما هو البنك المركزي الأمريكي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الاحتياطي الفيدرالي (Federal Reserve) هو البنك المركزي الأمريكي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "بنك أمريكا",
+            "الاحتياطي الفيدرالي",
+            "ول ستريت بنك",
+            "بنك مورغان"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_a9c2da5c0977",
+          "text": "ما هو الناتج المحلي الإجمالي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الناتج المحلي الإجمالي هو القيمة السوقية لجميع السلع والخدمات النهائية المنتجة في بلد خلال فترة زمنية محددة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "إجمالي دخل الأفراد",
+            "قيمة السلع والخدمات المنتجة في البلد",
+            "إجمالي الصادرات",
+            "قيمة الواردات"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_62bb0e231bb3",
+          "text": "ما هو التضخم الاقتصادي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "التضخم هو الارتفاع المستمر والمستدام في المستوى العام للأسعار مما يقلل القوة الشرائية للنقود",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "انخفاض الأسعار",
+            "ارتفاع المستوى العام للأسعار",
+            "ثبات الأسعار",
+            "زيادة الإنتاج"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_53b8f42010fe",
+          "text": "ما هي أكبر اقتصاد في العالم من حيث الناتج المحلي الإجمالي الاسمي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الولايات المتحدة الأمريكية هي أكبر اقتصاد في العالم من حيث الناتج المحلي الإجمالي الاسمي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الصين",
+            "اليابان",
+            "الولايات المتحدة",
+            "ألمانيا"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_4ff7d25cfb92",
+          "text": "ما هو سوق الأوراق المالية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "سوق الأوراق المالية هو سوق تنظم فيه عمليات buying وselling الأسهم والسندات والأوراق المالية الأخرى",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سوق لبيع السيارات",
+            "سوق لتداول الأسهم والسندات",
+            "سوق لبيع العقارات",
+            "سوق لبيع العملات فقط"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_08b41a67a399",
+          "text": "ما هو مؤشر داو جونز الصناعي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "مؤشر داو جونز هو مؤشر يمثل أداء 30 شركة كبرى في بورصة نيويورك",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "مؤشر للشركات الصغيرة",
+            "مؤشر لـ30 شركة كبرى في بورصة نيويورك",
+            "مؤشر للسندات الحكومية",
+            "مؤشر للعملات"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_6ad8ea5375df",
+          "text": "ما هي العملة الرسمية للمملكة العربية السعودية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الريال السعودي هو العملة الرسمية للمملكة العربية السعودية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الدينار",
+            "الريال",
+            "الدرهم",
+            "الجنيه"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_ecc484c0c074",
+          "text": "ما هو العرض والطلب؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "العرض هو كمية السلع المعروضة للبيع والطلب هو كمية السلع التي يرغب المستهلكون في شرائها عند سعر معين",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نظام ضريبي",
+            "قانون اقتصادي يحدد الأسعار بناءً على الكمية المتاحة والرغبة في الشراء",
+            "نظام مصرفي",
+            "طريقة دفع"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_ddca1ecfc05f",
+          "text": "ما هو الاحتياطي النقدي للبنك المركزي؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الاحتياطي النقدي هو الأموال التي يحتفظ بها البنك المركزي من الذهب والعملات الأجنبية لضمان استقرار العملة المحلية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أموال البنك التجاري",
+            "أموال البنك المركزي من الذهب والعملات الأجنبية",
+            "ميزانية الدولة",
+            "إيرادات الضرائب"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_75ed9dab6373",
+          "text": "ما هي منظمة أوبك؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "أوبك هي منظمة الدول المصدرة للبترول وتضم 13 دولة تتحكم في إنتاج النفط",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "منظمة التجارة العالمية",
+            "منظمة الدول المصدرة للبترول",
+            "منظمة التعاون الاقتصادي",
+            "صندوق النقد الدولي"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_727848c6dd4e",
+          "text": "ما هو الفرق بين الركود والكساد الاقتصادي؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الركود هو انخفاض النشاط الاقتصادي لفترة قصيرة (ربعين متتاليين)، أما الكساد فهو انخفاض حاد وطويل الأمد",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "لا فرق بينهما",
+            "الركود قصير والكساد حاد وطويل",
+            "الكساد أخف من الركود",
+            "الركود يحدث فقط في الدول النامية"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_f8abf7365bd6",
+          "text": "ما هي العملة الرسمية للاتحاد الأوروبي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "اليورو هو العملة الرسمية للاتحاد الأوروبي وتستخدمه 20 دولة أوروبية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الجنيه الإسترليني",
+            "اليورو",
+            "الفرنك",
+            "المارك"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_9c87fc4b59f1",
+          "text": "ما هو صندوق النقد الدولي؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "صندوق النقد الدولي هو منظمة مالية دولية تهدف لتعزيز التعاون النقدي الدولي وضمان استقرار النظام المالي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "بنك عالمي للإقراض",
+            "منظمة لتعزيز التعاون النقدي الدولي واستقرار النظام المالي",
+            "منظمة تجارية",
+            "شركة تأمين دولية"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_35fa16ea24a2",
+          "text": "ما هو السوق الحُر؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "السوق الحر هو نظام اقتصادي تتحدد فيه الأسعار والكميات بقوى العرض والطلب دون تدخل حكومي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سوق يتحكم فيه الحكومة بالكامل",
+            "سوق تتحدد فيه الأسعار بالعرض والطلب دون تدخل حكومي",
+            "سوق للمواد المجانية",
+            "سوق محلي فقط"
+          ],
+          "optionImages": [],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "cat_philosophy_thinking",
+      "name": "الفلسفة والتفكير",
+      "icon": "🤔",
+      "color": "#9c27b0",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "lib_q_340a3b54e060",
+          "text": "من هو أبو الفلسفة الغربية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "سقراط يُعتبر أبو الفلسفة الغربية لأسلوبه في الحوار والتساؤل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أفلاطون",
+            "سقراط",
+            "أرسطو",
+            "فيثاغورس"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_f48d07464ec5",
+          "text": "من هو مؤلف كتاب 'الجمهورية'؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "أفلاطون هو مؤلف كتاب الجمهورية الذي يتناول العدالة والدولة المثالية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أرسطو",
+            "سقراط",
+            "أفلاطون",
+            "هوميروس"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_84670bed3736",
+          "text": "من هو ابن سينا وما أشهر كتبه؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "ابن سينا هو فيلسوف وطبيب مسلم وأشهر كتبه 'الشفاء' و'القانون في الطب'",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "كتاب البيان والتبيين",
+            "القانون في الطب",
+            "المقدمة",
+            "الفهرست"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_2b27f87446cf",
+          "text": "ما هي المدرسة الفلسفية التي تؤمن بأن المعرفة تأتي من الحواس والتجربة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "المدرسة التجريبية تؤمن بأن المعرفة تأتي من الحواس والتجربة الحسية وليس من العقل وحده",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المدرسة العقلانية",
+            "المدرسة التجريبية",
+            "المدرسة الوجودية",
+            "المدرسة البراغماتية"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_035d2935a25b",
+          "text": "من هو صاحب كتاب 'المقدمة' في علم الاجتماع والفلسفة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "ابن خلدون هو صاحب كتاب المقدمة الذي يُعد من أوائل أعمال علم الاجتماع والفلسفة التاريخية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الفارابي",
+            "ابن خلدون",
+            "الغزالي",
+            "ابن رشد"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_552da3b89cc3",
+          "text": "ما هي الفلسفة الوجودية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الفلسفة الوجودية تركز على حرية الفرد ومسؤوليته في عالم لا معنى مسبق له وأبرز روادها سارتر وكامو",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فلسفة تؤمن بالقدر المسبق",
+            "فلسفة تركز على حرية الفرد ومسؤوليته",
+            "فلسفة تؤمن بتفوق العقل",
+            "فلسفة تنفي وجود الله"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_39e02cd4a492",
+          "text": "من هو الفارابي وما لقبه؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الفارابي فيلسوف مسلم لُقب بالمعلم الثاني بعد أرسطو المعلم الأول",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المعلم الأول",
+            "المعلم الثاني",
+            "المعلم الثالث",
+            "حكيم الشرق"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_f5987fc08930",
+          "text": "ما هو المذهب العقلي (العقلانية)؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "العقلانية مذهب فلسفي يرى أن العقل هو المصدر الرئيسي للمعرفة وأن الحقائق يمكن الوصول إليها بالتفكير المنطقي",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المعرفة تأتي من التجربة فقط",
+            "العقل هو المصدر الرئيسي للمعرفة",
+            "المعرفة مستحيلة",
+            "المعرفة تأتي من الإيمان فقط"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_506bbaed4c1a",
+          "text": "من هو الفيلسوف الفرنسي صاحب مقولة 'أنا أفكر إذاً أنا موجود'؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "رينيه ديكارت هو صاحب هذه المقولة الشهيرة التي تعتبر أساس الفلسفة الحديثة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "فولتير",
+            "روسو",
+            "ديكارت",
+            "باسكال"
+          ],
+          "optionImages": [],
+          "correct": 2
+        },
+        {
+          "id": "lib_q_1f7b00c3ce82",
+          "text": "ما هو مذهب الشك المنهجي؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الشك المنهجي هو منهج فلسفي وضعه ديكارت يقوم على الشك في كل شيء للوصول إلى يقين لا يُدحض",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الشك في كل شيء دون هدف",
+            "الشك المنظم للوصول إلى اليقين",
+            "إنكار كل المعرفة",
+            "الإيمان المطلق بالحواس"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_e81dc12efeae",
+          "text": "من هو أبو حامد الغزالي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الغزالي فيلسوف وعالم مسلم صاحب كتاب 'إحياء علوم الدين' و'المنقذ من الضلال'",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "طبيب مسلم",
+            "فيلسوف وعالم مسلم صاحب إحياء علوم الدين",
+            "شاعر عباسي",
+            "قائد عسكري"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_3b80cbf39234",
+          "text": "ما هو الفرق بين الاستقراء والاستنتاج؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الاستقراء ينتقل من الخاص إلى العام (من الملاحظات إلى القوانين)، والاستنتاج ينتقل من العام إلى الخاص (من المبادئ إلى النتائج)",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "لا فرق بينهما",
+            "الاستقراء من الخاص للعام والاستنتاج من العام للخاص",
+            "الاستقراء من العام للخاص والاستنتاج من الخاص للعام",
+            "كلاهما من العام للخاص"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_5a946448c10a",
+          "text": "من هو ابن رشد وما إسهامه الفلسفي؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "ابن رشد فيلسوف أندلسي شرح فلسفة أرسطو ودافع عن التوافق بين الفلسفة والدين في كتاب 'تهافت التهافت'",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "شرح فلسفة سقراط",
+            "شرح فلسفة أرسطو ودافع عن التوافق بين العقل والنقل",
+            "أسس المدرسة الوجودية",
+            "أنكر الفلسفة تماماً"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_3f2e60fc102a",
+          "text": "ما هي المغالطة المنطقية؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "المغالطة هي خطأ في التفكير أو الاستدلال يجعل الحجة غير صالحة رغم أنها قد تبدو مقنعة ظاهرياً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "حقيقة علمية",
+            "خطأ في التفكير أو الاستدلال",
+            "رأي شخصي",
+            "نظرية فلسفية"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_5bd7b9727ccc",
+          "text": "ما معنى الأخلاق في الفلسفة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الأخلاق في الفلسفة هي دراسة المبادئ والقيم التي تحكم السلوك البشري وتميز بين الصواب والخطأ",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "دراسة الكون",
+            "دراسة المبادئ التي تحكم السلوك وتميز بين الصواب والخطأ",
+            "دراسة اللغة",
+            "دراسة الفن"
+          ],
+          "optionImages": [],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "cat_space_astronomy",
+      "name": "الفضاء والفلك",
+      "icon": "🚀",
+      "color": "#00bcd4",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "lib_q_8a026012a2c9",
+          "text": "ما هو أقرب كوكب إلى الشمس؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "عطارد هو أقرب الكواكب إلى الشمس ويبعد عنها حوالي 58 مليون كيلومتر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الزهرة",
+            "عطارد",
+            "الأرض",
+            "المريخ"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_e548e21b70c3",
+          "text": "ما هو أكبر كوكب في المجموعة الشمسية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المشتري هو أكبر كوكب في المجموعة الشمسية ويبلغ قطره 142984 كيلومتر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "زحل",
+            "المشتري",
+            "أورانوس",
+            "نبتون"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_ca199f76482b",
+          "text": "كم عدد الكواكب في المجموعة الشمسية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المجموعة الشمسية تضم 8 كواكب بعد استبعاد بلوتو في عام 2006",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_f8afc5ad6997",
+          "text": "ما هو الكوكب الأحمر؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المريخ يُعرف بالكوكب الأحمر بسبب أكسيد الحديد على سطحه الذي يعطيه اللون الأحمر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الزهرة",
+            "المريخ",
+            "المشتري",
+            "عطارد"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_5a44224272af",
+          "text": "ما هو أبطأ كوكب في الدوران حول نفسه في المجموعة الشمسية؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الزهرة هو أبطأ كوكب في الدوران حول نفسه إذ يستغرق 243 يوماً أرضياً لدورة واحدة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "عطارد",
+            "الزهرة",
+            "المريخ",
+            "أورانوس"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_2070fa3dbff9",
+          "text": "ما هي المجرة التي نعيش فيها؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "نحن نعيش في مجرة درب التبانة وهي مجرة حلزونية الشكل",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "مجرة أندروميدا",
+            "درب التبانة",
+            "مجرة المثلث",
+            "مجرة سحابة ماجلان"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_7193b2145fbb",
+          "text": "ما هو النجم الأقرب إلى الأرض بعد الشمس؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "بروكسيما سنتوري هو أقرب نجم إلى الأرض بعد الشمس ويبعد 4.24 سنة ضوئية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سيريوس",
+            "بروكسيما سنتوري",
+            "ألفا سنتوري",
+            "بارنارد"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_82e4c222af4f",
+          "text": "ما هي الثقوب السوداء؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الثقوب السوداء هي مناطق في الفضاء ذات جاذبية هائلة لدرجة أن الضوء نفسه لا يستطيع الإفلات منها",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نجوم ساطعة جداً",
+            "مناطق ذات جاذبية هائلة لا يفلت منها الضوء",
+            "كواكب مظلمة",
+            "نيازك عملاقة"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_611818ad196b",
+          "text": "كم يستغرق ضوء الشمس للوصول إلى الأرض؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "يستغرق ضوء الشمس حوالي 8 دقائق و20 ثانية للوصول إلى الأرض",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "دقيقة واحدة",
+            "8 دقائق",
+            "30 دقيقة",
+            "ساعة"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_d2733f3a883c",
+          "text": "ما هو الكوكب الذي يمتلك أكبر عدد من الأقمار؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "زحل يمتلك أكبر عدد من الأقمار المعروفة في المجموعة الشمسية بأكثر من 140 قمراً مؤكداً",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المشتري",
+            "زحل",
+            "أورانوس",
+            "نبتون"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_515b48edb2d8",
+          "text": "ما هو الانفجار العظيم (Big Bang)؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الانفجار العظيم هو النظرية الأكثر قبولاً لبدء الكون والتي تفيد بأن الكون بدأ من نقطة شديدة الحرارة والكثافة قبل 13.8 مليار سنة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نظرية عن نهاية الكون",
+            "نظرية نشأة الكون من نقطة شديدة الحرارة والكثافة",
+            "نظرية عن تكوين الشمس",
+            "نظرية عن تشكل الكواكب"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_9ee6282294e5",
+          "text": "ما هو الكويكب؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الكويكب هو جسم صخري صغير يدور حول الشمس ويوجد معظمها في حزام الكويكبات بين المريخ والمشتري",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نجم صغير",
+            "جسم صخري صغير يدور حول الشمس",
+            "قمر صناعي",
+            "مذنب"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_d9edc7c456c8",
+          "text": "ما هي السنة الضوئية؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "السنة الضوئية هي المسافة التي يقطعها الضوء في سنة واحدة وتساوي حوالي 9.46 تريليون كيلومتر",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "زمن قدوم الضوء",
+            "المسافة التي يقطعها الضوء في سنة",
+            "سرعة الضوء",
+            "شدة إضاءة نجم"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_2d592c9ba6d0",
+          "text": "من هو أول إنسان يصل إلى الفضاء؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "يوري غاغارين هو أول إنسان يصل إلى الفضاء في 12 أبريل 1961",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نيل أرمسترونغ",
+            "يوري غاغارين",
+            "بز ألدرين",
+            "جون غلين"
+          ],
+          "optionImages": [],
+          "correct": 1
+        },
+        {
+          "id": "lib_q_e0d6d925ce0c",
+          "text": "ما هي حلقات زحل المكونة منها؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "حلقات زحل تتكون أساساً من جليد وصخور وأتربة كونية بأحجام مختلفة تدور حول الكوكب",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "غازات سامة",
+            "جليد وصخور وأتربة كونية",
+            "حمم بركانية",
+            "ماء سائل فقط"
+          ],
+          "optionImages": [],
+          "correct": 1
         }
       ]
     }
