@@ -1,5 +1,5 @@
 {
-  "version": "8",
+  "version": "9",
   "settings": {},
   "categories": [
     {
@@ -192,12 +192,12 @@
           "type": "tf",
           "difficulty": "medium",
           "time": 20,
-          "explanation": "سورة الكوثر ليست الأقصر، بل أقصر سور القرآن هي سورة العصر أو الكوثر (كلاهما 3 آيات)، لكن بعض العلماء يعدّون الكوثر 3 آيات والعصر 3 آيات",
+          "explanation": "سورة الكوثر أقصر سورة في القرآن الكريم (3 آيات)، وتشاركها سورة العصر في نفس العدد لكن الكوثر أقصر من حيث عدد الكلمات والحروف",
           "hostNote": "",
           "mediaData": null,
           "options": [],
           "optionImages": [],
-          "correct": 1
+          "correct": 0
         },
         {
           "id": "19de43fa302qddyq",
@@ -412,6 +412,24 @@
             null
           ],
           "correct": 0
+        },
+        {
+          "id": "ql_new_quran1",
+          "text": "ما هي السورة التي تسمى السبع المثاني؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "سورة الفاتحة تسمى السبع المثاني لأنها سبع آيات وتثنى في كل ركعة",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "البقرة",
+            "الفاتحة",
+            "الإخلاص",
+            "الأنعام"
+          ],
+          "optionImages": [],
+          "correct": 1
         }
       ]
     },
@@ -829,6 +847,24 @@
             null
           ],
           "correct": 1
+        },
+        {
+          "id": "ql_new_sunnah1",
+          "text": "ما هو المسند الذي رتب على أسماء الصحابة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "مسند الإمام أحمد بن حنبل رُتب على أسماء الصحابة الذين رووا الأحاديث",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "سنن الترمذي",
+            "مسند الإمام أحمد",
+            "صحيح مسلم",
+            "الموطأ"
+          ],
+          "optionImages": [],
+          "correct": 1
         }
       ]
     },
@@ -1090,29 +1126,6 @@
           "fitbAnswer": "جبريل|جبرائيل"
         },
         {
-          "id": "ql_nnuxj11t",
-          "text": "كم عدد أركان الإيمان؟",
-          "type": "text",
-          "difficulty": "easy",
-          "time": 20,
-          "explanation": "أركان الإيمان ستة كما جاء في حديث جبريل",
-          "hostNote": "",
-          "mediaData": null,
-          "options": [
-            "5",
-            "6",
-            "7",
-            "4"
-          ],
-          "optionImages": [
-            null,
-            null,
-            null,
-            null
-          ],
-          "correct": 1
-        },
-        {
           "id": "ql_whqbp815",
           "text": "رتّب الكتب السماوية حسب ترتيب نزولها",
           "type": "order",
@@ -1237,6 +1250,24 @@
             null,
             null
           ],
+          "correct": 1
+        },
+        {
+          "id": "ql_new_aqeedah1",
+          "text": "ما هو تعريف الإحسان؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الإحسان: أن تعبد الله كأنك تراه، فإن لم تكن تراه فإنه يراك",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "أن تصوم وتصلي كثيراً",
+            "أن تعبد الله كأنك تراه",
+            "أن تؤدي الزكاة بانتظام",
+            "أن تذكر الله كثيراً"
+          ],
+          "optionImages": [],
           "correct": 1
         }
       ]
@@ -1654,6 +1685,24 @@
             null,
             null
           ],
+          "correct": 1
+        },
+        {
+          "id": "ql_new_fiqh1",
+          "text": "كم نصاب زكاة الزروع والثمار؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "نصاب الزروع والثمار خمسة أوسق، والوسق 60 صاعاً، أي ما يعادل حوالي 653 كيلوجراماً من القمح ونحوه",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "ثلاثة أوسق",
+            "خمسة أوسق",
+            "سبعة أوسق",
+            "عشرة أوسق"
+          ],
+          "optionImages": [],
           "correct": 1
         }
       ]
@@ -2473,6 +2522,24 @@
             null
           ],
           "correct": 1
+        },
+        {
+          "id": "ql_new_history1",
+          "text": "من هو القائد المسلم الذي هزم المغول في معركة عين جالوت؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "سيف الدين قطز هو القائد الذي هزم المغول في عين جالوت عام 658هـ / 1260م",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "صلاح الدين الأيوبي",
+            "سيف الدين قطز",
+            "الظاهر بيبرس",
+            "نور الدين زنكي"
+          ],
+          "optionImages": [],
+          "correct": 1
         }
       ]
     },
@@ -2616,7 +2683,7 @@
           "type": "tf",
           "difficulty": "medium",
           "time": 20,
-          "explanation": "الهمزة والتنوين ليسا من الحروف العربية، فالحروف 28 والهمزة والتنوين علامات لا حروف",
+          "explanation": "الهمزة حرف من الحروف العربية أما التنوين فليس حرفاً بل علامة تشكيل، لذا العبارة خاطئة",
           "hostNote": "",
           "mediaData": null,
           "options": [],
@@ -2652,7 +2719,7 @@
           "type": "fitb",
           "difficulty": "easy",
           "time": 15,
-          "explanation": "عدد حروف اللغة العربية 28 حرفاً",
+          "explanation": "عدد حروف اللغة العربية 28 حرفاً (أو 29 باعتبار الهمزة والألف حرفين منفصلين، والمشهور 28)",
           "hostNote": "",
           "mediaData": null,
           "options": [],
@@ -3101,29 +3168,6 @@
           "correct": 1
         },
         {
-          "id": "ql_7ajurf32",
-          "text": "ما هو العنصر الأكثر وفرة في الغلاف الجوي؟",
-          "type": "text",
-          "difficulty": "easy",
-          "time": 20,
-          "explanation": "النيتروجين يشكل حوالي 78% من الغلاف الجوي",
-          "hostNote": "",
-          "mediaData": null,
-          "options": [
-            "الأكسجين",
-            "النيتروجين",
-            "الهيدروجين",
-            "ثاني أكسيد الكربون"
-          ],
-          "optionImages": [
-            null,
-            null,
-            null,
-            null
-          ],
-          "correct": 1
-        },
-        {
           "id": "ql_pcg84he0",
           "text": "الماء يتكون من ذرتي هيدروجين وذرة أكسجين",
           "type": "tf",
@@ -3298,6 +3342,24 @@
             null,
             null
           ],
+          "correct": 1
+        },
+        {
+          "id": "ql_new_science1",
+          "text": "ما هو الغاز الذي يشكل حوالي 21% من الغلاف الجوي للأرض؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الأكسجين يشكل 21% من الغلاف الجوي وهو ضروري لتنفس الكائنات الحية",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "النيتروجين",
+            "الأكسجين",
+            "ثاني أكسيد الكربون",
+            "الهيدروجين"
+          ],
+          "optionImages": [],
           "correct": 1
         }
       ]
@@ -3500,29 +3562,6 @@
             "أفريقيا",
             "أوروبا",
             "أمريكا"
-          ],
-          "optionImages": [
-            null,
-            null,
-            null,
-            null
-          ],
-          "correct": 1
-        },
-        {
-          "id": "ql_ar0yzcrs",
-          "text": "ما هي أكبر دولة عربية من حيث المساحة؟",
-          "type": "text",
-          "difficulty": "medium",
-          "time": 25,
-          "explanation": "الجزائر هي أكبر دولة عربية من حيث المساحة بعد انفصال جنوب السودان",
-          "hostNote": "",
-          "mediaData": null,
-          "options": [
-            "المملكة العربية السعودية",
-            "الجزائر",
-            "السودان",
-            "ليبيا"
           ],
           "optionImages": [
             null,
@@ -4125,6 +4164,24 @@
             null
           ],
           "correct": 2
+        },
+        {
+          "id": "ql_new_english1",
+          "text": "What is the largest desert in the world?",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "Antarctica is the largest desert in the world (a cold desert), followed by the Sahara (hot desert).",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Sahara",
+            "Antarctica",
+            "Arctic",
+            "Arabian Desert"
+          ],
+          "optionImages": [],
+          "correct": 1
         }
       ]
     },
@@ -4690,7 +4747,7 @@
           "type": "text",
           "difficulty": "medium",
           "time": 25,
-          "explanation": "كريستيانو رونالدو هو الهداف التاريخي لكرة القدم",
+          "explanation": "كريستيانو رونالدو هو الهداف التاريخي لكرة القدم (اعتباراً من آخر إحصاء رسمي)",
           "hostNote": "",
           "mediaData": null,
           "options": [
@@ -5761,6 +5818,24 @@
             null
           ],
           "correct": 1
+        },
+        {
+          "id": "ql_new_math1",
+          "text": "ما ناتج 7^2؟",
+          "type": "math",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "7^2 = 7 × 7 = 49",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "14",
+            "49",
+            "42",
+            "56"
+          ],
+          "optionImages": [],
+          "correct": 1
         }
       ]
     },
@@ -5904,7 +5979,7 @@
           "type": "tf",
           "difficulty": "medium",
           "time": 20,
-          "explanation": "نعم، إزالة الغاطق تقلل النباتات الماصة لثاني أكسيد الكربون",
+          "explanation": "نعم، إزالة الغابات تقلل النباتات الماصة لثاني أكسيد الكربون",
           "hostNote": "",
           "mediaData": null,
           "options": [],
@@ -6573,7 +6648,7 @@
           "type": "text",
           "difficulty": "medium",
           "time": 30,
-          "explanation": "الملاريا تسببها طفيليات البلازموديوم وليست بكتيريا، وتنتقل عن طريق البعوض",
+          "explanation": "الملاريا تسببها طفيليات البلازموديوم وليست بكتيريا، وتنتقل عن طريق البعوض. (السؤال به خطأ لفظي: الملاريا تسببها طفيليات وليس بكتيريا، ولكن الخيار الصحيح يشير إلى البلازموديوم)",
           "hostNote": "",
           "mediaData": null,
           "options": [
