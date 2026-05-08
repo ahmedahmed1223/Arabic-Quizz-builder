@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل المستخدم v9 — منصة المسابقات التفاعلية</title>
+<title>دليل المستخدم v10 — منصة المسابقات التفاعلية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -106,6 +106,7 @@ body::after{
 .new-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(251,146,60,.15);color:var(--orange);border:1px solid rgba(251,146,60,.3);margin-right:6px;vertical-align:middle}
 .v8-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(0,245,212,.15);color:var(--gold);border:1px solid rgba(0,245,212,.3);margin-right:6px;vertical-align:middle}
 .v9-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(251,146,60,.15);color:var(--orange);border:1px solid rgba(251,146,60,.3);margin-right:6px;vertical-align:middle}
+.v10-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(255,64,96,.15);color:var(--red);border:1px solid rgba(255,64,96,.3);margin-right:6px;vertical-align:middle}
 .table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:.85rem}
 thead{background:var(--bg3)}
@@ -227,10 +228,11 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 </head>
 <body>
 <header class="site-header">
-  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات — دليل المستخدم v9</div>
+  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات — دليل المستخدم v10</div>
   <nav class="header-nav">
     <a class="nav-pill active" href="#overview">نظرة عامة</a>
     <a class="nav-pill" href="#whats-new-v9">الجديد V9</a>
+    <a class="nav-pill" href="#whats-new-v10">V10</a>
     <a class="nav-pill" href="#whats-new-v8">V8</a>
     <a class="nav-pill" href="#login">الدخول</a>
     <a class="nav-pill" href="#settings">الإعدادات</a>
@@ -238,6 +240,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <a class="nav-pill" href="#builtin-library">المكتبة</a>
     <a class="nav-pill" href="#cat-display">عرض الأقسام</a>
     <a class="nav-pill" href="#whiteboard">السبورة</a>
+    <a class="nav-pill" href="#audience-screen">شاشة الجمهور</a>
+    <a class="nav-pill" href="#remote-screen">التحكم عن بُعد</a>
     <a class="nav-pill" href="#certificate">الشهادة</a>
     <a class="nav-pill" href="#themes">الثيمات</a>
     <a class="nav-pill" href="#sound">الصوت</a>
@@ -253,6 +257,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <a class="nav-pill" href="#ordering-detail">الترتيب</a>
     <a class="nav-pill" href="#jeopardy">جيوباردي</a>
     <a class="nav-pill" href="#custom-palettes">لوحات الألوان</a>
+    <a class="nav-pill" href="#tiebreaker">جولة الحسم</a>
+    <a class="nav-pill" href="#storage-monitor">مراقب التخزين</a>
     <a class="nav-pill" href="#api-ref">API</a>
     <a class="nav-pill" href="#security-perf">الأمان والأداء</a>
     <a class="nav-pill" href="#data-format">تنسيق البيانات</a>
@@ -268,6 +274,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="toc-title">محتويات الدليل</div>
     <a class="toc-item active" href="#overview">🗺️ نظرة عامة</a>
     <a class="toc-item" href="#whats-new-v9">🆕 الجديد في V9</a>
+    <a class="toc-item" href="#whats-new-v10">🆕 الجديد في V10</a>
     <a class="toc-item" href="#whats-new-v8">📋 الجديد في V8</a>
     <a class="toc-item" href="#login">🔐 تسجيل الدخول</a>
     <a class="toc-item" href="#settings">⚙️ الإعدادات</a>
@@ -280,10 +287,12 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <a class="toc-item" href="#competition-modes">🎮 أنماط المسابقة</a>
     <a class="toc-item" href="#cat-display">🎡 أنماط عرض الأقسام</a>
     <a class="toc-item" href="#presentation">🎬 شاشة العرض</a>
+    <a class="toc-item" href="#audience-screen">🖥️ شاشة الجمهور</a>
+    <a class="toc-item" href="#remote-screen">📱 شاشة التحكم عن بُعد</a>
     <a class="toc-item" href="#whiteboard">🖊️ السبورة التفاعلية</a>
     <a class="toc-item" href="#new-screens">🏆 المنصة والإحصاءات</a>
     <a class="toc-item" href="#certificate">📜 شهادة الفائز</a>
-    <a class="toc-item" href="#themes">🎨 الثيمات (15)</a>
+    <a class="toc-item" href="#themes">🎨 الثيمات (19)</a>
     <a class="toc-item" href="#lifelines">🆘 أطواق النجاة</a>
     <a class="toc-item" href="#sound">🔊 الصوت</a>
     <a class="toc-item" href="#shortcuts">⌨️ الاختصارات</a>
@@ -300,6 +309,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <a class="toc-item" href="#ordering-detail">📋 سؤال الترتيب (تفصيلي)</a>
     <a class="toc-item" href="#jeopardy">🎯 وضع جيوباردي</a>
     <a class="toc-item" href="#custom-palettes">🎨 لوحات الألوان المتعددة</a>
+    <a class="toc-item" href="#tiebreaker">⚡ جولة الحسم</a>
+    <a class="toc-item" href="#storage-monitor">📊 مراقب التخزين</a>
     <a class="toc-item" href="#security-perf">🛡️ الأمان والأداء</a>
     <a class="toc-item" href="#api-ref">🔌 مرجع API (التحكم عن بُعد)</a>
     <a class="toc-item" href="#data-format">📊 تنسيق البيانات V9</a>
@@ -313,14 +324,15 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 <!-- HERO -->
 <section id="overview">
   <div class="hero">
-    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 9</strong> 🆕</div>
+    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 10</strong> 🆕</div>
     <h1>منصة المسابقات التفاعلية</h1>
     <p>منصة احترافية متكاملة لإعداد وتقديم مسابقات تفاعلية تعليمية وترفيهية، تعمل كاملاً في المتصفح دون الحاجة لاتصال بالإنترنت أثناء العرض.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num">9</div><div class="lbl">أنواع أسئلة</div></div>
-      <div class="hero-stat"><div class="num">15</div><div class="lbl">ثيماً بصرياً</div></div>
-      <div class="hero-stat"><div class="num">100</div><div class="lbl">سؤال مدمج</div></div>
+      <div class="hero-stat"><div class="num">10</div><div class="lbl">أنواع أسئلة</div></div>
+      <div class="hero-stat"><div class="num">19</div><div class="lbl">ثيماً بصرياً</div></div>
+      <div class="hero-stat"><div class="num">300</div><div class="lbl">سؤال مدمج</div></div>
       <div class="hero-stat"><div class="num">🎡</div><div class="lbl">عجلة الحظ</div></div>
+      <div class="hero-stat"><div class="num">⚡</div><div class="lbl">جولة الحسم</div></div>
       <div class="hero-stat"><div class="num">🛡️</div><div class="lbl">أمان محسّن</div></div>
       <div class="hero-stat"><div class="num">⚡</div><div class="lbl">أداء أعلى</div></div>
     </div>
@@ -328,7 +340,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 
   <div class="callout new" style="margin-bottom:28px">
     <span class="callout-icon">🆕</span>
-    <span><strong>ما الجديد في الإصدار 9؟</strong> — سياسة أمان المحتوى (CSP) · مُطهِّر HTML مدمج ضد XSS · تخزين وسائط محسّن في IndexedDB · التخزين الأساسي في IndexedDB (V9.2) · حفظ محسّن مع فحص التغييرات · ضغط LZ-String للبيانات (~70% أصغر) · إدارة حالة مركزية (AppState) · نظام قوالب موحد وبناء DOM آمن · تحسينات أداء الحركات · إمكانية الوصول (prefers-reduced-motion) · تحسينات انتقال الشاشات · تحسينات التدويل.</span>
+    <span><strong>ما الجديد في الإصدار 10؟</strong> — جولة الحسم (Tiebreaker) · أشرطة تمرير فردية لمستوى الصوت · أصوات شاشة الجمهور · نمط احتساب أغلبية صحيحة للترتيب والتوصيل · مزامنة محسّنة لشاشة الجمهور · مراقب التخزين المحسّن · إصلاحات حرجة لمنع تجمّد التطبيق وفقدان البيانات · تحسينات شاملة للنظام الصوتي · سد ثغرات XSS · 32 مفتاح ترجمة جديد</span>
   </div>
 
   <div class="cards-grid">
@@ -337,6 +349,146 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="card"><div class="card-icon">💾</div><div class="card-title">حفظ تلقائي محسّن</div><p>يُحفظ كل شيء محلياً بضغط LZ-String (أصغر بـ 70%) في IndexedDB كتخزين أساسي مع localStorage كاحتياطي مضغوط. حفظ محسّن بفحص التغييرات والدمج الزمني.</p></div>
     <div class="card"><div class="card-icon">📱</div><div class="card-title">متوافق مع كل الشاشات</div><p>يعمل على الهواتف والأجهزة اللوحية والحواسيب وشاشات العرض الكبيرة والـ 4K مع دعم كامل للّمس واحترام إعدادات تقليل الحركة.</p></div>
   </div>
+</section>
+
+<!-- ═══ WHAT'S NEW V10 ═══ -->
+<section class="section" id="whats-new-v10">
+  <div class="section-header">
+    <div class="section-icon icon-red">🆕</div>
+    <div><div class="section-title">الجديد في الإصدار 10</div><div class="section-sub">استقرار · أمان · صوت · جولة حسم · مزامنة</div></div>
+  </div>
+
+  <div class="callout new"><span class="callout-icon">🆕</span><span>يُعد الإصدار 10 إصداراً مهماً يركّز على الاستقرار والأمان وتجربة المستخدم. يتضمن إصلاحات حرجة لمنع تجمّد التطبيق وفقدان البيانات، ميزة جولة الحسم الجديدة بالكامل، تحسينات شاملة للنظام الصوتي، ومزامنة محسّنة لشاشة الجمهور.</span></div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الميزات الجديدة الرئيسية</div></div>
+    <div class="cards-grid">
+      <div class="card" style="border-color:rgba(255,64,96,.35)"><div class="card-icon">⚡</div><div class="card-title">جولة الحسم (Tiebreaker) <span class="v10-badge">V10</span></div><p>نظام حسم كامل عند تعادل الفرق: نوع قسم جديد "حسم"، أسئلة حسم تلقائية، شاشة حسم كاملة مع مؤقت دائري ملون، أزرار تحكم عن بُعد للحسم، إعادة عرض تلقائي عند بقاء التعادل، واحتياطي ذكي من الأسئلة العادية.</p></div>
+      <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">🔊</div><div class="card-title">أشرطة تمرير فردية لمستوى الصوت <span class="v10-badge">V10</span></div><p>التحكم الدقيق بمستوى صوت كل مؤثر على حدة: إجابة صحيحة (80%)، إجابة خاطئة (80%)، موسيقى الخلفية (40%). يمكن ضبط كل قناة صوتية بشكل مستقل من الإعدادات.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🖥️</div><div class="card-title">أصوات شاشة الجمهور <span class="v10-badge">V10</span></div><p>إعداد جديد يتيح تشغيل أصوات الإجابات الصحيحة والخاطئة في شاشة العرض/الجمهور أيضاً. يعمل عبر Web Audio API مع معالجة تلقائية لسياسة التشغيل التلقائي.</p></div>
+      <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">📊</div><div class="card-title">نمط احتساب "أغلبية صحيحة" <span class="v10-badge">V10</span></div><p>خيار جديد لأسئلة الترتيب والتوصيل: "جميع الإجابات صحيحة" أو "الأغلبية صحيحة". في وضع الأغلبية يُحتسب السؤال صحيحاً إذا تعدّت الإجابات الصحيحة الخاطئة، مع منح نقاط تناسبية.</p></div>
+      <div class="card" style="border-color:rgba(167,139,250,.35)"><div class="card-icon">📺</div><div class="card-title">مزامنة محسّنة لشاشة الجمهور <span class="v10-badge">V10</span></div><p>استطلاع localStorage دائم كل 1.5 ثانية، sessionStorage كل 2 ثانية كطبقة احتياطية، دفع الحالة عبر postMessage مع دفعات تأكيدية، وآلية visibilitychange لمزامنة AudioContext. تحديث شبه فوري بدلاً من تأخير 5-7 ثوانٍ.</p></div>
+      <div class="card" style="border-color:rgba(0,245,212,.35)"><div class="card-icon">📊</div><div class="card-title">مراقب التخزين المحسّن <span class="v10-badge">V10</span></div><p>شاشة مراقبة محسّنة تعرض تفاصيل localStorage وIndexedDB، معلومات الحصة، فحص حالة البيانات الأساسية، وعدد الأقسام والأسئلة المحفوظة. تتضمن أيضاً زر تنظيف البيانات اليتيمة.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">إصلاحات حرجة</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🔴</div><div class="fi-body"><div class="fi-title">منع تجمّد التطبيق عند شاشة التحميل</div><div class="fi-desc">إصلاح خطأ JavaScript أساسي كان يُسبب توقف التطبيق بالكامل. إضافة معالج أخطاء عام لإزالة شاشة التحميل تلقائياً، مهلة زمنية 5 ثوانٍ لتحميل الحالة، ومهلة 8 ثوانٍ لتحميل الوسائط من IndexedDB.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔴</div><div class="fi-body"><div class="fi-title">منع فقدان البيانات بعد الاستيراد أو التحديث</div><div class="fi-desc">حفظ استباقي عند مغادرة الصفحة عبر visibilitychange، إجبار اكتمال حفظ IndexedDB قبل اعتبار الاستيراد ناجحاً، إصلاح خطأ تدمير البيانات الاحتياطية، وتوحيد صيغة البيانات المخزّنة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔴</div><div class="fi-body"><div class="fi-title">إصلاح تكرار الأسئلة بصمت</div><div class="fi-desc">إصلاح 15+ موضعاً في الكود كان يستخدم add() لإضافة الأسئلة المستخدمة دون تهيئة مجموعة Set، مما كان يُسقط الأسئلة المستخدمة ويُعيد طرحها.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تحسينات النظام الصوتي</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🎵</div><div class="fi-body"><div class="fi-title">نظام AudioMixer محسّن <span class="v10-badge">V10</span></div><div class="fi-desc">منع تدمير العقد الصوتية المُسجّلة عند إعادة التسجيل. فصل جميع العقد (disconnect) عند إيقاف الموسيقى لمنع التسريب الصوتي.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">😰</div><div class="fi-body"><div class="fi-title">موسيقى التوتر المحسّنة <span class="v10-badge">V10</span></div><div class="fi-desc">استبدال الموسيقى الافتراضية بملف 10sec.mp3 الجديد. إيقاف موسيقى الخلفية قبل تشغيل التوتر. استئناف الموسيقى الخلفية تلقائياً بعد انتهاء التوتر عبر BgmResumeTracker. إصلاح مسار الصوت القديم.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔊</div><div class="fi-body"><div class="fi-title">تحسينات صوتية عامة <span class="v10-badge">V10</span></div><div class="fi-desc">منع تسرب الذاكرة بتحرير موارد الصوت بعد الاستخدام في 6 مواقع. معالجة سياسة التشغيل التلقائي باستدعاء audioCtx.resume(). استعادة مستوى صوت الموسيقى المخصصة بعد انتهاء التوتر.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تحسينات الأمان</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🛡️</div><div class="fi-body"><div class="fi-title">سد ثغرات XSS <span class="v10-badge">V10</span></div><div class="fi-desc">تنظيف أسماء الفرق بـ _sanitizeUser() في 4 مواقع. تنظيف شرح الأسئلة في لوحة الإدارة. إضافة _sanitizeIcon() لمنع حقن HTML عبر أيقونات الأقسام.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔧</div><div class="fi-body"><div class="fi-title">استقرار الواجهة <span class="v10-badge">V10</span></div><div class="fi-desc">إصلاح عدم استجابة أزرار الإجابة بعد تبديل التبويبات. تنظيف أصناف CSS العالقة (opt-hidden-pr) التي تعطّل النقر. استعادة حالة الأزرار من bfcache. منع الإطلاق المزدوج للنقرات.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">إصلاحات منطقية مهمة</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">✅</div><div class="fi-body"><div class="fi-title">احترام تأكيد الإجابة في الترتيب والتوصيل <span class="v10-badge">V10</span></div><div class="fi-desc">أسئلة الترتيب والتوصيل أصبحت تحترم إعداد "تأكيد الإجابة" بدلاً من تجاوزه. عند التفعيل يظهر زر تأكيد قبل تسجيل الإجابة النهائية.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">✓✗</div><div class="fi-body"><div class="fi-title">إصلاح انعكاس أسئلة صح/خطأ <span class="v10-badge">V10</span></div><div class="fi-desc">إصلاح 6 مواقع كانت تُظهر الإجابة المعكوسة لأسئلة صح/خطأ في المكتبة المدمجة. ترحيل تلقائي للأسئلة القديمة التي أنشئت بالاتفاقية المعكوسة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📥</div><div class="fi-body"><div class="fi-title">استيراد ZIP يدعم مجلد media/ <span class="v10-badge">V10</span></div><div class="fi-desc">استيراد ZIP أصبح يستخرج ملفات الوسائط تلقائياً من مجلد media/. تصدير أنظف بإزالة 7 حقول وسائط كبيرة بدلاً من 3. تحقق من صحة بيانات الاستيراد قبل قبولها.</div></div></div>
+    </div>
+  </div>
+
+  <!-- Improvement table -->
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تحسّن ملحوظ في</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>الجانب</th><th>قبل الإصلاح</th><th>بعد الإصلاح</th></tr></thead>
+        <tbody>
+          <tr><td><strong>استقرار التطبيق</strong></td><td>تجمد كامل عند أخطاء التهيئة</td><td>✅ تجاوز تلقائي للأخطاء</td></tr>
+          <tr><td><strong>فقدان البيانات</strong></td><td>خطر حقيقي (IDB يتلف، حذف غير مقصود)</td><td>✅ آمن مع حفظ استباقي</td></tr>
+          <tr><td><strong>تكرار الأسئلة</strong></td><td>متكرر (Set غير مهيأ)</td><td>✅ مُصلح بالكامل</td></tr>
+          <tr><td><strong>تداخل الصوت</strong></td><td>موسيقى خلفية + توتر معاً</td><td>✅ إيقاف/استئناف منسق</td></tr>
+          <tr><td><strong>استجابة شاشة الجمهور</strong></td><td>تأخير 5-7 ثوانٍ أو عدم تحديث</td><td>✅ تحديث شبه فوري</td></tr>
+          <tr><td><strong>استقرار الأزرار</strong></td><td>عدم استجابة بعد التبديل</td><td>✅ استعادة تلقائية للحالة</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHAT'S NEW V9 ═══ -->
+<section class="section" id="whats-new-v9">
+  <div class="section-header">
+    <div class="section-icon icon-orange">🆕</div>
+    <div><div class="section-title">الجديد في الإصدار 9</div><div class="section-sub">إعادة هيكلة معمارية شاملة — أمان · أداء · تدويل · ثيمات · فيديو</div></div>
+  </div>
+
+  <div class="callout new"><span class="callout-icon">🆕</span><span>يُعد الإصدار التاسع إصداراً رئيسياً شاملاً يتضمن إعادة هيكلة معمارية كاملة وتحسينات جوهرية في الأداء والأمان وإضافة ميزات جديدة مهمة. يركّز على خمسة محاور: تعزيز الأمان ومنع ثغرات XSS، تحسين إدارة التخزين والبيانات، إضافة نظام تدويل ثنائي اللغة، تطوير البنية المعمارية للكود، ورفع كفاءة الأداء العام.</span></div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الميزات الجديدة الرئيسية</div></div>
+    <div class="cards-grid">
+      <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">🌐</div><div class="card-title">نظام التدويل ثنائي اللغة (I18n) <span class="v9-badge">V9</span></div><p>نظام ترجمة كامل من الصفر يدعم العربية (RTL) والإنجليزية (LTR) مع تبديل فوري بدون إعادة تحميل. أكثر من 523 مفتاح ترجمة يغطون جميع شاشات التطبيق ورسائله. تطبيق ديناميكي لاتجاه الصفحة حسب اللغة المختارة.</p></div>
+      <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">∑</div><div class="card-title">مكتبة KaTeX للرياضيات (Offline) <span class="v9-badge">V9</span></div><p>تضمين مكتبة KaTeX 0.16.9 بالكامل داخل التطبيق مع خطوط مدمجة كـ Data URIs. عرض فوري للمعادلات الرياضية بدون اتصال بالإنترنت. يدعم نوع الأسئلة الرياضية بصيغة LaTeX.</p></div>
+      <div class="card" style="border-color:rgba(255,64,96,.35)"><div class="card-icon">🛡️</div><div class="card-title">مُطهِّر HTML مدمج ضد XSS <span class="v9-badge">V9</span></div><p>أداة تطهير HTML مخصصة تزيل التاجات الخطرة والسمات ومعالجات الأحداث وروابط javascript:. أكثر من 30 ثغرة XSS أُغلقت. واجهات آمنة: <code>_sanitizeHTML()</code> و <code>_sanitizeUser()</code> و <code>_setSafeHTML()</code>.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">💾</div><div class="card-title">نظام التخزين المحسّن (QuizStorage) <span class="v9-badge">V9</span></div><p>ضغط LZ-String يُقلل حجم البيانات 60-70%. تخزين أساسي في IndexedDB مع localStorage كاحتياطي مضغوط. نقل الوسائط الكبيرة (>500 حرف) تلقائياً لـ IndexedDB. تنظيف دوري للبيانات اليتيمة وتشفير كلمات مرور بـ PBKDF2.</p></div>
+      <div class="card" style="border-color:rgba(167,139,250,.35)"><div class="card-icon">🎯</div><div class="card-title">إدارة حالة مركزية (AppState) <span class="v9-badge">V9</span></div><p>نظام تدفقي أحادي الاتجاه يسهّل تتبع التغييرات واكتشاف الأخطاء. حالة تفاعلية مع إشعارات تلقائية، مستمعون على مسارات محددة، خصائص محسوبة، حفظ تلقائي، وسجل بآخر 50 تغييراً للتشخيص.</p></div>
+      <div class="card" style="border-color:rgba(0,245,212,.35)"><div class="card-icon">🔌</div><div class="card-title">واجهة برمجة التطبيقات الجديدة (Quiz API) <span class="v9-badge">V9</span></div><p>إعادة تسمية مساحة الأسماء من window.QuizV7 إلى window.Quiz مع واجهة محسّنة: <code>Quiz.info()</code> و <code>Quiz.exportAll()</code> و <code>Quiz.importAll()</code> و <code>Quiz.diagnostics()</code> و <code>Quiz.storageUsage()</code> ووحدات Store و ErrorBus و Migration.</p></div>
+      <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">🎬</div><div class="card-title">مشغل فيديو محسّن <span class="v9-badge">V9</span></div><p>مشغل فيديو جديد بالكامل مع أزرار تحكم مخصصة: تشغيل/إيقاف، شريط تقدم قابل للنقر، عرض الوقت، ملء الشاشة. إخفاء تلقائي لأزرار التحكم أثناء التشغيل. تخزين ذكي كـ Blob في IndexedDB حتى 50 ميغابايت. وضع عداد الفيديو: تلقائي / يدوي / بعد الفيديو.</p></div>
+      <div class="card" style="border-color:rgba(0,212,255,.35)"><div class="card-icon">🔢</div><div class="card-title">ترقيم الإجابات وتغيير عددها <span class="v9-badge">V9</span></div><p>نظام ترقيم جديد يدعم: أحرف عربية (أ، ب، ج، د)، أرقام (1، 2، 3)، أحرف إنجليزية (A، B، C)، أو مخصص. أزرار +/− للتحكم بعدد الخيارات من 2 إلى 8 بدلاً من 4 فقط.</p></div>
+      <div class="card" style="border-color:rgba(245,200,66,.35)"><div class="card-icon">🖥️</div><div class="card-title">شاشة الجمهور المُعاد تصميمها <span class="v9-badge">V9</span></div><p>شريط حالة القسم أعلى الشاشة، شريط نتائج دائم في الأسفل مرئي من جميع التبويبات، عرض الفرق في وضع الانتظار، شبكة عرض الأقسام مع تمييز الحالي، شريط تقدم ملون لكل فريق، وتحسينات بصرية شاملة.</p></div>
+      <div class="card" style="border-color:rgba(167,139,250,.35)"><div class="card-icon">🎨</div><div class="card-title">4 ثيمات جديدة مستقلة <span class="v9-badge">V9</span></div><p>داكن تيل (محيطي هادئ)، وردي دافئ (رومانسي)، أسود نقي (احترافي بتباين أبيض)، أزرق منتصف الليل (أسلوب GitHub). كل ثيم بـ 14 متغير CSS كامل.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">📱</div><div class="card-title">تطبيق أندرويد (APK) <span class="v9-badge">V9</span></div><p>ملف APK جاهز للتثبيت على هواتف أندرويد مباشرة. أيقونة مخصصة، شاشة بداية داكنة، دعم زر الرجوع، منع التحديث بالسحب، ودعم الشاشة العمودية فقط.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تحسينات الأمان والاستقرار</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🔒</div><div class="fi-body"><div class="fi-title">سياسة أمان المحتوى (CSP) <span class="v9-badge">V9</span></div><div class="fi-desc">ترويسة Content-Security-Policy تحدد مصادر الموارد المسموحة. إضافة data: لتوجيه font-src لدعم خطوط KaTeX المدمجة. إزالة 'unsafe-inline' غير الضرورية من font-src.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🧹</div><div class="fi-body"><div class="fi-title">نظام قوالب آمن (SafeDOM) <span class="v9-badge">V9.2</span></div><div class="fi-desc">كائن SafeDOM يوفر بدائل آمنة لـ innerHTML: h() لإنشاء عناصر، text() لتعيين نص آمن، clear() لتفريغ العناصر، setChildren() لتعيين الأبناء بأمان، frag() لإنشاء أجزاء مستند.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔧</div><div class="fi-body"><div class="fi-title">نظام تسجيل الأخطاء المركزي (ErrorBus) <span class="v9-badge">V9</span></div><div class="fi-desc">نقطة تجميع واحدة لجميع الأخطاء مع سياق مفصل (اسم الدالة، الرسالة، الطابع الزمني). حد أقصى 500 إدخال لمنع تسرب الذاكرة. window.onerror و unhandledrejection يُسجّلان تلقائياً.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🚫</div><div class="fi-body"><div class="fi-title">حماية من النقر المزدوج (ActionLock) <span class="v9-badge">V9</span></div><div class="fi-desc">أقفال بمفاتيح مسماة (spin, submit, save) مع مدة تبريد قابلة للتخصيص. تنظيف تلقائي بعد انتهاء مدة التبريد لمنع حالات السباق والنقر المزدوج.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔄</div><div class="fi-body"><div class="fi-title">نظام ترحيل البيانات (MigrationV7) <span class="v9-badge">V9</span></div><div class="fi-desc">كشف تلقائي للإصدار القديم عند أول تشغيل، نسخ احتياطي تلقائي قبل الترحيل، حفظ النسخة الاحتياطية 30 يوماً مع تنظيف تلقائي، وإمكانية التراجع عن الترحيل.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تحسينات الأداء</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">⚡</div><div class="fi-body"><div class="fi-title">أدوات مراقبة الأداء (PerfMonitor + SmartSave) <span class="v9-badge">V9</span></div><div class="fi-desc">PerfMonitor يقيس أزمنة التنفيذ ويُنشئ تقارير مفصلة. SmartSave يطبّق Debounce (500ms) مع حساب الاختلافات (dirty checking) لعدم حفظ بيانات لم تتغير. حفظ ذكي يمنع الكتابات المتكررة لنفس البيانات.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📋</div><div class="fi-body"><div class="fi-title">القوائم الافتراضية (VirtualList) <span class="v9-badge">V9</span></div><div class="fi-desc">قائمة افتراضية لعرض أسئلة الأقسام الكبيرة بكفاءة. بدلاً من عرض جميع العناصر في DOM، يعرض فقط العناصر المرئية فعلياً مع تمرير افتراضي سلس. العتبة: 50 عنصراً فأكثر.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">⏰</div><div class="fi-body"><div class="fi-title">إدارة المؤقتات المركزية (TimerRegistry) <span class="v9-badge">V9</span></div><div class="fi-desc">نظام مركزي لتسجيل جميع المؤقتات وتنظيفها تلقائياً عند إغلاق التطبيق أو تبديل العروض. كل استدعاء مؤقت محمي بـ try-catch يُسجّل في ErrorBus.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📊</div><div class="fi-body"><div class="fi-title">نظام رسوم بيانية مدمج (QuizCharts) <span class="v9-badge">V9</span></div><div class="fi-desc">مكتبة رسوم بيانية خفيفة مدمجة بالكامل: رسوم دائرية لتوزيع النقاط، رسوم أعمدة لمقارنة أداء الفرق، رسوم خطية لتتبع التقدم. جميع الرسوم مرسومة بـ Canvas API بدون إنترنت.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تحديثات الإصدارات الفرعية (V9.1 — V9.4)</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>الإصدار</th><th>أبرز التغييرات</th></tr></thead>
+        <tbody>
+          <tr><td><strong>V9.1</strong></td><td>إصلاح CSP لخطوط KaTeX · تطهير بيانات المستخدم عند العرض (21 موقعاً) · إضافة ترويسة Content-Type · 38 مفتاح ترجمة جديد · إصلاح تعطل بدء التشغيل · حماية BroadcastChannel</td></tr>
+          <tr><td><strong>V9.2</strong></td><td>تبديل كامل إلى IndexedDB كتخزين أساسي · نظام SafeDOM لبناء DOM آمن · دفع حالة فوري للشاشات عبر BroadcastChannel · إكمال ترجمة 523 مفتاح · إصلاحات شاشة الجمهور</td></tr>
+          <tr><td><strong>V9.3</strong></td><td>إصلاح تجميد العدادات باستخدام Date.now() · مشغل فيديو محسّن بتحكم مخصص · 4 ثيمات جديدة (داكن تيل، وردي دافئ، أسود نقي، أزرق منتصف الليل) · توسيع المكتبة إلى 300 سؤال في 15 قسم</td></tr>
+          <tr><td><strong>V9.4</strong></td><td>إعادة تصميم شاشة الجمهور بالكامل · شريط حالة القسم · شريط نتائج دائم · عرض الأقسام بشبكة · شريط تقدم ملون · دفع حالة فوري بثلاث قنوات اتصال · تطبيق APK لأندرويد</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-top:20px"><span class="callout-icon">⚠️</span><span>تم إعادة تسمية مساحة الأسماء العالمية من <strong>window.QuizV7</strong> إلى <strong>window.Quiz</strong>. إذا كنت تستخدم كوداً مخصصاً يعتمد على QuizV7، حدّثه ليعمل مع واجهة Quiz الجديدة.</span></div>
 </section>
 
 <!-- ═══ WHAT'S NEW V8 ═══ -->
@@ -428,7 +580,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
         <tr><td><strong>كلمة المرور</strong></td><td>للدخول إلى لوحة التحكم</td><td>1234</td></tr>
         <tr><td><strong>رسالة الترحيب</strong></td><td>تظهر تحت عنوان المسابقة في الشاشة الرئيسية</td><td>—</td></tr>
         <tr><td><strong>وقت السؤال</strong></td><td>المدة الافتراضية بالثواني لكل سؤال</td><td>30 ثانية</td></tr>
-        <tr><td><strong>نقاط السؤال الصعب</strong></td><td>عدد النقاط للأسئلة المصنفة صعبة</td><td>2 نقطة</td></tr>
+        <tr><td><strong>نقاط السؤال الصعب</strong></td><td>عدد النقاط للأسئلة المصنفة صعبة</td><td>نقطتان</td></tr>
         <tr><td><strong>نمط عرض الأقسام</strong> <span class="v8-badge">V8</span></td><td>شبكة / عجلة الحظ / مخفي / قائمة / جيوباردي</td><td>شبكة</td></tr>
         <tr><td><strong>تحجيم الخط</strong> <span class="v8-badge">V8</span></td><td>حجم النص في العرض من 70% إلى 300%</td><td>100%</td></tr>
         <tr><td><strong>خلط الأسئلة</strong></td><td>يُعيد ترتيب الأسئلة عشوائياً في كل جلسة</td><td>معطّل</td></tr>
@@ -448,10 +600,38 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
         <tr><td><strong>الانتقال بعد السؤال</strong></td><td>تلقائي (0-10 ث تأخير) / يدوي</td><td>تلقائي - 0 ث</td></tr>
         <tr><td><strong>مدة كشف الإجابة</strong></td><td>500-5000 مللي ثانية</td><td>1000 مللي ثانية</td></tr>
         <tr><td><strong>إظهار صح/خطأ للترتيب</strong></td><td>أزرار كبيرة (صح/خطأ) أو تحقق تلقائي</td><td>مفعّل</td></tr>
+        <tr><td><strong>ترقيم الإجابات</strong> <span class="v9-badge">V9</span></td><td>أحرف عربية (أ، ب، ج، د) / أرقام (1، 2، 3) / أحرف إنجليزية (A، B، C) / مخصص</td><td>أحرف عربية</td></tr>
+        <tr><td><strong>عدد خيارات الإجابة</strong> <span class="v9-badge">V9</span></td><td>أزرار +/− للتحكم بعدد الخيارات (2-8)</td><td>4</td></tr>
+        <tr><td><strong>وضع عداد الفيديو</strong> <span class="v9-badge">V9</span></td><td>تلقائي (مع السؤال) / يدوي (بضغط المقدم) / بعد الفيديو (تلقائياً بعد انتهاء العرض)</td><td>تلقائي</td></tr>
+        <tr><td><strong>لغة الواجهة</strong> <span class="v9-badge">V9</span></td><td>عربية / إنجليزية — تبديل فوري بدون إعادة تحميل مع تغيير اتجاه الصفحة تلقائياً</td><td>عربية</td></tr>
+        <tr><td><strong>تفعيل جولة الحسم</strong> <span class="v10-badge">V10</span></td><td>تفعيل/تعطيل جولة الحسم عند تعادل الفرق في نهاية المسابقة</td><td>معطّل</td></tr>
+        <tr><td><strong>عدد أسئلة الحسم</strong> <span class="v10-badge">V10</span></td><td>عدد الأسئلة التي ستُطرح في جولة الحسم (1-10)</td><td>3</td></tr>
+        <tr><td><strong>نقاط سؤال الحسم</strong> <span class="v10-badge">V10</span></td><td>عدد النقاط الممنوحة لكل سؤال صحيح في جولة الحسم</td><td>1</td></tr>
+        <tr><td><strong>مستوى صوت الإجابة الصحيحة</strong> <span class="v10-badge">V10</span></td><td>شريط تمرير مستقل لمستوى صوت مؤثر الإجابة الصحيحة (0-100%)</td><td>80%</td></tr>
+        <tr><td><strong>مستوى صوت الإجابة الخاطئة</strong> <span class="v10-badge">V10</span></td><td>شريط تمرير مستقل لمستوى صوت مؤثر الإجابة الخاطئة (0-100%)</td><td>80%</td></tr>
+        <tr><td><strong>أصوات شاشة الجمهور</strong> <span class="v10-badge">V10</span></td><td>تشغيل أصوات الإجابات في شاشة العرض/الجمهور أيضاً</td><td>مفعّل</td></tr>
+        <tr><td><strong>آلية احتساب الترتيب والتوصيل</strong> <span class="v10-badge">V10</span></td><td>جميع الإجابات صحيحة (كامل أو لا شيء) / أغلبية صحيحة (صحيح إذا تعدّت الصحيحة الخاطئة)</td><td>جميع الإجابات صحيحة</td></tr>
+        <tr><td><strong>تأخير بدء العداد</strong></td><td>عدد الثواني قبل بدء العداد تلقائياً بعد عرض السؤال (0-10)</td><td>0 ثانية</td></tr>
+        <tr><td><strong>إعادة تصفير النقاط عند بدء جديد</strong></td><td>تصفير نقاط جميع الفرق عند بدء مسابقة جديدة</td><td>معطّل</td></tr>
+        <tr><td><strong>إنهاء تلقائي عند نقاط محددة</strong></td><td>تنتهي المسابقة تلقائياً عند وصول أحد الفرق للنقاط المحددة</td><td>معطّل</td></tr>
+        <tr><td><strong>إظهار شاشة منح النقطة يدوياً</strong></td><td>عرض شاشة خاصة لمنح نقاط يدوية لأي فريق أثناء المسابقة</td><td>مفعّل</td></tr>
+        <tr><td><strong>عرض أزرار صح/خطأ لأسئلة الفراغ</strong></td><td>عرض أزرار ✓/✗ في واجهة المقدم لأسئلة ملء الفراغ</td><td>مفعّل</td></tr>
+        <tr><td><strong>عرض رسالة تأكيد عند التحديث</strong></td><td>إظهار رسالة تأكيد عند إعادة تحميل الصفحة أثناء المسابقة</td><td>معطّل</td></tr>
+        <tr><td><strong>إخفاء زر "بدء المسابقة" في التسلسلي</strong></td><td>إخفاء زر البدء في الوضع التسلسلي للتحكم بالانطلاق من المقدم فقط</td><td>مفعّل</td></tr>
+        <tr><td><strong>التحكم بالأسهم في الوضع التسلسلي</strong></td><td>استخدام أسهم لوحة المفاتيح للتنقل بين شاشات الوضع التسلسلي</td><td>معطّل</td></tr>
+        <tr><td><strong>كتم الموسيقى تلقائياً عند فتح لوحة التحكم</strong></td><td>يُكتم الصوت تلقائياً عند العودة للوحة التحكم ويُستأنف عند العودة للعرض</td><td>مفعّل</td></tr>
+        <tr><td><strong>تشغيل الموسيقى عند فتح العرض</strong></td><td>تشغيل الموسيقى الخلفية تلقائياً عند بدء عرض المسابقة</td><td>معطّل</td></tr>
+        <tr><td><strong>إظهار أطواق النجاة</strong></td><td>عرض أزرار أطواق النجاة (50/50، وقت إضافي، تمرير) في شاشة اللعب</td><td>مفعّل</td></tr>
+        <tr><td><strong>مقدار الوقت الإضافي</strong></td><td>عدد الثواني المضافة عند استخدام طوق الوقت الإضافي (5-120)</td><td>15 ثانية</td></tr>
+        <tr><td><strong>حجم أيقونات الأقسام</strong></td><td>حجم أيقونات الأقسام في شاشة العرض (50-200%)</td><td>100%</td></tr>
+        <tr><td><strong>حجم بطاقات الأقسام</strong></td><td>حجم بطاقات الأقسام في شاشة العرض (60-200%)</td><td>100%</td></tr>
+        <tr><td><strong>وضع عمى الألوان</strong></td><td>عادي / عمى الأحمر (بروتانوبيا) / عمى الأخضر (ديوترانوبيا) / عمى الأزرق (تريتانوبيا) — يُعدّل الألوان ليناسب ذوي عمى الألوان</td><td>عادي</td></tr>
+        <tr><td><strong>مستوى صوت موسيقى المنصة</strong></td><td>شريط تمرير لمستوى صوت موسيقى شاشة التتويج (0-100%)</td><td>60%</td></tr>
+        <tr><td><strong>تكرار موسيقى المنصة</strong></td><td>تكرار تشغيل موسيقى التتويج تلقائياً</td><td>معطّل</td></tr>
       </tbody>
     </table>
   </div>
-  <div class="callout warn" style="margin-top:20px"><span class="callout-icon">⚠️</span><span>لا تنسَ تغيير كلمة المرور قبل استخدام المنصة في بيئة عامة. كلمة المرور الافتراضية معروفة لأي شخص يملك هذا الدليل.</span></div>
+  <div class="callout warn" style="margin-top:20px"><span class="callout-icon">⚠️</span><span>لا تنسَ تغيير كلمة المرور قبل استخدام المنصة في بيئة عامة. كلمة المرور الافتراضية معروفة لأي شخص يملك هذا الدليل. في V9: تُشفَّر كلمات المرور بـ PBKDF2 بدلاً من Base64 البسيط لضمان أمان أعلى. في V10: سُدَّت ثغرات XSS عبر تنظيف أسماء الفرق (<code>_sanitizeUser</code>) وشرح الأسئلة وأيقونات الأقسام (<code>_sanitizeIcon</code>).</span></div>
 </section>
 
 <!-- ═══ CATEGORIES ═══ -->
@@ -463,7 +643,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   <div class="steps">
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">اضغط على تبويب "الأقسام"</div><div class="step-desc">من القائمة العلوية في لوحة التحكم، اختر "📂 الأقسام".</div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">أضف قسماً جديداً</div><div class="step-desc">اضغط "➕ إضافة" لفتح نافذة إنشاء قسم. حدد: الاسم، الأيقونة (emoji)، واللون. يظهر هذا القسم كزر في شاشة العرض.</div><div class="step-tip">💡 اختر ألواناً متباينة لتسهيل التمييز بين الأقسام أثناء العرض</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">أضف الأسئلة أو حمّل المكتبة</div><div class="step-desc">انقر على اسم القسم لإضافة أسئلة يدوياً، أو انتقل لتبويب "استيراد" واضغط "📚 تحميل مكتبة الأسئلة" لتحميل 100 سؤال جاهز.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">نوع القسم: عادي أو حسم <span class="v10-badge">V10</span></div><div class="step-desc">عند إنشاء قسم، اختر نوعه: <strong>📂 عادي</strong> يظهر في المسابقة العادية، أو <strong>⚡ حسم</strong> يظهر فقط في جولة الحسم عند تعادل الفرق. أقسام الحسم تظهر بشارة "⚡ حسم" مميزة في لوحة الإدارة ولا تظهر في 10 أوضاع عرض مختلفة أثناء المسابقة العادية.</div><div class="step-tip">💡 أنشئ قسماً من نوع "حسم" مخصص بأسئلة صعبة لكسر التعادل في نهاية المسابقة</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">أضف الأسئلة أو حمّل المكتبة</div><div class="step-desc">انقر على اسم القسم لإضافة أسئلة يدوياً، أو انتقل لتبويب "استيراد" واضغط "📚 تحميل مكتبة الأسئلة" لتحميل 100 سؤال جاهز.</div></div></div>
   </div>
 </section>
 
@@ -497,10 +678,10 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div><div class="section-title">أنواع الأسئلة التسعة</div><div class="section-sub">اختر النوع المناسب لكل سؤال</div></div>
   </div>
   <div class="feature-list">
-    <div class="feature-item"><div class="fi-icon">📝</div><div class="fi-body"><div class="fi-title">نصي (text) — الافتراضي</div><div class="fi-desc">السؤال التقليدي مع خيارات نصية متعددة. يدعم العربية والإنجليزية مع ضبط اتجاه النص تلقائياً. من 2 إلى 4 خيارات.</div></div></div>
+    <div class="feature-item"><div class="fi-icon">📝</div><div class="fi-body"><div class="fi-title">نصي (text) — الافتراضي</div><div class="fi-desc">السؤال التقليدي مع خيارات نصية متعددة. يدعم العربية والإنجليزية مع ضبط اتجاه النص تلقائياً. من 2 إلى 8 خيارات <span class="v9-badge">V9</span>. يدعم ترقيم الإجابات بأحرف عربية أو أرقام أو أحرف إنجليزية أو مخصص <span class="v9-badge">V9</span>.</div></div></div>
     <div class="feature-item"><div class="fi-icon">🖼️</div><div class="fi-body"><div class="fi-title">صوري (image)</div><div class="fi-desc">أرفق صورة مع السؤال (JPG, PNG, GIF). تُعرض الصورة فوق نص السؤال في شاشة العرض. مثالي لأسئلة التعرف على الصور. يمكنك أيضاً رفع صورة مستقلة لكل خيار إجابة عبر زر 🖼️ بجانب كل حقل خيار. <a href="#option-images" style="color:var(--gold)">← صور الخيارات</a></div></div></div>
-    <div class="feature-item"><div class="fi-icon">🎧</div><div class="fi-body"><div class="fi-title">صوتي (audio)</div><div class="fi-desc">أرفق مقطعاً صوتياً بالسؤال (MP3, OGG, WAV). يظهر زر تشغيل/إيقاف في شاشة العرض. مثالي لأسئلة التعرف على الأصوات والألحان.</div></div></div>
-    <div class="feature-item"><div class="fi-icon">∑</div><div class="fi-body"><div class="fi-title">رياضي (math)</div><div class="fi-desc">اكتب المعادلات الرياضية بصيغة LaTeX وستُعرض منسقة احترافياً. المضمنة: <kbd>$...$</kbd> | المستقلة: <kbd>$$...$$</kbd>. معاينة فورية قبل الحفظ.</div></div></div>
+    <div class="feature-item"><div class="fi-icon">🎧</div><div class="fi-body"><div class="fi-title">صوتي (audio)</div><div class="fi-desc">أرفق مقطعاً صوتياً بالسؤال (MP3, OGG, WAV). يظهر زر تشغيل/إيقاف في شاشة العرض. مثالي لأسئلة التعرف على الأصوات والألحان. في V9: مرفقات الوسائط متاحة لجميع أنواع الأسئلة <span class="v9-badge">V9</span>، مع تخزين ذكي للملفات الكبيرة (>100KB) في IndexedDB.</div></div></div>
+    <div class="feature-item"><div class="fi-icon">∑</div><div class="fi-body"><div class="fi-title">رياضي (math)</div><div class="fi-desc">اكتب المعادلات الرياضية بصيغة LaTeX وستُعرض منسقة احترافياً. المضمنة: <kbd>$...$</kbd> | المستقلة: <kbd>$$...$$</kbd>. معاينة فورية قبل الحفظ. في V9: مكتبة KaTeX 0.16.9 مدمجة بالكامل مع خطوط Data URIs للعمل بدون إنترنت <span class="v9-badge">V9</span>.</div></div></div>
     <div class="feature-item"><div class="fi-icon">✓✗</div><div class="fi-body"><div class="fi-title">صح / خطأ (tf)</div><div class="fi-desc">سؤال بخيارين فقط: "صح ✓" و"خطأ ✗". مثالي للاختبارات السريعة والمراجعة. يُعرض بتصميم خاص ومميز في شاشة العرض.</div></div></div>
     <div class="feature-item"><div class="fi-icon">___</div><div class="fi-body"><div class="fi-title">ملء الفراغ (fitb)</div><div class="fi-desc">ضع <code>[___]</code> في نص السؤال ليتحول لفراغ تفاعلي. لإجابات بديلة افصل بـ <code>|</code> (مثال: الرياض|رياض). المقارنة تتجاهل التشكيل. للمقدم أزرار ✅❌.</div></div></div>
     <div class="feature-item"><div class="fi-icon">📖</div><div class="fi-body"><div class="fi-title">آية قرآنية (quran)</div><div class="fi-desc">أدخل اسم السورة ورقم الآية واضغط 🔍 جلب. اختر من 5 أنواع سؤال: اسم السورة / أكمل الآية / رقم الآية / رقم السورة / الجزء. اختر من 6 قرّاء وخيار إخفاء البيانات.</div></div></div>
@@ -513,9 +694,9 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 <section class="section" id="builtin-library">
   <div class="section-header">
     <div class="section-icon icon-blue">📚</div>
-    <div><div class="section-title">مكتبة الأسئلة المدمجة <span class="v8-badge">V8</span></div><div class="section-sub">100 سؤال جاهز في 10 أقسام</div></div>
+    <div><div class="section-title">مكتبة الأسئلة المدمجة <span class="v8-badge">V8</span> <span class="v9-badge">V9 موسّعة</span></div><div class="section-sub">300 سؤال جاهز في 15 قسم</div></div>
   </div>
-  <div class="callout new"><span class="callout-icon">📚</span><span>تتضمن المنصة مكتبة مدمجة من الأسئلة الجاهزة التي يمكنك تحميلها بضغطة واحدة. تشمل أنواعاً متنوعة: نصي، صح/خطأ، ملء فراغ، ترتيب، توصيل، قرآني، ورياضي.</span></div>
+  <div class="callout new"><span class="callout-icon">📚</span><span>تتضمن المنصة مكتبة مدمجة من الأسئلة الجاهزة التي يمكنك تحميلها بضغطة واحدة. تشمل أنواعاً متنوعة: نصي، صح/خطأ، ملء فراغ، ترتيب، توصيل، قرآني، ورياضي. في V9: تم توسيع المكتبة من 100 إلى 300 سؤال ومن 10 إلى 15 قسم مع إضافة أقسام جديدة (التقنية والبرمجة، الرياضة، الفنون والموسيقى، الرياضيات والمنطق، البيئة والطبيعة) وتنوع صعوبة (40% سهل، 40% متوسط، 20% صعب).</span></div>
   <div class="table-wrap" style="margin-top:18px">
     <table>
       <thead><tr><th>القسم</th><th>الأيقونة</th><th>عدد الأسئلة</th><th>أنواع الأسئلة</th></tr></thead>
@@ -530,6 +711,11 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
         <tr><td><strong>العلوم والمعرفة</strong></td><td>🔬</td><td>10</td><td>نصي، صح/خطأ، فراغ، ترتيب، توصيل، رياضي</td></tr>
         <tr><td><strong>الثقافة العامة</strong></td><td>🌍</td><td>10</td><td>نصي، صح/خطأ، فراغ، ترتيب، توصيل</td></tr>
         <tr><td><strong>English Section</strong></td><td>🇬🇧</td><td>10</td><td>نصي، صح/خطأ، فراغ، ترتيب، توصيل، رياضي</td></tr>
+        <tr><td><strong>التقنية والبرمجة</strong> <span class="v9-badge">V9</span></td><td>💻</td><td>20</td><td>نصي، صح/خطأ، فراغ، ترتيب، توصيل، رياضي</td></tr>
+        <tr><td><strong>الرياضة</strong> <span class="v9-badge">V9</span></td><td>⚽</td><td>20</td><td>نصي، صح/خطأ، فراغ، ترتيب، توصيل</td></tr>
+        <tr><td><strong>الفنون والموسيقى</strong> <span class="v9-badge">V9</span></td><td>🎭</td><td>20</td><td>نصي، صح/خطأ، فراغ، ترتيب، توصيل</td></tr>
+        <tr><td><strong>الرياضيات والمنطق</strong> <span class="v9-badge">V9</span></td><td>🧮</td><td>20</td><td>نصي، صح/خطأ، فراغ، رياضي</td></tr>
+        <tr><td><strong>البيئة والطبيعة</strong> <span class="v9-badge">V9</span></td><td>🌿</td><td>20</td><td>نصي، صح/خطأ، فراغ، ترتيب، توصيل</td></tr>
       </tbody>
     </table>
   </div>
@@ -565,7 +751,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div><div class="section-title">إدارة الفرق</div><div class="section-sub">إنشاء وتخصيص فرق المسابقة</div></div>
   </div>
   <div class="steps">
-    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">أضف فريقاً</div><div class="step-desc">من تبويب "👥 الفرق"، اضغط "➕ فريق". أدخل الاسم واللون. يمكن إضافة صورة للفريق وعضو عضو على حدة.</div></div></div>
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">أضف فريقاً</div><div class="step-desc">من تبويب "👥 الفرق"، اضغط "➕ فريق". أدخل الاسم واللون. يمكن إضافة صورة للفريق وكل عضو على حدة.</div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">أضف أعضاء الفريق</div><div class="step-desc">أدخل اسم كل عضو واضغط "➕ إضافة". تظهر أسماء الأعضاء في بطاقة الفريق أثناء العرض.</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">نظام السلاسل والخصم <span class="v8-badge">V8</span></div><div class="step-desc">فعّل "مكافأة السلسلة" لمنح نقاط إضافية بعد N إجابات صحيحة متتالية. فعّل "الخصم عند الخطأ" لخصم نقاط عند الإجابة الخاطئة. كلاهما يُضبط من الإعدادات.</div><div class="step-tip">💡 يمكن التراجع عن آخر نقاط مُمنوحة بالضغط على ↩ في شاشة السؤال</div></div></div>
   </div>
@@ -599,6 +785,52 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   <div class="callout tip" style="margin-top:16px"><span class="callout-icon">⚙️</span><span>يُضبط من <strong>لوحة التحكم → الإعدادات → نمط عرض الأقسام</strong>. التطبيق فوري على شاشة العرض.</span></div>
 </section>
 
+<!-- ═══ TIEBREAKER ═══ -->
+<section class="section" id="tiebreaker">
+  <div class="section-header">
+    <div class="section-icon icon-red">⚡</div>
+    <div><div class="section-title">جولة الحسم (Tiebreaker) <span class="v10-badge">V10</span></div><div class="section-sub">كسر التعادل بأسئلة إضافية</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">⚡</span><span>عند تعادل فريقين أو أكثر في النتيجة النهائية، تُفعَّل جولة الحسم تلقائياً لتحديد الفائز. تستخدم أقسام نوع "حسم" المخصصة، وإذا لم تُوجد تستخدم أسئلة عشوائية من الأقسام العادية كاحتياطي ذكي.</span></div>
+
+  <div style="margin-top:20px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">إعدادات جولة الحسم</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>الإعداد</th><th>الخيارات</th><th>الافتراضي</th><th>الوصف</th></tr></thead>
+        <tbody>
+          <tr><td><strong>تفعيل جولة الحسم</strong></td><td>مفعّل / معطّل</td><td>معطّل</td><td>المفتاح الرئيسي. عند التفعيل تظهر خيارات الحسم الإضافية. يمكن الوصول إليه من <strong>لوحة التحكم → الإعدادات → جولة الحسم</strong>.</td></tr>
+          <tr><td><strong>عدد أسئلة الحسم</strong></td><td>1 — 10</td><td>3</td><td>عدد الأسئلة التي ستُطرح في جولة الحسم الواحدة. يمكن زيادته للمسابقات التي تحتاج فوارق أكبر.</td></tr>
+          <tr><td><strong>نقاط سؤال الحسم</strong></td><td>1 — 10</td><td>1</td><td>عدد النقاط الممنوحة لكل سؤال صحيح في جولة الحسم. يُنصح بضبطها على 1 لضمان عدالة كسر التعادل.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">كيفية إنشاء أقسام الحسم</div></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">أنشئ قسماً جديداً</div><div class="step-desc">من تبويب "الأقسام"، اضغط "➕ إضافة" لفتح نافذة إنشاء قسم. أدخل الاسم والأيقونة واللون كالمعتاد.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">اختر نوع "⚡ قسم حسم"</div><div class="step-desc">من القائمة المنسدلة "نوع القسم"، اختر "⚡ قسم حسم — يظهر فقط في جولة الحسم" بدلاً من "📂 قسم عادي". سيُضاف القسم بشارة "⚡ حسم" مميزة في لوحة الإدارة.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">أضف أسئلة الحسم</div><div class="step-desc">أضف أسئلة صعبة ومناسبة لكسر التعادل. يُنصح بأسئلة متنوعة تشمل أنواعاً مختلفة (نصي، صح/خطأ، ترتيب). هذه الأسئلة لن تظهر في المسابقة العادية أبداً.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تجربة الحسم المتكاملة</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🎯</div><div class="fi-body"><div class="fi-title">شاشة حسم كاملة</div><div class="fi-desc">عند تعادل الفرق، تظهر شاشة حسم احترافية تتضمن: السؤال والخيارات، مؤقت دائري ملون يتغير لونه مع الوقت، ونقاط الفرق المتعادلة في شريط علوي. التصميم يُبرز طابع الإثارة والمنافسة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📡</div><div class="fi-body"><div class="fi-title">أزرار التحكم عن بُعد للحسم</div><div class="fi-desc">تظهر أزرار مخصصة في لوحة التحكم عن بُعد أثناء جولة الحسم: <strong>✅ منح نقطة</strong> للفريق الصحيح، <strong>⏭ التالي</strong> لسؤال الحسم التالي، <strong>✕ إنهاء</strong> لإنهاء جولة الحسم. تظهر ديناميكياً فقط عند الحاجة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔄</div><div class="fi-body"><div class="fi-title">إعادة عرض تلقائي</div><div class="fi-desc">إذا بقي التعادل بعد جولة الحسم، تُعرض جولة جديدة تلقائياً بأسماء الفرق المتبقية. يتكرر هذا حتى يتم كسر التعادل أو ينتهي المقدم الجولة يدوياً.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🛡️</div><div class="fi-body"><div class="fi-title">احتياطي ذكي</div><div class="fi-desc">إذا لم تكن هناك أقسام نوع "حسم"، يُستخدم احتياطي ذكي يختار أسئلة عشوائية من الأقسام العادية. هذا يضمن عمل جولة الحسم حتى بدون أقسام مخصصة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">👁️</div><div class="fi-body"><div class="fi-title">إخفاء تلقائي</div><div class="fi-desc">أقسام الحسم لا تظهر في أي من أنماط عرض الأقسام العشرة (شبكة، عجلة، مخفي، قائمة، جيوباردي، إلخ) أثناء المسابقة العادية. تُستخدم حصرياً في جولة الحسم.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🖥️</div><div class="fi-body"><div class="fi-title">تحديث فوري لشاشة الجمهور</div><div class="fi-desc">بعد منح النقاط في جولة الحسم، تُحدَّث شاشة الجمهور فوراً لعرض النتيجة الجديدة. هذا يضمن تجربة تفاعلية حقيقية مع الجمهور.</div></div></div>
+    </div>
+  </div>
+
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>للحصول على أفضل تجربة حسم: أنشئ 2-3 أقسام نوع "حسم" بعدة أسئلة متنوعة الصعوبة. اضبط نقاط الحسم على 1 لضمان عدالة التعادل. جرّب جولة الحسم مسبقاً بإنشاء مسابقة بفريقين متساويين النقاط.</span></div>
+</section>
+
 <!-- ═══ PRESENTATION ═══ -->
 <section class="section" id="presentation">
   <div class="section-header">
@@ -620,6 +852,155 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
       <div class="feature-item"><div class="fi-icon">🔤</div><div class="fi-body"><div class="fi-title">تحجيم الخط <span class="v8-badge">V8</span></div><div class="fi-desc">شريط تحكم من 70% إلى 300% يُطبَّق فوراً على نص السؤال والخيارات. متاح من تبويب المظهر. مفيد لضبط الحجم حسب بُعد الجمهور عن الشاشة.</div></div></div>
     </div>
   </div>
+</section>
+
+<!-- ═══ AUDIENCE SCREEN ═══ -->
+<section class="section" id="audience-screen">
+  <div class="section-header">
+    <div class="section-icon icon-green">🖥️</div>
+    <div><div class="section-title">شاشة الجمهور <span class="v9-badge">V9</span> <span class="v10-badge">V10 محسّنة</span></div><div class="section-sub">عرض تفاعلي مُعاد تصميمه لمتابعة المسابقة</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">🖥️</span><span>شاشة الجمهور هي نافذة منفصلة تُعرض للجمهور على شاشة ثانية أو بروجكتور، وتُظهر محتوى المسابقة بشكل تفاعلي ومتزامن مع نافذة المقدم. تفتح كنافذة منبثقة بمقاس 1200×800 بكسل قابلة لتغيير الحجم.</span></div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تبويبات شاشة الجمهور</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🎯</div><div class="fi-body"><div class="fi-title">المسابقة</div><div class="fi-desc">التبويب الرئيسي الذي يعرض السؤال الحالي مع خياراته وعداده التنازلي. يُظهر حالة السؤال (⏳ بانتظار الإجابة / ✅ تمت الإجابة)، ومؤشر الصعوبة، وخيارات الإجابة مع تمييز الإجابة الصحيحة بالأخضر والخاطئة بالأحمر عند الكشف. عند عدم وجود سؤال نشط يعرض رسالة "في انتظار بدء المسابقة".</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🏆</div><div class="fi-body"><div class="fi-title">لوحة النتائج</div><div class="fi-desc">يعرض نتائج جميع الفرق بترتيب تنازلي مع ألوان كل فريق ونقاطه. يتحدث تلقائياً عند تغيير النقاط. مرئي من جميع التبويبات عبر شريط النتائج الدائم في أسفل الشاشة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📋</div><div class="fi-body"><div class="fi-title">الأسئلة</div><div class="fi-desc">يتابع حالة كل سؤال في المسابقة: أُجيب أم لا، أي فريق أجاب، وكم استغرق من الوقت. يوفر نظرة شاملة على تقدم المسابقة.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">عناصر العرض الرئيسية</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">📊</div><div class="fi-body"><div class="fi-title">شريط حالة القسم <span class="v9-badge">V9</span></div><div class="fi-desc">يظهر أعلى الشاشة ويعرض اسم القسم الحالي ولونه وأيقونته، مع مؤشر لعدد الأسئلة المتبقية. يساعد الجمهور على معرفة الموضوع الحالي للمسابقة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📏</div><div class="fi-body"><div class="fi-title">شريط نتائج دائم <span class="v9-badge">V9</span></div><div class="fi-desc">شريط ثابت في أسفل الشاشة يعرض نقاط جميع الفرق بترتيبها الحالي. يبقى مرئياً عند التبديل بين التبويبات، مما يضمن إطلاع الجمهور على النتائج في كل الأوقات.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🖼️</div><div class="fi-body"><div class="fi-title">صور الخيارات <span class="v10-badge">V10</span></div><div class="fi-desc">عندما يحتوي سؤال على صور للخيارات، تُعرض الصور بشكل واضح على شاشة الجمهور مع النص. هذا يوفر تجربة بصرية متكاملة للجمهور.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔴</div><div class="fi-body"><div class="fi-title">تمييز الإجابة الخاطئة <span class="v10-badge">V10</span></div><div class="fi-desc">عند كشف الإجابة، يُظهر الإجابة الصحيحة باللون الأخضر والإجابة الخاطئة باللون الأحمر. في الإصدارات السابقة كانت تظهر الإجابة الصحيحة فقط.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">⚡</div><div class="fi-body"><div class="fi-title">شاشة جولة الحسم <span class="v10-badge">V10</span></div><div class="fi-desc">تظهر تلقائياً عند بدء جولة الحسم، مع سؤال الحسم وخياراته ومؤقت دائري ملون. تُحدَّث فوراً عند منح النقاط لعرض النتيجة الجديدة.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">نظام المزامنة <span class="v10-badge">V10 محسّن</span></div></div>
+    <div class="callout tip"><span class="callout-icon">📡</span><span>تعتمد شاشة الجمهور على نظام مزامنة متعدد الطبقات لضمان تحديث المحتوى بشكل شبه فوري. في V10: تحسن ملحوظ من تأخير 5-7 ثوانٍ إلى تحديث شبه فوري.</span></div>
+    <div class="table-wrap" style="margin-top:12px">
+      <table>
+        <thead><tr><th>آلية المزامنة</th><th>الفاصل الزمني</th><th>الوصف</th></tr></thead>
+        <tbody>
+          <tr><td><strong>BroadcastChannel</strong></td><td>فوري</td><td>الطبقة الأساسية: دفع الحالة عبر <code>quiz_remote_v1</code> عند أي تغيير</td></tr>
+          <tr><td><strong>postMessage</strong></td><td>فوري + 300ms + 1000ms</td><td>دفع الحالة عند بدء المسابقة مع دفعات تأكيدية تأخيرية</td></tr>
+          <tr><td><strong>localStorage استطلاع</strong> <span class="v10-badge">V10</span></td><td>1.5 ثانية</td><td>استطلاع دائم (بدلاً من الانتظار حتى فشل الاتصال)</td></tr>
+          <tr><td><strong>sessionStorage استطلاع</strong> <span class="v10-badge">V10</span></td><td>2 ثانية</td><td>طبقة احتياطية إضافية</td></tr>
+          <tr><td><strong>مرجع مباشر</strong></td><td>عند الفتح</td><td>طلب حالة فوري عبر <code>window.opener._getAudienceState()</code></td></tr>
+          <tr><td><strong>visibilitychange</strong> <span class="v10-badge">V10</span></td><td>عند التبديل</td><td>مزامنة AudioContext وحفظ الحالة عند تبديل التبويبات</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الصوت في شاشة الجمهور <span class="v10-badge">V10</span></div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🔊</div><div class="fi-body"><div class="fi-title">أصوات الإجابات</div><div class="fi-desc">عند تفعيل إعداد "أصوات شاشة الجمهور" من الإعدادات، تُشغَّل مؤثرات الإجابة الصحيحة والخاطئة في شاشة الجمهور أيضاً. يعمل عبر Web Audio API مع دالة <code>_audiencePlaySound()</code> المخصصة، ويتعامل تلقائياً مع سياسة التشغيل التلقائي للمتصفح عبر استدعاء <code>audioCtx.resume()</code> عند الحاجة.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الاستجابة وتوافق الشاشات</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">📱</div><div class="fi-body"><div class="fi-title">تصميم متجاوب <span class="v10-badge">V10</span></div><div class="fi-desc">تحسينات استجابة التصميم عبر 3 نقاط انقطاع: 768 بكسل (أجهزة لوحية)، 480 بكسل (هواتف)، وmax-height:500px (شاشات منخفضة الارتفاع). يضمن عرضاً مثالياً على جميع أحجام الشاشات.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">👥</div><div class="fi-body"><div class="fi-title">عرض الفرق أثناء الانتظار <span class="v9-badge">V9</span></div><div class="fi-desc">عندما تكون المسابقة في وضع الانتظار (قبل البدء أو بين الأسئلة)، تُعرض بطاقات الفرق مع ألوانها وأسمائها لاطلاع الجمهور على المتسابقين.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🎡</div><div class="fi-body"><div class="fi-title">شبكة عرض الأقسام <span class="v9-badge">V9</span></div><div class="fi-desc">تُعرض الأقسام في شبكة بصرية مع تمييز القسم الحالي، مما يتيح للجمهور متابعة تقدم المسابقة بصرياً.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📊</div><div class="fi-body"><div class="fi-title">استطلاع رأي الجمهور</div><div class="fi-desc">ميزة محاكاة استطلاع رأي الجمهور يمكن تفعيلها من شريط أدوات السؤال. تعرض نتائج وهمية بنسب متدرجة تعكس توزيعاً واقعياً للإجابات، مما يضيف تشويقاً أثناء الانتظار.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REMOTE CONTROL SCREEN ═══ -->
+<section class="section" id="remote-screen">
+  <div class="section-header">
+    <div class="section-icon icon-purple">📱</div>
+    <div><div class="section-title">شاشة التحكم عن بُعد <span class="v8-badge">V8</span> <span class="v10-badge">V10 محسّنة</span></div><div class="section-sub">التحكم بالمسابقة من هاتفك أو جهازك اللوحي</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">📱</span><span>شاشة التحكم عن بُعد هي نافذة منفصلة (440×680 بكسل) تتيح للمقدم التحكم بالمسابقة من أي مكان دون الحاجة للوقوف بجانب الحاسوب. تتواصل مع النافذة الرئيسية عبر BroadcastChannel بتنسيق فوري.</span></div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">كيفية فتح شاشة التحكم عن بُعد</div></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">من شاشة العرض</div><div class="step-desc">أثناء تشغيل المسابقة، اضغط على زر 📱 (التحكم عن بُعد) في شريط أدوات شاشة العرض. ستُفتح نافذة منفصلة بلوحة التحكم البعيدة.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">على جهاز آخر</div><div class="step-desc">يمكنك فتح نفس ملف المسابقة في متصفح جهاز آخر على نفس الشبكة، ثم الدخول إلى شاشة العرض والضغط على زر التحكم عن بُعد. تذكر أن BroadcastChannel يعمل ضمن نفس المتصفح والأصل فقط.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">أزرار التحكم الرئيسية</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>الزر</th><th>الأيقونة</th><th>الوظيفة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>التالي</strong></td><td>→</td><td>الانتقال للسؤال التالي أو للشاشة التالية</td></tr>
+          <tr><td><strong>كشف الإجابة</strong></td><td>🔍</td><td>كشف الإجابة الصحيحة للسؤال الحالي</td></tr>
+          <tr><td><strong>الأقسام</strong></td><td>📂</td><td>الانتقال لشاشة اختيار الأقسام</td></tr>
+          <tr><td><strong>لوحة النتائج</strong></td><td>🏆</td><td>عرض لوحة النتائج التفصيلية</td></tr>
+          <tr><td><strong>المنصة</strong></td><td>🥇</td><td>عرض شاشة منصة التتويج</td></tr>
+          <tr><td><strong>التحكم بالعداد</strong></td><td>⏱️</td><td>تشغيل/إيقاف/إيقاف مؤقت للعداد الزمني</td></tr>
+          <tr><td><strong>الموسيقى</strong></td><td>🎵</td><td>تشغيل/إيقاف الموسيقى الخلفية</td></tr>
+          <tr><td><strong>الكونفيتي</strong></td><td>🎉</td><td>إطلاق مؤثرات الاحتفال</td></tr>
+          <tr><td><strong>السبورة</strong></td><td>🖊️</td><td>فتح/إغلاق السبورة التفاعلية</td></tr>
+          <tr><td><strong>إعادة المسرّع</strong></td><td>🔔</td><td>إعادة تعيين نظام المسرّع (Buzzer)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تعديل النقاط</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">✅</div><div class="fi-body"><div class="fi-title">إجابة صحيحة</div><div class="fi-desc">يضيف نقاط السؤال للفريق المحدد. يُستخدم عند إجابة فريق إجابة صحيحة لمنحه النقاط المستحقة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">❌</div><div class="fi-body"><div class="fi-title">إجابة خاطئة</div><div class="fi-desc">يسجّل إجابة خاطئة للفريق المحدد. إذا كان الخصم عند الخطأ مفعّلاً، يُخصم عدد النقاط المحدد من رصيد الفريق.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">➕</div><div class="fi-body"><div class="fi-title">منح نقطة يدوياً</div><div class="fi-desc">يمنح نقطة واحدة إضافية لأي فريق. مفيد للأسئلة الشفهية أو المكافآت الخاصة خارج إطار الأسئلة المبرمجة.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">أزرار جولة الحسم <span class="v10-badge">V10</span></div></div>
+    <div class="callout new"><span class="callout-icon">⚡</span><span>تظهر أزرار مخصصة في لوحة التحكم عن بُعد أثناء جولة الحسم بشكل ديناميكي عند الحاجة فقط:</span></div>
+    <div class="feature-list" style="margin-top:12px">
+      <div class="feature-item"><div class="fi-icon">✅</div><div class="fi-body"><div class="fi-title">منح نقطة</div><div class="fi-desc">يمنح نقطة الحسم للفريق الصحيح. تُحدَّث شاشة الجمهور فوراً لعرض النتيجة الجديدة بعد منح النقاط.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">⏭️</div><div class="fi-body"><div class="fi-title">التالي</div><div class="fi-desc">ينتقل لسؤال الحسم التالي. إذا بقي التعادل بعد الجولة، تُعاد عرض أسئلة الحسم تلقائياً.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">✕</div><div class="fi-body"><div class="fi-title">إنهاء</div><div class="fi-desc">ينهي جولة الحسم ويعود لشاشة النتائج النهائية. يُستخدم عندما يرغب المقدم بإنهاء الحسم يدوياً.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">معلومات الحالة المعروضة</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>المعلومة</th><th>الوصف</th></tr></thead>
+        <tbody>
+          <tr><td><strong>الفرق ونقاطهم</strong></td><td>قائمة بجميع الفرق مع نقاطهم الحالية وألوانهم</td></tr>
+          <tr><td><strong>الفريق الحالي</strong></td><td>اسم الفريق الذي دوره في الإجابة</td></tr>
+          <tr><td><strong>السؤال الحالي</strong></td><td>أول 60 حرفاً من نص السؤال المعروض</td></tr>
+          <tr><td><strong>حالة الإجابة</strong></td><td>هل أُجيب السؤال أم لا</td></tr>
+          <tr><td><strong>الوقت المتبقي</strong></td><td>العداد التنازلي الحالي والمدة الكلية</td></tr>
+          <tr><td><strong>حالة الموسيقى</strong></td><td>هل الموسيقى الخلفية تعمل أم لا</td></tr>
+          <tr><td><strong>حالة المسابقة</strong></td><td>هل المسابقة جارية أم متوقفة</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الانتقال السريع للأسئلة</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">⏭️</div><div class="fi-body"><div class="fi-title">الانتقال لسؤال محدد</div><div class="fi-desc">أدخل رقم السؤال في حقل الإدخال واضغط "انتقال" للذهاب مباشرة إلى سؤال معين دون الحاجة للتنقل سؤالاً تلو الآخر. مفيد للعودة لسؤال مُتجاوز أو تصحيح خطأ في العرض.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📂</div><div class="fi-body"><div class="fi-title">تصفح الأقسام</div><div class="fi-desc">قسم التنقل بين الأقسام يتيح لك اختيار قسم محدد والانتقال إليه مباشرة، مما يسرّع عملية التنقل أثناء المسابقة.</div></div></div>
+    </div>
+  </div>
+
+  <div class="callout info" style="margin-top:16px"><span class="callout-icon">💡</span><span>شاشة التحكم عن بُعد تتزامن مع النافذة الرئيسية عبر رسائل ping دورية كل 4 ثوان. تُغلق تلقائياً عند إغلاق نافذة المسابقة الرئيسية. يمكن بناء وحدة تحكم مخصصة تتواصل مع المنصة عبر BroadcastChannel — <a href="#api-ref" style="color:var(--gold)">انظر مرجع API</a>.</span></div>
 </section>
 
 <!-- ═══ WHITEBOARD ═══ -->
@@ -682,7 +1063,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 <section class="section" id="themes">
   <div class="section-header">
     <div class="section-icon icon-purple">🎨</div>
-    <div><div class="section-title">الثيمات البصرية <span class="v8-badge">V8 — 14+ ثيماً</span></div><div class="section-sub">اختر شخصية المسابقة البصرية</div></div>
+    <div><div class="section-title">الثيمات البصرية <span class="v8-badge">V8 — 14+ ثيماً</span> <span class="v9-badge">V9 — 19 ثيماً</span></div><div class="section-sub">اختر شخصية المسابقة البصرية</div></div>
   </div>
   <div class="callout info"><span class="callout-icon">🎨</span><span>يُضبط الثيم من <strong>لوحة التحكم → المظهر</strong>. في V8: معاينات بصرية بتدرجات لونية وتوهّج محيطي لكل خيار.</span></div>
   <div class="themes-grid" style="margin-bottom:24px">
@@ -700,6 +1081,10 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="theme-card"><div class="theme-dot" style="background:linear-gradient(135deg,#059669,#34d399)"></div><div class="theme-info"><div class="th-name">زمردي (Emerald) <span class="v8-badge">V8</span></div><div class="th-desc">أخضر زمردي عميق</div></div></div>
     <div class="theme-card"><div class="theme-dot" style="background:linear-gradient(135deg,#dc2626,#f87171)"></div><div class="theme-info"><div class="th-name">ياقوتي (Ruby) <span class="v8-badge">V8</span></div><div class="th-desc">أحمر ياقوتي + وردي</div></div></div>
     <div class="theme-card"><div class="theme-dot" style="background:linear-gradient(135deg,#d4956a,#c9a84c)"></div><div class="theme-info"><div class="th-name">موكا فاخر (Mocha)</div><div class="th-desc">بني موكا + ذهبي خافت</div></div></div>
+    <div class="theme-card"><div class="theme-dot" style="background:linear-gradient(135deg,#1a3a4a,#00897b)"></div><div class="theme-info"><div class="th-name">داكن تيل (Teal Dark) <span class="v9-badge">V9</span></div><div class="th-desc">تيل داكن محيطي — هدوء وأعماق البحار</div></div></div>
+    <div class="theme-card"><div class="theme-dot" style="background:linear-gradient(135deg,#e91e63,#f48fb1)"></div><div class="theme-info"><div class="th-name">وردي دافئ (Warm Pink) <span class="v9-badge">V9</span></div><div class="th-desc">وردي دافئ رومانسي — المناسبات الخاصة</div></div></div>
+    <div class="theme-card"><div class="theme-dot" style="background:linear-gradient(135deg,#000000,#ffffff)"></div><div class="theme-info"><div class="th-name">أسود نقي (Pure Black) <span class="v9-badge">V9</span></div><div class="th-desc">أسود نقي بتباين أبيض كامل — العروض الاحترافية</div></div></div>
+    <div class="theme-card"><div class="theme-dot" style="background:linear-gradient(135deg,#0d1117,#1f6feb)"></div><div class="theme-info"><div class="th-name">أزرق منتصف الليل (Midnight) <span class="v9-badge">V9</span></div><div class="th-desc">أزرق منتصف الليل بأسلوب GitHub — الأناقة والتقنية</div></div></div>
   </div>
   <div class="callout new"><span class="callout-icon">🎨</span><span><strong>ثيم مخصص (Custom)</strong> — اختر "مخصص 🎨" لفتح محرر الألوان وضبط: لون الخلفية العميقة، اللون الرئيسي، اللون الثانوي، ولون النص يدوياً مطابق لهوية مؤسستك. يمكنك أيضاً <strong>حفظ عدة لوحات ألوان مخصصة</strong> والتبديل بينها — <a href="#custom-palettes" style="color:var(--orange)">انظر قسم لوحات الألوان المتعددة</a>.</span></div>
 </section>
@@ -733,8 +1118,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="feature-item"><div class="fi-icon">😰</div><div class="fi-body"><div class="fi-title">موسيقى التوتر</div><div class="fi-desc">ميزة مستقلة تُفعَّل تلقائياً في آخر N ثانية من العداد. تفعيل/تعطيل مستقل، مستوى صوت منفصل، مدمجة أو ملف صوتي مخصص. تتوقف عند كشف الإجابة أو انتهاء الوقت. <a href="#tension-music" style="color:var(--gold)">← قسم تفصيلي</a></div></div></div>
     <div class="feature-item"><div class="fi-icon">🎡</div><div class="fi-body"><div class="fi-title">موسيقى العجلة <span class="v8-badge">V8</span></div><div class="fi-desc">صوت مخصص لدوران عجلة الحظ مع مستوى صوت مستقل. يتوقف تلقائياً عند توقف العجلة.</div></div></div>
     <div class="feature-item"><div class="fi-icon">🏆</div><div class="fi-body"><div class="fi-title">موسيقى المنصة <span class="v8-badge">V8</span></div><div class="fi-desc">موسيقى احتفالية مخصصة لشاشة التتويج مع مستوى صوت مستقل.</div></div></div>
-    <div class="feature-item"><div class="fi-icon">✅❌</div><div class="fi-body"><div class="fi-title">أصوات الإجابات</div><div class="fi-desc">مؤثرات صوتية مدمجة أو مخصصة للإجابة الصحيحة والخاطئة. يمكن تجربتها قبل الاستخدام.</div></div></div>
-    <div class="feature-item"><div class="fi-icon">🎛️</div><div class="fi-body"><div class="fi-title">خلاط الصوت 6 قنوات <span class="v8-badge">V8</span></div><div class="fi-desc">نظام AudioMixer يدير 6 قنوات مستقلة: خلفية، مؤثرات، عجلة، سؤال، توتر، منصة. كتم تلقائي عند العودة للوحة التحكم.</div></div></div>
+    <div class="feature-item"><div class="fi-icon">✅❌</div><div class="fi-body"><div class="fi-title">أصوات الإجابات <span class="v10-badge">V10 محسّن</span></div><div class="fi-desc">مؤثرات صوتية مدمجة أو مخصصة للإجابة الصحيحة والخاطئة. <strong>أشرطة تمرير فردية</strong> للتحكم بمستوى كل مؤثر: إجابة صحيحة، إجابة خاطئة، وموسيقى الخلفية. يمكن تشغيل أصوات الإجابات أيضاً في شاشة الجمهور عبر إعداد "أصوات شاشة الجمهور" <span class="v10-badge">V10</span>. يعمل عبر Web Audio API مع معالجة تلقائية لسياسة التشغيل التلقائي.</div></div></div>
+    <div class="feature-item"><div class="fi-icon">🎛️</div><div class="fi-body"><div class="fi-title">خلاط الصوت 6 قنوات <span class="v8-badge">V8</span> <span class="v10-badge">V10 محسّن</span></div><div class="fi-desc">نظام AudioMixer يدير 6 قنوات مستقلة: خلفية، مؤثرات، عجلة، سؤال، توتر، منصة. كتم تلقائي عند العودة للوحة التحكم. في V10: منع تدمير العقد الصوتية عند إعادة التسجيل، فصل جميع العقد عند الإيقاف لمنع التسريب، ونظام BgmResumeTracker لاستئناف الموسيقى الخلفية تلقائياً بعد انتهاء موسيقى التوتر.</div></div></div>
   </div>
   <div class="callout warn" style="margin-top:16px"><span class="callout-icon">⚠️</span><span>إذا لم يعمل الصوت: انقر في أي مكان على الصفحة أولاً (سياسة المتصفحات تمنع الصوت التلقائي قبل تفاعل المستخدم).</span></div>
 </section>
@@ -774,8 +1159,9 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
       </div>
     </div>
     <div class="card"><div class="card-icon">💾</div><div class="card-title">تصدير / استيراد JSON</div><p>احفظ نسخة كاملة كملف JSON (صيغة V8). يمكن استعادتها لاحقاً أو نقلها لجهاز آخر. يتضمن الإعدادات والأقسام والفرق والشكر.</p></div>
-    <div class="card"><div class="card-icon">🔐</div><div class="card-title">تصدير مشفّر (.qze)</div><p>صدّر البيانات مشفّرة بكلمة مرور (XOR + Base64). مثالي لمشاركة الأسئلة بشكل آمن دون كشف المحتوى لغير المصرح لهم.</p></div>
+    <div class="card"><div class="card-icon">🔐</div><div class="card-title">تصدير مشفّر (.qze)</div><p>صدّر البيانات مشفّرة بكلمة مرور (XOR + Base64). مثالي لمشاركة الأسئلة بشكل آمن دون كشف المحتوى لغير المصرَّح لهم.</p></div>
     <div class="card"><div class="card-icon">⬇️</div><div class="card-title">تصدير النتائج CSV</div><p>صدّر نتائج المسابقة كملف CSV يتضمن أسماء الفرق والنقاط والإحصاءات. يُفتح في Excel مباشرة.</p></div>
+    <div class="card" style="border-color:rgba(251,146,60,.3)"><div class="card-icon">📦</div><div class="card-title">استيراد ZIP مع وسائط <span class="v10-badge">V10</span></div><p>استيراد ملف ZIP يحتوي مجلد media/ لاستخراج ملفات الوسائط (صور وأصوات) تلقائياً. تصدير أنظف بإزالة 7 حقول وسائط كبيرة بدلاً من 3، مع تحقق من صحة البيانات قبل قبولها ومعالجة أخطاء FileReader.</p></div>
   </div>
 </section>
 
@@ -798,6 +1184,35 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
       </tbody>
     </table>
   </div>
+</section>
+
+<!-- ═══ STORAGE MONITOR ═══ -->
+<section class="section" id="storage-monitor">
+  <div class="section-header">
+    <div class="section-icon icon-green">📊</div>
+    <div><div class="section-title">مراقب التخزين <span class="v10-badge">V10</span></div><div class="section-sub">فحص وإدارة مساحة التخزين المحلية</div></div>
+  </div>
+  <div class="callout info"><span class="callout-icon">📊</span><span>يوفر مراقب التخزين نظرة شاملة على حالة التخزين المحلي (localStorage و IndexedDB) مع أدوات فحص وتنظيف. يُساعدك على تشخيص مشاكل المساحة وتحديد البيانات التي تستهلك أكبر حجم. يمكن الوصول إليه من <strong>لوحة التحكم → تبويب الاستيراد → مراقب التخزين</strong>.</span></div>
+
+  <div style="margin-top:20px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">معلومات العرض</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">💾</div><div class="fi-body"><div class="fi-title">تفاصيل localStorage</div><div class="fi-desc">يعرض عدد المفاتيح المخزّنة، الحجم الكلي بالكيلوبايت، وقائمة بأكبر 10 مفاتيح مع أحجامها التفصيلية. يساعد في تحديد البيانات التي تستهلك مساحة كبيرة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🗄️</div><div class="fi-body"><div class="fi-title">تفاصيل IndexedDB</div><div class="fi-desc">يعرض عدد العناصر المخزّنة، الحجم الكلي التقريبي، ومفاتيح IDB المستخدمة. بما أن الوسائط الكبيرة تُخزّن حصرياً في IndexedDB، فهذا القسم مهم لمراقبة حجم الصور والملفات الصوتية.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📏</div><div class="fi-body"><div class="fi-title">معلومات الحصة</div><div class="fi-desc">يعرض الحجم المستخدم والمتاح والنسبة المئوية من حصة التخزين الكلية. يُنبّهك عندما تقترب من الحد الأقصى لاتخاذ إجراء (مثل حذف وسائط قديمة أو تنظيف البيانات).</div></div></div>
+      <div class="feature-item"><div class="fi-icon">✅</div><div class="fi-body"><div class="fi-title">فحص البيانات الأساسية</div><div class="fi-desc">يفحص حالة البيانات الأساسية (Primary State) في IndexedDB ويعرض عدد الأقسام والأسئلة المحفوظة. إذا وُجدت فئات بدون أسئلة، يُستعاد تلقائياً من IndexedDB.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">أدوات التنظيف</div></div>
+    <div class="cards-grid">
+      <div class="card"><div class="card-icon">🔍</div><div class="card-title">فحص التخزين</div><p>يفحص صحة التخزين بالكامل ويعرض تقريراً مفصلاً. يكشف البيانات التالفة أو المتضاربة ويقترح حلولاً.</p></div>
+      <div class="card"><div class="card-icon">🗑️</div><div class="card-title">تنظيف البيانات اليتيمة</div><p>يحذف البيانات اليتيمة في IndexedDB التي لم تعد مرتبطة بأي قسم أو سؤال. يساعد في استعادة المساحة المهدرة دون التأثير على البيانات الفعّالة.</p></div>
+    </div>
+  </div>
+
+  <div class="callout warn" style="margin-top:16px"><span class="callout-icon">⚠️</span><span>في وضع التصفح الخاص، قد لا يتوفر IndexedDB. يعمل مراقب التخزين في الوضع العادي فقط. إذا لاحظت بطءاً في التطبيق، افحص مراقب التخزين — كثرة الوسائط الكبيرة قد تسبب بطئاً ملحوظاً.</span></div>
 </section>
 
 <!-- ═══ MOBILE ═══ -->
@@ -1016,9 +1431,10 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
         <tbody>
           <tr><td><strong>تفعيل موسيقى التوتر</strong></td><td>مفعّل / معطّل</td><td>مفعّل</td><td>المفتاح الرئيسي لتشغيل الموسيقى. عند التعطيل لا تُشغَّل موسيقى التوتر أبداً بغض النظر عن بقية الإعدادات.</td></tr>
           <tr><td><strong>وقت التفعيل</strong></td><td>3 — 30 ثانية</td><td>10 ثوانٍ</td><td>عندما يصل العداد إلى هذه القيمة تبدأ موسيقى التوتر. مثال: عند ضبطه على 10، تبدأ الموسيقى عندما تبقى 10 ثوانٍ. اضبطه أعلى للأسئلة الصعبة وأقل للأسئلة السريعة.</td></tr>
-          <tr><td><strong>نوع الموسيقى</strong></td><td>مدمجة / ملف مخصص</td><td>مدمجة</td><td"><strong>مدمجة</strong>: نغمات توتر آلية تُولَّد داخل المتصفح. <strong>ملف مخصص</strong>: ارفع ملفك الصوتي (MP3, OGG, WAV) للحصول على تجربة فريدة.</td></tr>
+          <tr><td><strong>نوع الموسيقى</strong></td><td>مدمجة / ملف مخصص</td><td>مدمجة</td><td><strong>مدمجة</strong>: ملف مدمج 10sec.mp3 (حلول مكان النغمات الآلية القديمة). <strong>ملف مخصص</strong>: ارفع ملفك الصوتي (MP3, OGG, WAV) للحصول على تجربة فريدة.</td></tr>
           <tr><td><strong>مستوى الصوت</strong></td><td>10% — 100%</td><td>70%</td><td>مستوى صوت مستقل عن الموسيقى الخلفية. يمكن رفعه أعلى من الموسيقى الخلفية لإبراز لحظة التوتر.</td></tr>
           <tr><td><strong>ملف صوتي مخصص</strong></td><td>MP3 / OGG / WAV</td><td>—</td><td>يظهر فقط عند اختيار "ملف مخصص". ارفع الملف ثم اختبره بأزرار "▶ تشغيل" و"⏹ إيقاف" و"✕ إزالة".</td></tr>
+          <tr><td><strong>استئناف الخلفية تلقائياً</strong> <span class="v10-badge">V10</span></td><td>تلقائي</td><td>مفعّل</td><td>عند تفعيل موسيقى التوتر، تتوقف الموسيقى الخلفية أولاً ثم تُستأنف تلقائياً بعد انتهاء التوتر عبر BgmResumeTracker. لا حاجة لإعادة تشغيل الموسيقى يدوياً.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1069,6 +1485,15 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
       <div class="feature-item"><div class="fi-icon">🔀</div><div class="fi-body"><div class="fi-title">الخلط التلقائي</div><div class="fi-desc">عند عرض السؤال، تُخلط العناصر عشوائياً (خوارزمية Fisher-Yates) مع التأكد من أن الترتيب المعروض <strong>يختلف</strong> عن الترتيب الصحيح (حتى 8 محاولات خلط لضمان الاختلاف).</div></div></div>
       <div class="feature-item"><div class="fi-icon">✅</div><div class="fi-body"><div class="fi-title">وضع أزرار صح/خطأ (orderShowTF = true)</div><div class="fi-desc">يُعرض زران كبيران ✅ و❌ مباشرة. يقيّم المقدم بصرياً ثم يضغط الزر المناسب. هذا الوضع أسرع ويناسب المسابقات المباشرة حيث الحكم بصري.</div></div></div>
       <div class="feature-item"><div class="fi-icon">🔍</div><div class="fi-body"><div class="fi-title">وضع التحقق التلقائي (orderShowTF = false)</div><div class="fi-desc">يظهر زر "✅ تحقق من الترتيب" يحلل الترتيب تلقائياً. يُلوَّن كل عنصر بالأخضر (موضع صحيح) أو الأحمر (موضع خاطئ) مع عرض الترتيب الصحيح عند الخطأ. يوجد أيضاً أزرار ✅❌ صغيرة للتجاوز اليدوي.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">آلية احتساب الإجابة <span class="v10-badge">V10</span></div></div>
+    <div class="callout info"><span class="callout-icon">📋</span><span>يتحكم إعداد <strong>آلية احتساب أسئلة الترتيب والتوصيل</strong> في كيفية تقييم إجابة المتسابق. يُضبط من <strong>لوحة التحكم → الإعدادات</strong> وينطبق على أسئلة الترتيب والتوصيل معاً.</span></div>
+    <div class="feature-list" style="margin-top:18px">
+      <div class="feature-item" style="border-color:rgba(0,245,212,.3)"><div class="fi-icon">✅</div><div class="fi-body"><div class="fi-title">جميع الإجابات صحيحة (all) — الافتراضي</div><div class="fi-desc">يجب أن تكون <strong>كل</strong> العناصر بالترتيب الصحيح لاحتساب الإجابة صحيحة. أي خطأ في موضع واحد يُسجَّل كإجابة خاطئة بالكامل. هذا الوضع أكثر صرامة وضماناً للعدالة في المسابقات التنافسية.</div></div></div>
+      <div class="feature-item" style="border-color:rgba(251,146,60,.3)"><div class="fi-icon">📊</div><div class="fi-body"><div class="fi-title">أغلبية صحيحة (majority) <span class="v10-badge">V10</span></div><div class="fi-desc">يُحتسب السؤال صحيحاً إذا تعدّت الإجابات الصحيحة الخاطئة. مثلاً: في سؤال من 4 عناصر، إذا كان 3 صحيحة و1 خاطئة = صحيح (أغلبية). عند الاحتساب تُمنح نقاط تناسبية بنسبة الإجابات الصحيحة. هذا الوضع أكثر مرونة ويناسب المسابقات التعليمية.</div></div></div>
     </div>
   </div>
 
@@ -1192,18 +1617,18 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     </div>
   </div>
   <div style="margin-top:24px">
-    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1.05rem;font-weight:800">اوامر API</div></div>
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1.05rem;font-weight:800">أوامر API</div></div>
     <div class="endpoint-list">
       <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>next</code></h4><p style="font-size:.86rem;color:var(--txt2)">الانتقال للسؤال التالي. ينفذ: <code>nextQuestion()</code></p><div class="code-block">{ "action": "next", "ts": 1714567890123 }</div></div>
       <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>reveal</code></h4><p style="font-size:.86rem;color:var(--txt2)">كشف الإجابة الصحيحة. ينفذ: <code>revealAnswer()</code></p><div class="code-block">{ "action": "reveal", "ts": 1714567890123 }</div></div>
-      <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>categories</code></h4><p style="font-size:.86rem;color:var(--txt2)">شاشة اختيار الاقسام. ينفذ: <code>showView('categories')</code></p><div class="code-block">{ "action": "categories", "ts": 1714567890123 }</div></div>
+      <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>categories</code></h4><p style="font-size:.86rem;color:var(--txt2)">شاشة اختيار الأقسام. ينفذ: <code>showView('categories')</code></p><div class="code-block">{ "action": "categories", "ts": 1714567890123 }</div></div>
       <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>scores</code></h4><p style="font-size:.86rem;color:var(--txt2)">شاشة النتائج. ينفذ: <code>showView('scores')</code></p><div class="code-block">{ "action": "scores", "ts": 1714567890123 }</div></div>
       <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>podium</code></h4><p style="font-size:.86rem;color:var(--txt2)">شاشة المنصة. ينفذ: <code>showPodium()</code></p><div class="code-block">{ "action": "podium", "ts": 1714567890123 }</div></div>
-      <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>timer</code></h4><p style="font-size:.86rem;color:var(--txt2)">تشغيل/ايقاف المؤقت. ينفذ: <code>toggleTimer()</code></p><div class="code-block">{ "action": "timer", "ts": 1714567890123 }</div></div>
-      <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>music</code></h4><p style="font-size:.86rem;color:var(--txt2)">تشغيل/ايقاف الموسيقى. ينفذ: <code>toggleMusic()</code></p><div class="code-block">{ "action": "music", "ts": 1714567890123 }</div></div>
+      <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>timer</code></h4><p style="font-size:.86rem;color:var(--txt2)">تشغيل/إيقاف المؤقت. ينفذ: <code>toggleTimer()</code></p><div class="code-block">{ "action": "timer", "ts": 1714567890123 }</div></div>
+      <div class="api-section"><h4><span class="api-method api-post">CMD</span> <code>music</code></h4><p style="font-size:.86rem;color:var(--txt2)">تشغيل/إيقاف الموسيقى. ينفذ: <code>toggleMusic()</code></p><div class="code-block">{ "action": "music", "ts": 1714567890123 }</div></div>
       <div class="api-section">
         <h4><span class="api-method api-get">GET</span> <code>ping</code> — طلب تحديث الحالة</h4>
-        <p style="font-size:.86rem;color:var(--txt2)">يرسل تلقائيا كل 4 ثوان. يجيب المضيف بـ state_update.</p>
+        <p style="font-size:.86rem;color:var(--txt2)">يرسل تلقائيًا كل 4 ثوانٍ. يجيب المضيف بـ state_update.</p>
         <div class="code-block">// طلب
 { "action": "ping", "ts": 1714567890123 }
 
@@ -1213,7 +1638,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   "payload": {
     "teams": [{"name":"فريق أ","score":5,"color":"#f5c842"}],
     "currentTeam": "اسم الفريق الحالي",
-    "currentQ": "اول 60 حرفا من نص السؤال...",
+    "currentQ": "أول 60 حرفا من نص السؤال...",
     "answered": false,
     "timeLeft": 25,
     "timerTotal": 30,
@@ -1222,12 +1647,12 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   }
 }</div>
       </div>
-      <div class="api-section"><h4><span class="api-method api-delete">EVT</span> <code>host_closed</code></h4><p style="font-size:.86rem;color:var(--txt2)">يرسل تلقائيا عند اغلاق النافذة المضيفة (beforeunload).</p><div class="code-block">{ "action": "host_closed", "ts": 1714567890123 }</div></div>
+      <div class="api-section"><h4><span class="api-method api-delete">EVT</span> <code>host_closed</code></h4><p style="font-size:.86rem;color:var(--txt2)">يرسل تلقائيا عند إغلاق النافذة المضيفة (beforeunload).</p><div class="code-block">{ "action": "host_closed", "ts": 1714567890123 }</div></div>
     </div>
   </div>
   <div style="margin-top:24px">
     <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1.05rem;font-weight:800">مثال: بناء وحدة تحكم مخصصة</div></div>
-    <div class="callout tip"><span class="callout-icon">💡</span><span>يمكنك بناء وحدة تحكم خاصة بك تتواصل مع المنصة عبر BroadcastChannel. كل ما تحتاجه هو فتح نفس الصفحة في نافذة اخرى والانضمام للقناة <code>quiz_remote_v1</code>.</span></div>
+    <div class="callout tip"><span class="callout-icon">💡</span><span>يمكنك بناء وحدة تحكم خاصة بك تتواصل مع المنصة عبر BroadcastChannel. كل ما تحتاجه هو فتح نفس الصفحة في نافذة أخرى والانضمام للقناة <code>quiz_remote_v1</code>.</span></div>
     <div class="code-block">const channel = new BroadcastChannel('quiz_remote_v1');
 
 function sendCommand(action) {
@@ -1251,11 +1676,11 @@ sendCommand('ping');
 // sendCommand('categories'); // شاشة الأقسام
 // sendCommand('scores');     // شاشة النتائج
 // sendCommand('podium');     // شاشة المنصة
-// sendCommand('timer');      // تشغيل/ايقاف المؤقت
-// sendCommand('music');      // تشغيل/ايقاف الموسيقى</div>
+// sendCommand('timer');      // تشغيل/إيقاف المؤقت
+// sendCommand('music');      // تشغيل/إيقاف الموسيقى</div>
   </div>
   <div style="margin-top:24px">
-    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1.05rem;font-weight:800">ملخص اوامر API</div></div>
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1.05rem;font-weight:800">ملخص أوامر API</div></div>
     <div class="table-wrap">
       <table>
         <thead><tr><th>الأمر</th><th>الاتجاه</th><th>الوظيفة</th><th>الدالة المنفذة</th></tr></thead>
@@ -1265,11 +1690,11 @@ sendCommand('ping');
           <tr><td><code>categories</code></td><td>بعيد ← مضيف</td><td>شاشة اختيار الأقسام</td><td><code>showView('categories')</code></td></tr>
           <tr><td><code>scores</code></td><td>بعيد ← مضيف</td><td>شاشة النتائج</td><td><code>showView('scores')</code></td></tr>
           <tr><td><code>podium</code></td><td>بعيد ← مضيف</td><td>شاشة المنصة</td><td><code>showPodium()</code></td></tr>
-          <tr><td><code>timer</code></td><td>بعيد ← مضيف</td><td>تشغيل/ايقاف المؤقت</td><td><code>toggleTimer()</code></td></tr>
-          <tr><td><code>music</code></td><td>بعيد ← مضيف</td><td>تشغيل/ايقاف الموسيقى</td><td><code>toggleMusic()</code></td></tr>
+          <tr><td><code>timer</code></td><td>بعيد ← مضيف</td><td>تشغيل/إيقاف المؤقت</td><td><code>toggleTimer()</code></td></tr>
+          <tr><td><code>music</code></td><td>بعيد ← مضيف</td><td>تشغيل/إيقاف الموسيقى</td><td><code>toggleMusic()</code></td></tr>
           <tr><td><code>ping</code></td><td>بعيد ← مضيف</td><td>طلب تحديث الحالة</td><td>يرد بـ state_update</td></tr>
           <tr><td><code>state_update</code></td><td>مضيف ← بعيد</td><td>بيانات الحالة الكاملة</td><td>—</td></tr>
-          <tr><td><code>host_closed</code></td><td>مضيف ← بعيد</td><td>اشعار اغلاق المضيف</td><td>—</td></tr>
+          <tr><td><code>host_closed</code></td><td>مضيف ← بعيد</td><td>إشعار إغلاق المضيف</td><td>—</td></tr>
         </tbody>
       </table>
     </div>
@@ -1342,14 +1767,14 @@ sendCommand('ping');
         <tbody>
           <tr><td><code>quiz_v4</code></td><td>البيانات الرئيسية: settings + categories + teams + credits</td></tr>
           <tr><td><code>quiz_v4_catimg</code></td><td>صور الأقسام: {catId: base64Image}</td></tr>
-          <tr><td><code>quiz_v4_teamimg</code></td><td>صور الفرق والاعضاء</td></tr>
-          <tr><td><code>quiz_v4_audio</code></td><td>بيانات الاصوات المخصصة</td></tr>
-          <tr><td><code>quiz_v4_progress</code></td><td>تقدم المسابقة: الاسئلة المستخدمة، الاطواق، الاحصاءات</td></tr>
+          <tr><td><code>quiz_v4_teamimg</code></td><td>صور الفرق والأعضاء</td></tr>
+          <tr><td><code>quiz_v4_audio</code></td><td>بيانات الأصوات المخصصة</td></tr>
+          <tr><td><code>quiz_v4_progress</code></td><td>تقدم المسابقة: الأسئلة المستخدمة، الأطواق، الإحصاءات</td></tr>
           <tr><td><code>quiz_session_history</code></td><td>سجل المسابقات السابقة (آخر 20)</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="callout info" style="margin-top:8px"><span class="callout-icon">💾</span><span>يستخدم ايضا IndexedDB (<code>MediaDB</code>) لتخزين الملفات الكبيرة التي تتجاوز حد localStorage.</span></div>
+    <div class="callout info" style="margin-top:8px"><span class="callout-icon">💾</span><span>يُستخدم أيضاً IndexedDB (<code>MediaDB</code>) لتخزين الملفات الكبيرة التي تتجاوز حد localStorage.</span></div>
   </div>
 </section>
 
@@ -1399,19 +1824,66 @@ sendCommand('ping');
 
 <a class="back-top" href="#overview" title="العودة للأعلى">↑</a>
 
+<!-- Mobile TOC Button & Overlay -->
+<button class="mobile-toc-btn" id="mobileTocBtn" title="الفهرس">☰</button>
+<div class="mobile-toc-overlay" id="mobileTocOverlay">
+  <div class="mobile-toc-panel">
+    <div class="mobile-toc-close" id="mobileTocClose">✕</div>
+    <div class="toc-title">محتويات الدليل</div>
+    <a class="toc-item" href="#overview">🗺️ نظرة عامة</a>
+    <a class="toc-item" href="#whats-new-v9">🆕 الجديد في V9</a>
+    <a class="toc-item" href="#whats-new-v10">🆕 الجديد في V10</a>
+    <a class="toc-item" href="#whats-new-v8">📋 الجديد في V8</a>
+    <a class="toc-item" href="#login">🔐 تسجيل الدخول</a>
+    <a class="toc-item" href="#settings">⚙️ الإعدادات</a>
+    <a class="toc-item" href="#categories">📂 الأقسام</a>
+    <a class="toc-item" href="#q-types">🖼️ أنواع الأسئلة</a>
+    <a class="toc-item" href="#builtin-library">📚 المكتبة</a>
+    <a class="toc-item" href="#teams">👥 الفرق</a>
+    <a class="toc-item" href="#cat-display">🎡 عرض الأقسام</a>
+    <a class="toc-item" href="#presentation">🎬 شاشة العرض</a>
+    <a class="toc-item" href="#certificate">📜 شهادة الفائز</a>
+    <a class="toc-item" href="#themes">🎨 الثيمات</a>
+    <a class="toc-item" href="#sound">🔊 الصوت</a>
+    <a class="toc-item" href="#shortcuts">⌨️ الاختصارات</a>
+    <a class="toc-item" href="#import">📥 الاستيراد</a>
+    <a class="toc-item" href="#tiebreaker">⚡ جولة الحسم</a>
+    <a class="toc-item" href="#storage-monitor">📊 مراقب التخزين</a>
+    <a class="toc-item" href="#security-perf">🛡️ الأمان والأداء</a>
+    <a class="toc-item" href="#api-ref">🔌 API</a>
+    <a class="toc-item" href="#data-format">📊 تنسيق البيانات</a>
+    <a class="toc-item" href="#tips">💡 نصائح</a>
+  </div>
+</div>
+
 <script>
-// Active TOC tracking
-const tocLinks=document.querySelectorAll('.toc-item');
-const sections=document.querySelectorAll('section[id]');
-const navPills=document.querySelectorAll('.nav-pill');
-function updateActive(){
-  let current='';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)current=s.id});
-  tocLinks.forEach(l=>{l.classList.toggle('active',l.getAttribute('href')==='#'+current)});
-  navPills.forEach(p=>{p.classList.toggle('active',p.getAttribute('href')==='#'+current)});
-}
-window.addEventListener('scroll',updateActive,{passive:true});
-updateActive();
+(function(){
+  // Active TOC + Nav tracking
+  var tocLinks=document.querySelectorAll('.toc-sticky .toc-item');
+  var sections=document.querySelectorAll('section[id]');
+  var navPills=document.querySelectorAll('.header-nav .nav-pill');
+  function updateActive(){
+    var current='';
+    sections.forEach(function(s){if(window.scrollY>=s.offsetTop-120)current=s.id});
+    tocLinks.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+current)});
+    navPills.forEach(function(p){p.classList.toggle('active',p.getAttribute('href')==='#'+current)});
+  }
+  window.addEventListener('scroll',updateActive,{passive:true});
+  updateActive();
+
+  // Mobile TOC
+  var btn=document.getElementById('mobileTocBtn');
+  var overlay=document.getElementById('mobileTocOverlay');
+  var close=document.getElementById('mobileTocClose');
+  function openToc(){if(!overlay)return;overlay.classList.add('open');document.body.style.overflow='hidden'}
+  function closeToc(){if(!overlay)return;overlay.classList.remove('open');document.body.style.overflow=''}
+  if(btn)btn.addEventListener('click',openToc);
+  if(close)close.addEventListener('click',closeToc);
+  if(overlay){
+    overlay.addEventListener('click',function(e){if(e.target===overlay)closeToc()});
+    overlay.querySelectorAll('.toc-item').forEach(function(item){item.addEventListener('click',closeToc)});
+  }
+})();
 </script>
 </body>
 </html>
