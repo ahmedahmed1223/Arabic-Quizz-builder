@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل المستخدم v11 — منصة المسابقات التفاعلية</title>
+<title>دليل المستخدم v12 — منصة المسابقات التفاعلية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -108,6 +108,8 @@ body::after{
 .v9-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(251,146,60,.15);color:var(--orange);border:1px solid rgba(251,146,60,.3);margin-right:6px;vertical-align:middle}
 .v10-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(255,64,96,.15);color:var(--red);border:1px solid rgba(255,64,96,.3);margin-right:6px;vertical-align:middle}
 .v11-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.3);margin-right:6px;vertical-align:middle}
+.v12-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(0,212,255,.15);color:#00d4ff;border:1px solid rgba(0,212,255,.3);margin-right:6px;vertical-align:middle}
+.icon-cyan{background:rgba(0,212,255,.12);color:#00d4ff}
 .table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:.85rem}
 thead{background:var(--bg3)}
@@ -229,12 +231,13 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 </head>
 <body>
 <header class="site-header">
-  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات — دليل المستخدم v11</div>
+  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات — دليل المستخدم v12</div>
   <nav class="header-nav">
     <a class="nav-pill active" href="#overview">نظرة عامة</a>
-    <a class="nav-pill" href="#whats-new-v9">الجديد V9</a>
+    <a class="nav-pill" href="#whats-new-v12">V12</a>
     <a class="nav-pill" href="#whats-new-v11">V11</a>
     <a class="nav-pill" href="#whats-new-v10">V10</a>
+    <a class="nav-pill" href="#whats-new-v9">V9</a>
     <a class="nav-pill" href="#whats-new-v8">V8</a>
     <a class="nav-pill" href="#solo-mode">الوضع الفردي</a>
     <a class="nav-pill" href="#setup-wizard">معالج الإعداد</a>
@@ -278,19 +281,25 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   <div class="toc-sticky">
     <div class="toc-title">محتويات الدليل</div>
     <a class="toc-item active" href="#overview">🗺️ نظرة عامة</a>
+    <a class="toc-item" href="#whats-new-v12">🆕 الجديد في V12</a>
     <a class="toc-item" href="#whats-new-v11">🆕 الجديد في V11</a>
     <a class="toc-item" href="#whats-new-v10">🆕 الجديد في V10</a>
     <a class="toc-item" href="#whats-new-v8">📋 الجديد في V8</a>
     <a class="toc-item" href="#login">🔐 تسجيل الدخول</a>
     <a class="toc-item" href="#settings">⚙️ الإعدادات</a>
     <a class="toc-item" href="#categories">📂 الأقسام</a>
+    <a class="toc-item" href="#container-sections">🧩 الأقسام الحاوية <span class="v12-badge">V12</span></a>
     <a class="toc-item" href="#questions">❓ الأسئلة</a>
+    <a class="toc-item" href="#rich-editor">✏️ المحرر الاحترافي <span class="v12-badge">V12</span></a>
+    <a class="toc-item" href="#image-crop">✂️ قص الصور <span class="v12-badge">V12</span></a>
     <a class="toc-item" href="#q-types">🖼️ أنواع الأسئلة (9)</a>
     <a class="toc-item" href="#builtin-library">📚 المكتبة المدمجة</a>
+    <a class="toc-item" href="#external-library">🌐 المكتبة الخارجية <span class="v12-badge">V12</span></a>
     <a class="toc-item" href="#shuffle">🔀 الخلط والعشوائية</a>
     <a class="toc-item" href="#teams">👥 الفرق</a>
     <a class="toc-item" href="#competition-modes">🎮 أنماط المسابقة</a>
     <a class="toc-item" href="#solo-mode">🏆 الوضع الفردي</a>
+    <a class="toc-item" href="#achievements">🏅 الإنجازات والمتصدرين <span class="v12-badge">V12</span></a>
     <a class="toc-item" href="#setup-wizard">🧙 معالج الإعداد</a>
     <a class="toc-item" href="#google-sheets">📊 Google Sheets</a>
     <a class="toc-item" href="#cat-display">🎡 أنماط عرض الأقسام</a>
@@ -299,6 +308,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <a class="toc-item" href="#remote-screen">📱 شاشة التحكم عن بُعد</a>
     <a class="toc-item" href="#whiteboard">🖊️ السبورة التفاعلية</a>
     <a class="toc-item" href="#new-screens">🏆 المنصة والإحصاءات</a>
+    <a class="toc-item" href="#pdf-excel-export">📄 تصدير PDF و Excel <span class="v12-badge">V12</span></a>
     <a class="toc-item" href="#certificate">📜 شهادة الفائز</a>
     <a class="toc-item" href="#themes">🎨 الثيمات (19)</a>
     <a class="toc-item" href="#lifelines">🆘 أطواق النجاة</a>
@@ -319,6 +329,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <a class="toc-item" href="#custom-palettes">🎨 لوحات الألوان المتعددة</a>
     <a class="toc-item" href="#tiebreaker">⚡ جولة الحسم</a>
     <a class="toc-item" href="#storage-monitor">📊 مراقب التخزين</a>
+    <a class="toc-item" href="#notifications">🔔 الإشعارات الذكية <span class="v12-badge">V12</span></a>
     <a class="toc-item" href="#security-perf">🛡️ الأمان والأداء</a>
     <a class="toc-item" href="#api-ref">🔌 مرجع API (التحكم عن بُعد)</a>
     <a class="toc-item" href="#data-format">📊 تنسيق البيانات</a>
@@ -332,32 +343,108 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 <!-- HERO -->
 <section id="overview">
   <div class="hero">
-    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 11</strong> 🆕</div>
+    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 12</strong> 🆕</div>
     <h1>منصة المسابقات التفاعلية</h1>
-    <p>منصة احترافية متكاملة لإعداد وتقديم مسابقات تفاعلية تعليمية وترفيهية، تعمل كاملاً في المتصفح دون الحاجة لاتصال بالإنترنت أثناء العرض.</p>
+    <p>منصة احترافية متكاملة لإعداد وتقديم مسابقات تفاعلية تعليمية وترفيهية، تعمل كاملاً في المتصفح دون الحاجة لاتصال بالإنترنت أثناء العرض. ملف واحد متكامل يحتوي كل ما تحتاجه.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num">10</div><div class="lbl">أنواع أسئلة</div></div>
+      <div class="hero-stat"><div class="num">7</div><div class="lbl">أنواع أسئلة</div></div>
       <div class="hero-stat"><div class="num">19</div><div class="lbl">ثيماً بصرياً</div></div>
-      <div class="hero-stat"><div class="num">407</div><div class="lbl">سؤال مدمج</div></div>
-      <div class="hero-stat"><div class="num">🎡</div><div class="lbl">عجلة الحظ</div></div>
-      <div class="hero-stat"><div class="num">⚡</div><div class="lbl">جولة الحسم</div></div>
+      <div class="hero-stat"><div class="num">1500+</div><div class="lbl">سؤال مدمج</div></div>
+      <div class="hero-stat"><div class="num">30</div><div class="lbl">قسماً</div></div>
+      <div class="hero-stat"><div class="num">16</div><div class="lbl">إنجازاً</div></div>
       <div class="hero-stat"><div class="num">🏆</div><div class="lbl">الوضع الفردي</div></div>
-      <div class="hero-stat"><div class="num">🧙</div><div class="lbl">معالج الإعداد</div></div>
-      <div class="hero-stat"><div class="num">🛡️</div><div class="lbl">أمان محسّن</div></div>
-      <div class="hero-stat"><div class="num">⚡</div><div class="lbl">أداء أعلى</div></div>
+      <div class="hero-stat"><div class="num">🌐</div><div class="lbl">يعمل أوفلاين</div></div>
+      <div class="hero-stat"><div class="num">📱</div><div class="lbl">دعم الجوال</div></div>
     </div>
   </div>
 
   <div class="callout new" style="margin-bottom:28px">
     <span class="callout-icon">🆕</span>
-    <span><strong>ما الجديد في الإصدار 11؟</strong> — الوضع الفردي بنظام مراحل · معالج إعداد متكامل (7 خطوات) · تكامل Google Sheets · مكتبة موسّعة (407 سؤال في 21 قسم) · ترجمة شاملة (1,488 مفتاح) · أيقونات SVG احترافية · تحسينات تجاوب وأداء · إصلاحات حرجة</span>
+    <span><strong>ما الجديد في الإصدار 12؟</strong> — مكتبة أسئلة ضخمة (1500+ سؤال في 30 قسم) · مكتبة خارجية بتحديث تلقائي · محرر نصوص احترافي · أداة قص الصور · تصدير PDF و Excel · نظام إنجازات ومتصدرين · أقسام حاوية وفرعية · إشعارات ذكية · تشغيل كامل بدون إنترنت · نظام تصميم جديد · تحسينات جوال شاملة</span>
   </div>
 
   <div class="cards-grid">
-    <div class="card"><div class="card-icon">🎯</div><div class="card-title">إعداد سريع</div><p>أضف الأقسام والأسئلة والفرق من لوحة تحكم بسيطة، أو حمّل المكتبة المدمجة بضغطة واحدة، أو استورد الأسئلة من Excel.</p></div>
-    <div class="card"><div class="card-icon">🖥️</div><div class="card-title">عرض احترافي</div><p>واجهة عرض مبهرة مع عجلة الحظ، السبورة التفاعلية، الموسيقى الخلفية، مؤثرات الكونفيتي، والتحكم عن بُعد.</p></div>
-    <div class="card"><div class="card-icon">💾</div><div class="card-title">حفظ تلقائي محسّن</div><p>يُحفظ كل شيء محلياً بضغط LZ-String (أصغر بـ 70%) في IndexedDB كتخزين أساسي مع localStorage كاحتياطي مضغوط. حفظ محسّن بفحص التغييرات والدمج الزمني.</p></div>
-    <div class="card"><div class="card-icon">📱</div><div class="card-title">متوافق مع كل الشاشات</div><p>يعمل على الهواتف والأجهزة اللوحية والحواسيب وشاشات العرض الكبيرة والـ 4K مع دعم كامل للّمس واحترام إعدادات تقليل الحركة.</p></div>
+    <div class="card"><div class="card-icon">🎯</div><div class="card-title">إعداد سريع</div><p>أضف الأقسام والأسئلة والفرق من لوحة تحكم بسيطة، أو حمّل المكتبة المدمجة بضغطة واحدة، أو استورد الأسئلة من Excel أو Google Sheets أو المكتبة الخارجية.</p></div>
+    <div class="card"><div class="card-icon">🖥️</div><div class="card-title">عرض احترافي</div><p>واجهة عرض مبهرة مع عجلة الحظ، السبورة التفاعلية، الموسيقى الخلفية، مؤثرات الكونفيتي، والتحكم عن بُعد. نظام تصميم موحّد بظلال وانتقالات سلسة.</p></div>
+    <div class="card"><div class="card-icon">💾</div><div class="card-title">حفظ تلقائي محسّن</div><p>يُحفظ كل شيء محلياً بضغط LZ-String (أصغر بـ 70%) في IndexedDB كتخزين أساسي مع localStorage كاحتياطي مضغوط. نسخ احتياطي تلقائي دوري وتصدير تقارير PDF و Excel.</p></div>
+    <div class="card"><div class="card-icon">📱</div><div class="card-title">متوافق مع كل الشاشات</div><p>يعمل على الهواتف والأجهزة اللوحية والحواسيب وشاشات العرض الكبيرة والـ 4K مع دعم كامل للّمس واحترام إعدادات تقليل الحركة. تحسينات جوال شاملة في الإصدار 12.</p></div>
+  </div>
+</section>
+
+<!-- ═══ WHAT'S NEW V12 ═══ -->
+<section class="section" id="whats-new-v12">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">🆕</div>
+    <div><div class="section-title">الجديد في الإصدار 12</div><div class="section-sub">مكتبة ضخمة · محرر احترافي · إنجازات · تصدير متقدم · أوفلاين كامل</div></div>
+  </div>
+
+  <div class="callout new"><span class="callout-icon">🆕</span><span>يُعد الإصدار 12 إصداراً رئيسياً ضخماً يركز على تجربة المستخدم والأداء ودعم الجوال والعمل بدون إنترنت وإدارة المحتوى بشكل احترافي. لا يضيف ميزات جديدة فقط، بل يعيد صقل النظام بالكامل ليصبح أكثر استقراراً ومرونة وسهولة في الاستخدام للمسابقات التعليمية والترفيهية على حد سواء.</span></div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الميزات الجديدة الرئيسية</div></div>
+    <div class="cards-grid">
+      <div class="card" style="border-color:rgba(0,212,255,.35)"><div class="card-icon">🧠</div><div class="card-title">تطوير شامل لمكتبة الأسئلة <span class="v12-badge">V12</span></div><p>إعادة بناء المكتبة بالكامل: إضافة مئات الأسئلة الجديدة والمتنوعة، إزالة الأسئلة البسيطة أو المكررة، تحسين جودة الخيارات والشروحات، إضافة ألغاز حديثة وأسئلة تفكير جانبي. دعم 7 أنواع: اختيار من متعدد، صح/خطأ، ترتيب، توصيل، أكمل الفراغ، رياضيات، أسئلة قرآنية.</p></div>
+      <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">📚</div><div class="card-title">مكتبة أسئلة خارجية بتحديث تلقائي <span class="v12-badge">V12</span></div><p>ربط مكتبة خارجية عبر JSON مع جلب التحديثات تلقائياً. مقارنة التغييرات قبل الاستيراد وأوضاع استيراد متعددة: دمج ذكي، إضافة، استبدال كامل. فحص دوري للتحديثات يضمن بقاء المحتوى محدثاً دون تدخل يدوي.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">✏️</div><div class="card-title">محرر نصوص احترافي <span class="v12-badge">V12</span></div><p>محرر نصوص منسق مدمج يدعم العناوين والتنسيقات المتعددة، دعم RTL الكامل، إدراج الصور والروابط، القوائم المرقمة والنقطية، الألوان والخلفيات، مع تحرير بصري كامل يساعد في إنشاء محتوى غني وجذاب.</p></div>
+      <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">✂️</div><div class="card-title">أداة قص الصور المدمجة <span class="v12-badge">V12</span></div><p>قص الصور داخل التطبيق مباشرة دون الحاجة لأدوات خارجية. نسب متعددة للقص (حر، مربع، مستطيل، دائري)، معاينة فورية قبل التأكيد، تحسين جودة الصور تلقائياً عند القص.</p></div>
+      <div class="card" style="border-color:rgba(255,64,96,.35)"><div class="card-icon">📄</div><div class="card-title">تصدير التقارير إلى PDF و Excel <span class="v12-badge">V12</span></div><p>تقارير PDF احترافية بتنسيق جاهز للطباعة، ملفات Excel متعددة الأوراق تتضمن إحصائيات الجلسات وأداء الفرق والأسئلة، تقارير شاملة للأداء مع رسوم بيانية مدمجة.</p></div>
+      <div class="card" style="border-color:rgba(0,245,212,.35)"><div class="card-icon">🏆</div><div class="card-title">نظام الإنجازات والمتصدرين <span class="v12-badge">V12</span></div><p>أكثر من 16 إنجازاً متنوعاً مع تأثيرات بصرية وصوتية عند الإنجاز، عرض الإنجازات داخل الوضع الفردي. لوحة متصدرين بتصنيفات أسبوعية وشهرية وعامة، أفضل اللاعبين والفرق، تحديث مباشر بين الشاشات.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">تحسينات الجوال والتجاوب</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">📱</div><div class="fi-body"><div class="fi-title">تحسينات ضخمة للجوال <span class="v12-badge">V12</span></div><div class="fi-desc">تحسين التخطيط المتجاوب بالكامل للأجهزة المحمولة، تكبير مناطق اللمس لتسهيل التفاعل، إصلاح تجاوز العناصر على الشاشات الصغيرة، دعم ملء الشاشة، ودعم الهواتف ذات النوتش بتصميم آمن.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🎨</div><div class="fi-body"><div class="fi-title">نظام تصميم جديد <span class="v12-badge">V12</span></div><div class="fi-desc">توحيد الألوان والظلال في متغيرات CSS مركزية، انتقالات وحركات أكثر سلاسة عبر النظام بالكامل، تحسين التباعد والخطوط بمقاييس موحدة، دعم أفضل للوضع الداكن مع انتقالات سلسة بين الأوضاع.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🖱️</div><div class="fi-body"><div class="fi-title">تفاعلات بصرية جديدة <span class="v12-badge">V12</span></div><div class="fi-desc">مؤثرات حركية للأزرار والبطاقات عند التفاعل، انتقالات ناعمة للتبويبات في لوحة التحكم، تحسين مؤثرات الإجابات الصحيحة والخاطئة بتأثيرات بصرية أكثر وضوحاً وجاذبية.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">لوحة التحكم والإدارة</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🧩</div><div class="fi-body"><div class="fi-title">تحسينات لوحة التحكم <span class="v12-badge">V12</span></div><div class="fi-desc">تقسيم الإعدادات لتبويبات منظمة بدلاً من صفحة واحدة طويلة، لوحة معلومات شاملة تعرض إحصائيات مباشرة عن المسابقة، إدارة أسهل للأقسام والأسئلة مع واجهة محسّنة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📂</div><div class="fi-body"><div class="fi-title">نظام الأقسام الرئيسية والفرعية <span class="v12-badge">V12</span></div><div class="fi-desc">أقسام رئيسية حاوية تضم أقساماً فرعية مرتبطة، عرض هرمي للمراحل يُتيح تنظيم المسابقة بشكل منظم، تقدم مرحلي للمسابقة يتيح فتح الأقسام بالتدريج.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔔</div><div class="fi-body"><div class="fi-title">نظام إشعارات ذكي <span class="v12-badge">V12</span></div><div class="fi-desc">إشعارات تحديثات المكتبة الخارجية، تنبيهات حالة البطارية، تنبيهات مشاكل الاتصال، تحذيرات نقص الأسئلة، شريط تقدم مرئي للإشعارات يساعد في متابعة العمليات الجارية.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الأداء والاستقرار وإمكانية الوصول</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">⚡</div><div class="fi-body"><div class="fi-title">تحسينات الأداء <span class="v12-badge">V12</span></div><div class="fi-desc">تحسين نظام حفظ الحالة لمنع فقدان البيانات، إزالة تكرار أجزاء كبيرة من الكود مما يقلل حجم الملف، تحسين دعم History API للتنقل بين الصفحات، تحسين إدارة الأحداث المركزية، معالجة مئات الأخطاء الصامتة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🌐</div><div class="fi-body"><div class="fi-title">تشغيل كامل بدون إنترنت <span class="v12-badge">V12</span></div><div class="fi-desc">دمج جميع المكتبات داخل الملف الواحد، إزالة الاعتماد على CDN نهائياً، تشغيل كامل أوفلاين بدون أي قيود، ملف واحد متكامل يحتوي كل ما تحتاجه من خطوط ومكتبات وموارد.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">♿</div><div class="fi-body"><div class="fi-title">تحسينات إمكانية الوصول <span class="v12-badge">V12</span></div><div class="fi-desc">دعم أفضل للوحة المفاتيح بتركيز مرئي واضح على جميع العناصر التفاعلية، تحسين التباين العالي لذوي الاحتياجات البصرية، دعم قارئات الشاشة بسمات ARIA محسّنة.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">إصلاحات وتحسينات عامة</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🏆</div><div class="fi-body"><div class="fi-title">إصلاح مشاكل الوضع الفردي <span class="v12-badge">V12</span></div><div class="fi-desc">حل مشاكل عدة في الوضع الفردي كانت تؤثر على تجربة اللعب، تحسين شاشة النتائج لتعرض إحصائيات أدق، تحسين نظام الإنجازات والتفاعل معه.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📋</div><div class="fi-body"><div class="fi-title">تحسين الدليل والمساعدة <span class="v12-badge">V12</span></div><div class="fi-desc">تحسين دليل المستخدم ليغطي جميع الميزات الجديدة، إزالة التكرارات داخل واجهة المساعدة، تحسين نظام الاستيراد والتصدير، إصلاح النوافذ المنبثقة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🎨</div><div class="fi-body"><div class="fi-title">تحسين الثيمات والانتقالات <span class="v12-badge">V12</span></div><div class="fi-desc">تحسين الثيمات البصرية والانتقالات بينها، دعم أفضل للوضع الداكن بتباين محسّن، تحسين الاستيراد والتصدير بمعالجة أفضل للأخطاء.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">أرقام هذا الإصدار</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>العنصر</th><th>القيمة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>عدد الأسئلة في المكتبة</strong></td><td>+1500 سؤال</td></tr>
+          <tr><td><strong>عدد الأقسام</strong></td><td>30 قسماً</td></tr>
+          <tr><td><strong>أنواع الأسئلة</strong></td><td>7 أنواع</td></tr>
+          <tr><td><strong>الإنجازات</strong></td><td>16 إنجازاً</td></tr>
+          <tr><td><strong>العمل بدون إنترنت</strong></td><td>✅ كامل</td></tr>
+          <tr><td><strong>دعم الجوال</strong></td><td>✅ محسّن بالكامل</td></tr>
+          <tr><td><strong>نظام التصميم</strong></td><td>✅ موحّد بـ CSS Variables</td></tr>
+          <tr><td><strong>تصدير التقارير</strong></td><td>PDF + Excel</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>
 
@@ -719,6 +806,10 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
         <tr><td><strong>وضع عمى الألوان</strong></td><td>عادي / عمى الأحمر (بروتانوبيا) / عمى الأخضر (ديوترانوبيا) / عمى الأزرق (تريتانوبيا) — يُعدّل الألوان ليناسب ذوي عمى الألوان</td><td>عادي</td></tr>
         <tr><td><strong>مستوى صوت موسيقى المنصة</strong></td><td>شريط تمرير لمستوى صوت موسيقى شاشة التتويج (0-100%)</td><td>60%</td></tr>
         <tr><td><strong>تكرار موسيقى المنصة</strong></td><td>تكرار تشغيل موسيقى التتويج تلقائياً</td><td>معطّل</td></tr>
+        <tr><td><strong>رابط المكتبة الخارجية</strong> <span class="v12-badge">V12</span></td><td>رابط JSON لمكتبة أسئلة خارجية مع تحديث تلقائي</td><td>—</td></tr>
+        <tr><td><strong>تفعيل الإنجازات</strong> <span class="v12-badge">V12</span></td><td>تفعيل/تعطيل نظام الإنجازات والمتصدرين</td><td>مفعّل</td></tr>
+        <tr><td><strong>الإشعارات</strong> <span class="v12-badge">V12</span></td><td>تحكم بأنواع الإشعارات (تحديثات المكتبة، البطارية، الاتصال، نقص الأسئلة)</td><td>الكل مفعّل</td></tr>
+        <tr><td><strong>أقسام حاوية</strong> <span class="v12-badge">V12</span></td><td>تفعيل نظام الأقسام الرئيسية والفرعية</td><td>مفعّل</td></tr>
       </tbody>
     </table>
   </div>
@@ -735,8 +826,26 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">اضغط على تبويب "الأقسام"</div><div class="step-desc">من القائمة العلوية في لوحة التحكم، اختر "📂 الأقسام".</div></div></div>
     <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">أضف قسماً جديداً</div><div class="step-desc">اضغط "➕ إضافة" لفتح نافذة إنشاء قسم. حدد: الاسم، الأيقونة (emoji)، واللون. يظهر هذا القسم كزر في شاشة العرض.</div><div class="step-tip">💡 اختر ألواناً متباينة لتسهيل التمييز بين الأقسام أثناء العرض</div></div></div>
     <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">نوع القسم: عادي أو حسم <span class="v10-badge">V10</span></div><div class="step-desc">عند إنشاء قسم، اختر نوعه: <strong>📂 عادي</strong> يظهر في المسابقة العادية، أو <strong>⚡ حسم</strong> يظهر فقط في جولة الحسم عند تعادل الفرق. أقسام الحسم تظهر بشارة "⚡ حسم" مميزة في لوحة الإدارة ولا تظهر في 10 أوضاع عرض مختلفة أثناء المسابقة العادية.</div><div class="step-tip">💡 أنشئ قسماً من نوع "حسم" مخصص بأسئلة صعبة لكسر التعادل في نهاية المسابقة</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">أضف الأسئلة أو حمّل المكتبة</div><div class="step-desc">انقر على اسم القسم لإضافة أسئلة يدوياً، أو انتقل لتبويب "استيراد" واضغط "📚 تحميل مكتبة الأسئلة" لتحميل 407 سؤال جاهز في 21 قسم.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">أضف الأسئلة أو حمّل المكتبة</div><div class="step-desc">انقر على اسم القسم لإضافة أسئلة يدوياً، أو انتقل لتبويب "استيراد" واضغط "📚 تحميل مكتبة الأسئلة" لتحميل 1500+ سؤال جاهز في 30 قسم.</div></div></div>
   </div>
+</section>
+
+<!-- ═══ CONTAINER SECTIONS ═══ -->
+<section class="section" id="container-sections">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">🧩</div>
+    <div><div class="section-title">نظام الأقسام الرئيسية والفرعية <span class="v12-badge">V12</span></div><div class="section-sub">تنظيم هرمي للمسابقات المعقدة</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">🧩</span><span>يُتيح الإصدار 12 إنشاء أقسام رئيسية حاوية تضم تحتها أقساماً فرعية مرتبطة، مما يُتيح تنظيم المسابقات الكبيرة والمعقدة بشكل هرمي منظم. يمكنك بناء مسابقات متعددة المراحل حيث يفتح كل مرحلة مجموعة جديدة من الأسئلة، مما يجعل تجربة المسابقة أكثر ترتيباً وتشويقاً للمشاركين.</span></div>
+  <div style="margin-top:18px">
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">📂</div><div class="fi-body"><div class="fi-title">أقسام رئيسية حاوية</div><div class="fi-desc">أنشئ أقساماً رئيسية تعمل كمجلدات حاوية تضم أقساماً فرعية. مثال: قسم "العلوم" يحتوي تحته "فيزياء"، "كيمياء"، "أحياء". هذا يُسهّل تنظيم المسابقات الكبيرة التي تتضمن عشرات الأقسام.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔗</div><div class="fi-body"><div class="fi-title">أقسام فرعية مرتبطة</div><div class="fi-desc">كل قسم فرعي مرتبط بقسمه الرئيسي ويظهر تحته في العرض الهرمي. يمكن للفرق اختيار القسم الرئيسي للتنقل بين فروعه، أو اختيار فرعي مباشرة للإجابة على أسئلته.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🏔️</div><div class="fi-body"><div class="fi-title">عرض هرمي للمراحل</div><div class="fi-desc">تُعرض الأقسام بشكل هرمي يُظهر العلاقة بين الرئيسي والفرعي بوضوح. هذا يُسهّل على المقدم والجمهور فهم بنية المسابقة وتتبع التقدم في كل مرحلة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📈</div><div class="fi-body"><div class="fi-title">تقدم مرحلي للمسابقة</div><div class="fi-desc">يمكن ضبط المسابقة لفتح الأقسام الفرعية بالتدريج عند إكمال القسم الرئيسي. هذا يضيف عنصر التشويق والتحدي التدريجي ويمنح المسابقة بنية سردية ممتعة.</div></div></div>
+    </div>
+  </div>
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>لإنشاء قسم حاوي: من تبويب "الأقسام"، اضغط "➕ إضافة" واختر نوع "📂 قسم حاوي". ثم أضف أقساماً فرعية واربطها بالقسم الحاوي من قائمة "القسم الأب".</span></div>
 </section>
 
 <!-- ═══ QUESTIONS ═══ -->
@@ -762,6 +871,42 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   </div>
 </section>
 
+<!-- ═══ RICH TEXT EDITOR ═══ -->
+<section class="section" id="rich-editor">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">✏️</div>
+    <div><div class="section-title">محرر النصوص الاحترافي <span class="v12-badge">V12</span></div><div class="section-sub">تحرير بصري غني لنصوص الأسئلة والشروحات</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">✏️</span><span>يُوفر الإصدار 12 محرر نصوص منسق مدمجاً بالكامل يتيح إنشاء محتوى غني وجذاب دون الحاجة لأدوات خارجية. يعمل المحرر داخل المتصفح مباشرة ويدعم العربية بشكل كامل مع محاذاة RTL تلقائية، مما يجعله مثالياً لإنشاء أسئلة وشروحات احترافية بتنسيقات متقدمة.</span></div>
+  <div style="margin-top:18px">
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">📝</div><div class="fi-body"><div class="fi-title">العناوين والتنسيقات</div><div class="fi-desc">يدعم ستة مستويات من العناوين، النص العريض والمائل والتسطير، وتنسيقات الفقرات. يمكنك تطبيق التنسيقات بنقرة واحدة من شريط الأدوات العلوي أو باستخدام اختصارات لوحة المفاتيح المعتادة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">↔️</div><div class="fi-body"><div class="fi-title">دعم RTL الكامل</div><div class="fi-desc">محاذاة تلقائية من اليمين لليسار للنص العربي، مع إمكانية إدراج نص إنجليزي LTR داخل الفقرة العربية. المحرر يكتشف اتجاه النص تلقائياً ويُطبّق المحاذاة المناسبة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🖼️</div><div class="fi-body"><div class="fi-title">الصور والروابط</div><div class="fi-desc">إدراج صور مباشرة من جهازك أو عبر رابط URL، مع التحكم في الحجم والمحاذاة. إضافة روابط تشعبية داخل النص للإشارة إلى مصادر خارجية أو محتوى إضافي.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📋</div><div class="fi-body"><div class="fi-title">القوائم والألوان</div><div class="fi-desc">قوائم مرقمة ونقطية بتنسيقات متعددة، تلوين النص وتلوين الخلفية لإبراز أجزاء معينة من المحتوى. مثالي لإنشاء شروحات ملونة وجذابة.</div></div></div>
+    </div>
+  </div>
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>يظهر المحرر تلقائياً عند تحرير نص السؤال أو الشرح في لوحة التحكم. يمكنك التبديل بين وضع المحرر البصري ووضع HTML الخام عبر زر التبديل في شريط الأدوات.</span></div>
+</section>
+
+<!-- ═══ IMAGE CROP ═══ -->
+<section class="section" id="image-crop">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">✂️</div>
+    <div><div class="section-title">أداة قص الصور المدمجة <span class="v12-badge">V12</span></div><div class="section-sub">قص الصور داخل التطبيق مباشرة</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">✂️</span><span>لا حاجة بعد الآن لاستخدام أدوات خارجية لقص الصور قبل رفعها. تتيح أداة القص المدمجة قص الصور مباشرة داخل التطبيق بنسب متعددة ومعاينة فورية قبل التأكيد، مما يُوفّر الوقت ويضمن توافق الصور مع متطلبات العرض.</span></div>
+  <div style="margin-top:18px">
+    <div class="cards-grid">
+      <div class="card" style="border-color:rgba(0,212,255,.35)"><div class="card-icon">✂️</div><div class="card-title">قص داخل التطبيق</div><p>عند رفع أي صورة (لسؤال أو لخيار)، يظهر خيار القص تلقائياً. اسحب حدود منطقة القص لتحديد الجزء المطلوب بدقة ثم اضغط "تأكيد".</p></div>
+      <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">📐</div><div class="card-title">نسب متعددة للقص</div><p>اختر من عدة نسب ثابتة: حر (بدون قيود)، مربع (1:1)، مستطيل أفقي (16:9)، مستطيل عمودي (9:16)، دائري. يساعدك في الحصول على صور متناسبة مع واجهة العرض.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">👁️</div><div class="card-title">معاينة فورية</div><p>شاهد نتيجة القص مباشرة قبل التأكيد. يمكنك إعادة ضبط منطقة القص عدة مرات حتى تحصل على النتيجة المطلوبة. المعة الفورية تضمن عدم الحاجة لإعادة العمل.</p></div>
+      <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">✨</div><div class="card-title">تحسين الجودة</div><p>تحسين تلقائي لجودة الصورة عند القص: ضبط السطوع والتباين، تصغير حجم الملف دون فقدان وضوح ملحوظ، وتحويل الصيغ غير المدعومة تلقائياً.</p></div>
+    </div>
+  </div>
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>تظهر أداة القص تلقائياً عند رفع صورة لسؤال أو خيار. يمكن تخطي القص بالضغط على "استخدام كاملة" إذا كانت الصورة مناسبة كما هي.</span></div>
+</section>
+
 <!-- ═══ QUESTION TYPES ═══ -->
 <section class="section" id="q-types">
   <div class="section-header">
@@ -785,9 +930,9 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 <section class="section" id="builtin-library">
   <div class="section-header">
     <div class="section-icon icon-blue">📚</div>
-    <div><div class="section-title">مكتبة الأسئلة المدمجة <span class="v8-badge">V8</span> <span class="v9-badge">V9 موسّعة</span> <span class="v11-badge">V11 موسّعة</span></div><div class="section-sub">407 سؤال جاهز في 21 قسم</div></div>
+    <div><div class="section-title">مكتبة الأسئلة المدمجة <span class="v8-badge">V8</span> <span class="v9-badge">V9</span> <span class="v11-badge">V11</span> <span class="v12-badge">V12 ضخمة</span></div><div class="section-sub">1500+ سؤال جاهز في 30 قسم</div></div>
   </div>
-  <div class="callout new"><span class="callout-icon">📚</span><span>تتضمن المنصة مكتبة مدمجة من الأسئلة الجاهزة التي يمكنك تحميلها بضغطة واحدة. تشمل أنواعاً متنوعة: نصي، صح/خطأ، ملء فراغ، ترتيب، توصيل، قرآني، ورياضي. في V9: تم توسيع المكتبة من 100 إلى 300 سؤال ومن 10 إلى 15 قسم. في V11: توسّعت المكتبة من 300 إلى 407 سؤال ومن 15 إلى 21 قسم مع إضافة أقسام جديدة (ثقافة عامة متقدمة، علوم وتكنولوجيا، جغرافيا وتاريخ عالمي، التاريخ العام، الأدب واللغة، الفنون والثقافة) وتنوع صعوبة (40% سهل، 40% متوسط، 20% صعب).</span></div>
+  <div class="callout new"><span class="callout-icon">📚</span><span>تتضمن المنصة مكتبة مدمجة ضخمة من الأسئلة الجاهزة التي يمكنك تحميلها بضغطة واحدة. تشمل أنواعاً متنوعة: نصي، صح/خطأ، ملء فراغ، ترتيب، توصيل، قرآني، ورياضي. في V12: تمت إعادة بناء المكتبة بالكامل لتشمل أكثر من 1500 سؤال في 30 قسماً مع إضافة ألغاز حديثة وأسئلة تفكير جانبي وإزالة الأسئلة البسيطة أو المكررة وتحسين جودة الخيارات والشروحات.</span></div>
   <div class="table-wrap" style="margin-top:18px">
     <table>
       <thead><tr><th>القسم</th><th>الأيقونة</th><th>عدد الأسئلة</th><th>أنواع الأسئلة</th></tr></thead>
@@ -826,6 +971,24 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     </div>
   </div>
   <div class="callout tip" style="margin-top:16px"><span class="callout-icon">📍</span><span>للوصول: <strong>لوحة التحكم → تبويب الاستيراد → بطاقة مكتبة الأسئلة المدمجة → 📚 تحميل</strong>. تظهر نافذة بتفاصيل كل قسم وخيارات التحميل.</span></div>
+</section>
+
+<!-- ═══ EXTERNAL LIBRARY ═══ -->
+<section class="section" id="external-library">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">🌐</div>
+    <div><div class="section-title">مكتبة أسئلة خارجية <span class="v12-badge">V12</span></div><div class="section-sub">ربط مكتبة JSON خارجية مع تحديث تلقائي</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">🌐</span><span>يتيح لك الإصدار 12 ربط مكتبة أسئلة خارجية عبر ملف JSON مستضاف على خادمك. تُجلب التحديثات تلقائياً ويتم مقارنة التغييرات قبل الاستيراد لضمان التحكم الكامل في المحتوى. هذا مثالي للفرق التعليمية والمؤسسات التي ترغب في مركزية إدارة الأسئلة وتوزيعها على عدة أجهزة.</span></div>
+  <div style="margin-top:18px">
+    <div class="cards-grid">
+      <div class="card" style="border-color:rgba(0,212,255,.35)"><div class="card-icon">🔗</div><div class="card-title">ربط عبر JSON</div><p>حدد رابط ملف JSON الخارجي من الإعدادات. يدعم أي خادم يستضيف ملف JSON بصيغة المكتبة المتوافقة. يمكن تحديث الرابط في أي وقت.</p></div>
+      <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">🔄</div><div class="card-title">تحديث تلقائي</div><p>فحص دوري للتحديثات يقارن النسخة المحلية بالبعيدة. عند توفر تحديث يظهر إشعار يتيح لك مراجعة التغييرات قبل تطبيقها، مما يضمن عدم استبدال محتواك بدون موافقتك.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🔀</div><div class="card-title">أوضاع استيراد متعددة</div><p>اختر طريقة الاستيراد: دمج ذكي (يضيف للأقسام الموجودة وينشئ جديدة)، إضافة (يضيف في النهاية)، أو استبدال كامل (يحل محل كل الأسئلة الحالية). نفس خيارات المكتبة المدمجة.</p></div>
+      <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">📊</div><div class="card-title">مقارنة قبل الاستيراد</div><p>قبل تطبيق أي تحديث، تعرض المنصة ملخصاً بالتغييرات: عدد الأسئلة الجديدة والمعدّلة والمحذوفة. يمكنك قبول التغييرات كاملة أو رفضها أو اختيار أقسام محددة فقط.</p></div>
+    </div>
+  </div>
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>للوصول: <strong>لوحة التحكم → تبويب الاستيراد → بطاقة المكتبة الخارجية</strong> أو من <strong>الإعدادات → رابط المكتبة الخارجية</strong>. يُشترط اتصال بالإنترنت لجلب التحديثات فقط، لكن الأسئلة المستوردة تعمل أوفلاين بعد ذلك.</span></div>
 </section>
 
 <!-- ═══ SHUFFLE ═══ -->
@@ -904,6 +1067,35 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
       </table>
     </div>
   </div>
+</section>
+
+<!-- ═══ ACHIEVEMENTS ═══ -->
+<section class="section" id="achievements">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">🏅</div>
+    <div><div class="section-title">نظام الإنجازات والمتصدرين <span class="v12-badge">V12</span></div><div class="section-sub">تحديات ومكافآت تُعزز التفاعل والمنافسة</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">🏅</span><span>يُضيف الإصدار 12 نظام إنجازات ومتصدرين متكاملاً يُعزز التفاعل والمنافسة بين اللاعبين. يضم أكثر من 16 إنجازاً متنوعاً مع تأثيرات بصرية وصوتية عند تحقيقها، ولوحة متصدرين تُصنّف أفضل اللاعبين والفرق على مدار الأسبوع والشهر والعام. هذا النظام يُحفّز المشاركين على تقديم أفضل أداء ويُضيف عنصر الإثارة للمنافسة.</span></div>
+
+  <div style="margin-top:18px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">نظام الإنجازات</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">🏅</div><div class="fi-body"><div class="fi-title">16+ إنجازاً متنوعاً</div><div class="fi-desc">تشمل الإنجازات: أول إجابة صحيحة، سلسلة من 5 إجابات متتالية، إكمال قسم كامل، سرعة خارقة (إجابة في أقل من 3 ثوانٍ)، إكمال جميع المراحل في الوضع الفردي، وإنجازات خاصة بالألغاز والتفكير الجانبي. كل إنجاز له أيقونة ووصف ومستوى صعوبة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🎉</div><div class="fi-body"><div class="fi-title">تأثيرات بصرية وصوتية</div><div class="fi-desc">عند تحقيق إنجاز يظهر إشعار متحرك بتأثيرات كونفيتي وصوت إنجاز مميز. الإشعار يعرض اسم الإنجاز وأيقونته ووصفاً مختصراً. التأثيرات مصممة لتكون ملفتة دون إزعاج.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🏆</div><div class="fi-body"><div class="fi-title">عرض الإنجازات في الوضع الفردي</div><div class="fi-desc">في الوضع الفردي تُعرض الإنجازات المحققة في شاشة النصر مع إحصائيات الأداء. يمكنك مراجعة جميع الإنجازات من صفحة الملف الشخصي للاعب ومعرفة ما تبقى من إنجازات لتحقيقها.</div></div></div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">لوحة المتصدرين</div></div>
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">📊</div><div class="fi-body"><div class="fi-title">تصنيفات زمنية</div><div class="fi-desc">ثلاثة تصنيفات: أسبوعية (أفضل اللاعبين هذا الأسبوع)، شهرية (أفضل اللاعبين هذا الشهر)، وعامة (أفضل اللاعبين على الإطلاق). يُعاد ضبط التصنيفات الأسبوعية والشهرية تلقائياً.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">👥</div><div class="fi-body"><div class="fi-title">أفضل اللاعبين والفرق</div><div class="fi-desc">ترتيب منفصل لأفضل اللاعبين في الوضع الفردي وأفضل الفرق في المسابقات الجماعية. يُعرض اسم اللاعب/الفريق، النقاط، وعدد الإنجازات المحققة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔄</div><div class="fi-body"><div class="fi-title">تحديث مباشر بين الشاشات</div><div class="fi-desc">عند تحقيق إنجاز أو تحديث نقاط، تتحدث لوحة المتصدرين فوراً في جميع الشاشات المفتوحة عبر نظام المزامنة. هذا يضمن أن الجمهور يرى التحديثات في الوقت الفعلي.</div></div></div>
+    </div>
+  </div>
+
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>يمكن تفعيل أو تعطيل نظام الإنجازات من <strong>لوحة التحكم → الإعدادات → الإنجازات</strong>. يمكنك أيضاً تخصيص الإنجازات بتعديل شروطها ونقاطها.</span></div>
 </section>
 
 <!-- ═══ SETUP WIZARD ═══ -->
@@ -1256,6 +1448,24 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   </div>
 </section>
 
+<!-- ═══ PDF & EXCEL EXPORT ═══ -->
+<section class="section" id="pdf-excel-export">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">📄</div>
+    <div><div class="section-title">تصدير التقارير إلى PDF و Excel <span class="v12-badge">V12</span></div><div class="section-sub">تقارير احترافية جاهزة للطباعة والمشاركة</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">📄</span><span>يُتيح الإصدار 12 تصدير تقارير مفصلة بتنسيقي PDF و Excel، مما يُسهّل توثيق نتائج المسابقات ومشاركتها مع الإدارة أو أولياء الأمور أو الجمهور. التقارير تتضمن رسوماً بيانية وإحصائيات شاملة تعرض أداء كل فريق وتفاصيل كل سؤال.</span></div>
+  <div style="margin-top:18px">
+    <div class="cards-grid">
+      <div class="card" style="border-color:rgba(0,212,255,.35)"><div class="card-icon">📄</div><div class="card-title">تقارير PDF احترافية</div><p>تقارير بتنسيق A4 جاهزة للطباعة تتضمن: عنوان المسابقة وتاريخها، نتائج الفرق بترتيب تنازلي، إحصائيات أداء كل فريق (صحيحة/خاطئة/متوسط وقت)، رسوم بيانية ملونة لتوزيع النقاط، وتفاصيل الأسئلة مع نسب الإجابات الصحيحة.</p></div>
+      <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">📊</div><div class="card-title">ملفات Excel متعددة الأوراق</div><p>ملف Excel يتضمن عدة أوراق عمل: ملخص النتائج، تفاصيل أداء الفرق، تفاصيل كل سؤال وإجاباته، الإحصاءات العامة، وورقة للرسوم البيانية. يُتيح تحليل البيانات بمرونة كاملة.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">📈</div><div class="card-title">إحصائيات الجلسات والفرق</div><p>تقارير مفصلة تشمل: متوسط وقت الإجابة لكل فريق، نسبة الإجابات الصحيحة لكل قسم، مقارنة أداء الفرق عبر الأقسام المختلفة، وتطور الأداء عبر أسئلة المسابقة.</p></div>
+      <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">🏆</div><div class="card-title">تقارير شاملة للأداء</div><p>تقرير أداء شامل يجمع بين النتائج الرقمية والرسوم البيانية والتوصيات. مثالي لتقديم تقارير للإدارة التعليمية أو لأولياء الأمور أو لتوثيق المسابقات الرسمية.</p></div>
+    </div>
+  </div>
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>للوصول: <strong>شاشة النتائج → زر تصدير</strong> أو <strong>لوحة التحكم → تبويب التقارير</strong>. اختر نوع التقرير (PDF أو Excel) ثم اضغط "تصدير". يتم إنشاء الملف وتحميله تلقائياً.</span></div>
+</section>
+
 <!-- ═══ CERTIFICATE ═══ -->
 <section class="section" id="certificate">
   <div class="section-header">
@@ -1381,6 +1591,8 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="card"><div class="card-icon">⬇️</div><div class="card-title">تصدير النتائج CSV</div><p>صدّر نتائج المسابقة كملف CSV يتضمن أسماء الفرق والنقاط والإحصاءات. يُفتح في Excel مباشرة.</p></div>
     <div class="card" style="border-color:rgba(251,146,60,.3)"><div class="card-icon">📦</div><div class="card-title">استيراد ZIP مع وسائط <span class="v10-badge">V10</span></div><p>استيراد ملف ZIP يحتوي مجلد media/ لاستخراج ملفات الوسائط (صور وأصوات) تلقائياً. تصدير أنظف بإزالة 7 حقول وسائط كبيرة بدلاً من 3، مع تحقق من صحة البيانات قبل قبولها ومعالجة أخطاء FileReader.</p></div>
     <div class="card" style="border-color:rgba(0,230,118,.3)"><div class="card-icon">📊</div><div class="card-title">استيراد من Google Sheets <span class="v11-badge">V11</span></div><p>استورد الأسئلة مباشرة من جداول بيانات Google عبر رابط المشاركة. يدعم تحليل CSV متقدم مع معاينة قبل الاستيراد. <a href="#google-sheets" style="color:var(--gold)">← دليل تفصيلي</a></p></div>
+    <div class="card" style="border-color:rgba(0,212,255,.3)"><div class="card-icon">🌐</div><div class="card-title">مكتبة أسئلة خارجية <span class="v12-badge">V12</span></div><p>ربط مكتبة خارجية عبر JSON مع تحديث تلقائي ومقارنة التغييرات قبل الاستيراد. دعم أوضاع استيراد متعددة: دمج ذكي، إضافة، استبدال كامل. <a href="#external-library" style="color:var(--gold)">← دليل تفصيلي</a></p></div>
+    <div class="card" style="border-color:rgba(255,64,96,.3)"><div class="card-icon">📄</div><div class="card-title">تصدير PDF و Excel <span class="v12-badge">V12</span></div><p>صدّر تقارير احترافية بتنسيق PDF جاهز للطباعة أو ملفات Excel متعددة الأوراق تتضمن إحصائيات شاملة. <a href="#pdf-excel-export" style="color:var(--gold)">← دليل تفصيلي</a></p></div>
   </div>
 </section>
 
@@ -1434,11 +1646,30 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
   <div class="callout warn" style="margin-top:16px"><span class="callout-icon">⚠️</span><span>في وضع التصفح الخاص، قد لا يتوفر IndexedDB. يعمل مراقب التخزين في الوضع العادي فقط. إذا لاحظت بطءاً في التطبيق، افحص مراقب التخزين — كثرة الوسائط الكبيرة قد تسبب بطئاً ملحوظاً.</span></div>
 </section>
 
+<!-- ═══ NOTIFICATIONS ═══ -->
+<section class="section" id="notifications">
+  <div class="section-header">
+    <div class="section-icon icon-cyan">🔔</div>
+    <div><div class="section-title">نظام الإشعارات الذكي <span class="v12-badge">V12</span></div><div class="section-sub">تنبيهات ذكية تُبقيك على اطلاع دائم</div></div>
+  </div>
+  <div class="callout new"><span class="callout-icon">🔔</span><span>يُقدّم الإصدار 12 نظام إشعارات ذكياً يُبقيك على اطلاع بأحداث المنصة المهمة دون إزعاج. يراقب النظام عدة مصادر للتنبيهات ويعرضها بشكل غير مفاجئ مع شريط تقدم مرئي. يمكنك تخصيص أنواع الإشعارات التي تريد تلقيها من الإعدادات.</span></div>
+  <div style="margin-top:18px">
+    <div class="feature-list">
+      <div class="feature-item"><div class="fi-icon">📚</div><div class="fi-body"><div class="fi-title">إشعارات تحديثات المكتبة</div><div class="fi-desc">عند ربط مكتبة خارجية، يُرسل النظام إشعاراً عند توفر تحديثات جديدة. يُعرض الإشعار بعدد الأسئلة الجديدة والمعدّلة والمحذوفة مع زر لمراجعة التغييرات وتطبيقها.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">🔋</div><div class="fi-body"><div class="fi-title">تنبيهات البطارية</div><div class="fi-desc">عند انخفاض مستوى البطارية عن 20%، يظهر تنبيه يُنصح بحفظ العمل الحالي. هذا يحمي من فقدان البيانات بسبب انطفاء الجهاز فجأة أثناء المسابقة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📡</div><div class="fi-body"><div class="fi-title">تنبيهات مشاكل الاتصال</div><div class="fi-desc">إذا كان التطبيق يعتمد على مصدر خارجي (مثل المكتبة الخارجية أو Google Sheets)، يُنبّهك عند فقدان الاتصال بالإنترنت وعند استعادته، مع عرض حالة المزامنة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">❓</div><div class="fi-body"><div class="fi-title">تحذيرات نقص الأسئلة</div><div class="fi-desc">عندما يكون عدد الأسئلة في قسم ما أقل من المطلوب للمسابقة، يظهر تحذير يُنصح بإضافة أسئلة أو تقليل عدد الأسئلة المطلوبة. هذا يمنع نفاد الأسئلة أثناء المسابقة.</div></div></div>
+      <div class="feature-item"><div class="fi-icon">📊</div><div class="fi-body"><div class="fi-title">شريط تقدم الإشعارات</div><div class="fi-desc">عند إجراء عمليات طويلة (استيراد، تصدير، مزامنة)، يظهر شريط تقدم مرئي يُعرض حالة العملية والوقت المتبقي التقريبي. هذا يمنع القلق أثناء العمليات الطويلة.</div></div></div>
+    </div>
+  </div>
+  <div class="callout tip" style="margin-top:16px"><span class="callout-icon">💡</span><span>يمكنك التحكم بأنواع الإشعارات من <strong>لوحة التحكم → الإعدادات → الإشعارات</strong>. يمكنك تعطيل أي نوع من الإشعارات بشكل مستقل.</span></div>
+</section>
+
 <!-- ═══ MOBILE ═══ -->
 <section class="section" id="mobile-touch">
   <div class="section-header">
     <div class="section-icon icon-orange">📱</div>
-    <div><div class="section-title">استخدام الجوال</div><div class="section-sub">التحكم باللمس على الهواتف</div></div>
+    <div><div class="section-title">استخدام الجوال <span class="v12-badge">V12 محسّن</span></div><div class="section-sub">التحكم باللمس على الهواتف — تحسينات شاملة</div></div>
   </div>
   <div class="feature-list">
     <div class="feature-item"><div class="fi-icon">👆</div><div class="fi-body"><div class="fi-title">السحب والإفلات</div><div class="fi-desc">أعد ترتيب الفرق والأقسام والأسئلة بإصبعك. نظام سحب كامل متوافق مع اللمس.</div></div></div>
@@ -2072,21 +2303,29 @@ sendCommand('ping');
     <div class="mobile-toc-close" id="mobileTocClose">✕</div>
     <div class="toc-title">محتويات الدليل</div>
     <a class="toc-item" href="#overview">🗺️ نظرة عامة</a>
+    <a class="toc-item" href="#whats-new-v12">🆕 الجديد في V12</a>
     <a class="toc-item" href="#whats-new-v11">🆕 الجديد في V11</a>
     <a class="toc-item" href="#whats-new-v10">🆕 الجديد في V10</a>
     <a class="toc-item" href="#whats-new-v8">📋 الجديد في V8</a>
     <a class="toc-item" href="#login">🔐 تسجيل الدخول</a>
     <a class="toc-item" href="#settings">⚙️ الإعدادات</a>
     <a class="toc-item" href="#categories">📂 الأقسام</a>
+    <a class="toc-item" href="#container-sections">🧩 الأقسام الحاوية</a>
+    <a class="toc-item" href="#questions">❓ الأسئلة</a>
+    <a class="toc-item" href="#rich-editor">✏️ المحرر الاحترافي</a>
+    <a class="toc-item" href="#image-crop">✂️ قص الصور</a>
     <a class="toc-item" href="#q-types">🖼️ أنواع الأسئلة</a>
     <a class="toc-item" href="#builtin-library">📚 المكتبة</a>
+    <a class="toc-item" href="#external-library">🌐 المكتبة الخارجية</a>
     <a class="toc-item" href="#teams">👥 الفرق</a>
     <a class="toc-item" href="#competition-modes">🎮 أنماط المسابقة</a>
     <a class="toc-item" href="#solo-mode">🏆 الوضع الفردي</a>
+    <a class="toc-item" href="#achievements">🏅 الإنجازات والمتصدرين</a>
     <a class="toc-item" href="#setup-wizard">🧙 معالج الإعداد</a>
     <a class="toc-item" href="#google-sheets">📊 Google Sheets</a>
     <a class="toc-item" href="#cat-display">🎡 عرض الأقسام</a>
     <a class="toc-item" href="#presentation">🎬 شاشة العرض</a>
+    <a class="toc-item" href="#pdf-excel-export">📄 تصدير PDF و Excel</a>
     <a class="toc-item" href="#certificate">📜 شهادة الفائز</a>
     <a class="toc-item" href="#themes">🎨 الثيمات</a>
     <a class="toc-item" href="#sound">🔊 الصوت</a>
@@ -2094,6 +2333,7 @@ sendCommand('ping');
     <a class="toc-item" href="#import">📥 الاستيراد</a>
     <a class="toc-item" href="#tiebreaker">⚡ جولة الحسم</a>
     <a class="toc-item" href="#storage-monitor">📊 مراقب التخزين</a>
+    <a class="toc-item" href="#notifications">🔔 الإشعارات الذكية</a>
     <a class="toc-item" href="#security-perf">🛡️ الأمان والأداء</a>
     <a class="toc-item" href="#api-ref">🔌 API</a>
     <a class="toc-item" href="#data-format">📊 تنسيق البيانات</a>
