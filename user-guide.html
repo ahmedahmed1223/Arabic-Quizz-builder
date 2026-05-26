@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل المستخدم v12 — منصة المسابقات التفاعلية</title>
+<title>دليل المستخدم v13 — منصة المسابقات التفاعلية</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -109,7 +109,13 @@ body::after{
 .v10-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(255,64,96,.15);color:var(--red);border:1px solid rgba(255,64,96,.3);margin-right:6px;vertical-align:middle}
 .v11-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.3);margin-right:6px;vertical-align:middle}
 .v12-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(0,212,255,.15);color:#00d4ff;border:1px solid rgba(0,212,255,.3);margin-right:6px;vertical-align:middle}
+.v13-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(0,230,118,.15);color:#00e676;border:1px solid rgba(0,230,118,.3);margin-right:6px;vertical-align:middle}
+.v13-badge{display:inline-flex;align-items:center;padding:1px 8px;border-radius:20px;font-size:.7rem;font-weight:900;letter-spacing:.04em;background:rgba(0,230,118,.15);color:#00e676;border:1px solid rgba(0,230,118,.3);margin-right:6px;vertical-align:middle}
 .icon-cyan{background:rgba(0,212,255,.12);color:#00d4ff}
+.icon-magenta{background:rgba(167,139,250,.12);color:#a78bfa}
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--purple));z-index:200;transition:width .1s}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
 .table-wrap{overflow-x:auto;border-radius:var(--r);border:1px solid var(--border)}
 table{width:100%;border-collapse:collapse;font-size:.85rem}
 thead{background:var(--bg3)}
@@ -230,15 +236,15 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 </style>
 </head>
 <body>
+<div class="scroll-progress" id="scrollProgress"></div>
 <header class="site-header">
-  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات — دليل المستخدم v12</div>
+  <div class="header-brand"><span class="trophy">🏆</span> منصة المسابقات — دليل المستخدم v13</div>
   <nav class="header-nav">
     <a class="nav-pill active" href="#overview">نظرة عامة</a>
+    <a class="nav-pill" href="#whats-new-v13">V13</a>
     <a class="nav-pill" href="#whats-new-v12">V12</a>
     <a class="nav-pill" href="#whats-new-v11">V11</a>
     <a class="nav-pill" href="#whats-new-v10">V10</a>
-    <a class="nav-pill" href="#whats-new-v9">V9</a>
-    <a class="nav-pill" href="#whats-new-v8">V8</a>
     <a class="nav-pill" href="#solo-mode">الوضع الفردي</a>
     <a class="nav-pill" href="#setup-wizard">معالج الإعداد</a>
     <a class="nav-pill" href="#google-sheets">Google Sheets</a>
@@ -343,14 +349,14 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 <!-- HERO -->
 <section id="overview">
   <div class="hero">
-    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الإصدار 12</strong> 🆕</div>
+    <div class="hero-badge">📖 دليل المستخدم الكامل — <strong>الصدار 13</strong> 🆕</div>
     <h1>منصة المسابقات التفاعلية</h1>
     <p>منصة احترافية متكاملة لإعداد وتقديم مسابقات تفاعلية تعليمية وترفيهية، تعمل كاملاً في المتصفح دون الحاجة لاتصال بالإنترنت أثناء العرض. ملف واحد متكامل يحتوي كل ما تحتاجه.</p>
     <div class="hero-stats">
-      <div class="hero-stat"><div class="num">7</div><div class="lbl">أنواع أسئلة</div></div>
-      <div class="hero-stat"><div class="num">19</div><div class="lbl">ثيماً بصرياً</div></div>
-      <div class="hero-stat"><div class="num">1500+</div><div class="lbl">سؤال مدمج</div></div>
-      <div class="hero-stat"><div class="num">30</div><div class="lbl">قسماً</div></div>
+      <div class="hero-stat"><div class="num">10</div><div class="lbl">أنواع أسئلة</div></div>
+      <div class="hero-stat"><div class="num">13</div><div class="lbl">ثيماً بصرياً</div></div>
+      <div class="hero-stat"><div class="num">3000+</div><div class="lbl">سؤال خارجي</div></div>
+      <div class="hero-stat"><div class="num">56</div><div class="lbl">قسماً خارجياً</div></div>
       <div class="hero-stat"><div class="num">16</div><div class="lbl">إنجازاً</div></div>
       <div class="hero-stat"><div class="num">🏆</div><div class="lbl">الوضع الفردي</div></div>
       <div class="hero-stat"><div class="num">🌐</div><div class="lbl">يعمل أوفلاين</div></div>
@@ -360,7 +366,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 
   <div class="callout new" style="margin-bottom:28px">
     <span class="callout-icon">🆕</span>
-    <span><strong>ما الجديد في الإصدار 12؟</strong> — مكتبة أسئلة ضخمة (1500+ سؤال في 30 قسم) · مكتبة خارجية بتحديث تلقائي · محرر نصوص احترافي · أداة قص الصور · تصدير PDF و Excel · نظام إنجازات ومتصدرين · أقسام حاوية وفرعية · إشعارات ذكية · تشغيل كامل بدون إنترنت · نظام تصميم جديد · تحسينات جوال شاملة</span>
+    <span><strong>ما الجديد في الصدار 13؟</strong> — تحسينات شاملة لتجربة المستخدم تشمل 18 محوراً: نظام تصميم موحّد · لوحة تحكم محسّنة · حالات شاغرة ذكية · تفاعلات دقيقة واهتزاز · تحميل هيكلي · معالجة أخطاء متقدمة · تنقل بلوحة المفاتيح · إيماءات لمسية · مركز إشعارات · تحسينات العرض واللعب الفردي · نظام انتقالات موحد · كشف سمة تلقائي وسمة AMOLED · إمكانية وصول متقدمة · تحسينات المكتبة الخارجية</span>
   </div>
 
   <div class="cards-grid">
@@ -370,6 +376,58 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="card"><div class="card-icon">📱</div><div class="card-title">متوافق مع كل الشاشات</div><p>يعمل على الهواتف والأجهزة اللوحية والحواسيب وشاشات العرض الكبيرة والـ 4K مع دعم كامل للّمس واحترام إعدادات تقليل الحركة. تحسينات جوال شاملة في الإصدار 12.</p></div>
   </div>
 </section>
+
+<!-- ═══ WHAT'S NEW V13 ═══ -->
+<section class="section" id="whats-new-v13">
+  <div class="section-header">
+    <div class="section-icon icon-magenta">🆕</div>
+    <div><div class="section-title">الجديد في الصدار 13</div><div class="section-sub">18 محوراً لتحسين تجربة المستخدم · نظام تصميم · إمكانية وصول · تفاعلات · أداء</div></div>
+  </div>
+
+  <div class="callout new"><span class="callout-icon">🆕</span><span>يُعد الصدار 13 تحديثاً ضخماً يركز على تحسين تجربة المستخدم عبر 12 محوراً شاملاً. تم تنفيذ جميع المحاور بنجاح باستخدام دوال عامة التسمية وتوثيق كل مهمة وفحصها قبل الانتقال للتالية. يشمل تحسينات جذرية في إمكانية الوصول والتفاعلات الدقيقة ومعالجة الأخطاء والأداء.</span></div>
+
+  <div style="margin-top:24px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">المحاور الـ 18 المنفّذة</div></div>
+    <div class="cards-grid">
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">📭</div><div class="card-title">مكونات الحالات الشاغرة <span class="v13-badge">V13</span></div><p>مكون EmptyState قابل لإعادة الاستخدام بأيقونات SVG مخصصة ورسائل إيجابية وأزرار إجراء ونصائح ذكية سياقية. يدعم 6 أنواع أيقونات ويُطبّق في جميع القوائم الفارغة مع تأثير ظهور تدريجي.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">✨</div><div class="card-title">التفاعلات الدقيقة الشاملة <span class="v13-badge">V13</span></div><p>تأثير Ripple تلقائي على جميع الأزرار عبر CSS. 5 أنماط اهتزاز ذكي (خفيف/متوسط/ثقيل/نجاح/تك) عبر Vibration API. تفاعلات على حقول الإدخال مع تحقق فوري. احترام prefers-reduced-motion.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🦴</div><div class="card-title">التحميل الهيكلي <span class="v13-badge">V13</span></div><p>3 أنماط هيكلية: بطاقات، صفوف، إحصائيات. حقائق ممتعة تتغير كل 3 ثوانٍ أثناء التحميل. تحميل كسول للصور (lazy loading). يعطي إحساساً بالسرعة بدل شاشة فارغة.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">⚠️</div><div class="card-title">واجهات معالجة الأخطاء <span class="v13-badge">V13</span></div><p>مكون ErrorState قابل لإعادة الاستخدام مع أيقونة تحذير وزر إعادة محاولة. صفحة استعادة بيانات عند الفساد. إشعارات تفاعلية مع أزرار إجراء (أعد المحاولة، اعرض، احفظ الآان).</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">⌨️</div><div class="card-title">التنقل بلوحة المفاتيح <span class="v13-badge">V13</span></div><p>مؤشرات تركيز مرئية على جميع البطاقات. سلوك Escape موحد لإغلاق المودالات. تنقل بالأسهم بين الخيارات. لوحة اختصارات (?) وبحث سريع Ctrl+K.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">👆</div><div class="card-title">الإيماءات والاهتزاز <span class="v13-badge">V13</span></div><p>5 إيماءات لمسية: سحب للتنقل بين الأسئلة، سحب من الحافة للعودة، ضغط مطول لقائمة سياقية، قرصة لتكبير النص، سحب للأسفل للتحديث. قائمة سياقية على بطاقات الفئات والفرق.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🔔</div><div class="card-title">مركز الإشعارات <span class="v13-badge">V13</span></div><p>أيقونة جرس في رأس لوحة التحكم مع نقطة حمراء للإشعارات غير المقروءة. لوحة منسدلة تعرض آخر 20 إشعار. تخزين دائم (حتى 50 إشعار). تنسيق الوقت النسبي.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🎬</div><div class="card-title">تحسينات العرض واللعب الفردي <span class="v13-badge">V13</span></div><p>كشف متدرج بتسلسل زمني مدروس. حلقة مؤقت نابضة في الثواني العشر الأخيرة. نقاط متطايرة عند الإجابة الصحيحة. نظام سلسلة مرئي مع إشعارات عند 3/5/10 وتأثير انكسار عند الكسر.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🔄</div><div class="card-title">نظام الانتقالات الموحد <span class="v13-badge">V13</span></div><p>TransitionManager مركزي يدعم fade و slide-up و scale مع أنيميشنات خروج لكل نمط. توحيد التوقيت عبر CSS Variables. دعم prefers-reduced-motion محسّن (تقليل المدة بدل التعطيل).</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🌗</div><div class="card-title">كشف السمة التلقائي <span class="v13-badge">V13</span></div><p>كشف تلقائي لتفضيلات النظام (داكن/فاتح/تباين عالي). سمة AMOLED سوداء كاملة #000000. انتقال سلس بين السمات (0.3s ease). علامة عند الاختيار اليدوي لمنع التبديل التلقائي.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">♿</div><div class="card-title">إمكانية الوصول المتقدمة <span class="v13-badge">V13</span></div><p>مناطق ARIA حية للإعلانات. فخ تركيز قابل لإعادة الاستخدام في المودالات. مؤشرات بصرية بديلة لدعم عمى الألوان (حدود صلبة/متقطعة + علامات ✓/✗).</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">📚</div><div class="card-title">تحسينات المكتبة الخارجية <span class="v13-badge">V13</span></div><p>تحديث الرابط لمكتبة 3000+ سؤال و56 قسم. حل مشكلة CORS بتحويل تلقائي github.com/raw/ إلى raw.githubusercontent.com. إعادة محاولة 3 مرات مع تأخير تصاعدي. تخزين مؤقت للعمل بدون اتصال. إشعار تحديث عند فتح الاستيراد بدل الجلب التلقائي.</p></div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px">
+    <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">أرقام هذا الإصدار</div></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>العنصر</th><th>القيمة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>عدد الأسئلة في المكتبة الخارجية</strong></td><td>+3000 سؤال</td></tr>
+          <tr><td><strong>عدد الأقسام في المكتبة الخارجية</strong></td><td>56 قسماً</td></tr>
+          <tr><td><strong>عدد الأسئلة في المكتبة الخارجية</strong></td><td>+3000 سؤال</td></tr>
+          <tr><td><strong>عدد الأقسام في المكتبة الخارجية</strong></td><td>56 قسماً</td></tr>
+          <tr><td><strong>الدوال العامة الجديدة</strong></td><td>20+ دالة</td></tr>
+          <tr><td><strong>الكائنات الجديدة</strong></td><td>3 (GestureManager, StreakManager, TransitionManager)</td></tr>
+          <tr><td><strong>السمات البصرية</strong></td><td>13+ (بما فيها AMOLED)</td></tr>
+          <tr><td><strong>الإيماءات اللمسية</strong></td><td>5 إيماءات</td></tr>
+          <tr><td><strong>أنماط الاهتزاز</strong></td><td>5 أنماط</td></tr>
+          <tr><td><strong>إعادة محاولة الجلب</strong></td><td>3 محاولات مع مهلة 30 ثانية</td></tr>
+          <tr><td><strong>محاور التحسين</strong></td><td>18 محوراً</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
 
 <!-- ═══ WHAT'S NEW V12 ═══ -->
 <section class="section" id="whats-new-v12">
@@ -461,7 +519,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="section-header" style="margin-bottom:16px;border-bottom:1px solid var(--border)"><div style="font-size:1rem;font-weight:800">الميزات الجديدة الرئيسية</div></div>
     <div class="cards-grid">
       <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🏆</div><div class="card-title">الوضع الفردي (Solo Mode) <span class="v11-badge">V11</span></div><p>خريطة مراحل على نمط ألعاب الألغاز، نظام أقفال وفتح تدريجي، نظام نجوم (1-3 حسب السرعة)، شاشة نصر بتأثيرات كونفيتي، اختصارات لوحة مفاتيح عربية، تأثيرات لمسية (Haptic)، حفظ واسترجاع التقدم في localStorage وIndexedDB.</p></div>
-      <div class="card" style="border-color:rgba(167,139,250,.35)"><div class="card-icon">🧙</div><div class="card-title">معالج الإعداد (Setup Wizard) <span class="v11-badge">V11</span></div><p>سبع خطوات إعداد متكاملة: الترحيب واللغة، اختيار الوضع، الإعدادات العامة، الثيم والمظهر، الحماية، استيراد الأسئلة، مراجعة وبدء المسابقة. حفظ تلقائي، استكمال من حيث توقفت، وضع سريع (3 خطوات) ومتقدم (7 خطوات)، تصدير الإعدادات.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🧙</div><div class="card-title">معالج الإعداد (Setup Wizard) <span class="v11-badge">V11</span></div><p>سبع خطوات إعداد متكاملة: الترحيب واللغة، اختيار الوضع، الإعدادات العامة، الثيم والمظهر، الحماية، استيراد الأسئلة، مراجعة وبدء المسابقة. حفظ تلقائي، استكمال من حيث توقفت، وضع سريع (3 خطوات) ومتقدم (7 خطوات)، تصدير الإعدادات.</p></div>
       <div class="card" style="border-color:rgba(0,212,255,.35)"><div class="card-icon">📊</div><div class="card-title">تكامل Google Sheets <span class="v11-badge">V11</span></div><p>استيراد الأسئلة مباشرة من جداول Google عبر رابط المشاركة، دعم تحليل CSV متقدم، معاينة البيانات قبل الاستيراد، خيارات: استبدال الكل / إضافة للنهاية / دمج ذكي.</p></div>
       <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">📚</div><div class="card-title">توسعة مكتبة الأسئلة <span class="v11-badge">V11</span></div><p>إجمالي المكتبة الآن: 21 قسماً – 407 سؤ (كانت 10 أقسام – 200 سؤال). أقسام جديدة تشمل: ثقافة عامة متقدمة، علوم وتكنولوجيا، جغرافيا وتاريخ عالمي، التاريخ العام، الأدب واللغة، الفنون والثقافة.</p></div>
       <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">🌐</div><div class="card-title">الترجمة الشاملة (i18n) <span class="v11-badge">V11</span></div><p>توحيد أنظمة الترجمة في جميع أجزاء التطبيق. أكثر من 500 مفتاح ترجمة جديد بالعربية والإنجليزية، ليصل الإجمالي إلى 1,488 مفتاحاً. ترجمة كاملة للوحة الإدارة. دعم data-i18n-options لترجمة خيارات عناصر select. سمات الوصول (ARIA).</p></div>
@@ -538,7 +596,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
       <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">🔊</div><div class="card-title">أشرطة تمرير فردية لمستوى الصوت <span class="v10-badge">V10</span></div><p>التحكم الدقيق بمستوى صوت كل مؤثر على حدة: إجابة صحيحة (80%)، إجابة خاطئة (80%)، موسيقى الخلفية (40%). يمكن ضبط كل قناة صوتية بشكل مستقل من الإعدادات.</p></div>
       <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🖥️</div><div class="card-title">أصوات شاشة الجمهور <span class="v10-badge">V10</span></div><p>إعداد جديد يتيح تشغيل أصوات الإجابات الصحيحة والخاطئة في شاشة العرض/الجمهور أيضاً. يعمل عبر Web Audio API مع معالجة تلقائية لسياسة التشغيل التلقائي.</p></div>
       <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">📊</div><div class="card-title">نمط احتساب "أغلبية صحيحة" <span class="v10-badge">V10</span></div><p>خيار جديد لأسئلة الترتيب والتوصيل: "جميع الإجابات صحيحة" أو "الأغلبية صحيحة". في وضع الأغلبية يُحتسب السؤال صحيحاً إذا تعدّت الإجابات الصحيحة الخاطئة، مع منح نقاط تناسبية.</p></div>
-      <div class="card" style="border-color:rgba(167,139,250,.35)"><div class="card-icon">📺</div><div class="card-title">مزامنة محسّنة لشاشة الجمهور <span class="v10-badge">V10</span></div><p>استطلاع localStorage دائم كل 1.5 ثانية، sessionStorage كل 2 ثانية كطبقة احتياطية، دفع الحالة عبر postMessage مع دفعات تأكيدية، وآلية visibilitychange لمزامنة AudioContext. تحديث شبه فوري بدلاً من تأخير 5-7 ثوانٍ.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">📺</div><div class="card-title">مزامنة محسّنة لشاشة الجمهور <span class="v10-badge">V10</span></div><p>استطلاع localStorage دائم كل 1.5 ثانية، sessionStorage كل 2 ثانية كطبقة احتياطية، دفع الحالة عبر postMessage مع دفعات تأكيدية، وآلية visibilitychange لمزامنة AudioContext. تحديث شبه فوري بدلاً من تأخير 5-7 ثوانٍ.</p></div>
       <div class="card" style="border-color:rgba(0,245,212,.35)"><div class="card-icon">📊</div><div class="card-title">مراقب التخزين المحسّن <span class="v10-badge">V10</span></div><p>شاشة مراقبة محسّنة تعرض تفاصيل localStorage وIndexedDB، معلومات الحصة، فحص حالة البيانات الأساسية، وعدد الأقسام والأسئلة المحفوظة. تتضمن أيضاً زر تنظيف البيانات اليتيمة.</p></div>
     </div>
   </div>
@@ -613,12 +671,12 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
       <div class="card" style="border-color:rgba(123,97,255,.35)"><div class="card-icon">∑</div><div class="card-title">مكتبة KaTeX للرياضيات (Offline) <span class="v9-badge">V9</span></div><p>تضمين مكتبة KaTeX 0.16.9 بالكامل داخل التطبيق مع خطوط مدمجة كـ Data URIs. عرض فوري للمعادلات الرياضية بدون اتصال بالإنترنت. يدعم نوع الأسئلة الرياضية بصيغة LaTeX.</p></div>
       <div class="card" style="border-color:rgba(255,64,96,.35)"><div class="card-icon">🛡️</div><div class="card-title">مُطهِّر HTML مدمج ضد XSS <span class="v9-badge">V9</span></div><p>أداة تطهير HTML مخصصة تزيل التاجات الخطرة والسمات ومعالجات الأحداث وروابط javascript:. أكثر من 30 ثغرة XSS أُغلقت. واجهات آمنة: <code>_sanitizeHTML()</code> و <code>_sanitizeUser()</code> و <code>_setSafeHTML()</code>.</p></div>
       <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">💾</div><div class="card-title">نظام التخزين المحسّن (QuizStorage) <span class="v9-badge">V9</span></div><p>ضغط LZ-String يُقلل حجم البيانات 60-70%. تخزين أساسي في IndexedDB مع localStorage كاحتياطي مضغوط. نقل الوسائط الكبيرة (>500 حرف) تلقائياً لـ IndexedDB. تنظيف دوري للبيانات اليتيمة وتشفير كلمات مرور بـ PBKDF2.</p></div>
-      <div class="card" style="border-color:rgba(167,139,250,.35)"><div class="card-icon">🎯</div><div class="card-title">إدارة حالة مركزية (AppState) <span class="v9-badge">V9</span></div><p>نظام تدفقي أحادي الاتجاه يسهّل تتبع التغييرات واكتشاف الأخطاء. حالة تفاعلية مع إشعارات تلقائية، مستمعون على مسارات محددة، خصائص محسوبة، حفظ تلقائي، وسجل بآخر 50 تغييراً للتشخيص.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🎯</div><div class="card-title">إدارة حالة مركزية (AppState) <span class="v9-badge">V9</span></div><p>نظام تدفقي أحادي الاتجاه يسهّل تتبع التغييرات واكتشاف الأخطاء. حالة تفاعلية مع إشعارات تلقائية، مستمعون على مسارات محددة، خصائص محسوبة، حفظ تلقائي، وسجل بآخر 50 تغييراً للتشخيص.</p></div>
       <div class="card" style="border-color:rgba(0,245,212,.35)"><div class="card-icon">🔌</div><div class="card-title">واجهة برمجة التطبيقات الجديدة (Quiz API) <span class="v9-badge">V9</span></div><p>إعادة تسمية مساحة الأسماء من window.QuizV7 إلى window.Quiz مع واجهة محسّنة: <code>Quiz.info()</code> و <code>Quiz.exportAll()</code> و <code>Quiz.importAll()</code> و <code>Quiz.diagnostics()</code> و <code>Quiz.storageUsage()</code> ووحدات Store و ErrorBus و Migration.</p></div>
       <div class="card" style="border-color:rgba(251,146,60,.35)"><div class="card-icon">🎬</div><div class="card-title">مشغل فيديو محسّن <span class="v9-badge">V9</span></div><p>مشغل فيديو جديد بالكامل مع أزرار تحكم مخصصة: تشغيل/إيقاف، شريط تقدم قابل للنقر، عرض الوقت، ملء الشاشة. إخفاء تلقائي لأزرار التحكم أثناء التشغيل. تخزين ذكي كـ Blob في IndexedDB حتى 50 ميغابايت. وضع عداد الفيديو: تلقائي / يدوي / بعد الفيديو.</p></div>
       <div class="card" style="border-color:rgba(0,212,255,.35)"><div class="card-icon">🔢</div><div class="card-title">ترقيم الإجابات وتغيير عددها <span class="v9-badge">V9</span></div><p>نظام ترقيم جديد يدعم: أحرف عربية (أ، ب، ج، د)، أرقام (1، 2، 3)، أحرف إنجليزية (A، B، C)، أو مخصص. أزرار +/− للتحكم بعدد الخيارات من 2 إلى 8 بدلاً من 4 فقط.</p></div>
       <div class="card" style="border-color:rgba(245,200,66,.35)"><div class="card-icon">🖥️</div><div class="card-title">شاشة الجمهور المُعاد تصميمها <span class="v9-badge">V9</span></div><p>شريط حالة القسم أعلى الشاشة، شريط نتائج دائم في الأسفل مرئي من جميع التبويبات، عرض الفرق في وضع الانتظار، شبكة عرض الأقسام مع تمييز الحالي، شريط تقدم ملون لكل فريق، وتحسينات بصرية شاملة.</p></div>
-      <div class="card" style="border-color:rgba(167,139,250,.35)"><div class="card-icon">🎨</div><div class="card-title">4 ثيمات جديدة مستقلة <span class="v9-badge">V9</span></div><p>داكن تيل (محيطي هادئ)، وردي دافئ (رومانسي)، أسود نقي (احترافي بتباين أبيض)، أزرق منتصف الليل (أسلوب GitHub). كل ثيم بـ 14 متغير CSS كامل.</p></div>
+      <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">🎨</div><div class="card-title">4 ثيمات جديدة مستقلة <span class="v9-badge">V9</span></div><p>داكن تيل (محيطي هادئ)، وردي دافئ (رومانسي)، أسود نقي (احترافي بتباين أبيض)، أزرق منتصف الليل (أسلوب GitHub). كل ثيم بـ 14 متغير CSS كامل.</p></div>
       <div class="card" style="border-color:rgba(0,230,118,.35)"><div class="card-icon">📱</div><div class="card-title">تطبيق أندرويد (APK) <span class="v9-badge">V9</span></div><p>ملف APK جاهز للتثبيت على هواتف أندرويد مباشرة. أيقونة مخصصة، شاشة بداية داكنة، دعم زر الرجوع، منع التحديث بالسحب، ودعم الشاشة العمودية فقط.</p></div>
     </div>
   </div>
@@ -922,7 +980,7 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
     <div class="feature-item"><div class="fi-icon">___</div><div class="fi-body"><div class="fi-title">ملء الفراغ (fitb)</div><div class="fi-desc">ضع <code>[___]</code> في نص السؤال ليتحول لفراغ تفاعلي. لإجابات بديلة افصل بـ <code>|</code> (مثال: الرياض|رياض). المقارنة تتجاهل التشكيل. للمقدم أزرار ✅❌.</div></div></div>
     <div class="feature-item"><div class="fi-icon">📖</div><div class="fi-body"><div class="fi-title">آية قرآنية (quran)</div><div class="fi-desc">أدخل اسم السورة ورقم الآية واضغط 🔍 جلب. اختر من 5 أنواع سؤال: اسم السورة / أكمل الآية / رقم الآية / رقم السورة / الجزء. اختر من 6 قرّاء وخيار إخفاء البيانات.</div></div></div>
     <div class="feature-item"><div class="fi-icon">📋</div><div class="fi-body"><div class="fi-title">ترتيب (order)</div><div class="fi-desc">أدخل العناصر بالترتيب الصحيح. يُعرض للمتسابق بترتيب عشوائي عليه إعادة ترتيبها بالسحب أو أزرار ▲▼ أو اللمس. عند الخطأ يظهر الترتيب الصحيح. يدعم وضعي تقييم: أزرار صح/خطأ مباشرة أو تحقق تلقائي مع تلوين. <a href="#ordering-detail" style="color:var(--gold)">← دليل تفصيلي</a></div></div></div>
-    <div class="feature-item" style="border-color:rgba(167,139,250,.35)"><div class="fi-icon">🔗</div><div class="fi-body"><div class="fi-title">توصيل (match) <span class="v8-badge">V8</span></div><div class="fi-desc">أضف أزواجاً من العناصر (يسار ⇄ يمين) من 2 إلى 8 أزواج. يُعرض بعمودين: الأيسر بالترتيب والأيمن مخلوط. يضغط المتسابق على عنصر يسار ثم يمين لتوصيلهما بخط مرئي. للتقييم: <strong>تناسبي</strong> (نقاط حسب عدد الأزواج الصحيحة) أو <strong>كامل أو لا شيء</strong> (نقاط كاملة فقط عند إكمال كل الأزواج). بعد التقديم تظهر الأزواج الخاطئة باللون الأحمر والصحيحة بالأخضر.</div></div></div>
+    <div class="feature-item" style="border-color:rgba(0,230,118,.35)"><div class="fi-icon">🔗</div><div class="fi-body"><div class="fi-title">توصيل (match) <span class="v8-badge">V8</span></div><div class="fi-desc">أضف أزواجاً من العناصر (يسار ⇄ يمين) من 2 إلى 8 أزواج. يُعرض بعمودين: الأيسر بالترتيب والأيمن مخلوط. يضغط المتسابق على عنصر يسار ثم يمين لتوصيلهما بخط مرئي. للتقييم: <strong>تناسبي</strong> (نقاط حسب عدد الأزواج الصحيحة) أو <strong>كامل أو لا شيء</strong> (نقاط كاملة فقط عند إكمال كل الأزواج). بعد التقديم تظهر الأزواج الخاطئة باللون الأحمر والصحيحة بالأخضر.</div></div></div>
   </div>
 </section>
 
@@ -2303,6 +2361,8 @@ sendCommand('ping');
     <div class="mobile-toc-close" id="mobileTocClose">✕</div>
     <div class="toc-title">محتويات الدليل</div>
     <a class="toc-item" href="#overview">🗺️ نظرة عامة</a>
+    <a class="toc-item" href="#whats-new-v13">🆕 الجديد في V13</a>
+    <a class="toc-item active" href="#whats-new-v13">🆕 الجديد في V13</a>
     <a class="toc-item" href="#whats-new-v12">🆕 الجديد في V12</a>
     <a class="toc-item" href="#whats-new-v11">🆕 الجديد في V11</a>
     <a class="toc-item" href="#whats-new-v10">🆕 الجديد في V10</a>
@@ -2368,6 +2428,30 @@ sendCommand('ping');
     overlay.addEventListener('click',function(e){if(e.target===overlay)closeToc()});
     overlay.querySelectorAll('.toc-item').forEach(function(item){item.addEventListener('click',closeToc)});
   }
+})();
+
+// V13: Scroll progress bar
+(function(){
+  var bar=document.getElementById('scrollProgress');
+  if(!bar)return;
+  window.addEventListener('scroll',function(){
+    var st=window.scrollY||document.documentElement.scrollTop;
+    var sh=document.documentElement.scrollHeight-document.documentElement.clientHeight;
+    var pct=sh>0?(st/sh)*100:0;
+    bar.style.width=pct+'%';
+  },{passive:true});
+})();
+
+// V13: Scroll reveal animation
+(function(){
+  var els=document.querySelectorAll('.section,.card,.feature-item,.step');
+  if(!('IntersectionObserver' in window))return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}
+    });
+  },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){el.classList.add('reveal');obs.observe(el);});
 })();
 </script>
 </body>
