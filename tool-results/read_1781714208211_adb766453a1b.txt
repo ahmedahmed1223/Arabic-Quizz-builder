@@ -1,0 +1,1550 @@
+     1→// ════════════════════════════════════════════════════════════════════════
+     2→//  PHASE 3: ACCESSIBILITY & ADVANCED FEATURES (merged 24+25+26+27)
+     3→//  Color Blindness Filters · Event Delegation · Team Stats ·
+     4→//  Charts · More Features · ARIA Improvements · Google Sheets Import
+     5→//  NOTE: These sections are merged because file 24's outer IIFE spans
+     6→//        all of them (closing at the end of original file 27).
+     7→// ════════════════════════════════════════════════════════════════════════
+     8→
+     9→// ═══ EVENT DELEGATION ═══
+    10→// V12-fix: Enhanced event delegation for option button clicks
+    11→// Handles clicks on child elements (opt-btn-letter, opt-btn-content, opt-btn-text)
+    12→// that may not trigger the button's onclick attribute in some browsers/scenarios
+    13→var _lastOptionClickTime=0;
+    14→var _lastOptionClickIdx=-1;
+    15→document.addEventListener('click',function(e){
+    16→  // V12-fix: Allow clicks on hidden-option buttons so handleOptionClick can reveal them
+    17→  var optBtn=e.target.closest('#q-options-grid .option-btn:not(.revealed):not(.faded)');
+    18→  if(optBtn){
+    19→    var origI=parseInt(optBtn.id.replace('opt-btn-',''));
+    20→    if(!isNaN(origI)){
+    21→      e.stopPropagation();
+    22→      // V12-fix: Invoke handleOptionClick only if it wasn't already called for this button
+    23→      // in the last 300ms (prevents double-firing from onclick + event delegation)
+    24→      var now=Date.now();
+    25→      if(typeof handleOptionClick==='function'&&!state.answered
+    26→        &&!(origI===_lastOptionClickIdx&&now-_lastOptionClickTime<300)){
+    27→        _lastOptionClickTime=now;
+    28→        _lastOptionClickIdx=origI;
+    29→        handleOptionClick(origI);
+    30→      }
+    31→    }
+    32→  }
+    33→});
+    34→
+    35→function initSessionStats(){
+    36→  state.sessionStats={};
+    37→  state.teamStreaks={};        // ← reset streaks each session
+    38→  state.scoreHistory=[];       // ← clear undo history
+    39→  state.teams.forEach(t=>{
+    40→    state.sessionStats[t.id]={correct:0,wrong:0,skipped:0,totalTime:0,answers:[]};
+    41→    state.teamStreaks[t.id]=0;
+    42→  });
+    43→  updateUndoBtn();             // ← reset undo button state
+    44→}
+    45→
+    46→function recordAnswer(teamId,isCorrect,timeUsed){
+    47→  if(!teamId)return; // Guard against null teamId
+    48→  if(!state.sessionStats[teamId])
+    49→    state.sessionStats[teamId]={correct:0,wrong:0,skipped:0,totalTime:0,answers:[]};
+    50→  const s=state.sessionStats[teamId];
+    51→  if(isCorrect)s.correct++;else s.wrong++;
+    52→  s.totalTime+=timeUsed||0;
+    53→  s.answers.push({catId:state.currentCatId,qIdx:state.currentQIndex,correct:isCorrect,time:timeUsed||0});
+    54→  // Cap answers array to prevent unbounded growth
+    55→  if(s.answers.length>500)s.answers=s.answers.slice(-400);
+    56→  // Refresh stats if visible
+    57→  try{refreshTeamStatsIfVisible();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_199")}catch(_){}}
+    58→}
+    59→
+    60→// Unified streak update — call from ALL answer-handling paths
+    61→function _updateStreak(teamId,isCorrect){
+    62→  if(!teamId)return;
+    63→  if(isCorrect){
+    64→    state.teamStreaks[teamId]=(state.teamStreaks[teamId]||0)+1;
+    65→  }else{
+    66→    state.teamStreaks[teamId]=0;
+    67→  }
+    68→  const team=state.teams.find(t=>t.id===teamId);
+    69→  if(team) updateStreakDisplay(team);
+    70→}
+    71→
+    72→function showTeamStats(){
+    73→  renderTeamStats();
+    74→  showView('teamstats');
+    75→  // Force scroll to top — multiple attempts for mobile reliability
+    76→  const _scrollTeamStats=()=>{
+    77→    const v=document.getElementById('view-teamstats');
+    78→    if(v){v.scrollTop=0;v.scrollTo(0,0);const w=v.querySelector('.teamstats-wrapper');if(w){w.scrollTop=0;w.scrollTo(0,0);}}
+    79→    window.scrollTo({top:0,left:0,behavior:'instant'});
+    80→    document.documentElement.scrollTop=0;
+    81→    document.body.scrollTop=0;
+    82→  };
+    83→  _scrollTeamStats();
+    84→  requestAnimationFrame(()=>{_scrollTeamStats();});
+    85→  setTimeout(_scrollTeamStats,50);
+    86→  setTimeout(_scrollTeamStats,200);
+    87→  setTimeout(_scrollTeamStats,400);
+    88→}
+    89→
+    90→function renderTeamStats(){
+    91→  const grid=document.getElementById('teamstats-grid');if(!grid)return;
+    92→  if(!state.teams.length){setChildren(grid,h('div.empty-state',h('div.empty-icon','👥'),h('p','لا توجد فرق')));return;}
+    93→  const sorted=[...state.teams].sort((a,b)=>(b.score||0)-(a.score||0));
+    94→  const medals=['🥇','🥈','🥉'];
+    95→  grid.innerHTML=sorted.map((t,rank)=>{
+    96→    const s=state.sessionStats[t.id]||{correct:0,wrong:0,skipped:0,totalTime:0};
+    97→    const total=(s.correct||0)+(s.wrong||0);
+    98→    const pct=total>0?Math.round(s.correct/total*100):0;
+    99→    const avgTime=total>0?Math.round((s.totalTime||0)/total):0;
+   100→    const cats=new Set((s.answers||[]).map(a=>a.catId));
+   101→    return `
+   102→    <div class="teamstat-card" style="animation-delay:${rank*.1}s;border-color:${t.color}44">
+   103→      <div class="teamstat-header" style="background:${t.color}14">
+   104→        <div class="teamstat-avatar" style="background:${t.color};overflow:hidden">${t.teamImage?'<img src="'+_safeMediaSrc(t.teamImage)+'" alt="'+_sanitizeUser(t.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':t.name[0]}</div>
+   105→        <div>
+   106→          <div class="teamstat-name" style="color:${t.color}">${medals[rank]||rank+1} ${_sanitizeUser(t.name)}</div>
+   107→          <div class="text-sm text-muted">${(function(n){return n+(n===0?" أعضاء":n===1?" عضو":n===2?" عضوان":n<=10?" أعضاء":" عضواً")})((t.members||[]).filter(m=>m&&(typeof m==="object"?(m.name||"").trim():String(m).trim())).length)}</div>
+   108→        </div>
+   109→        <div class="teamstat-score" style="color:${t.color}">${t.score||0}<span style="font-size:.7rem;color:var(--text-muted)"> ن</span></div>
+   110→      </div>
+   111→      <div class="teamstat-body">
+   112→        <div class="stat-row">
+   113→          <span class="stat-label">✅ إجابات صحيحة</span>
+   114→          <span class="stat-value" style="color:var(--success)">${s.correct||0}</span>
+   115→        </div>
+   116→        <div class="stat-row">
+   117→          <span class="stat-label">❌ إجابات خاطئة</span>
+   118→          <span class="stat-value" style="color:var(--danger)">${s.wrong||0}</span>
+   119→        </div>
+   120→        <div class="stat-row">
+   121→          <span class="stat-label">⏱ متوسط وقت الإجابة</span>
+   122→          <span class="stat-value">${avgTime} ث</span>
+   123→        </div>
+   124→        <div class="stat-row">
+   125→          <span class="stat-label">📂 أقسام لُعبت</span>
+   126→          <span class="stat-value">${cats.size}</span>
+   127→        </div>
+   128→        <div class="stat-bar-row">
+   129→          <div class="stat-bar-label">
+   130→            <span>نسبة الإجابات الصحيحة</span>
+   131→            <span style="color:${pct>=70?'var(--success)':pct>=40?'var(--accent1)':'var(--danger)'}">${pct}%</span>
+   132→          </div>
+   133→          <div class="stat-bar-track">
+   134→            <div class="stat-bar-fill" style="width:${pct}%;background:${pct>=70?'var(--success)':pct>=40?'var(--accent1)':'var(--danger)'}"></div>
+   135→          </div>
+   136→        </div>
+   137→      </div>
+   138→    </div>`;
+   139→  }).join('');
+   140→}
+   141→
+   142→// Helper: refresh team stats if the teamstats view is currently visible
+   143→function refreshTeamStatsIfVisible(){
+   144→  const v=document.getElementById('view-teamstats');
+   145→  if(v&&!v.classList.contains('hidden')){
+   146→    try{renderTeamStats();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_200")}catch(_){}}
+   147→  }
+   148→}
+   149→
+   150→// ════════════════════════════════════════════════════════
+   151→//  PHASE 3 FEATURES — Advanced Stats, Branching, Accessibility,
+   152→//  Mobile, Badges, Enhanced Editor
+   153→// ════════════════════════════════════════════════════════
+   154→
+   155→(function(){
+   156→'use strict';
+   157→
+   158→// ── Phase 3: Inject CSS ──────────────────────────────────
+   159→var _phase3CSS=document.createElement('style');
+   160→_phase3CSS.textContent='\n/* ── PHASE 3: Advanced Statistics Panel ── */\n#adv-stats-panel{width:100%;max-width:1100px;margin:12px auto 0;padding:0;box-sizing:border-box}\n#adv-stats-panel.hidden{display:none!important}\n.adv-stats-charts{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:16px;width:100%}\n.adv-chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:16px;overflow:hidden;transition:transform .2s,box-shadow .2s}\n.adv-chart-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}\n.adv-chart-title{font-size:.9rem;font-weight:700;color:var(--accent1);margin-bottom:10px;display:flex;align-items:center;gap:8px}\n.adv-chart-canvas{width:100%!important;height:auto!important;max-height:260px;display:block}\n.adv-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;margin-bottom:16px}\n.adv-summary-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;transition:border-color .2s}\n.adv-summary-card:hover{border-color:var(--accent1)}\n.adv-summary-value{font-size:1.6rem;font-weight:900;color:var(--accent1)}\n.adv-summary-label{font-size:.7rem;color:var(--text-muted);margin-top:2px}\n#btn-adv-stats{white-space:nowrap;transition:background .2s}\n@media(max-width:768px){.adv-stats-charts{grid-template-columns:1fr;gap:12px}.adv-chart-card{padding:12px}.adv-chart-canvas{max-height:220px}.adv-summary-grid{grid-template-columns:repeat(2,minmax(100px,1fr))}.adv-summary-value{font-size:1.3rem}}\n@media(max-width:480px){.adv-stats-charts{grid-template-columns:1fr;gap:10px}.adv-chart-card{padding:10px;border-radius:12px}.adv-chart-canvas{max-height:180px}.adv-summary-grid{grid-template-columns:repeat(2,minmax(80px,1fr));gap:8px}.adv-summary-card{padding:8px}#btn-adv-stats{font-size:.75rem;padding:4px 10px}}\n@media(min-width:1200px){.adv-chart-canvas{max-height:320px}.adv-stats-charts{gap:20px}.adv-summary-grid{grid-template-columns:repeat(4,minmax(150px,1fr))}}\n\n/* ── PHASE 3: Color Blindness Filters ── */\nbody.cb-protanopia{filter:url(#cb-filter-protanopia)}\nbody.cb-deuteranopia{filter:url(#cb-filter-deuteranopia)}\nbody.cb-tritanopia{filter:url(#cb-filter-tritanopia)}\n\n/* ── PHASE 3: Skip Navigation ── */\n.skip-nav{position:absolute;top:-100%;right:0;z-index:99999;background:var(--accent1);color:#000;padding:8px 16px;font-weight:700;text-decoration:none;border-radius:0 0 0 8px;transition:top .2s}\n.skip-nav:focus{top:0}\n\n/* ── PHASE 3: Bottom Sheet Modal ── */\n.modal-overlay.bottom-sheet{align-items:flex-end;padding:0}\n.modal-overlay.bottom-sheet .modal{border-radius:20px 20px 0 0;max-height:85vh;max-width:100%;margin-bottom:0;animation:sheet-up .3s cubic-bezier(.16,1,.3,1)}\n@keyframes sheet-up{from{transform:translateY(100%)}to{transform:none}}\n.modal-overlay.bottom-sheet .modal::before{content:\'\'";display:block;width:40px;height:4px;background:var(--text-muted);border-radius:2px;margin:0 auto 12px}\n\n/* ── PHASE 3: Touch Targets ── */\n@media(pointer:coarse){\n  .btn,.nav-tab,.option-btn,.lifeline-btn,.question-item,.cat-pres-btn{min-height:44px;min-width:44px}\n  .btn-icon{min-width:44px;min-height:44px;padding:10px}\n}\n\n/* ── PHASE 3: Badge Notification ── */\n.badge-notif{position:fixed;top:50%;left:50%;z-index:9000;transform:translate(-50%,-50%) scale(0);background:var(--bg-card);border:2px solid var(--accent1);border-radius:24px;padding:32px 48px;text-align:center;box-shadow:0 0 80px rgba(0,232,208,.4),0 24px 64px rgba(0,0,0,.8);animation:badge-pop .6s cubic-bezier(.175,.885,.32,1.275) forwards;pointer-events:none}\n.badge-notif-icon{font-size:4rem;display:block;margin-bottom:8px;animation:badge-spin 1s ease}\n.badge-notif-name{font-size:1.5rem;font-weight:900;color:var(--accent1);margin-bottom:4px}\n.badge-notif-desc{font-size:.9rem;color:var(--text-secondary)}\n@keyframes badge-pop{0%{transform:translate(-50%,-50%) scale(0);opacity:0}60%{transform:translate(-50%,-50%) scale(1.15);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}\n@keyframes badge-spin{0%{transform:rotateY(0)}100%{transform:rotateY(720deg)}}\n.badge-notif.badge-exit{animation:badge-fade .4s ease forwards}\n@keyframes badge-fade{to{transform:translate(-50%,-50%) scale(.8);opacity:0}}\n\n/* ── PHASE 3: Badges Grid ── */\n.badges-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;justify-content:center}\n.badge-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px;border-radius:12px;border:1px solid var(--border);background:var(--bg-panel);min-width:80px;text-align:center;transition:border-color .2s}\n.badge-item.earned{border-color:var(--accent1);box-shadow:0 0 12px rgba(0,232,208,.15)}\n.badge-item.locked{opacity:.4;filter:grayscale(.6)}\n.badge-item-icon{font-size:1.8rem}\n.badge-item-name{font-size:.7rem;font-weight:700;color:var(--text-primary)}\n.badge-item-desc{font-size:.6rem;color:var(--text-muted)}\n\n/* ── PHASE 3: Question Branching UI ── */\n.branch-section{margin-top:12px;padding:12px;border:1px dashed var(--accent2);border-radius:10px;background:rgba(162,89,255,.06)}\n.branch-section-title{font-size:.83rem;font-weight:700;color:var(--accent2);margin-bottom:8px;display:flex;align-items:center;gap:6px}\n.branch-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}\n.branch-label-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:.7rem;font-weight:700;background:rgba(162,89,255,.1);color:var(--accent2);border:1px solid rgba(162,89,255,.3)}\n\n/* ── PHASE 3: Keyboard Shortcuts Overlay ── */\n.kb-shortcuts-overlay{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;animation:fade-in .2s ease}\n.kb-shortcuts-panel{background:var(--bg-card);border:1px solid var(--border-light);border-radius:20px;padding:28px 32px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}\n.kb-shortcuts-panel h3{font-size:1.1rem;font-weight:900;color:var(--accent1);margin-bottom:16px}\n.kb-shortcut-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}\n.kb-key{display:inline-flex;padding:2px 8px;border-radius:6px;background:var(--bg-surface);border:1px solid var(--border);font-family:monospace;font-size:.8rem;font-weight:700;color:var(--accent1);min-width:28px;text-align:center}\n.kb-desc{font-size:.85rem;color:var(--text-secondary)}\n\n/* ── PHASE 3: Bulk Import ── */\n.bulk-import-area{margin-top:12px}\n.bulk-import-area textarea{width:100%;min-height:120px;font-family:Cairo,monospace;font-size:.85rem;direction:rtl;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);padding:12px;resize:vertical}\n\n/* ── PHASE 3: Mobile Collapsible Sections ── */\n@media(max-width:768px){\n  .admin-content .card-header{cursor:pointer;-webkit-tap-highlight-color:transparent}\n  .admin-content .card-body-collapsible{max-height:0;overflow:hidden;transition:max-height .3s ease}\n  .admin-content .card-body-collapsible.expanded{max-height:5000px}\n  .mobile-collapse-toggle{display:inline-flex!important}\n}\n.mobile-collapse-toggle{display:none;align-items:center;gap:4px;font-size:.75rem;color:var(--text-muted);cursor:pointer;margin-right:auto;padding:4px 8px;border-radius:6px;background:var(--bg-surface)}\n.mobile-collapse-toggle:hover{color:var(--text-primary)}\n\n/* ── PHASE 3: Touch Scroll ── */\n.touch-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:thin}\n.touch-scroll::-webkit-scrollbar{width:4px}\n.touch-scroll::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}\n\n/* ── PHASE 3: Question Preview ── */\n.q-preview-overlay{position:fixed;inset:0;z-index:7000;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;justify-content:center;animation:fade-in .2s ease}\n.q-preview-box{background:var(--bg-card);border:2px solid var(--accent1);border-radius:20px;padding:32px;max-width:700px;width:92%;text-align:center;box-shadow:0 0 60px rgba(0,232,208,.2)}\n.q-preview-close{position:absolute;top:16px;left:16px;z-index:1}\n';
+   161→document.head.appendChild(_phase3CSS);
+   162→
+   163→// ── Phase 3: Inject SVG filters for color blindness ─────
+   164→var _svgFilters=document.createElement('div');
+   165→_svgFilters.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+   166→_svgFilters.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0"><defs><filter id="cb-filter-protanopia"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter><filter id="cb-filter-deuteranopia"><feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/></filter><filter id="cb-filter-tritanopia"><feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/></filter></defs></svg>';
+   167→document.body.insertBefore(_svgFilters,document.body.firstChild);
+   168→
+   169→// ── Phase 3: Add skip navigation link ────────────────────
+   170→(function(){
+   171→  var skipLink=document.createElement('a');
+   172→  skipLink.className='skip-nav';
+   173→  skipLink.href='#app';
+   174→  skipLink.textContent=I18n.t('btn.skipToContent')||'انتقل إلى المحتوى الرئيسي';
+   175→  document.body.insertBefore(skipLink,document.body.firstChild);
+   176→})();
+   177→
+   178→// ── Phase 3: Add aria-live region ────────────────────────
+   179→(function(){
+   180→  var liveRegion=document.createElement('div');
+   181→  liveRegion.id='aria-score-updates';
+   182→  liveRegion.setAttribute('aria-live','polite');
+   183→  liveRegion.setAttribute('aria-atomic','true');
+   184→  liveRegion.style.cssText='position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)';
+   185→  document.body.appendChild(liveRegion);
+   186→})();
+   187→
+   188→
+   189→// ────────────────────────────────────────────────────────────
+   190→//  Continued from previous section (merged boundary)
+   191→// ────────────────────────────────────────────────────────────
+   192→
+   193→// ════════════════════════════════════════════════════════
+   194→//  1. ADVANCED STATISTICS WITH CHARTS
+   195→// ════════════════════════════════════════════════════════
+   196→
+   197→var QuizCharts={};
+   198→
+   199→QuizCharts.drawPieChart=function(canvas,data,colors){
+   200→  if(!canvas||!data||!data.length)return;
+   201→  var ctx=canvas.getContext('2d');
+   202→  var dpr=window.devicePixelRatio||1;
+   203→  var rect=canvas.getBoundingClientRect();
+   204→  canvas.width=rect.width*dpr;
+   205→  canvas.height=rect.height*dpr;
+   206→  ctx.scale(dpr,dpr);
+   207→  ctx.clearRect(0,0,rect.width,rect.height);
+   208→  var w=rect.width,h=rect.height;
+   209→  var cx=w/2,cy=h/2;
+   210→  var radius=Math.max(10,Math.min(cx,cy)-40);
+   211→  var innerRadius=radius*0.5;
+   212→  var total=data.reduce(function(s,d){return s+Math.max(0,d.value||0);},0);
+   213→  if(total===0){
+   214→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   215→    ctx.font='14px Cairo,sans-serif';ctx.textAlign='center';
+   216→    ctx.fillText(t('empty.noData'),cx,cy);
+   217→    return;
+   218→  }
+   219→  var cs=colors||['#00e8d0','#a259ff','#ff3d5a','#ffb800','#00e676','#f472b6','#fb923c','#34d399'];
+   220→  var startAngle=-Math.PI/2;
+   221→  data.forEach(function(d,i){
+   222→    var sliceAngle=Math.max(0,(d.value||0)/total)*2*Math.PI;
+   223→    if(sliceAngle<0.001){startAngle+=sliceAngle;return;}
+   224→    ctx.beginPath();
+   225→    ctx.arc(cx,cy,radius,startAngle,startAngle+sliceAngle);
+   226→    ctx.arc(cx,cy,innerRadius,startAngle+sliceAngle,startAngle,true);
+   227→    ctx.closePath();
+   228→    ctx.fillStyle=cs[i%cs.length];ctx.fill();
+   229→    if(sliceAngle>0.15){
+   230→      var midAngle=startAngle+sliceAngle/2;
+   231→      var lx=cx+Math.cos(midAngle)*(radius*0.75);
+   232→      var ly=cy+Math.sin(midAngle)*(radius*0.75);
+   233→      ctx.fillStyle='#fff';ctx.font='bold 12px Cairo,sans-serif';
+   234→      ctx.textAlign='center';ctx.textBaseline='middle';
+   235→      var pct=Math.round((d.value||0)/total*100);
+   236→      ctx.fillText(pct+'%',lx,ly);
+   237→    }
+   238→    startAngle+=sliceAngle;
+   239→  });
+   240→  var legendY=h-8;
+   241→  ctx.textAlign='right';ctx.textBaseline='bottom';
+   242→  ctx.font='11px Cairo,sans-serif';
+   243→  var legendSpacing=w/data.length;
+   244→  data.forEach(function(d,i){
+   245→    var lx=legendSpacing*i+legendSpacing/2;
+   246→    ctx.fillStyle=cs[i%cs.length];
+   247→    ctx.fillRect(lx-30,legendY-10,8,8);
+   248→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim()||'#aaa';
+   249→    var label=(d.label||'').length>8?(d.label||'').slice(0,7)+'…':d.label||'';
+   250→    ctx.fillText(label,lx+20,legendY);
+   251→  });
+   252→};
+   253→
+   254→QuizCharts.drawBarChart=function(canvas,labels,values,colors){
+   255→  if(!canvas||!labels||!labels.length)return;
+   256→  var ctx=canvas.getContext('2d');
+   257→  var dpr=window.devicePixelRatio||1;
+   258→  var rect=canvas.getBoundingClientRect();
+   259→  canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;
+   260→  ctx.scale(dpr,dpr);ctx.clearRect(0,0,rect.width,rect.height);
+   261→  var w=rect.width,h=rect.height;
+   262→  var padTop=20,padBottom=40,padLeft=50,padRight=20;
+   263→  var chartW=w-padLeft-padRight,chartH=h-padTop-padBottom;
+   264→  var maxVal=Math.max.apply(null,values.map(function(v){return Math.max(0,v||0);}).concat([1]));
+   265→  var cs=colors||['#00e8d0','#a259ff','#ff3d5a','#ffb800','#00e676'];
+   266→  var barW=Math.max(8,Math.min(50,chartW/labels.length-12));
+   267→  ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--border').trim()||'#333';
+   268→  ctx.lineWidth=0.5;
+   269→  for(var gi=0;gi<=4;gi++){
+   270→    var gy=padTop+chartH*(1-gi/4);
+   271→    ctx.beginPath();ctx.moveTo(padLeft,gy);ctx.lineTo(w-padRight,gy);ctx.stroke();
+   272→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   273→    ctx.font='10px Cairo,sans-serif';ctx.textAlign='right';ctx.textBaseline='middle';
+   274→    ctx.fillText(Math.round(maxVal*gi/4),padLeft-6,gy);
+   275→  }
+   276→  labels.forEach(function(label,i){
+   277→    var x=padLeft+(i+0.5)*(chartW/labels.length);
+   278→    var barH=Math.max(0,(values[i]||0)/maxVal)*chartH;
+   279→    var y=padTop+chartH-barH;
+   280→    ctx.fillStyle=cs[i%cs.length];
+   281→    var rx=x-barW/2;
+   282→    var r=Math.min(4,barW/4);
+   283→    ctx.beginPath();
+   284→    ctx.moveTo(rx+r,y);ctx.lineTo(rx+barW-r,y);
+   285→    ctx.quadraticCurveTo(rx+barW,y,rx+barW,y+r);
+   286→    ctx.lineTo(rx+barW,padTop+chartH);ctx.lineTo(rx,padTop+chartH);
+   287→    ctx.lineTo(rx,y+r);ctx.quadraticCurveTo(rx,y,rx+r,y);
+   288→    ctx.fill();
+   289→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim()||'#fff';
+   290→    ctx.font='bold 11px Cairo,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+   291→    ctx.fillText(values[i]||0,x,y-4);
+   292→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim()||'#aaa';
+   293→    ctx.font='10px Cairo,sans-serif';ctx.textBaseline='top';
+   294→    var truncLabel=label.length>6?label.slice(0,5)+'…':label;
+   295→    ctx.fillText(truncLabel,x,padTop+chartH+6);
+   296→  });
+   297→};
+   298→
+   299→QuizCharts.drawLineChart=function(canvas,dataPoints,colors,labels){
+   300→  if(!canvas||!dataPoints||!dataPoints.length)return;
+   301→  var ctx=canvas.getContext('2d');
+   302→  var dpr=window.devicePixelRatio||1;
+   303→  var rect=canvas.getBoundingClientRect();
+   304→  canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;
+   305→  ctx.scale(dpr,dpr);ctx.clearRect(0,0,rect.width,rect.height);
+   306→  var w=rect.width,h=rect.height;
+   307→  var padTop=20,padBottom=40,padLeft=50,padRight=20;
+   308→  var chartW=w-padLeft-padRight,chartH=h-padTop-padBottom;
+   309→  var cs=colors||['#00e8d0','#a259ff','#ff3d5a','#ffb800','#00e676'];
+   310→  var allVals=[];
+   311→  dataPoints.forEach(function(d){if(d.points)allVals=allVals.concat(d.points);});
+   312→  var maxVal=Math.max.apply(null,allVals.concat([1]));
+   313→  var numPts=Math.max.apply(null,dataPoints.map(function(d){return (d.points||[]).length;}).concat([1]));
+   314→  ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--border').trim()||'#333';
+   315→  ctx.lineWidth=0.5;
+   316→  for(var gi=0;gi<=4;gi++){
+   317→    var gy=padTop+chartH*(1-gi/4);
+   318→    ctx.beginPath();ctx.moveTo(padLeft,gy);ctx.lineTo(w-padRight,gy);ctx.stroke();
+   319→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   320→    ctx.font='10px Cairo,sans-serif';ctx.textAlign='right';ctx.textBaseline='middle';
+   321→    ctx.fillText(Math.round(maxVal*gi/4),padLeft-6,gy);
+   322→  }
+   323→  if(labels&&labels.length){
+   324→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   325→    ctx.font='9px Cairo,sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+   326→    labels.forEach(function(lbl,i){
+   327→      if(i%Math.max(1,Math.floor(labels.length/8))!==0&&i!==labels.length-1)return;
+   328→      var x=padLeft+i/(labels.length-1||1)*chartW;
+   329→      ctx.fillText(lbl.length>5?lbl.slice(0,4)+'…':lbl,x,padTop+chartH+6);
+   330→    });
+   331→  }
+   332→  dataPoints.forEach(function(team,ti){
+   333→    var pts=team.points||[];
+   334→    if(pts.length<1)return;
+   335→    ctx.strokeStyle=cs[ti%cs.length];ctx.lineWidth=2.5;
+   336→    ctx.beginPath();
+   337→    pts.forEach(function(v,i){
+   338→      var x=padLeft+i/(numPts-1||1)*chartW;
+   339→      var y=padTop+chartH-Math.max(0,v)/maxVal*chartH;
+   340→      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+   341→    });
+   342→    ctx.stroke();
+   343→    pts.forEach(function(v,i){
+   344→      var x=padLeft+i/(numPts-1||1)*chartW;
+   345→      var y=padTop+chartH-Math.max(0,v)/maxVal*chartH;
+   346→      ctx.fillStyle=cs[ti%cs.length];
+   347→      ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
+   348→    });
+   349→  });
+   350→  var legendY=8;var legendX=padLeft;
+   351→  ctx.font='10px Cairo,sans-serif';ctx.textAlign='right';ctx.textBaseline='top';
+   352→  dataPoints.forEach(function(team,ti){
+   353→    ctx.fillStyle=cs[ti%cs.length];ctx.fillRect(legendX,legendY,8,8);
+   354→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim()||'#aaa';
+   355→    var name=(team.label||'').length>10?(team.label||'').slice(0,9)+'…':team.label||'';
+   356→    ctx.fillText(name,legendX+12+ctx.measureText(name).width,legendY);
+   357→    legendX+=40+ctx.measureText(name).width;
+   358→  });
+   359→};
+   360→
+   361→QuizCharts.renderAdvancedStats=function(){
+   362→  var _t=function(key,fallback){try{var v=I18n.t(key);return v&&v!==key?v:fallback;}catch(e){return fallback;}};
+   363→  var panel=document.getElementById('adv-stats-panel');
+   364→  if(!panel)return;
+   365→  if(panel.classList.contains('hidden'))return;
+   366→  var teams=state.teams||[];
+   367→  if(!teams.length){panel.innerHTML='<div style="text-align:center;color:var(--text-muted);padding:32px">'+_t('stats.noTeams','لا توجد فرق لعرض الإحصائيات')+'</div>';return;}
+   368→  var teamColors=teams.map(function(t){return t.color||'#00e8d0';});
+   369→  var teamNames=teams.map(function(t){return t.name||'فريق';});
+   370→  // Calculate summary stats
+   371→  var totalAnswers=0,totalCorrect=0,fastestTeam='',fastestAvg=Infinity;
+   372→  teams.forEach(function(t){
+   373→    var s=state.sessionStats[t.id]||{correct:0,wrong:0,totalTime:0};
+   374→    var cnt=(s.correct||0)+(s.wrong||0);
+   375→    totalAnswers+=cnt;
+   376→    totalCorrect+=(s.correct||0);
+   377→    if(cnt>0){
+   378→      var avg=Math.round((s.totalTime||0)/cnt*10)/10;
+   379→      if(avg<fastestAvg){fastestAvg=avg;fastestTeam=t.name||'فريق';}
+   380→    }
+   381→  });
+   382→  var overallAccuracy=totalAnswers>0?Math.round(totalCorrect/totalAnswers*100):0;
+   383→  var totalCategories=(state.categories||[]).length;
+   384→  var summaryHTML='<div class="adv-summary-grid">'
+   385→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+totalAnswers+'</div><div class="adv-summary-label">'+_t('stats.totalAnswers','إجمالي الإجابات')+'</div></div>'
+   386→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+overallAccuracy+'%</div><div class="adv-summary-label">'+_t('stats.accuracy','الدقة الإجمالية')+'</div></div>'
+   387→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+(fastestTeam||'—')+'</div><div class="adv-summary-label">'+_t('stats.fastestTeam','أسرع فريق')+'</div></div>'
+   388→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+totalCategories+'</div><div class="adv-summary-label">'+_t('stats.categoriesPlayed','الأقسام الملعوبة')+'</div></div>'
+   389→    +'</div>';
+   390→  panel.innerHTML=summaryHTML+'<div class="adv-stats-charts"><div class="adv-chart-card"><div class="adv-chart-title">📊 '+_t('stats.accuracyPerTeam','دقة الإجابات لكل فريق')+'</div><canvas id="chart-accuracy" class="adv-chart-canvas" style="height:260px"></canvas></div><div class="adv-chart-card"><div class="adv-chart-title">📈 '+_t('stats.scoreEvolution','تطور النتائج')+'</div><canvas id="chart-timeline" class="adv-chart-canvas" style="height:260px"></canvas></div><div class="adv-chart-card"><div class="adv-chart-title">📂 '+_t('stats.categoryPerformance','أداء الأقسام')+'</div><canvas id="chart-categories" class="adv-chart-canvas" style="height:260px"></canvas></div><div class="adv-chart-card"><div class="adv-chart-title">⏱ '+_t('stats.answerSpeed','سرعة الإجابة')+'</div><canvas id="chart-speed" class="adv-chart-canvas" style="height:260px"></canvas></div></div><div id="badges-panel" style="margin-top:20px;max-width:1100px;width:100%"></div>';
+   391→  requestAnimationFrame(function(){
+   392→    var accCanvas=document.getElementById('chart-accuracy');
+   393→    if(accCanvas){
+   394→      var accData=teams.map(function(t){
+   395→        var s=state.sessionStats[t.id]||{correct:0,wrong:0};
+   396→        var total=(s.correct||0)+(s.wrong||0);
+   397→        return {label:t.name,value:total>0?Math.round((s.correct||0)/total*100):0};
+   398→      });
+   399→      QuizCharts.drawPieChart(accCanvas,accData,teamColors);
+   400→    }
+   401→    var timeCanvas=document.getElementById('chart-timeline');
+   402→    if(timeCanvas&&state.scoreHistory&&state.scoreHistory.length){
+   403→      var scores={};
+   404→      teams.forEach(function(t){scores[t.id]=[0];});
+   405→      var timeLabels=['0'];var step=0;
+   406→      (state.scoreHistory||[]).forEach(function(entry){
+   407→        step++;
+   408→        teams.forEach(function(t){
+   409→          var prev=scores[t.id][scores[t.id].length-1]||0;
+   410→          scores[t.id].push(t.id===entry.teamId?prev+(entry.delta||0):prev);
+   411→        });
+   412→        timeLabels.push(String(step));
+   413→      });
+   414→      var dp=teams.map(function(t){return {label:t.name,teamId:t.id,points:scores[t.id]||[]};});
+   415→      QuizCharts.drawLineChart(timeCanvas,dp,teamColors,timeLabels);
+   416→    }else if(timeCanvas){
+   417→      var tctx=timeCanvas.getContext('2d');
+   418→      var tdpr=window.devicePixelRatio||1;
+   419→      var trect=timeCanvas.getBoundingClientRect();
+   420→      timeCanvas.width=trect.width*tdpr;timeCanvas.height=trect.height*tdpr;
+   421→      tctx.scale(tdpr,tdpr);
+   422→      tctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   423→      tctx.font='14px Cairo,sans-serif';tctx.textAlign='center';
+   424→      var _t2=function(key,fb){try{var v=I18n.t(key);return v&&v!==key?v:fb;}catch(e){return fb;}};
+   425→      tctx.fillText(_t2('stats.noDataYet','لا توجد بيانات بعد'),trect.width/2,trect.height/2);
+   426→    }
+   427→    var catCanvas=document.getElementById('chart-categories');
+   428→    if(catCanvas){
+   429→      var categories=state.categories||[];
+   430→      var catLabels=categories.map(function(c){return c.name||'قسم';}).slice(0,8);
+   431→      var catCorrect=categories.slice(0,8).map(function(c){
+   432→        var total=0;
+   433→        teams.forEach(function(t){
+   434→          var s=state.sessionStats[t.id];
+   435→          if(s&&s.answers)s.answers.forEach(function(a){if(a.catId===c.id&&a.correct)total++;});
+   436→        });
+   437→        return total;
+   438→      });
+   439→      QuizCharts.drawBarChart(catCanvas,catLabels,catCorrect,categories.map(function(_,i){return i%2===0?'#00e676':'#00c050';}));
+   440→    }
+   441→    var speedCanvas=document.getElementById('chart-speed');
+   442→    if(speedCanvas){
+   443→      var speedData=teams.map(function(t){
+   444→        var s=state.sessionStats[t.id]||{correct:0,wrong:0,totalTime:0};
+   445→        var total=(s.correct||0)+(s.wrong||0);
+   446→        return total>0?Math.round((s.totalTime||0)/total*10)/10:0;
+   447→      });
+   448→      QuizCharts.drawBarChart(speedCanvas,teamNames,speedData,teamColors);
+   449→    }
+   450→    if(typeof renderBadgesPanel==='function'){
+   451→      teams.forEach(function(t){renderBadgesPanel(t.id);});
+   452→    }
+   453→  });
+   454→};
+   455→
+   456→QuizCharts.toggleAdvancedStats=function(){
+   457→  var panel=document.getElementById('adv-stats-panel');
+   458→  if(!panel)return;
+   459→  var btn=document.getElementById('btn-adv-stats');
+   460→  if(panel.classList.contains('hidden')){
+   461→    panel.classList.remove('hidden');
+   462→    QuizCharts.renderAdvancedStats();
+   463→    if(btn)btn.innerHTML='📊 '+(function(){try{var v=I18n.t('btn.hideAdvancedStats');return v&&v!=='btn.hideAdvancedStats'?v:'إخفاء الإحصائيات';}catch(e){return 'إخفاء الإحصائيات';}})();
+   464→  }else{
+   465→    panel.classList.add('hidden');
+   466→    if(btn)btn.innerHTML='📊 '+(function(){try{var v=I18n.t('btn.advancedStats');return v&&v!=='btn.advancedStats'?v:'الإحصائيات المتقدمة';}catch(e){return 'الإحصائيات المتقدمة';}})();
+   467→  }
+   468→};
+   469→
+   470→// ── Enhance renderTeamStats: add "Advanced Statistics" button ──
+   471→// Use QuizStats.renderTeamStats which is set at line ~6400 (same scope as the function)
+   472→// rather than window.renderTeamStats which may not be set yet at parse time
+   473→(function(){
+   474→  // Wait until the function is available (it's set during app init)
+   475→  var _orig=typeof renderTeamStats==='function'?renderTeamStats:(typeof QuizStats!=='undefined'&&QuizStats.renderTeamStats?QuizStats.renderTeamStats:null);
+   476→  if(!_orig){
+   477→    // Defer: try again after DOM is ready
+   478→    document.addEventListener('DOMContentLoaded',function(){
+   479→      var orig2=typeof renderTeamStats==='function'?renderTeamStats:(typeof QuizStats!=='undefined'&&QuizStats.renderTeamStats?QuizStats.renderTeamStats:null);
+   480→      if(orig2)_installAdvStats(orig2);
+   481→    });
+   482→    return;
+   483→  }
+   484→  _installAdvStats(_orig);
+   485→  function _installAdvStats(origFn){
+   486→    // Override the globally-accessible renderTeamStats
+   487→    window._renderTeamStatsWithAdvStats=origFn;
+   488→    window.renderTeamStats=function(){
+   489→      origFn.call(this);
+   490→      // V11: Button is now in the header bar HTML, no need to create dynamically
+   491→      // Update button text based on current language
+   492→      var btn=document.getElementById('btn-adv-stats');
+   493→      if(btn){
+   494→        var panel=document.getElementById('adv-stats-panel');
+   495→        var isHidden=panel&&panel.classList.contains('hidden');
+   496→        btn.innerHTML='📊 '+(function(){
+   497→          try{
+   498→            var v=isHidden?I18n.t('btn.advancedStats'):I18n.t('btn.hideAdvancedStats');
+   499→            return v&&v!=='btn.advancedStats'&&v!=='btn.hideAdvancedStats'?v:(isHidden?'الإحصائيات المتقدمة':'إخفاء الإحصائيات');
+   500→          }catch(e){return isHidden?'الإحصائيات المتقدمة':'إخفاء الإحصائيات';}
+   501→        })();
+   502→      }
+   503→      var panel=document.getElementById('adv-stats-panel');
+   504→      if(panel&&!panel.classList.contains('hidden')){
+   505→        QuizCharts.renderAdvancedStats();
+   506→      }
+   507→    };
+   508→    // Also update QuizStats reference
+   509→    if(typeof QuizStats!=='undefined')QuizStats.renderTeamStats=window.renderTeamStats;
+   510→  }
+   511→})();
+   512→
+   513→
+   514→// ════════════════════════════════════════════════════════
+   515→//  2. CONDITIONAL / BRANCHING QUESTIONS
+   516→// ════════════════════════════════════════════════════════
+   517→
+   518→function isQuestionAvailable(catId,qIndex){
+   519→  try{
+   520→    var cat=(state.categories||[]).find(function(c){return c.id===catId;});
+   521→    if(!cat||!cat.questions||!cat.questions[qIndex])return true;
+   522→    var q=cat.questions[qIndex];
+   523→    if(!q.dependsOn||!q.dependsOn.questionId)return true;
+   524→    var depQId=q.dependsOn.questionId;
+   525→    var reqResult=q.dependsOn.answerRequired||'any';
+   526→    var teams=state.teams||[];
+   527→    for(var ti=0;ti<teams.length;ti++){
+   528→      var s=state.sessionStats[teams[ti].id];
+   529→      if(!s||!s.answers)continue;
+   530→      var ans=s.answers.find(function(a){
+   531→        for(var ci=0;ci<state.categories.length;ci++){
+   532→          var idx=state.categories[ci].questions.findIndex(function(qq){return qq.id===depQId;});
+   533→          if(idx!==-1&&a.catId===state.categories[ci].id&&a.qIdx===idx)return true;
+   534→        }
+   535→        return false;
+   536→      });
+   537→      if(ans){
+   538→        if(reqResult==='any')return true;
+   539→        if(reqResult==='correct'&&ans.correct)return true;
+   540→        if(reqResult==='wrong'&&!ans.correct)return true;
+   541→      }
+   542→    }
+   543→    for(var ci2=0;ci2<state.categories.length;ci2++){
+   544→      var depIdx=state.categories[ci2].questions.findIndex(function(qq){return qq.id===depQId;});
+   545→      if(depIdx!==-1){
+   546→        var usedSet=state.usedQuestions[state.categories[ci2].id];
+   547→        if(!usedSet||!usedSet.has(depIdx)){return true;}
+   548→        return reqResult==='any';
+   549→      }
+   550→    }
+   551→    return false;
+   552→  }catch(e){
+   553→    console.warn('isQuestionAvailable error:',e);
+   554→    return true;
+   555→  }
+   556→}
+   557→
+   558→function getAvailableQuestions(catId){
+   559→  try{
+   560→    var cat=(state.categories||[]).find(function(c){return c.id===catId;});
+   561→    if(!cat||!cat.questions)return[];
+   562→    return cat.questions.map(function(_,i){return i;}).filter(function(i){return isQuestionAvailable(catId,i);});
+   563→  }catch(e){
+   564→    console.warn('getAvailableQuestions error:',e);
+   565→    var cat2=(state.categories||[]).find(function(c){return c.id===catId;});
+   566→    return cat2?cat2.questions.map(function(_,i){return i;}):[];
+   567→  }
+   568→}
+   569→
+   570→// ── Patch loadQuestion to skip unavailable questions ──
+   571→(function(){
+   572→  var _origLoadQuestion=window.loadQuestion;
+   573→  if(_origLoadQuestion){
+   574→    window.loadQuestion=function(catId,qIdx,teamIdx){
+   575→      if(!isQuestionAvailable(catId,qIdx)){
+   576→        var available=getAvailableQuestions(catId);
+   577→        var nextIdx=available.find(function(i){return i>qIdx;});
+   578→        if(nextIdx!==undefined){qIdx=nextIdx;}
+   579→        else if(available.length>0){qIdx=available[0];}
+   580→        else{if(typeof toast==='function')toast(I18n.t('toast.noAvailableQuestions'),'info');return;}
+   581→      }
+   582→      return _origLoadQuestion.call(this,catId,qIdx,teamIdx);
+   583→    };
+   584→  }
+   585→})();
+   586→
+   587→// ── Add branching UI to question editor ──
+   588→(function(){
+   589→  var observer=new MutationObserver(function(){
+   590→    var modal=document.getElementById('modal-question');
+   591→    if(!modal||document.getElementById('branch-section'))return;
+   592→    var footer=modal.querySelector('.modal-footer');
+   593→    if(!footer)return;
+   594→    var branchSection=document.createElement('div');
+   595→    branchSection.id='branch-section';branchSection.className='branch-section';
+   596→    branchSection.innerHTML='<div class="branch-section-title">🔗 شروط العرض</div><div class="branch-row"><label class="form-label" style="margin:0;font-size:.78rem">يعتمد على السؤال:</label><select id="q-depends-on" class="form-select" style="max-width:200px;font-size:.82rem"><option value="">— بدون شرط —</option></select><label class="form-label" style="margin:0;font-size:.78rem">النتيجة المطلوبة:</label><select id="q-depends-result" class="form-select" style="max-width:140px;font-size:.82rem"><option value="any">أي إجابة</option><option value="correct">إجابة صحيحة</option><option value="wrong">إجابة خاطئة</option></select><input type="text" id="q-branch-label" class="form-input" style="max-width:140px;font-size:.82rem" placeholder="تسمية الفرع"></div>';
+   597→    footer.parentNode.insertBefore(branchSection,footer);
+   598→  });
+   599→  observer.observe(document.body,{childList:true,subtree:true});
+   600→})();
+   601→
+   602→// ── Populate dependsOn dropdown when opening question modal ──
+   603→var _origOpenQuestionModal=window.openQuestionModal;
+   604→if(_origOpenQuestionModal){
+   605→  window.openQuestionModal=function(catId,qId){
+   606→    _origOpenQuestionModal.apply(this,arguments);
+   607→    setTimeout(function(){
+   608→      var sel=document.getElementById('q-depends-on');
+   609→      if(!sel)return;
+   610→      sel.innerHTML='<option value="">— بدون شرط —</option>';
+   611→      var tCat=catId||state.currentCatId;
+   612→      if(!tCat)return;
+   613→      var cat=state.categories.find(function(c){return c.id===tCat;});
+   614→      if(!cat)return;
+   615→      cat.questions.forEach(function(q,i){
+   616→        if(qId&&q.id===qId)return;
+   617→        var opt=document.createElement('option');
+   618→        opt.value=q.id;
+   619→        opt.textContent=(i+1)+'. '+(q.text||'').slice(0,40);
+   620→        sel.appendChild(opt);
+   621→      });
+   622→      if(qId){
+   623→        var eq=cat.questions.find(function(qq){return qq.id===qId;});
+   624→        if(eq&&eq.dependsOn){
+   625→          sel.value=eq.dependsOn.questionId||'';
+   626→          var resSel=document.getElementById('q-depends-result');
+   627→          if(resSel)resSel.value=eq.dependsOn.answerRequired||'any';
+   628→        }
+   629→        if(eq&&eq.branchLabel){
+   630→          var lbl=document.getElementById('q-branch-label');
+   631→          if(lbl)lbl.value=eq.branchLabel;
+   632→        }
+   633→      }
+   634→    },100);
+   635→  };
+   636→}
+   637→
+   638→// ── Patch saveQuestion to include branching fields ──
+   639→var _origSaveQuestion=window.saveQuestion;
+   640→if(_origSaveQuestion){
+   641→  window.saveQuestion=function(){
+   642→    var cat=state.categories.find(function(c){return c.id===state.currentCatId;});
+   643→    if(cat&&state.editingQId){
+   644→      var q=cat.questions.find(function(qq){return qq.id===state.editingQId;});
+   645→      if(q){
+   646→        var depSel=document.getElementById('q-depends-on');
+   647→        var depRes=document.getElementById('q-depends-result');
+   648→        var branchLbl=document.getElementById('q-branch-label');
+   649→        if(depSel&&depSel.value){q.dependsOn={questionId:depSel.value,answerRequired:depRes?depRes.value:'any'};}
+   650→        else{delete q.dependsOn;}
+   651→        if(branchLbl&&branchLbl.value.trim()){q.branchLabel=branchLbl.value.trim();}
+   652→        else{delete q.branchLabel;}
+   653→        if(typeof saveState==='function')saveState();
+   654→      }
+   655→    }
+   656→    var depSel2=document.getElementById('q-depends-on');
+   657→    var depRes2=document.getElementById('q-depends-result');
+   658→    var branchLbl2=document.getElementById('q-branch-label');
+   659→    window._pendingDependsOn=depSel2&&depSel2.value?{questionId:depSel2.value,answerRequired:depRes2?depRes2.value:'any'}:null;
+   660→    window._pendingBranchLabel=branchLbl2?branchLbl2.value.trim():'';
+   661→    _origSaveQuestion.apply(this,arguments);
+   662→    if(window._pendingDependsOn||window._pendingBranchLabel){
+   663→      var cat2=state.categories.find(function(c){return c.id===state.currentCatId;});
+   664→      if(cat2){
+   665→        var lastQ=cat2.questions[cat2.questions.length-1];
+   666→        if(lastQ&&!state.editingQId){
+   667→          if(window._pendingDependsOn)lastQ.dependsOn=window._pendingDependsOn;
+   668→          if(window._pendingBranchLabel)lastQ.branchLabel=window._pendingBranchLabel;
+   669→          if(typeof saveState==='function')saveState();
+   670→        }
+   671→      }
+   672→      window._pendingDependsOn=null;window._pendingBranchLabel='';
+   673→    }
+   674→  };
+   675→}
+   676→
+   677→// ── Show branch badge in question list ──
+   678→var _origRenderQuestionsAdmin=window.renderQuestionsAdmin;
+   679→if(_origRenderQuestionsAdmin){
+   680→  window.renderQuestionsAdmin=function(catId){
+   681→    _origRenderQuestionsAdmin.apply(this,arguments);
+   682→    var cat=state.categories.find(function(c){return c.id===catId;});
+   683→    if(!cat)return;
+   684→    var items=document.querySelectorAll('.question-item[data-qidx]');
+   685→    items.forEach(function(item){
+   686→      var idx=+item.dataset.qidx;
+   687→      var q=cat.questions[idx];
+   688→      if(!q)return;
+   689→      if(q.dependsOn&&q.dependsOn.questionId){
+   690→        var badge=document.createElement('span');
+   691→        badge.className='branch-label-badge';
+   692→        var depQ=cat.questions.find(function(qq){return qq.id===q.dependsOn.questionId;});
+   693→        var depName=depQ?(depQ.text||'').slice(0,20):q.dependsOn.questionId.slice(0,6);
+   694→        var resLabel=q.dependsOn.answerRequired==='correct'?I18n.t('answer.correct'):q.dependsOn.answerRequired==='wrong'?I18n.t('answer.wrong'):I18n.t('branch.anyAnswer','أي');
+   695→        badge.textContent='🔗 '+I18n.t('branch.dependsOn','يعتمد على')+': '+depName+' ('+resLabel+')';
+   696→        var body=item.querySelector('.question-body');
+   697→        if(body)body.appendChild(badge);
+   698→      }
+   699→      if(!isQuestionAvailable(catId,idx)){
+   700→        item.style.opacity='0.5';item.style.borderStyle='dashed';
+   701→        var lock=document.createElement('span');
+   702→        lock.style.cssText='font-size:.7rem;color:var(--danger);margin-right:4px';
+   703→        lock.textContent='🔒';
+   704→        var numEl=item.querySelector('.question-num');
+   705→        if(numEl)numEl.appendChild(lock);
+   706→      }
+   707→    });
+   708→  };
+   709→}
+   710→
+   711→
+   712→// ────────────────────────────────────────────────────────────
+   713→//  Continued from previous section (merged boundary)
+   714→// ────────────────────────────────────────────────────────────
+   715→
+   716→// ════════════════════════════════════════════════════════
+   717→//  3. ACCESSIBILITY IMPROVEMENTS
+   718→// ════════════════════════════════════════════════════════
+   719→
+   720→var _focusTrapHandler=null;
+   721→var _prevFocusEl=null;
+   722→
+   723→function trapFocus(modalEl){
+   724→  if(!modalEl)return;
+   725→  _prevFocusEl=document.activeElement;
+   726→  var focusable=modalEl.querySelectorAll('a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])');
+   727→  if(!focusable.length)return;
+   728→  var first=focusable[0];var last=focusable[focusable.length-1];
+   729→  _focusTrapHandler=function(e){
+   730→    if(e.key!=='Tab')return;
+   731→    if(e.shiftKey){if(document.activeElement===first){e.preventDefault();last.focus();}}
+   732→    else{if(document.activeElement===last){e.preventDefault();first.focus();}}
+   733→  };
+   734→  document.addEventListener('keydown',_focusTrapHandler);
+   735→  first.focus();
+   736→}
+   737→
+   738→function releaseFocus(){
+   739→  if(_focusTrapHandler){document.removeEventListener('keydown',_focusTrapHandler);_focusTrapHandler=null;}
+   740→  if(_prevFocusEl){try{_prevFocusEl.focus();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_201")}catch(_){}}_prevFocusEl=null;}
+   741→}
+   742→
+   743→var _origOpenModal=window.openModal;
+   744→if(_origOpenModal){
+   745→  window.openModal=function(id){
+   746→    _origOpenModal.apply(this,arguments);
+   747→    setTimeout(function(){
+   748→      var modal=document.getElementById(id);
+   749→      if(modal)trapFocus(modal.querySelector('.modal')||modal);
+   750→    },50);
+   751→  };
+   752→}
+   753→var _origCloseModal=window.closeModal;
+   754→if(_origCloseModal){
+   755→  window.closeModal=function(id){releaseFocus();_origCloseModal.apply(this,arguments);};
+   756→}
+   757→
+   758→// ── Announce score updates via aria-live ──
+   759→var _origRecordAnswer=window.recordAnswer;
+   760→if(_origRecordAnswer){
+   761→  window.recordAnswer=function(teamId,isCorrect,timeUsed){
+   762→    _origRecordAnswer.apply(this,arguments);
+   763→    try{
+   764→      var team=(state.teams||[]).find(function(t){return t.id===teamId;});
+   765→      var liveEl=document.getElementById('aria-score-updates');
+   766→      if(team&&liveEl){liveEl.textContent=(team.name||'فريق')+' — '+(isCorrect?'إجابة صحيحة!':'إجابة خاطئة')+(team.score!==undefined?' — النتيجة: '+team.score:'');}
+   767→    }catch(e){try{ErrorBus.capture(e,"catch#AUTO_202")}catch(_){}}
+   768→  };
+   769→}
+   770→
+   771→function setColorBlindMode(mode){
+   772→  document.body.classList.remove('cb-protanopia','cb-deuteranopia','cb-tritanopia');
+   773→  if(mode&&mode!=='none'){document.body.classList.add('cb-'+mode);}
+   774→  if(state.settings)state.settings.colorBlindMode=mode;
+   775→  if(typeof saveState==='function')saveState();
+   776→}
+   777→
+   778→function showKeyboardShortcuts(){
+   779→  var existing=document.querySelector('.kb-shortcuts-overlay');
+   780→  if(existing){existing.remove();return;}
+   781→  var overlay=document.createElement('div');
+   782→  overlay.className='kb-shortcuts-overlay';
+   783→  overlay.innerHTML='<div class="kb-shortcuts-panel"><h3>⌨️ اختصارات لوحة المفاتيح</h3><div class="kb-shortcut-row"><span class="kb-desc">عرض الاختصارات</span><span class="kb-key">?</span></div><div class="kb-shortcut-row"><span class="kb-desc">السؤال التالي</span><span class="kb-key">→</span></div><div class="kb-shortcut-row"><span class="kb-desc">السؤال السابق</span><span class="kb-key">←</span></div><div class="kb-shortcut-row"><span class="kb-desc">إجابة صحيحة</span><span class="kb-key">C</span></div><div class="kb-shortcut-row"><span class="kb-desc">إجابة خاطئة</span><span class="kb-key">X</span></div><div class="kb-shortcut-row"><span class="kb-desc">إغلاق النافذة</span><span class="kb-key">Esc</span></div><div class="kb-shortcut-row"><span class="kb-desc">عرض النتائج</span><span class="kb-key">S</span></div><div style="margin-top:16px;text-align:center"><button class="btn btn-ghost btn-sm" onclick="this.closest(\'.kb-shortcuts-overlay\').remove()">إغلاق</button></div></div>';
+   784→  overlay.addEventListener('click',function(e){if(e.target===overlay)overlay.remove();});
+   785→  document.body.appendChild(overlay);
+   786→}
+   787→
+   788→document.addEventListener('keydown',function(e){
+   789→  if(e.key==='?'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?document.activeElement.tagName:'')){
+   790→    e.preventDefault();showKeyboardShortcuts();
+   791→  }
+   792→});
+   793→
+   794→
+   795→// ════════════════════════════════════════════════════════
+   796→//  4. MOBILE IMPROVEMENTS
+   797→// ════════════════════════════════════════════════════════
+   798→
+   799→function initSwipeNavigation(){
+   800→  var startX=0,startY=0,swiping=false;
+   801→  var questionView=document.getElementById('view-question');
+   802→  if(!questionView)return;
+   803→  questionView.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;startY=e.touches[0].clientY;swiping=true;},{passive:true});
+   804→  questionView.addEventListener('touchmove',function(){},{passive:true});
+   805→  questionView.addEventListener('touchend',function(e){
+   806→    if(!swiping)return;swiping=false;
+   807→    var dx=e.changedTouches[0].clientX-startX;
+   808→    var dy=e.changedTouches[0].clientY-startY;
+   809→    if(Math.abs(dx)>80&&Math.abs(dx)>Math.abs(dy)){
+   810→      if(dx<0){if(typeof nextQuestion==='function')nextQuestion();}
+   811→    }
+   812→  },{passive:true});
+   813→}
+   814→
+   815→function openBottomSheet(modalId){
+   816→  var overlay=document.getElementById(modalId);
+   817→  if(!overlay)return;
+   818→  overlay.classList.add('bottom-sheet');overlay.classList.remove('hidden');
+   819→  setTimeout(function(){var modal=overlay.querySelector('.modal');if(modal)trapFocus(modal);},50);
+   820→}
+   821→
+   822→function initMobileCollapsibles(){
+   823→  if(window.innerWidth>768)return;
+   824→  document.querySelectorAll('.admin-content .card-header').forEach(function(header){
+   825→    if(header.dataset.collapsibleInit)return;
+   826→    header.dataset.collapsibleInit='1';
+   827→    var body=header.nextElementSibling;
+   828→    if(!body)return;
+   829→    var toggle=document.createElement('span');
+   830→    toggle.className='mobile-collapse-toggle';toggle.innerHTML='▼';
+   831→    header.style.display='flex';header.style.alignItems='center';
+   832→    header.appendChild(toggle);
+   833→    body.classList.add('card-body-collapsible');body.classList.add('expanded');
+   834→    header.addEventListener('click',function(e){
+   835→      if(e.target.closest('button')||e.target.closest('.btn'))return;
+   836→      body.classList.toggle('expanded');
+   837→      toggle.textContent=body.classList.contains('expanded')?'▼':'▲';
+   838→    });
+   839→  });
+   840→}
+   841→
+   842→function initTouchScrolling(){
+   843→  document.querySelectorAll('.questions-list,.teams-grid,.scoreboard-list').forEach(function(el){el.classList.add('touch-scroll');});
+   844→}
+   845→
+   846→function initMobileImprovements(){
+   847→  initSwipeNavigation();initTouchScrolling();
+   848→  try{if(typeof Store!=='undefined')Store.subscribe('VIEW_CHANGE',function(){setTimeout(initMobileCollapsibles,200);});}catch(e){try{ErrorBus.capture(e,"catch#AUTO_203")}catch(_){}}
+   849→  setTimeout(initMobileCollapsibles,500);
+   850→}
+   851→
+   852→
+   853→// ════════════════════════════════════════════════════════
+   854→//  5. BADGES AND ACHIEVEMENTS
+   855→// ════════════════════════════════════════════════════════
+   856→
+   857→var BADGES=[
+   858→  {id:'first_win',name:'الفوز الأول',desc:'إجابة صحيحة أولى',icon:'🏆',condition:function(stats){return(stats.correct||0)>=1;}},
+   859→  {id:'streak_3',name:'سلسلة 3',desc:'3 إجابات صحيحة متتالية',icon:'🔥',condition:function(stats,streak){return(streak||0)>=3;}},
+   860→  {id:'streak_5',name:'سلسلة 5',desc:'5 إجابات صحيحة متتالية',icon:'⚡',condition:function(stats,streak){return(streak||0)>=5;}},
+   861→  {id:'streak_10',name:'الأسطورة',desc:'10 إجابات صحيحة متتالية',icon:'👑',condition:function(stats,streak){return(streak||0)>=10;}},
+   862→  {id:'perfect',name:'كامل',desc:'إجابات صحيحة 100%',icon:'💎',condition:function(stats){return(stats.correct||0)>0&&(stats.wrong||0)===0;}},
+   863→  {id:'speed_demon',name:'البرق',desc:'إجابة في أقل من 3 ثوان',icon:'⚡',condition:function(stats){return(stats.answers||[]).some(function(a){return a.correct&&a.time<3;});}},
+   864→  {id:'comeback',name:'العودة',desc:'تصدر بعد التخلف',icon:'🔄',condition:null},
+   865→  {id:'category_master',name:'خبير القسم',desc:'إجابات صحيحة في كل أقسام',icon:'📚',condition:null},
+   866→  {id:'ten_correct',name:'العشرة',desc:'10 إجابات صحيحة',icon:'⭐',condition:function(stats){return(stats.correct||0)>=10;}},
+   867→  {id:'fifty_correct',name:'الخمسون',desc:'50 إجابة صحيحة',icon:'🌟',condition:function(stats){return(stats.correct||0)>=50;}}
+   868→];
+   869→
+   870→if(!state.teamBadges)state.teamBadges={};
+   871→
+   872→function checkBadges(teamId){
+   873→  if(!state.teamBadges)state.teamBadges={};
+   874→  if(!state.teamBadges[teamId])state.teamBadges[teamId]=[];
+   875→  var stats=state.sessionStats[teamId]||{correct:0,wrong:0,skipped:0,totalTime:0,answers:[]};
+   876→  var streak=state.teamStreaks?state.teamStreaks[teamId]||0:0;
+   877→  var earned=state.teamBadges[teamId]||[];
+   878→  var newBadges=[];
+   879→  BADGES.forEach(function(badge){
+   880→    if(earned.indexOf(badge.id)!==-1)return;
+   881→    var earned_flag=false;
+   882→    if(badge.condition){try{earned_flag=badge.condition(stats,streak);}catch(_){earned_flag=false;}}
+   883→    if(badge.id==='comeback'&&state.scoreHistory&&state.scoreHistory.length>2){
+   884→      var team=(state.teams||[]).find(function(t){return t.id===teamId;});
+   885→      if(team){
+   886→        var sorted=[].concat(state.teams||[]).sort(function(a,b){return(b.score||0)-(a.score||0);});
+   887→        var isLeading=sorted.length>0&&sorted[0].id===teamId;
+   888→        var wasTrailing=state.scoreHistory.some(function(h){return h.teamId!==teamId&&h.delta>0;});
+   889→        if(isLeading&&wasTrailing)earned_flag=true;
+   890→      }
+   891→    }
+   892→    if(badge.id==='category_master'){
+   893→      var categories=state.categories||[];
+   894→      var answeredCats=new Set();
+   895→      (stats.answers||[]).forEach(function(a){if(a.correct)answeredCats.add(a.catId);});
+   896→      if(categories.length>0&&answeredCats.size>=categories.length)earned_flag=true;
+   897→    }
+   898→    if(earned_flag){earned.push(badge.id);newBadges.push(badge.id);showBadgeNotification(teamId,badge);}
+   899→  });
+   900→  state.teamBadges[teamId]=earned;
+   901→  if(newBadges.length&&typeof saveState==='function')saveState();
+   902→  return newBadges;
+   903→}
+   904→
+   905→function renderBadgesPanel(teamId){
+   906→  var panel=document.getElementById('badges-panel');
+   907→  if(!panel)return;
+   908→  if(!state.teamBadges)state.teamBadges={};
+   909→  if(!panel.innerHTML){
+   910→    panel.innerHTML='<div class="adv-chart-card"><div class="adv-chart-title">🏅 الإنجازات والأوسمة</div><div class="badges-grid" id="badges-grid-inner"></div></div>';
+   911→  }
+   912→  var grid=document.getElementById('badges-grid-inner');
+   913→  if(!grid)return;
+   914→  var allEarned=new Set();
+   915→  (state.teams||[]).forEach(function(t){(state.teamBadges[t.id]||[]).forEach(function(b){allEarned.add(b);});});
+   916→  grid.innerHTML=BADGES.map(function(badge){
+   917→    var isEarned=allEarned.has(badge.id);
+   918→    return '<div class="badge-item '+(isEarned?'earned':'locked')+'"><span class="badge-item-icon">'+badge.icon+'</span><span class="badge-item-name">'+badge.name+'</span><span class="badge-item-desc">'+badge.desc+'</span></div>';
+   919→  }).join('');
+   920→}
+   921→
+   922→function showBadgeNotification(teamId,badge){
+   923→  var team=(state.teams||[]).find(function(t){return t.id===teamId;});
+   924→  var notif=document.createElement('div');
+   925→  notif.className='badge-notif';
+   926→  notif.innerHTML='<span class="badge-notif-icon">'+_sanitize(badge.icon||'')+'</span><div class="badge-notif-name">'+_sanitize(badge.name||'')+'</div><div class="badge-notif-desc">'+(team?_sanitizeUser(team.name)+' — ':'')+_sanitize(badge.desc||'')+'</div>';
+   927→  document.body.appendChild(notif);
+   928→  setTimeout(function(){notif.classList.add('badge-exit');setTimeout(function(){notif.remove();},400);},3000);
+   929→}
+   930→
+   931→// ── Hook checkBadges into recordAnswer ──
+   932→var _origRecordAnswer2=window.recordAnswer;
+   933→if(_origRecordAnswer2){
+   934→  window.recordAnswer=function(teamId,isCorrect,timeUsed){
+   935→    _origRecordAnswer2.apply(this,arguments);
+   936→    try{checkBadges(teamId);}catch(e){try{ErrorBus.capture(e,"catch#AUTO_204")}catch(_){}}
+   937→  };
+   938→}
+   939→
+   940→// ── Hook checkBadges into streak update ──
+   941→var _origUpdateStreak=window._updateStreak;
+   942→if(_origUpdateStreak){
+   943→  window._updateStreak=function(teamId,isCorrect){
+   944→    _origUpdateStreak.apply(this,arguments);
+   945→    try{checkBadges(teamId);}catch(e){try{ErrorBus.capture(e,"catch#AUTO_205")}catch(_){}}
+   946→  };
+   947→}
+   948→
+   949→
+   950→// ════════════════════════════════════════════════════════
+   951→//  6. ENHANCED QUESTION EDITOR
+   952→// ════════════════════════════════════════════════════════
+   953→
+   954→function previewQuestion(){
+   955→  try{
+   956→    var cat=state.categories.find(function(c){return c.id===state.currentCatId;});
+   957→    if(!cat){toast(I18n.t('toast.selectCatFirst'),'info');return;}
+   958→    var textEl=document.getElementById('q-text-input');
+   959→    var text=textEl?textEl.value||'':'';
+   960→    var qtype=typeof _currentQType!=='undefined'?_currentQType:'text';
+   961→    var options=[0,1,2,3].map(function(i){var el=document.getElementById('q-opt-'+i);return el?el.value||'':'';});
+   962→    var correctEl=document.getElementById('q-correct-input');
+   963→    var correct=correctEl?+correctEl.value||0:0;
+   964→    // Remove any existing preview overlay
+   965→    var existing=document.querySelector('.q-preview-overlay');
+   966→    if(existing)existing.remove();
+   967→    var overlay=document.createElement('div');
+   968→    overlay.className='q-preview-overlay';
+   969→    var optsHtml='';
+   970→    if(qtype==='tf'){
+   971→      optsHtml='<div style="display:flex;gap:12px;justify-content:center"><div style="padding:12px 32px;border-radius:12px;border:2px solid '+(correct===0?'var(--success)':'var(--border)')+';background:'+(correct===0?'rgba(0,230,118,.1)':'var(--bg-panel)')+';font-size:1.1rem;font-weight:700">صح ✓</div><div style="padding:12px 32px;border-radius:12px;border:2px solid '+(correct===1?'var(--danger)':'var(--border)')+';background:'+(correct===1?'rgba(255,64,96,.1)':'var(--bg-panel)')+';font-size:1.1rem;font-weight:700">خطأ ✗</div></div>';
+   972→    }else if(qtype==='fitb'){
+   973→      optsHtml='<div style="color:var(--accent2);font-weight:700;font-size:1.1rem">✏️ سؤال إكمال الفراغ</div>';
+   974→    }else if(qtype==='order'){
+   975→      optsHtml='<div style="color:var(--accent2);font-weight:700;font-size:1.1rem">🔢 سؤال ترتيب</div>';
+   976→    }else if(qtype==='match'){
+   977→      optsHtml='<div style="color:var(--accent2);font-weight:700;font-size:1.1rem">🔗 سؤال توصيل</div>';
+   978→    }else{
+   979→      var filteredOpts=options.filter(Boolean);
+   980→      if(filteredOpts.length){
+   981→        optsHtml='<div style="display:flex;flex-direction:column;gap:8px;max-width:400px;margin:0 auto">';
+   982→        options.forEach(function(o,i){
+   983→          if(!o)return;
+   984→          optsHtml+='<div style="padding:10px 16px;border-radius:10px;border:2px solid '+(i===correct?'var(--success)':'var(--border)')+';background:'+(i===correct?'rgba(0,230,118,.1)':'var(--bg-panel)')+';text-align:right;font-size:.95rem"><span style="font-weight:700;color:'+(i===correct?'var(--success)':'var(--text-muted)')+'">'+['أ','ب','ج','د'][i]+'. </span>'+o+'</div>';
+   985→        });
+   986→        optsHtml+='</div>';
+   987→      }else{optsHtml='<div style="color:var(--text-muted)">لا توجد خيارات</div>';}
+   988→    }
+   989→    overlay.innerHTML='<button class="btn btn-ghost btn-sm q-preview-close" onclick="this.closest(\'.q-preview-overlay\').remove()">✕ إغلاق المعاينة</button><div class="q-preview-box"><div style="font-size:.8rem;color:var(--text-muted);margin-bottom:8px">'+(cat.icon||'📂')+' '+_sanitizeUser(cat.name)+' — معاينة</div><div style="font-size:1.3rem;font-weight:700;margin-bottom:20px;line-height:1.7">'+(text||'نص السؤال')+'</div>'+optsHtml+'</div>';
+   990→    overlay.addEventListener('click',function(e){if(e.target===overlay)overlay.remove();});
+   991→    document.body.appendChild(overlay);
+   992→  }catch(err){
+   993→    console.error('Preview error:',err);
+   994→    toast(I18n.t('toast.previewError'),'danger');
+   995→  }
+   996→}
+   997→
+   998→var QUESTION_TEMPLATES=[
+   999→  {type:'text',name:'سؤال اختيار متعدد',text:'ما هو ...؟',options:['الخيار أ','الخيار ب','الخيار ج','الخيار د'],correct:0,difficulty:'medium',time:30},
+  1000→  {type:'tf',name:'صح أو خطأ',text:'العبارة التالية صحيحة:',options:[],correct:0,difficulty:'easy',time:20},
+  1001→  {type:'fitb',name:'أكمل الفراغ',text:'أكمل: [___]',options:[],correct:0,fitbAnswer:'الإجابة',difficulty:'medium',time:25},
+  1002→  {type:'image',name:'سؤال بالصورة',text:'ما الذي يظهر في الصورة؟',options:['الخيار أ','الخيار ب','الخيار ج','الخيار د'],correct:0,difficulty:'medium',time:30},
+  1003→  {type:'math',name:'سؤال رياضيات',text:'ما ناتج $2 + 2$؟',options:['3','4','5','6'],correct:1,difficulty:'easy',time:30},
+  1004→  {type:'order',name:'ترتيب',text:'رتّب العناصر التالية:',options:['الأول','الثاني','الثالث','الرابع'],correct:0,difficulty:'hard',time:40},
+  1005→  {type:'match',name:'توصيل',text:'صِل كل عنصر بنظيره:',options:[],correct:0,difficulty:'hard',time:45}
+  1006→];
+  1007→
+  1008→function applyQuestionTemplateByIndex(templateIndex){
+  1009→  var tmpl=QUESTION_TEMPLATES[templateIndex];
+  1010→  if(!tmpl)return;
+  1011→  var textEl=document.getElementById('q-text-input');
+  1012→  if(textEl)textEl.value=tmpl.text||'';
+  1013→  if(typeof setQType==='function')setQType(tmpl.type||'text');
+  1014→  if(tmpl.options&&tmpl.options.length){tmpl.options.forEach(function(o,i){var el=document.getElementById('q-opt-'+i);if(el)el.value=o||'';});}
+  1015→  var correctEl=document.getElementById('q-correct-input');
+  1016→  if(correctEl)correctEl.value=tmpl.correct||0;
+  1017→  var diffEl=document.getElementById('q-difficulty-input');
+  1018→  if(diffEl)diffEl.value=tmpl.difficulty||'medium';
+  1019→  var timeEl=document.getElementById('q-time-input');
+  1020→  if(timeEl)timeEl.value=tmpl.time||30;
+  1021→  if(tmpl.type==='fitb'&&tmpl.fitbAnswer){var fitbEl=document.getElementById('fitb-answer-input');if(fitbEl)fitbEl.value=tmpl.fitbAnswer;}
+  1022→  if(typeof toast==='function')toast(I18n.t('toast.templateApplied',{name:tmpl.name}),'success');
+  1023→}
+  1024→
+  1025→// ── Add template dropdown to question modal ──
+  1026→(function addTemplateDropdown(){
+  1027→  var observer=new MutationObserver(function(){
+  1028→    var modalTitle=document.getElementById('q-modal-title');
+  1029→    if(!modalTitle||document.getElementById('q-template-dropdown'))return;
+  1030→    var dropdown=document.createElement('select');
+  1031→    dropdown.id='q-template-dropdown';dropdown.className='form-select';
+  1032→    dropdown.style.cssText='max-width:180px;font-size:.78rem;margin-right:8px;vertical-align:middle';
+  1033→    dropdown.innerHTML='<option value="">📋 قالب سريع...</option>'+QUESTION_TEMPLATES.map(function(t,i){return '<option value="'+i+'">'+t.name+'</option>';}).join('');
+  1034→    dropdown.addEventListener('change',function(){if(this.value!==''){applyQuestionTemplateByIndex(+this.value);this.value='';}});
+  1035→    modalTitle.parentNode.style.display='flex';modalTitle.parentNode.style.alignItems='center';modalTitle.parentNode.style.gap='8px';
+  1036→    modalTitle.parentNode.insertBefore(dropdown,modalTitle.nextSibling);
+  1037→  });
+  1038→  observer.observe(document.body,{childList:true,subtree:true});
+  1039→})();
+  1040→
+  1041→// ── Add Preview button to question modal footer ──
+  1042→(function addPreviewButton(){
+  1043→  var observer=new MutationObserver(function(){
+  1044→    var footer=document.querySelector('#modal-question .modal-footer');
+  1045→    if(!footer||document.getElementById('btn-q-preview'))return;
+  1046→    var btn=document.createElement('button');
+  1047→    btn.id='btn-q-preview';btn.className='btn btn-purple btn-sm';
+  1048→    btn.style.marginLeft='8px';btn.innerHTML='👁 معاينة';btn.onclick=previewQuestion;
+  1049→    footer.insertBefore(btn,footer.firstChild);
+  1050→  });
+  1051→  observer.observe(document.body,{childList:true,subtree:true});
+  1052→})();
+  1053→
+  1054→function bulkImportQuestions(){
+  1055→  var textarea=document.getElementById('bulk-import-textarea');
+  1056→  if(!textarea||!textarea.value.trim()){if(typeof toast==='function')toast(I18n.t('toast.addCategoriesFirst'),'danger');return;}
+  1057→  var cat=state.categories.find(function(c){return c.id===state.currentCatId;});
+  1058→  if(!cat){if(typeof toast==='function')toast(I18n.t('toast.selectCatFirst'),'danger');return;}
+  1059→  var lines=textarea.value.trim().split('\n').filter(function(l){return l.trim()&&!l.trim().startsWith('#');});
+  1060→  var imported=0,errors=0;
+  1061→  lines.forEach(function(line){
+  1062→    try{
+  1063→      var parts=line.split('|').map(function(s){return s.trim();});
+  1064→      if(parts.length<2){errors++;return;}
+  1065→      var text=_sanitizeUser(parts[0]);
+  1066→      if(!text){errors++;return;}
+  1067→      if(parts.length===2){
+  1068→        var answer=parts[1].toLowerCase();
+  1069→        cat.questions.push({id:uid(),text:text,type:'tf',options:[],optionImages:[],correct:answer==='صح'||answer==='true'||answer==='1'?0:1,difficulty:'easy',time:state.settings.defaultTime||30,explanation:'',hostNote:'',mediaData:null,mediaAttachment:null});
+  1070→        imported++;return;
+  1071→      }
+  1072→      var opts=parts.slice(1).filter(function(p){return p&&!['0','1','2','3','e','m','h','easy','medium','hard'].includes(p.toLowerCase());});
+  1073→      if(opts.length<2){errors++;return;}
+  1074→      var correctIdx=0;var difficulty='medium';
+  1075→      var lastParts=parts.slice(-2);
+  1076→      if(lastParts.length>=1){
+  1077→        var lp=lastParts[lastParts.length-1];
+  1078→        if(['e','m','h','easy','medium','hard'].includes(lp.toLowerCase())){
+  1079→          difficulty=lp.toLowerCase().startsWith('e')?'easy':lp.toLowerCase().startsWith('h')?'hard':'medium';
+  1080→        }
+  1081→        if(lastParts.length>=2){var ci=parseInt(lastParts[0]);if(!isNaN(ci)&&ci>=0&&ci<opts.length)correctIdx=ci;}
+  1082→      }
+  1083→      cat.questions.push({id:uid(),text:text,type:'text',options:opts.map(function(o){return _sanitizeUser(o);}),optionImages:[],correct:correctIdx,difficulty:difficulty,time:state.settings.defaultTime||30,explanation:'',hostNote:'',mediaData:null,mediaAttachment:null});
+  1084→      imported++;
+  1085→    }catch(e){errors++;}
+  1086→  });
+  1087→  if(typeof saveState==='function')saveState();
+  1088→  if(typeof renderQuestionsAdmin==='function')renderQuestionsAdmin(state.currentCatId);
+  1089→  if(typeof renderStatsGrid==='function')renderStatsGrid();
+  1090→  var msg=imported>0?(errors>0?I18n.t('toast.importedWithErrors',{count:imported,errors:errors}):I18n.t('toast.importedQuestions',{count:imported})):I18n.t('toast.noImported');
+  1091→  if(typeof toast==='function')toast(msg,imported>0?'success':'danger');
+  1092→  var bulkModal=document.getElementById('modal-bulk-import');
+  1093→  if(bulkModal)bulkModal.classList.add('hidden');
+  1094→}
+  1095→
+  1096→function openBulkImport(){
+  1097→  var modal=document.getElementById('modal-bulk-import');
+  1098→  if(!modal){
+  1099→    modal=document.createElement('div');modal.id='modal-bulk-import';modal.className='modal-overlay hidden';
+  1100→    modal.innerHTML='<div class="modal" style="max-width:650px"><div class="modal-header"><div class="modal-title">📋 استيراد أسئلة مجمّع</div><button class="modal-close" onclick="closeModal(\'modal-bulk-import\')">✕</button></div><div style="padding:4px 0"><p style="font-size:.82rem;color:var(--text-secondary);margin-bottom:8px">كل سطر = سؤال واحد. الصيغة: <code style="color:var(--accent1)">السؤال | خيار1 | خيار2 | خيار3 | خيار4 | رقم_الصحيح | صعوبة</code></p><p style="font-size:.78rem;color:var(--text-muted);margin-bottom:8px">سؤال صح/خطأ: <code style="color:var(--accent1)">السؤال | صح</code> أو <code style="color:var(--accent1)">السؤال | خطأ</code></p><div class="bulk-import-area"><textarea id="bulk-import-textarea" placeholder="مثال:&#10;ما عاصمة السعودية؟ | الرياض | جدة | مكة | المدينة | 0 | e&#10;الشمس نجم | صح&#10;أكبر محيط في العالم؟ | الهادي | الأطلسي | الهندي | المتجمد | 0 | m"></textarea></div></div><div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal(\'modal-bulk-import\')">إلغاء</button><button class="btn btn-primary" onclick="bulkImportQuestions()">استيراد</button></div></div>';
+  1101→    modal.addEventListener('click',function(e){if(e.target===modal)closeModal('modal-bulk-import');});
+  1102→    document.body.appendChild(modal);
+  1103→  }
+  1104→  openModal('modal-bulk-import');
+  1105→}
+  1106→
+  1107→// ── Add bulk import button to questions admin ──
+  1108→(function addBulkImportButton(){
+  1109→  var observer=new MutationObserver(function(){
+  1110→    var addBtn=document.getElementById('btn-add-question');
+  1111→    if(!addBtn||document.getElementById('btn-bulk-import'))return;
+  1112→    var btn=document.createElement('button');
+  1113→    btn.id='btn-bulk-import';btn.className='btn btn-ghost btn-sm';
+  1114→    btn.style.marginRight='8px';btn.innerHTML='📋 استيراد مجمّع';btn.onclick=openBulkImport;
+  1115→    addBtn.parentNode.insertBefore(btn,addBtn.nextSibling);
+  1116→  });
+  1117→  observer.observe(document.body,{childList:true,subtree:true});
+  1118→})();
+  1119→
+  1120→
+  1121→// ────────────────────────────────────────────────────────────
+  1122→//  Continued from previous section (merged boundary)
+  1123→// ────────────────────────────────────────────────────────────
+  1124→
+  1125→// ════════════════════════════════════════════════════════
+  1126→//  INITIALIZATION
+  1127→// ════════════════════════════════════════════════════════
+  1128→
+  1129→if(document.readyState==='loading'){
+  1130→  document.addEventListener('DOMContentLoaded',function(){
+  1131→    initMobileImprovements();
+  1132→    if(state.settings&&state.settings.colorBlindMode&&state.settings.colorBlindMode!=='none'){setColorBlindMode(state.settings.colorBlindMode);}
+  1133→  });
+  1134→}else{
+  1135→  initMobileImprovements();
+  1136→  if(state.settings&&state.settings.colorBlindMode&&state.settings.colorBlindMode!=='none'){setColorBlindMode(state.settings.colorBlindMode);}
+  1137→}
+  1138→
+  1139→// ── Add color blindness setting to settings panel ──
+  1140→(function addColorBlindSetting(){
+  1141→  var observer=new MutationObserver(function(){
+  1142→    var themeSelect=document.getElementById('s-theme');
+  1143→    if(!themeSelect||document.getElementById('colorblind-setting'))return;
+  1144→    var parent=themeSelect.parentNode;
+  1145→    if(!parent)return;
+  1146→    var div=document.createElement('div');div.id='colorblind-setting';div.className='form-group';
+  1147→    div.innerHTML='<label class="form-label">👁 وضع عمى الألوان</label><select id="s-colorblind-mode" class="form-select" onchange="setColorBlindMode(this.value)"><option value="none" '+((!state.settings||!state.settings.colorBlindMode||state.settings.colorBlindMode==='none')?'selected':'')+'>عادي</option><option value="protanopia" '+((state.settings&&state.settings.colorBlindMode==='protanopia')?'selected':'')+'>عمى الأحمر (بروتانوبيا)</option><option value="deuteranopia" '+((state.settings&&state.settings.colorBlindMode==='deuteranopia')?'selected':'')+'>عمى الأخضر (ديوتيرانوبيا)</option><option value="tritanopia" '+((state.settings&&state.settings.colorBlindMode==='tritanopia')?'selected':'')+'>عمى الأزرق (تريتانوبيا)</option></select>';
+  1148→    parent.parentNode.insertBefore(div,parent.nextSibling);
+  1149→  });
+  1150→  observer.observe(document.body,{childList:true,subtree:true});
+  1151→})();
+  1152→
+  1153→// Expose functions globally
+  1154→window.QuizCharts=QuizCharts;
+  1155→window.isQuestionAvailable=isQuestionAvailable;
+  1156→window.getAvailableQuestions=getAvailableQuestions;
+  1157→window.trapFocus=trapFocus;
+  1158→window.releaseFocus=releaseFocus;
+  1159→window.setColorBlindMode=setColorBlindMode;
+  1160→window.showKeyboardShortcuts=showKeyboardShortcuts;
+  1161→window.initSwipeNavigation=initSwipeNavigation;
+  1162→window.openBottomSheet=openBottomSheet;
+  1163→window.BADGES=BADGES;
+  1164→window.checkBadges=checkBadges;
+  1165→window.renderBadgesPanel=renderBadgesPanel;
+  1166→window.showBadgeNotification=showBadgeNotification;
+  1167→window.previewQuestion=previewQuestion;
+  1168→window.applyQuestionTemplate=applyQuestionTemplate;
+  1169→window.bulkImportQuestions=bulkImportQuestions;
+  1170→window.openBulkImport=openBulkImport;
+  1171→window.QUESTION_TEMPLATES=QUESTION_TEMPLATES;
+  1172→
+  1173→// ═══════════════════════════════════════════════════════════════
+  1174→// Google Sheets Import Module
+  1175→// ═══════════════════════════════════════════════════════════════
+  1176→var _gsheetsData=null;
+  1177→
+  1178→/**
+  1179→ * Validate Google Sheets URL and show status
+  1180→ */
+  1181→function validateSheetsURL(input){
+  1182→  var status=document.getElementById('gsheets-url-status');
+  1183→  if(!status)return;
+  1184→  var url=input.value.trim();
+  1185→  if(!url){status.innerHTML='';return;}
+  1186→  var sheetId=extractSheetId(url);
+  1187→  if(sheetId){
+  1188→    status.innerHTML='<span style="color:#00e676">'+I18n.t('gsheets.urlValid','✓ رابط صالح')+'</span>';
+  1189→  }else{
+  1190→    status.innerHTML='<span style="color:#ff5252">'+I18n.t('gsheets.urlInvalid','✗ رابط غير صالح')+'</span>';
+  1191→  }
+  1192→}
+  1193→
+  1194→/**
+  1195→ * Extract Google Sheet ID from various URL formats
+  1196→ */
+  1197→function extractSheetId(url){
+  1198→  if(!url)return null;
+  1199→  // Format: https://docs.google.com/spreadsheets/d/SHEET_ID/...
+  1200→  var match=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
+  1201→  if(match)return match[1];
+  1202→  // Format: https://docs.google.com/spreadsheets/d/SHEET_ID/edit...
+  1203→  match=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)\/edit/);
+  1204→  if(match)return match[1];
+  1205→  // Format: https://docs.google.com/spreadsheets/d/SHEET_ID/copy
+  1206→  match=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)\/copy/);
+  1207→  if(match)return match[1];
+  1208→  return null;
+  1209→}
+  1210→
+  1211→/**
+  1212→ * Build CSV export URL from Google Sheets URL
+  1213→ */
+  1214→function buildCSVUrl(url,sheetName){
+  1215→  var sheetId=extractSheetId(url);
+  1216→  if(!sheetId)return null;
+  1217→  var encodedSheet=encodeURIComponent(sheetName||'Sheet1');
+  1218→  return 'https://docs.google.com/spreadsheets/d/'+sheetId+'/gviz/tq?tqx=out:csv&sheet='+encodedSheet;
+  1219→}
+  1220→
+  1221→/**
+  1222→ * Fetch Google Sheet data and parse it
+  1223→ */
+  1224→async function fetchGoogleSheet(){
+  1225→  var urlInput=document.getElementById('gsheets-url-input');
+  1226→  var csvUrlInput=document.getElementById('gsheets-csv-url');
+  1227→  var fetchBtn=document.getElementById('gsheets-fetch-btn');
+  1228→  var sheetNameInput=document.getElementById('gsheets-sheet-name');
+  1229→  var firstRowHeader=document.getElementById('gsheets-first-row-header');
+  1230→
+  1231→  var url=(urlInput?urlInput.value.trim():'');
+  1232→  var csvUrl=(csvUrlInput?csvUrlInput.value.trim():'');
+  1233→  var sheetName=sheetNameInput?sheetNameInput.value.trim():'Sheet1';
+  1234→  var hasHeader=firstRowHeader?firstRowHeader.checked:true;
+  1235→
+  1236→  // Determine which URL to use
+  1237→  var fetchUrl=csvUrl;
+  1238→  if(!fetchUrl&&url){
+  1239→    fetchUrl=buildCSVUrl(url,sheetName);
+  1240→  }
+  1241→
+  1242→  if(!fetchUrl){
+  1243→    toast(I18n.t('gsheets.invalidURL','رابط غير صالح'),'danger');
+  1244→    return;
+  1245→  }
+  1246→
+  1247→  // Show loading
+  1248→  if(fetchBtn){
+  1249→    fetchBtn.disabled=true;
+  1250→    fetchBtn.innerHTML='<span class="spinner" style="width:16px;height:16px;border-width:2px;margin:0 6px 0 0"></span>'+I18n.t('gsheets.fetching','جارٍ الجلب...');
+  1251→  }
+  1252→  if(typeof showLoading==='function')showLoading();
+  1253→
+  1254→  try{
+  1255→    var response=await fetch(fetchUrl);
+  1256→    if(!response.ok)throw new Error('HTTP '+response.status);
+  1257→    var csvText=await response.text();
+  1258→
+  1259→    if(!csvText||csvText.trim().length===0){
+  1260→      toast(I18n.t('gsheets.noData','لم يتم العثور على بيانات'),'warning');
+  1261→      return;
+  1262→    }
+  1263→
+  1264→    // Parse CSV
+  1265→    _gsheetsData=parseGoogleSheetsCSV(csvText,hasHeader);
+  1266→
+  1267→    if(!_gsheetsData||!_gsheetsData.categories||_gsheetsData.categories.length===0||
+  1268→       _gsheetsData.categories.every(function(c){return c.questions.length===0;})){
+  1269→      toast(I18n.t('gsheets.noData','لم يتم العثور على بيانات'),'warning');
+  1270→      return;
+  1271→    }
+  1272→
+  1273→    // Show preview
+  1274→    showGoogleSheetsPreview(_gsheetsData);
+  1275→    toast(I18n.t('gsheets.success','تم جلب البيانات بنجاح!'),'success');
+  1276→
+  1277→  }catch(err){
+  1278→    console.error('[GoogleSheets] Fetch error:',err);
+  1279→    toast(I18n.t('gsheets.error','فشل في جلب البيانات')+': '+err.message,'danger');
+  1280→  }finally{
+  1281→    if(fetchBtn){
+  1282→      fetchBtn.disabled=false;
+  1283→      fetchBtn.innerHTML=I18n.t('gsheets.fetchBtn','جلب البيانات');
+  1284→    }
+  1285→    if(typeof hideLoading==='function')hideLoading();
+  1286→  }
+  1287→}
+  1288→
+  1289→/**
+  1290→ * Robust CSV parser that handles quoted fields with commas and newlines
+  1291→ */
+  1292→function parseGoogleSheetsCSV(csvText,hasHeader){
+  1293→  var rows=parseCSVRows(csvText);
+  1294→  if(rows.length===0)return{categories:[]};
+  1295→
+  1296→  var startRow=hasHeader?1:0;
+  1297→  var catMap={};
+  1298→  var catOrder=[];
+  1299→
+  1300→  for(var i=startRow;i<rows.length;i++){
+  1301→    var cols=rows[i];
+  1302→    if(!cols||cols.length<2)continue;
+  1303→
+  1304→    var questionText=(cols[0]||'').trim();
+  1305→    if(!questionText)continue;
+  1306→
+  1307→    var opt1=(cols[1]||'').trim();
+  1308→    var opt2=(cols[2]||'').trim();
+  1309→    var opt3=(cols[3]||'').trim();
+  1310→    var opt4=(cols[4]||'').trim();
+  1311→    var correctIdx=parseInt(cols[5]||'1')-1;
+  1312→    if(isNaN(correctIdx)||correctIdx<0)correctIdx=0;
+  1313→    if(correctIdx>3)correctIdx=3;
+  1314→
+  1315→    var category=(cols[6]||'عام').trim();
+  1316→    var time=parseInt(cols[7]||'20');
+  1317→    if(isNaN(time)||time<5)time=20;
+  1318→    var diffRaw=(cols[8]||'m').trim().toLowerCase();
+  1319→    var difficulty=diffRaw==='e'?'easy':diffRaw==='h'?'hard':'medium';
+  1320→    var qType=(cols[9]||'text').trim().toLowerCase();
+  1321→    var explanation=(cols[10]||'').trim();
+  1322→
+  1323→    // Determine question type
+  1324→    var type='text';
+  1325→    var options=[];
+  1326→    var correct=correctIdx;
+  1327→    var fitbAnswer='';
+  1328→    var matchPairs=[];
+  1329→
+  1330→    if(qType==='tf'||qType==='truefalse'){
+  1331→      type='tf';
+  1332→      correct=(opt1==='صح'||opt1==='true'||opt1==='1'||opt1==='نعم')?0:1;
+  1333→    }else if(qType==='fitb'||qType==='fill'||qType==='fillblank'){
+  1334→      type='fitb';
+  1335→      fitbAnswer=opt1||'';
+  1336→    }else if(qType==='order'||qType==='ordering'){
+  1337→      type='order';
+  1338→      options=[opt1,opt2,opt3,opt4].filter(function(o){return o;});
+  1339→    }else if(qType==='match'||qType==='matching'){
+  1340→      type='match';
+  1341→      // Format: left1:right1 | left2:right2 | ...
+  1342→      var pairStrs=[opt1,opt2,opt3,opt4].filter(function(o){return o;});
+  1343→      pairStrs.forEach(function(p){
+  1344→        var parts=p.split(':');
+  1345→        if(parts.length>=2){
+  1346→          matchPairs.push({left:parts[0].trim(),right:parts[1].trim()});
+  1347→        }
+  1348→      });
+  1349→    }else{
+  1350→      // Default: text (multiple choice)
+  1351→      type='text';
+  1352→      options=[opt1,opt2,opt3,opt4].filter(function(o){return o;});
+  1353→      if(options.length<2){
+  1354→        // If less than 2 options, treat as true/false
+  1355→        type='tf';
+  1356→        correct=0;
+  1357→      }
+  1358→    }
+  1359→
+  1360→    // Build category
+  1361→    if(!catMap[category]){
+  1362→      catMap[category]={
+  1363→        id:'gcat_'+Date.now()+'_'+Object.keys(catMap).length,
+  1364→        name:category,
+  1365→        icon:'📊',
+  1366→        color:'#'+Math.floor(Math.random()*0xFFFFFF).toString(16).padStart(6,'0'),
+  1367→        catImage:null,
+  1368→        questions:[]
+  1369→      };
+  1370→      catOrder.push(category);
+  1371→    }
+  1372→
+  1373→    var qObj={
+  1374→      id:'gq_'+Date.now()+'_'+i+'_'+Math.random().toString(36).substr(2,6),
+  1375→      text:questionText,
+  1376→      type:type,
+  1377→      difficulty:difficulty,
+  1378→      time:time,
+  1379→      explanation:explanation,
+  1380→      hostNote:'',
+  1381→      mediaData:null,
+  1382→      options:options,
+  1383→      optionImages:options.map(function(){return null;}),
+  1384→      correct:correct
+  1385→    };
+  1386→
+  1387→    if(type==='fitb')qObj.fitbAnswer=fitbAnswer;
+  1388→    if(type==='match')qObj.matchPairs=matchPairs;
+  1389→
+  1390→    catMap[category].questions.push(qObj);
+  1391→  }
+  1392→
+  1393→  return{categories:catOrder.map(function(name){return catMap[name];})};
+  1394→}
+  1395→
+  1396→/**
+  1397→ * Parse CSV text into rows, handling quoted fields
+  1398→ */
+  1399→function parseCSVRows(text){
+  1400→  var rows=[];
+  1401→  var current=[];
+  1402→  var field='';
+  1403→  var inQuotes=false;
+  1404→
+  1405→  for(var i=0;i<text.length;i++){
+  1406→    var ch=text[i];
+  1407→    var next=text[i+1];
+  1408→
+  1409→    if(inQuotes){
+  1410→      if(ch==='"'&&next==='"'){
+  1411→        field+='"';
+  1412→        i++;
+  1413→      }else if(ch==='"'){
+  1414→        inQuotes=false;
+  1415→      }else{
+  1416→        field+=ch;
+  1417→      }
+  1418→    }else{
+  1419→      if(ch==='"'){
+  1420→        inQuotes=true;
+  1421→      }else if(ch===','){
+  1422→        current.push(field);
+  1423→        field='';
+  1424→      }else if(ch==='\r'&&next==='\n'){
+  1425→        current.push(field);
+  1426→        field='';
+  1427→        if(current.length>0&&current.some(function(c){return c.trim();}))rows.push(current);
+  1428→        current=[];
+  1429→        i++;
+  1430→      }else if(ch==='\n'){
+  1431→        current.push(field);
+  1432→        field='';
+  1433→        if(current.length>0&&current.some(function(c){return c.trim();}))rows.push(current);
+  1434→        current=[];
+  1435→      }else{
+  1436→        field+=ch;
+  1437→      }
+  1438→    }
+  1439→  }
+  1440→  // Last field/row
+  1441→  current.push(field);
+  1442→  if(current.length>0&&current.some(function(c){return c.trim();}))rows.push(current);
+  1443→
+  1444→  return rows;
+  1445→}
+  1446→
+  1447→/**
+  1448→ * Show preview of Google Sheets data
+  1449→ */
+  1450→function showGoogleSheetsPreview(data){
+  1451→  var preview=document.getElementById('gsheets-preview');
+  1452→  var actions=document.getElementById('gsheets-actions');
+  1453→  if(!preview||!data)return;
+  1454→
+  1455→  var cats=data.categories||[];
+  1456→  var totalQ=cats.reduce(function(s,c){return s+c.questions.length;},0);
+  1457→
+  1458→  preview.classList.remove('hidden');
+  1459→  preview.innerHTML=
+  1460→    '<div style="padding:12px;background:var(--bg-secondary,rgba(255,255,255,.04));border-radius:12px;border:1px solid var(--border-color,rgba(255,255,255,.08))">'+
+  1461→      '<div style="font-weight:700;margin-bottom:8px;font-size:.95rem">'+I18n.t('gsheets.previewTitle','معاينة البيانات')+'</div>'+
+  1462→      '<div style="display:flex;gap:16px;margin-bottom:12px">'+
+  1463→        '<div style="text-align:center"><div style="font-size:1.6rem;font-weight:800;color:var(--accent)">'+totalQ+'</div><div style="font-size:.78rem;opacity:.7">'+I18n.t('gsheets.questions','أسئلة')+'</div></div>'+
+  1464→        '<div style="text-align:center"><div style="font-size:1.6rem;font-weight:800;color:var(--accent2)">'+cats.length+'</div><div style="font-size:.78rem;opacity:.7">'+I18n.t('gsheets.categories','أقسام')+'</div></div>'+
+  1465→      '</div>'+
+  1466→      '<div style="max-height:250px;overflow-y:auto;font-size:.82rem">'+
+  1467→        cats.map(function(cat){
+  1468→          return '<div style="padding:6px 8px;margin-bottom:4px;border-radius:6px;background:rgba(255,255,255,.03)">'+
+  1469→            '<span style="color:'+cat.color+'">'+cat.icon+'</span> <strong>'+cat.name+'</strong> <span style="opacity:.6">('+cat.questions.length+' '+I18n.t('gsheets.questions','أسئلة')+')</span>'+
+  1470→          '</div>';
+  1471→        }).join('')+
+  1472→      '</div>'+
+  1473→    '</div>';
+  1474→
+  1475→  if(actions)actions.classList.remove('hidden');
+  1476→}
+  1477→
+  1478→/**
+  1479→ * Import questions from Google Sheets into the app state
+  1480→ */
+  1481→function importFromGoogleSheet(mode){
+  1482→  if(!_gsheetsData||!_gsheetsData.categories||_gsheetsData.categories.length===0){
+  1483→    toast(I18n.t('gsheets.noData','لم يتم العثور على بيانات'),'warning');
+  1484→    return;
+  1485→  }
+  1486→
+  1487→  if(!mode)mode='replace';
+  1488→
+  1489→  // Deep clone to avoid reference issues
+  1490→  var importCats=JSON.parse(JSON.stringify(_gsheetsData.categories));
+  1491→
+  1492→  // Regenerate IDs to avoid conflicts
+  1493→  importCats.forEach(function(cat){
+  1494→    cat.id=uid();
+  1495→    cat.questions.forEach(function(q){q.id=uid();});
+  1496→  });
+  1497→
+  1498→  if(mode==='replace'){
+  1499→    state.categories=importCats;
+  1500→  }else if(mode==='append'){
+  1501→    state.categories=state.categories.concat(importCats);
+  1502→  }else if(mode==='merge'){
+  1503→    importCats.forEach(function(importCat){
+  1504→      var existing=state.categories.find(function(c){return c.name===importCat.name;});
+  1505→      if(existing){
+  1506→        importCat.questions.forEach(function(q){
+  1507→          q.id=uid();
+  1508→          existing.questions.push(q);
+  1509→        });
+  1510→      }else{
+  1511→        importCat.id=uid();
+  1512→        importCat.questions.forEach(function(q){q.id=uid();});
+  1513→        state.categories.push(importCat);
+  1514→      }
+  1515→    });
+  1516→  }
+  1517→
+  1518→  // Save to IndexedDB for large data
+  1519→  if(typeof MediaDB!=='undefined'){
+  1520→    try{
+  1521→      MediaDB.set('_gsheets_import',JSON.stringify({
+  1522→        timestamp:Date.now(),
+  1523→        mode:mode,
+  1524→        categories:state.categories.map(function(c){return{id:c.id,name:c.name,qCount:c.questions.length};})
+  1525→      })).catch(function(e){_logErr(e,'MediaDB:setGSheetsImport')});
+  1526→    }catch(e){console.error("[Error]",e);}
+  1527→  }
+  1528→
+  1529→  // Save state
+  1530→  _lastSavedJSON='';
+  1531→  if(!_idbLoadDone){_idbLoadDone=true;_pendingSaveNeeded=false;}
+  1532→  try{saveStateSync();}catch(e){try{saveState();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_206")}catch(_){}}}
+  1533→
+  1534→  toast(I18n.t('gsheets.imported','تم استيراد الأسئلة من Google Sheets بنجاح!'),'success');
+  1535→  renderAdmin();
+  1536→
+  1537→  // Reset preview
+  1538→  _gsheetsData=null;
+  1539→  var preview=document.getElementById('gsheets-preview');
+  1540→  var actions=document.getElementById('gsheets-actions');
+  1541→  if(preview){preview.classList.add('hidden');preview.innerHTML='';}
+  1542→  if(actions)actions.classList.add('hidden');
+  1543→}
+  1544→
+  1545→window.validateSheetsURL=validateSheetsURL;
+  1546→window.fetchGoogleSheet=fetchGoogleSheet;
+  1547→window.importFromGoogleSheet=importFromGoogleSheet;
+  1548→
+  1549→})();
+  1550→

@@ -1,0 +1,502 @@
+     1→// ════════════════════════════════════════════════════════════════════════
+     2→//  PHASE 3: ACCESSIBILITY & ADVANCED FEATURES (merged 24+25+26+27)
+     3→//  Color Blindness Filters · Event Delegation · Team Stats ·
+     4→//  Charts · More Features · ARIA Improvements · Google Sheets Import
+     5→//  NOTE: These sections are merged because file 24's outer IIFE spans
+     6→//        all of them (closing at the end of original file 27).
+     7→// ════════════════════════════════════════════════════════════════════════
+     8→
+     9→// ═══ EVENT DELEGATION ═══
+    10→// V12-fix: Enhanced event delegation for option button clicks
+    11→// Handles clicks on child elements (opt-btn-letter, opt-btn-content, opt-btn-text)
+    12→// that may not trigger the button's onclick attribute in some browsers/scenarios
+    13→var _lastOptionClickTime=0;
+    14→var _lastOptionClickIdx=-1;
+    15→document.addEventListener('click',function(e){
+    16→  // V12-fix: Allow clicks on hidden-option buttons so handleOptionClick can reveal them
+    17→  var optBtn=e.target.closest('#q-options-grid .option-btn:not(.revealed):not(.faded)');
+    18→  if(optBtn){
+    19→    var origI=parseInt(optBtn.id.replace('opt-btn-',''));
+    20→    if(!isNaN(origI)){
+    21→      e.stopPropagation();
+    22→      // V12-fix: Invoke handleOptionClick only if it wasn't already called for this button
+    23→      // in the last 300ms (prevents double-firing from onclick + event delegation)
+    24→      var now=Date.now();
+    25→      if(typeof handleOptionClick==='function'&&!state.answered
+    26→        &&!(origI===_lastOptionClickIdx&&now-_lastOptionClickTime<300)){
+    27→        _lastOptionClickTime=now;
+    28→        _lastOptionClickIdx=origI;
+    29→        handleOptionClick(origI);
+    30→      }
+    31→    }
+    32→  }
+    33→});
+    34→
+    35→function initSessionStats(){
+    36→  state.sessionStats={};
+    37→  state.teamStreaks={};        // ← reset streaks each session
+    38→  state.scoreHistory=[];       // ← clear undo history
+    39→  state.teams.forEach(t=>{
+    40→    state.sessionStats[t.id]={correct:0,wrong:0,skipped:0,totalTime:0,answers:[]};
+    41→    state.teamStreaks[t.id]=0;
+    42→  });
+    43→  updateUndoBtn();             // ← reset undo button state
+    44→}
+    45→
+    46→function recordAnswer(teamId,isCorrect,timeUsed){
+    47→  if(!teamId)return; // Guard against null teamId
+    48→  if(!state.sessionStats[teamId])
+    49→    state.sessionStats[teamId]={correct:0,wrong:0,skipped:0,totalTime:0,answers:[]};
+    50→  const s=state.sessionStats[teamId];
+    51→  if(isCorrect)s.correct++;else s.wrong++;
+    52→  s.totalTime+=timeUsed||0;
+    53→  s.answers.push({catId:state.currentCatId,qIdx:state.currentQIndex,correct:isCorrect,time:timeUsed||0});
+    54→  // Cap answers array to prevent unbounded growth
+    55→  if(s.answers.length>500)s.answers=s.answers.slice(-400);
+    56→  // Refresh stats if visible
+    57→  try{refreshTeamStatsIfVisible();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_199")}catch(_){}}
+    58→}
+    59→
+    60→// Unified streak update — call from ALL answer-handling paths
+    61→function _updateStreak(teamId,isCorrect){
+    62→  if(!teamId)return;
+    63→  if(isCorrect){
+    64→    state.teamStreaks[teamId]=(state.teamStreaks[teamId]||0)+1;
+    65→  }else{
+    66→    state.teamStreaks[teamId]=0;
+    67→  }
+    68→  const team=state.teams.find(t=>t.id===teamId);
+    69→  if(team) updateStreakDisplay(team);
+    70→}
+    71→
+    72→function showTeamStats(){
+    73→  renderTeamStats();
+    74→  showView('teamstats');
+    75→  // Force scroll to top — multiple attempts for mobile reliability
+    76→  const _scrollTeamStats=()=>{
+    77→    const v=document.getElementById('view-teamstats');
+    78→    if(v){v.scrollTop=0;v.scrollTo(0,0);const w=v.querySelector('.teamstats-wrapper');if(w){w.scrollTop=0;w.scrollTo(0,0);}}
+    79→    window.scrollTo({top:0,left:0,behavior:'instant'});
+    80→    document.documentElement.scrollTop=0;
+    81→    document.body.scrollTop=0;
+    82→  };
+    83→  _scrollTeamStats();
+    84→  requestAnimationFrame(()=>{_scrollTeamStats();});
+    85→  setTimeout(_scrollTeamStats,50);
+    86→  setTimeout(_scrollTeamStats,200);
+    87→  setTimeout(_scrollTeamStats,400);
+    88→}
+    89→
+    90→function renderTeamStats(){
+    91→  const grid=document.getElementById('teamstats-grid');if(!grid)return;
+    92→  if(!state.teams.length){setChildren(grid,h('div.empty-state',h('div.empty-icon','👥'),h('p','لا توجد فرق')));return;}
+    93→  const sorted=[...state.teams].sort((a,b)=>(b.score||0)-(a.score||0));
+    94→  const medals=['🥇','🥈','🥉'];
+    95→  grid.innerHTML=sorted.map((t,rank)=>{
+    96→    const s=state.sessionStats[t.id]||{correct:0,wrong:0,skipped:0,totalTime:0};
+    97→    const total=(s.correct||0)+(s.wrong||0);
+    98→    const pct=total>0?Math.round(s.correct/total*100):0;
+    99→    const avgTime=total>0?Math.round((s.totalTime||0)/total):0;
+   100→    const cats=new Set((s.answers||[]).map(a=>a.catId));
+   101→    return `
+   102→    <div class="teamstat-card" style="animation-delay:${rank*.1}s;border-color:${t.color}44">
+   103→      <div class="teamstat-header" style="background:${t.color}14">
+   104→        <div class="teamstat-avatar" style="background:${t.color};overflow:hidden">${t.teamImage?'<img src="'+_safeMediaSrc(t.teamImage)+'" alt="'+_sanitizeUser(t.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':t.name[0]}</div>
+   105→        <div>
+   106→          <div class="teamstat-name" style="color:${t.color}">${medals[rank]||rank+1} ${_sanitizeUser(t.name)}</div>
+   107→          <div class="text-sm text-muted">${(function(n){return n+(n===0?" أعضاء":n===1?" عضو":n===2?" عضوان":n<=10?" أعضاء":" عضواً")})((t.members||[]).filter(m=>m&&(typeof m==="object"?(m.name||"").trim():String(m).trim())).length)}</div>
+   108→        </div>
+   109→        <div class="teamstat-score" style="color:${t.color}">${t.score||0}<span style="font-size:.7rem;color:var(--text-muted)"> ن</span></div>
+   110→      </div>
+   111→      <div class="teamstat-body">
+   112→        <div class="stat-row">
+   113→          <span class="stat-label">✅ إجابات صحيحة</span>
+   114→          <span class="stat-value" style="color:var(--success)">${s.correct||0}</span>
+   115→        </div>
+   116→        <div class="stat-row">
+   117→          <span class="stat-label">❌ إجابات خاطئة</span>
+   118→          <span class="stat-value" style="color:var(--danger)">${s.wrong||0}</span>
+   119→        </div>
+   120→        <div class="stat-row">
+   121→          <span class="stat-label">⏱ متوسط وقت الإجابة</span>
+   122→          <span class="stat-value">${avgTime} ث</span>
+   123→        </div>
+   124→        <div class="stat-row">
+   125→          <span class="stat-label">📂 أقسام لُعبت</span>
+   126→          <span class="stat-value">${cats.size}</span>
+   127→        </div>
+   128→        <div class="stat-bar-row">
+   129→          <div class="stat-bar-label">
+   130→            <span>نسبة الإجابات الصحيحة</span>
+   131→            <span style="color:${pct>=70?'var(--success)':pct>=40?'var(--accent1)':'var(--danger)'}">${pct}%</span>
+   132→          </div>
+   133→          <div class="stat-bar-track">
+   134→            <div class="stat-bar-fill" style="width:${pct}%;background:${pct>=70?'var(--success)':pct>=40?'var(--accent1)':'var(--danger)'}"></div>
+   135→          </div>
+   136→        </div>
+   137→      </div>
+   138→    </div>`;
+   139→  }).join('');
+   140→}
+   141→
+   142→// Helper: refresh team stats if the teamstats view is currently visible
+   143→function refreshTeamStatsIfVisible(){
+   144→  const v=document.getElementById('view-teamstats');
+   145→  if(v&&!v.classList.contains('hidden')){
+   146→    try{renderTeamStats();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_200")}catch(_){}}
+   147→  }
+   148→}
+   149→
+   150→// ════════════════════════════════════════════════════════
+   151→//  PHASE 3 FEATURES — Advanced Stats, Branching, Accessibility,
+   152→//  Mobile, Badges, Enhanced Editor
+   153→// ════════════════════════════════════════════════════════
+   154→
+   155→(function(){
+   156→'use strict';
+   157→
+   158→// ── Phase 3: Inject CSS ──────────────────────────────────
+   159→var _phase3CSS=document.createElement('style');
+   160→_phase3CSS.textContent='\n/* ── PHASE 3: Advanced Statistics Panel ── */\n#adv-stats-panel{width:100%;max-width:1100px;margin:12px auto 0;padding:0;box-sizing:border-box}\n#adv-stats-panel.hidden{display:none!important}\n.adv-stats-charts{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:16px;width:100%}\n.adv-chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:16px;overflow:hidden;transition:transform .2s,box-shadow .2s}\n.adv-chart-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}\n.adv-chart-title{font-size:.9rem;font-weight:700;color:var(--accent1);margin-bottom:10px;display:flex;align-items:center;gap:8px}\n.adv-chart-canvas{width:100%!important;height:auto!important;max-height:260px;display:block}\n.adv-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;margin-bottom:16px}\n.adv-summary-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center;transition:border-color .2s}\n.adv-summary-card:hover{border-color:var(--accent1)}\n.adv-summary-value{font-size:1.6rem;font-weight:900;color:var(--accent1)}\n.adv-summary-label{font-size:.7rem;color:var(--text-muted);margin-top:2px}\n#btn-adv-stats{white-space:nowrap;transition:background .2s}\n@media(max-width:768px){.adv-stats-charts{grid-template-columns:1fr;gap:12px}.adv-chart-card{padding:12px}.adv-chart-canvas{max-height:220px}.adv-summary-grid{grid-template-columns:repeat(2,minmax(100px,1fr))}.adv-summary-value{font-size:1.3rem}}\n@media(max-width:480px){.adv-stats-charts{grid-template-columns:1fr;gap:10px}.adv-chart-card{padding:10px;border-radius:12px}.adv-chart-canvas{max-height:180px}.adv-summary-grid{grid-template-columns:repeat(2,minmax(80px,1fr));gap:8px}.adv-summary-card{padding:8px}#btn-adv-stats{font-size:.75rem;padding:4px 10px}}\n@media(min-width:1200px){.adv-chart-canvas{max-height:320px}.adv-stats-charts{gap:20px}.adv-summary-grid{grid-template-columns:repeat(4,minmax(150px,1fr))}}\n\n/* ── PHASE 3: Color Blindness Filters ── */\nbody.cb-protanopia{filter:url(#cb-filter-protanopia)}\nbody.cb-deuteranopia{filter:url(#cb-filter-deuteranopia)}\nbody.cb-tritanopia{filter:url(#cb-filter-tritanopia)}\n\n/* ── PHASE 3: Skip Navigation ── */\n.skip-nav{position:absolute;top:-100%;right:0;z-index:99999;background:var(--accent1);color:#000;padding:8px 16px;font-weight:700;text-decoration:none;border-radius:0 0 0 8px;transition:top .2s}\n.skip-nav:focus{top:0}\n\n/* ── PHASE 3: Bottom Sheet Modal ── */\n.modal-overlay.bottom-sheet{align-items:flex-end;padding:0}\n.modal-overlay.bottom-sheet .modal{border-radius:20px 20px 0 0;max-height:85vh;max-width:100%;margin-bottom:0;animation:sheet-up .3s cubic-bezier(.16,1,.3,1)}\n@keyframes sheet-up{from{transform:translateY(100%)}to{transform:none}}\n.modal-overlay.bottom-sheet .modal::before{content:\'\'";display:block;width:40px;height:4px;background:var(--text-muted);border-radius:2px;margin:0 auto 12px}\n\n/* ── PHASE 3: Touch Targets ── */\n@media(pointer:coarse){\n  .btn,.nav-tab,.option-btn,.lifeline-btn,.question-item,.cat-pres-btn{min-height:44px;min-width:44px}\n  .btn-icon{min-width:44px;min-height:44px;padding:10px}\n}\n\n/* ── PHASE 3: Badge Notification ── */\n.badge-notif{position:fixed;top:50%;left:50%;z-index:9000;transform:translate(-50%,-50%) scale(0);background:var(--bg-card);border:2px solid var(--accent1);border-radius:24px;padding:32px 48px;text-align:center;box-shadow:0 0 80px rgba(0,232,208,.4),0 24px 64px rgba(0,0,0,.8);animation:badge-pop .6s cubic-bezier(.175,.885,.32,1.275) forwards;pointer-events:none}\n.badge-notif-icon{font-size:4rem;display:block;margin-bottom:8px;animation:badge-spin 1s ease}\n.badge-notif-name{font-size:1.5rem;font-weight:900;color:var(--accent1);margin-bottom:4px}\n.badge-notif-desc{font-size:.9rem;color:var(--text-secondary)}\n@keyframes badge-pop{0%{transform:translate(-50%,-50%) scale(0);opacity:0}60%{transform:translate(-50%,-50%) scale(1.15);opacity:1}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}\n@keyframes badge-spin{0%{transform:rotateY(0)}100%{transform:rotateY(720deg)}}\n.badge-notif.badge-exit{animation:badge-fade .4s ease forwards}\n@keyframes badge-fade{to{transform:translate(-50%,-50%) scale(.8);opacity:0}}\n\n/* ── PHASE 3: Badges Grid ── */\n.badges-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;justify-content:center}\n.badge-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px;border-radius:12px;border:1px solid var(--border);background:var(--bg-panel);min-width:80px;text-align:center;transition:border-color .2s}\n.badge-item.earned{border-color:var(--accent1);box-shadow:0 0 12px rgba(0,232,208,.15)}\n.badge-item.locked{opacity:.4;filter:grayscale(.6)}\n.badge-item-icon{font-size:1.8rem}\n.badge-item-name{font-size:.7rem;font-weight:700;color:var(--text-primary)}\n.badge-item-desc{font-size:.6rem;color:var(--text-muted)}\n\n/* ── PHASE 3: Question Branching UI ── */\n.branch-section{margin-top:12px;padding:12px;border:1px dashed var(--accent2);border-radius:10px;background:rgba(162,89,255,.06)}\n.branch-section-title{font-size:.83rem;font-weight:700;color:var(--accent2);margin-bottom:8px;display:flex;align-items:center;gap:6px}\n.branch-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}\n.branch-label-badge{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:12px;font-size:.7rem;font-weight:700;background:rgba(162,89,255,.1);color:var(--accent2);border:1px solid rgba(162,89,255,.3)}\n\n/* ── PHASE 3: Keyboard Shortcuts Overlay ── */\n.kb-shortcuts-overlay{position:fixed;inset:0;z-index:8000;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;animation:fade-in .2s ease}\n.kb-shortcuts-panel{background:var(--bg-card);border:1px solid var(--border-light);border-radius:20px;padding:28px 32px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}\n.kb-shortcuts-panel h3{font-size:1.1rem;font-weight:900;color:var(--accent1);margin-bottom:16px}\n.kb-shortcut-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}\n.kb-key{display:inline-flex;padding:2px 8px;border-radius:6px;background:var(--bg-surface);border:1px solid var(--border);font-family:monospace;font-size:.8rem;font-weight:700;color:var(--accent1);min-width:28px;text-align:center}\n.kb-desc{font-size:.85rem;color:var(--text-secondary)}\n\n/* ── PHASE 3: Bulk Import ── */\n.bulk-import-area{margin-top:12px}\n.bulk-import-area textarea{width:100%;min-height:120px;font-family:Cairo,monospace;font-size:.85rem;direction:rtl;background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);padding:12px;resize:vertical}\n\n/* ── PHASE 3: Mobile Collapsible Sections ── */\n@media(max-width:768px){\n  .admin-content .card-header{cursor:pointer;-webkit-tap-highlight-color:transparent}\n  .admin-content .card-body-collapsible{max-height:0;overflow:hidden;transition:max-height .3s ease}\n  .admin-content .card-body-collapsible.expanded{max-height:5000px}\n  .mobile-collapse-toggle{display:inline-flex!important}\n}\n.mobile-collapse-toggle{display:none;align-items:center;gap:4px;font-size:.75rem;color:var(--text-muted);cursor:pointer;margin-right:auto;padding:4px 8px;border-radius:6px;background:var(--bg-surface)}\n.mobile-collapse-toggle:hover{color:var(--text-primary)}\n\n/* ── PHASE 3: Touch Scroll ── */\n.touch-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;scrollbar-width:thin}\n.touch-scroll::-webkit-scrollbar{width:4px}\n.touch-scroll::-webkit-scrollbar-thumb{background:var(--border-light);border-radius:2px}\n\n/* ── PHASE 3: Question Preview ── */\n.q-preview-overlay{position:fixed;inset:0;z-index:7000;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;justify-content:center;animation:fade-in .2s ease}\n.q-preview-box{background:var(--bg-card);border:2px solid var(--accent1);border-radius:20px;padding:32px;max-width:700px;width:92%;text-align:center;box-shadow:0 0 60px rgba(0,232,208,.2)}\n.q-preview-close{position:absolute;top:16px;left:16px;z-index:1}\n';
+   161→document.head.appendChild(_phase3CSS);
+   162→
+   163→// ── Phase 3: Inject SVG filters for color blindness ─────
+   164→var _svgFilters=document.createElement('div');
+   165→_svgFilters.style.cssText='position:absolute;width:0;height:0;overflow:hidden';
+   166→_svgFilters.innerHTML='<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0"><defs><filter id="cb-filter-protanopia"><feColorMatrix type="matrix" values="0.567,0.433,0,0,0 0.558,0.442,0,0,0 0,0.242,0.758,0,0 0,0,0,1,0"/></filter><filter id="cb-filter-deuteranopia"><feColorMatrix type="matrix" values="0.625,0.375,0,0,0 0.7,0.3,0,0,0 0,0.3,0.7,0,0 0,0,0,1,0"/></filter><filter id="cb-filter-tritanopia"><feColorMatrix type="matrix" values="0.95,0.05,0,0,0 0,0.433,0.567,0,0 0,0.475,0.525,0,0 0,0,0,1,0"/></filter></defs></svg>';
+   167→document.body.insertBefore(_svgFilters,document.body.firstChild);
+   168→
+   169→// ── Phase 3: Add skip navigation link ────────────────────
+   170→(function(){
+   171→  var skipLink=document.createElement('a');
+   172→  skipLink.className='skip-nav';
+   173→  skipLink.href='#app';
+   174→  skipLink.textContent=I18n.t('btn.skipToContent')||'انتقل إلى المحتوى الرئيسي';
+   175→  document.body.insertBefore(skipLink,document.body.firstChild);
+   176→})();
+   177→
+   178→// ── Phase 3: Add aria-live region ────────────────────────
+   179→(function(){
+   180→  var liveRegion=document.createElement('div');
+   181→  liveRegion.id='aria-score-updates';
+   182→  liveRegion.setAttribute('aria-live','polite');
+   183→  liveRegion.setAttribute('aria-atomic','true');
+   184→  liveRegion.style.cssText='position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)';
+   185→  document.body.appendChild(liveRegion);
+   186→})();
+   187→
+   188→
+   189→// ────────────────────────────────────────────────────────────
+   190→//  Continued from previous section (merged boundary)
+   191→// ────────────────────────────────────────────────────────────
+   192→
+   193→// ════════════════════════════════════════════════════════
+   194→//  1. ADVANCED STATISTICS WITH CHARTS
+   195→// ════════════════════════════════════════════════════════
+   196→
+   197→var QuizCharts={};
+   198→
+   199→QuizCharts.drawPieChart=function(canvas,data,colors){
+   200→  if(!canvas||!data||!data.length)return;
+   201→  var ctx=canvas.getContext('2d');
+   202→  var dpr=window.devicePixelRatio||1;
+   203→  var rect=canvas.getBoundingClientRect();
+   204→  canvas.width=rect.width*dpr;
+   205→  canvas.height=rect.height*dpr;
+   206→  ctx.scale(dpr,dpr);
+   207→  ctx.clearRect(0,0,rect.width,rect.height);
+   208→  var w=rect.width,h=rect.height;
+   209→  var cx=w/2,cy=h/2;
+   210→  var radius=Math.max(10,Math.min(cx,cy)-40);
+   211→  var innerRadius=radius*0.5;
+   212→  var total=data.reduce(function(s,d){return s+Math.max(0,d.value||0);},0);
+   213→  if(total===0){
+   214→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   215→    ctx.font='14px Cairo,sans-serif';ctx.textAlign='center';
+   216→    ctx.fillText(t('empty.noData'),cx,cy);
+   217→    return;
+   218→  }
+   219→  var cs=colors||['#00e8d0','#a259ff','#ff3d5a','#ffb800','#00e676','#f472b6','#fb923c','#34d399'];
+   220→  var startAngle=-Math.PI/2;
+   221→  data.forEach(function(d,i){
+   222→    var sliceAngle=Math.max(0,(d.value||0)/total)*2*Math.PI;
+   223→    if(sliceAngle<0.001){startAngle+=sliceAngle;return;}
+   224→    ctx.beginPath();
+   225→    ctx.arc(cx,cy,radius,startAngle,startAngle+sliceAngle);
+   226→    ctx.arc(cx,cy,innerRadius,startAngle+sliceAngle,startAngle,true);
+   227→    ctx.closePath();
+   228→    ctx.fillStyle=cs[i%cs.length];ctx.fill();
+   229→    if(sliceAngle>0.15){
+   230→      var midAngle=startAngle+sliceAngle/2;
+   231→      var lx=cx+Math.cos(midAngle)*(radius*0.75);
+   232→      var ly=cy+Math.sin(midAngle)*(radius*0.75);
+   233→      ctx.fillStyle='#fff';ctx.font='bold 12px Cairo,sans-serif';
+   234→      ctx.textAlign='center';ctx.textBaseline='middle';
+   235→      var pct=Math.round((d.value||0)/total*100);
+   236→      ctx.fillText(pct+'%',lx,ly);
+   237→    }
+   238→    startAngle+=sliceAngle;
+   239→  });
+   240→  var legendY=h-8;
+   241→  ctx.textAlign='right';ctx.textBaseline='bottom';
+   242→  ctx.font='11px Cairo,sans-serif';
+   243→  var legendSpacing=w/data.length;
+   244→  data.forEach(function(d,i){
+   245→    var lx=legendSpacing*i+legendSpacing/2;
+   246→    ctx.fillStyle=cs[i%cs.length];
+   247→    ctx.fillRect(lx-30,legendY-10,8,8);
+   248→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim()||'#aaa';
+   249→    var label=(d.label||'').length>8?(d.label||'').slice(0,7)+'…':d.label||'';
+   250→    ctx.fillText(label,lx+20,legendY);
+   251→  });
+   252→};
+   253→
+   254→QuizCharts.drawBarChart=function(canvas,labels,values,colors){
+   255→  if(!canvas||!labels||!labels.length)return;
+   256→  var ctx=canvas.getContext('2d');
+   257→  var dpr=window.devicePixelRatio||1;
+   258→  var rect=canvas.getBoundingClientRect();
+   259→  canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;
+   260→  ctx.scale(dpr,dpr);ctx.clearRect(0,0,rect.width,rect.height);
+   261→  var w=rect.width,h=rect.height;
+   262→  var padTop=20,padBottom=40,padLeft=50,padRight=20;
+   263→  var chartW=w-padLeft-padRight,chartH=h-padTop-padBottom;
+   264→  var maxVal=Math.max.apply(null,values.map(function(v){return Math.max(0,v||0);}).concat([1]));
+   265→  var cs=colors||['#00e8d0','#a259ff','#ff3d5a','#ffb800','#00e676'];
+   266→  var barW=Math.max(8,Math.min(50,chartW/labels.length-12));
+   267→  ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--border').trim()||'#333';
+   268→  ctx.lineWidth=0.5;
+   269→  for(var gi=0;gi<=4;gi++){
+   270→    var gy=padTop+chartH*(1-gi/4);
+   271→    ctx.beginPath();ctx.moveTo(padLeft,gy);ctx.lineTo(w-padRight,gy);ctx.stroke();
+   272→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   273→    ctx.font='10px Cairo,sans-serif';ctx.textAlign='right';ctx.textBaseline='middle';
+   274→    ctx.fillText(Math.round(maxVal*gi/4),padLeft-6,gy);
+   275→  }
+   276→  labels.forEach(function(label,i){
+   277→    var x=padLeft+(i+0.5)*(chartW/labels.length);
+   278→    var barH=Math.max(0,(values[i]||0)/maxVal)*chartH;
+   279→    var y=padTop+chartH-barH;
+   280→    ctx.fillStyle=cs[i%cs.length];
+   281→    var rx=x-barW/2;
+   282→    var r=Math.min(4,barW/4);
+   283→    ctx.beginPath();
+   284→    ctx.moveTo(rx+r,y);ctx.lineTo(rx+barW-r,y);
+   285→    ctx.quadraticCurveTo(rx+barW,y,rx+barW,y+r);
+   286→    ctx.lineTo(rx+barW,padTop+chartH);ctx.lineTo(rx,padTop+chartH);
+   287→    ctx.lineTo(rx,y+r);ctx.quadraticCurveTo(rx,y,rx+r,y);
+   288→    ctx.fill();
+   289→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim()||'#fff';
+   290→    ctx.font='bold 11px Cairo,sans-serif';ctx.textAlign='center';ctx.textBaseline='bottom';
+   291→    ctx.fillText(values[i]||0,x,y-4);
+   292→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim()||'#aaa';
+   293→    ctx.font='10px Cairo,sans-serif';ctx.textBaseline='top';
+   294→    var truncLabel=label.length>6?label.slice(0,5)+'…':label;
+   295→    ctx.fillText(truncLabel,x,padTop+chartH+6);
+   296→  });
+   297→};
+   298→
+   299→QuizCharts.drawLineChart=function(canvas,dataPoints,colors,labels){
+   300→  if(!canvas||!dataPoints||!dataPoints.length)return;
+   301→  var ctx=canvas.getContext('2d');
+   302→  var dpr=window.devicePixelRatio||1;
+   303→  var rect=canvas.getBoundingClientRect();
+   304→  canvas.width=rect.width*dpr;canvas.height=rect.height*dpr;
+   305→  ctx.scale(dpr,dpr);ctx.clearRect(0,0,rect.width,rect.height);
+   306→  var w=rect.width,h=rect.height;
+   307→  var padTop=20,padBottom=40,padLeft=50,padRight=20;
+   308→  var chartW=w-padLeft-padRight,chartH=h-padTop-padBottom;
+   309→  var cs=colors||['#00e8d0','#a259ff','#ff3d5a','#ffb800','#00e676'];
+   310→  var allVals=[];
+   311→  dataPoints.forEach(function(d){if(d.points)allVals=allVals.concat(d.points);});
+   312→  var maxVal=Math.max.apply(null,allVals.concat([1]));
+   313→  var numPts=Math.max.apply(null,dataPoints.map(function(d){return (d.points||[]).length;}).concat([1]));
+   314→  ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--border').trim()||'#333';
+   315→  ctx.lineWidth=0.5;
+   316→  for(var gi=0;gi<=4;gi++){
+   317→    var gy=padTop+chartH*(1-gi/4);
+   318→    ctx.beginPath();ctx.moveTo(padLeft,gy);ctx.lineTo(w-padRight,gy);ctx.stroke();
+   319→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   320→    ctx.font='10px Cairo,sans-serif';ctx.textAlign='right';ctx.textBaseline='middle';
+   321→    ctx.fillText(Math.round(maxVal*gi/4),padLeft-6,gy);
+   322→  }
+   323→  if(labels&&labels.length){
+   324→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   325→    ctx.font='9px Cairo,sans-serif';ctx.textAlign='center';ctx.textBaseline='top';
+   326→    labels.forEach(function(lbl,i){
+   327→      if(i%Math.max(1,Math.floor(labels.length/8))!==0&&i!==labels.length-1)return;
+   328→      var x=padLeft+i/(labels.length-1||1)*chartW;
+   329→      ctx.fillText(lbl.length>5?lbl.slice(0,4)+'…':lbl,x,padTop+chartH+6);
+   330→    });
+   331→  }
+   332→  dataPoints.forEach(function(team,ti){
+   333→    var pts=team.points||[];
+   334→    if(pts.length<1)return;
+   335→    ctx.strokeStyle=cs[ti%cs.length];ctx.lineWidth=2.5;
+   336→    ctx.beginPath();
+   337→    pts.forEach(function(v,i){
+   338→      var x=padLeft+i/(numPts-1||1)*chartW;
+   339→      var y=padTop+chartH-Math.max(0,v)/maxVal*chartH;
+   340→      if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+   341→    });
+   342→    ctx.stroke();
+   343→    pts.forEach(function(v,i){
+   344→      var x=padLeft+i/(numPts-1||1)*chartW;
+   345→      var y=padTop+chartH-Math.max(0,v)/maxVal*chartH;
+   346→      ctx.fillStyle=cs[ti%cs.length];
+   347→      ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill();
+   348→    });
+   349→  });
+   350→  var legendY=8;var legendX=padLeft;
+   351→  ctx.font='10px Cairo,sans-serif';ctx.textAlign='right';ctx.textBaseline='top';
+   352→  dataPoints.forEach(function(team,ti){
+   353→    ctx.fillStyle=cs[ti%cs.length];ctx.fillRect(legendX,legendY,8,8);
+   354→    ctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim()||'#aaa';
+   355→    var name=(team.label||'').length>10?(team.label||'').slice(0,9)+'…':team.label||'';
+   356→    ctx.fillText(name,legendX+12+ctx.measureText(name).width,legendY);
+   357→    legendX+=40+ctx.measureText(name).width;
+   358→  });
+   359→};
+   360→
+   361→QuizCharts.renderAdvancedStats=function(){
+   362→  var _t=function(key,fallback){try{var v=I18n.t(key);return v&&v!==key?v:fallback;}catch(e){return fallback;}};
+   363→  var panel=document.getElementById('adv-stats-panel');
+   364→  if(!panel)return;
+   365→  if(panel.classList.contains('hidden'))return;
+   366→  var teams=state.teams||[];
+   367→  if(!teams.length){panel.innerHTML='<div style="text-align:center;color:var(--text-muted);padding:32px">'+_t('stats.noTeams','لا توجد فرق لعرض الإحصائيات')+'</div>';return;}
+   368→  var teamColors=teams.map(function(t){return t.color||'#00e8d0';});
+   369→  var teamNames=teams.map(function(t){return t.name||'فريق';});
+   370→  // Calculate summary stats
+   371→  var totalAnswers=0,totalCorrect=0,fastestTeam='',fastestAvg=Infinity;
+   372→  teams.forEach(function(t){
+   373→    var s=state.sessionStats[t.id]||{correct:0,wrong:0,totalTime:0};
+   374→    var cnt=(s.correct||0)+(s.wrong||0);
+   375→    totalAnswers+=cnt;
+   376→    totalCorrect+=(s.correct||0);
+   377→    if(cnt>0){
+   378→      var avg=Math.round((s.totalTime||0)/cnt*10)/10;
+   379→      if(avg<fastestAvg){fastestAvg=avg;fastestTeam=t.name||'فريق';}
+   380→    }
+   381→  });
+   382→  var overallAccuracy=totalAnswers>0?Math.round(totalCorrect/totalAnswers*100):0;
+   383→  var totalCategories=(state.categories||[]).length;
+   384→  var summaryHTML='<div class="adv-summary-grid">'
+   385→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+totalAnswers+'</div><div class="adv-summary-label">'+_t('stats.totalAnswers','إجمالي الإجابات')+'</div></div>'
+   386→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+overallAccuracy+'%</div><div class="adv-summary-label">'+_t('stats.accuracy','الدقة الإجمالية')+'</div></div>'
+   387→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+(fastestTeam||'—')+'</div><div class="adv-summary-label">'+_t('stats.fastestTeam','أسرع فريق')+'</div></div>'
+   388→    +'<div class="adv-summary-card"><div class="adv-summary-value">'+totalCategories+'</div><div class="adv-summary-label">'+_t('stats.categoriesPlayed','الأقسام الملعوبة')+'</div></div>'
+   389→    +'</div>';
+   390→  panel.innerHTML=summaryHTML+'<div class="adv-stats-charts"><div class="adv-chart-card"><div class="adv-chart-title">📊 '+_t('stats.accuracyPerTeam','دقة الإجابات لكل فريق')+'</div><canvas id="chart-accuracy" class="adv-chart-canvas" style="height:260px"></canvas></div><div class="adv-chart-card"><div class="adv-chart-title">📈 '+_t('stats.scoreEvolution','تطور النتائج')+'</div><canvas id="chart-timeline" class="adv-chart-canvas" style="height:260px"></canvas></div><div class="adv-chart-card"><div class="adv-chart-title">📂 '+_t('stats.categoryPerformance','أداء الأقسام')+'</div><canvas id="chart-categories" class="adv-chart-canvas" style="height:260px"></canvas></div><div class="adv-chart-card"><div class="adv-chart-title">⏱ '+_t('stats.answerSpeed','سرعة الإجابة')+'</div><canvas id="chart-speed" class="adv-chart-canvas" style="height:260px"></canvas></div></div><div id="badges-panel" style="margin-top:20px;max-width:1100px;width:100%"></div>';
+   391→  requestAnimationFrame(function(){
+   392→    var accCanvas=document.getElementById('chart-accuracy');
+   393→    if(accCanvas){
+   394→      var accData=teams.map(function(t){
+   395→        var s=state.sessionStats[t.id]||{correct:0,wrong:0};
+   396→        var total=(s.correct||0)+(s.wrong||0);
+   397→        return {label:t.name,value:total>0?Math.round((s.correct||0)/total*100):0};
+   398→      });
+   399→      QuizCharts.drawPieChart(accCanvas,accData,teamColors);
+   400→    }
+   401→    var timeCanvas=document.getElementById('chart-timeline');
+   402→    if(timeCanvas&&state.scoreHistory&&state.scoreHistory.length){
+   403→      var scores={};
+   404→      teams.forEach(function(t){scores[t.id]=[0];});
+   405→      var timeLabels=['0'];var step=0;
+   406→      (state.scoreHistory||[]).forEach(function(entry){
+   407→        step++;
+   408→        teams.forEach(function(t){
+   409→          var prev=scores[t.id][scores[t.id].length-1]||0;
+   410→          scores[t.id].push(t.id===entry.teamId?prev+(entry.delta||0):prev);
+   411→        });
+   412→        timeLabels.push(String(step));
+   413→      });
+   414→      var dp=teams.map(function(t){return {label:t.name,teamId:t.id,points:scores[t.id]||[]};});
+   415→      QuizCharts.drawLineChart(timeCanvas,dp,teamColors,timeLabels);
+   416→    }else if(timeCanvas){
+   417→      var tctx=timeCanvas.getContext('2d');
+   418→      var tdpr=window.devicePixelRatio||1;
+   419→      var trect=timeCanvas.getBoundingClientRect();
+   420→      timeCanvas.width=trect.width*tdpr;timeCanvas.height=trect.height*tdpr;
+   421→      tctx.scale(tdpr,tdpr);
+   422→      tctx.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim()||'#666';
+   423→      tctx.font='14px Cairo,sans-serif';tctx.textAlign='center';
+   424→      var _t2=function(key,fb){try{var v=I18n.t(key);return v&&v!==key?v:fb;}catch(e){return fb;}};
+   425→      tctx.fillText(_t2('stats.noDataYet','لا توجد بيانات بعد'),trect.width/2,trect.height/2);
+   426→    }
+   427→    var catCanvas=document.getElementById('chart-categories');
+   428→    if(catCanvas){
+   429→      var categories=state.categories||[];
+   430→      var catLabels=categories.map(function(c){return c.name||'قسم';}).slice(0,8);
+   431→      var catCorrect=categories.slice(0,8).map(function(c){
+   432→        var total=0;
+   433→        teams.forEach(function(t){
+   434→          var s=state.sessionStats[t.id];
+   435→          if(s&&s.answers)s.answers.forEach(function(a){if(a.catId===c.id&&a.correct)total++;});
+   436→        });
+   437→        return total;
+   438→      });
+   439→      QuizCharts.drawBarChart(catCanvas,catLabels,catCorrect,categories.map(function(_,i){return i%2===0?'#00e676':'#00c050';}));
+   440→    }
+   441→    var speedCanvas=document.getElementById('chart-speed');
+   442→    if(speedCanvas){
+   443→      var speedData=teams.map(function(t){
+   444→        var s=state.sessionStats[t.id]||{correct:0,wrong:0,totalTime:0};
+   445→        var total=(s.correct||0)+(s.wrong||0);
+   446→        return total>0?Math.round((s.totalTime||0)/total*10)/10:0;
+   447→      });
+   448→      QuizCharts.drawBarChart(speedCanvas,teamNames,speedData,teamColors);
+   449→    }
+   450→    if(typeof renderBadgesPanel==='function'){
+   451→      teams.forEach(function(t){renderBadgesPanel(t.id);});
+   452→    }
+   453→  });
+   454→};
+   455→
+   456→QuizCharts.toggleAdvancedStats=function(){
+   457→  var panel=document.getElementById('adv-stats-panel');
+   458→  if(!panel)return;
+   459→  var btn=document.getElementById('btn-adv-stats');
+   460→  if(panel.classList.contains('hidden')){
+   461→    panel.classList.remove('hidden');
+   462→    QuizCharts.renderAdvancedStats();
+   463→    if(btn)btn.innerHTML='📊 '+(function(){try{var v=I18n.t('btn.hideAdvancedStats');return v&&v!=='btn.hideAdvancedStats'?v:'إخفاء الإحصائيات';}catch(e){return 'إخفاء الإحصائيات';}})();
+   464→  }else{
+   465→    panel.classList.add('hidden');
+   466→    if(btn)btn.innerHTML='📊 '+(function(){try{var v=I18n.t('btn.advancedStats');return v&&v!=='btn.advancedStats'?v:'الإحصائيات المتقدمة';}catch(e){return 'الإحصائيات المتقدمة';}})();
+   467→  }
+   468→};
+   469→
+   470→// ── Enhance renderTeamStats: add "Advanced Statistics" button ──
+   471→// Use QuizStats.renderTeamStats which is set at line ~6400 (same scope as the function)
+   472→// rather than window.renderTeamStats which may not be set yet at parse time
+   473→(function(){
+   474→  // Wait until the function is available (it's set during app init)
+   475→  var _orig=typeof renderTeamStats==='function'?renderTeamStats:(typeof QuizStats!=='undefined'&&QuizStats.renderTeamStats?QuizStats.renderTeamStats:null);
+   476→  if(!_orig){
+   477→    // Defer: try again after DOM is ready
+   478→    document.addEventListener('DOMContentLoaded',function(){
+   479→      var orig2=typeof renderTeamStats==='function'?renderTeamStats:(typeof QuizStats!=='undefined'&&QuizStats.renderTeamStats?QuizStats.renderTeamStats:null);
+   480→      if(orig2)_installAdvStats(orig2);
+   481→    });
+   482→    return;
+   483→  }
+   484→  _installAdvStats(_orig);
+   485→  function _installAdvStats(origFn){
+   486→    // Override the globally-accessible renderTeamStats
+   487→    window._renderTeamStatsWithAdvStats=origFn;
+   488→    window.renderTeamStats=function(){
+   489→      origFn.call(this);
+   490→      // V11: Button is now in the header bar HTML, no need to create dynamically
+   491→      // Update button text based on current language
+   492→      var btn=document.getElementById('btn-adv-stats');
+   493→      if(btn){
+   494→        var panel=document.getElementById('adv-stats-panel');
+   495→        var isHidden=panel&&panel.classList.contains('hidden');
+   496→        btn.innerHTML='📊 '+(function(){
+   497→          try{
+   498→            var v=isHidden?I18n.t('btn.advancedStats'):I18n.t('btn.hideAdvancedStats');
+   499→            return v&&v!=='btn.advancedStats'&&v!=='btn.hideAdvancedStats'?v:(isHidden?'الإحصائيات المتقدمة':'إخفاء الإحصائيات');
+   500→          }catch(e){return isHidden?'الإحصائيات المتقدمة':'إخفاء الإحصائيات';}
+
+[showing lines 1-500 of 1550; use offset=501 with limit to continue reading]

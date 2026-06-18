@@ -1,0 +1,1266 @@
+/* ════════════════════════════════════════════════════════════════════════
+   UI/UX ENHANCEMENT LAYER 2 — Targeted Screen Fixes
+   ════════════════════════════════════════════════════════════════════════
+   Builds on enhancements.css with screen-specific refinements based on
+   VLM analysis of actual rendered pages.
+
+   Focus areas:
+   - Wizard step 1: Better step dots, larger subtitles, refined start button
+   - Wizard step 2: Mode card consistency, clearer selected state
+   - Wizard step 3: Better form input hierarchy and contrast
+   - Wizard step 4: Theme grid alignment and selected indicator
+   - General: Consistent spacing scale application
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. STEP DOTS — Clearer Active/Completed/Hover States
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-step-dot {
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 0.9rem !important;
+  font-weight: 800 !important;
+  border-width: 2px !important;
+  position: relative;
+  transition: all 320ms var(--ease-bouncy) !important;
+}
+
+/* Add subtle inner shadow for depth on inactive dots */
+.wiz-step-dot:not(.active):not(.completed) {
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Active dot — bigger, glowing, with ring */
+.wiz-step-dot.active {
+  transform: scale(1.15) !important;
+  box-shadow:
+    0 0 0 4px rgba(0, 232, 208, 0.15),
+    0 0 0 8px rgba(0, 232, 208, 0.08),
+    0 0 24px rgba(0, 232, 208, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  animation: stepDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes stepDotPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px rgba(0, 232, 208, 0.15),
+      0 0 0 8px rgba(0, 232, 208, 0.08),
+      0 0 24px rgba(0, 232, 208, 0.50),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 0 4px rgba(0, 232, 208, 0.20),
+      0 0 0 10px rgba(0, 232, 208, 0.10),
+      0 0 32px rgba(0, 232, 208, 0.60),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Completed dot — checkmark with subtle success tint */
+.wiz-step-dot.completed {
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.15), rgba(0, 232, 208, 0.05)) !important;
+  border-color: var(--accent1) !important;
+  color: var(--accent1) !important;
+  box-shadow:
+    0 0 12px rgba(0, 232, 208, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.wiz-step-dot.completed .dot-check {
+  font-size: 1rem !important;
+  font-weight: 900 !important;
+}
+
+/* Hover state — clearer feedback */
+.wiz-step-dot:hover:not(.active) {
+  transform: translateY(-2px) scale(1.05);
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  color: var(--text-secondary-enhanced) !important;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2. WELCOME SCREEN — Better Text Hierarchy & Readability
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-welcome-sub {
+  font-size: 1rem !important;
+  line-height: 1.7 !important;
+  color: var(--text-secondary-enhanced) !important;
+  max-width: 520px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 32px !important;
+  font-weight: 500 !important;
+}
+
+/* Trophy icon — better glow and entrance */
+.wiz-welcome-logo {
+  font-size: 4rem !important;
+  margin-bottom: 24px !important;
+  filter:
+    drop-shadow(0 0 24px rgba(245, 200, 66, 0.5))
+    drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  animation: trophyFloat 3s ease-in-out infinite, wizBounceInEnhanced 0.8s var(--ease-bouncy) !important;
+}
+
+@keyframes trophyFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Welcome title — more impactful */
+.wiz-welcome-title {
+  font-size: 2.4rem !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.025em;
+  margin-bottom: 12px !important;
+  background: linear-gradient(135deg, var(--accent1-light) 0%, var(--accent1) 40%, var(--accent2) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 2px 8px rgba(0, 232, 208, 0.20));
+}
+
+/* Step subtitle — bigger, more readable */
+.wiz-step-sub {
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  color: var(--text-secondary-enhanced) !important;
+  margin-bottom: 28px !important;
+  max-width: 480px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  font-weight: 500 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   3. MODE SELECTION CARDS — Consistent, Clear Selected State
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-mode-cards {
+  gap: 20px !important;
+  margin-top: 24px !important;
+}
+
+.wiz-mode-card {
+  padding: 32px 24px !important;
+  border: 2px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  border-radius: var(--radius-lg) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 320ms var(--ease-snappy) !important;
+}
+
+/* Subtle gradient overlay on cards */
+.wiz-mode-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 320ms var(--ease-smooth);
+  pointer-events: none;
+}
+
+.wiz-mode-card:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.30),
+    0 4px 8px rgba(0, 0, 0, 0.20) !important;
+}
+
+.wiz-mode-card:hover::before {
+  opacity: 1;
+}
+
+/* Selected state — ring instead of just border */
+.wiz-mode-card.selected {
+  border-color: var(--accent1) !important;
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.08), rgba(0, 232, 208, 0.03)) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    0 0 24px rgba(0, 232, 208, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+.wiz-mode-card.selected::before {
+  opacity: 1;
+}
+
+/* Selected indicator checkmark */
+.wiz-mode-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--accent1);
+  color: #001a18;
+  font-size: 0.9rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 232, 208, 0.4);
+  animation: checkPop 320ms var(--ease-bouncy);
+}
+
+@keyframes checkPop {
+  0% { transform: scale(0) rotate(-180deg); }
+  60% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.wiz-mode-card .mode-icon {
+  font-size: 3.2rem !important;
+  margin-bottom: 16px !important;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  transition: transform 320ms var(--ease-bouncy);
+}
+
+.wiz-mode-card:hover .mode-icon,
+.wiz-mode-card.selected .mode-icon {
+  transform: scale(1.08) translateY(-2px);
+}
+
+.wiz-mode-card .mode-name {
+  font-size: 1.2rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 10px !important;
+  color: var(--text-primary) !important;
+  letter-spacing: -0.01em;
+}
+
+.wiz-mode-card .mode-desc {
+  font-size: 0.85rem !important;
+  line-height: 1.65 !important;
+  margin-bottom: 16px !important;
+  color: var(--text-secondary-enhanced) !important;
+}
+
+.wiz-mode-card .mode-features {
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  gap: 6px !important;
+}
+
+.wiz-mode-card .mode-features span::before {
+  content: '✓ ' !important;
+  color: var(--accent1) !important;
+  font-weight: 900 !important;
+  opacity: 1 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   4. SETUP CHOICE (Quick/Advanced) — Better Visual Weight
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-setup-choice {
+  gap: 20px !important;
+  margin-top: 24px !important;
+}
+
+.wiz-setup-opt {
+  padding: 24px 28px !important;
+  border: 2px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  border-radius: var(--radius-lg) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 320ms var(--ease-snappy) !important;
+}
+
+.wiz-setup-opt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.05) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 320ms var(--ease-smooth);
+  pointer-events: none;
+}
+
+.wiz-setup-opt:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.30) !important;
+}
+
+.wiz-setup-opt:hover::before {
+  opacity: 1;
+}
+
+.wiz-setup-opt.selected {
+  border-color: var(--accent1) !important;
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.08), rgba(0, 232, 208, 0.03)) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    0 0 24px rgba(0, 232, 208, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+.wiz-setup-opt.selected::before {
+  opacity: 1;
+}
+
+.wiz-setup-opt.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--accent1);
+  color: #001a18;
+  font-size: 0.8rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 232, 208, 0.4);
+  animation: checkPop 280ms var(--ease-bouncy);
+}
+
+.wiz-setup-opt .opt-icon {
+  font-size: 2rem !important;
+  margin-bottom: 10px !important;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+  transition: transform 320ms var(--ease-bouncy);
+}
+
+.wiz-setup-opt:hover .opt-icon,
+.wiz-setup-opt.selected .opt-icon {
+  transform: scale(1.1) translateY(-2px);
+}
+
+.wiz-setup-opt .opt-title {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 6px !important;
+  color: var(--text-primary) !important;
+  letter-spacing: -0.01em;
+}
+
+.wiz-setup-opt .opt-desc {
+  font-size: 0.8rem !important;
+  line-height: 1.55 !important;
+  color: var(--text-secondary-enhanced) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   5. FORM INPUTS — Better Hierarchy & Active State
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-form-group {
+  margin-bottom: 20px !important;
+}
+
+.wiz-form-group label {
+  display: block !important;
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 10px !important;
+  color: var(--text-secondary-enhanced) !important;
+  letter-spacing: 0.01em;
+}
+
+.wiz-form-group label::after {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: var(--accent1);
+  border-radius: var(--radius-full);
+  margin-right: 6px;
+  vertical-align: middle;
+  opacity: 0.7;
+}
+
+.wiz-input, .wiz-textarea {
+  padding: 13px 16px !important;
+  font-size: 0.95rem !important;
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  font-family: inherit !important;
+  transition: all 220ms var(--ease-smooth) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.wiz-input::placeholder, .wiz-textarea::placeholder {
+  color: var(--text-muted-enhanced) !important;
+  font-weight: 400 !important;
+}
+
+.wiz-input:hover:not(:focus), .wiz-textarea:hover:not(:focus) {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+}
+
+.wiz-input:focus, .wiz-textarea:focus {
+  outline: none !important;
+  border-color: var(--accent1) !important;
+  background: var(--surface-3) !important;
+  box-shadow:
+    0 0 0 4px rgba(0, 232, 208, 0.12),
+    inset 0 1px 2px rgba(0, 0, 0, 0.10) !important;
+}
+
+/* Form inputs in admin panel — same treatment */
+.form-input, .form-select, .form-textarea {
+  padding: 13px 16px !important;
+  font-size: 0.95rem !important;
+  border-width: 1.5px !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none !important;
+  border-color: var(--accent1) !important;
+  box-shadow:
+    0 0 0 4px rgba(0, 232, 208, 0.12),
+    inset 0 1px 2px rgba(0, 0, 0, 0.10) !important;
+}
+
+.form-label {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 10px !important;
+  color: var(--text-secondary-enhanced) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   6. THEME GRID — Consistent Alignment & Selected Indicator
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-theme-grid {
+  gap: 14px !important;
+  margin-top: 20px !important;
+}
+
+.wiz-theme-card {
+  padding: 16px 12px !important;
+  border: 2px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  border-radius: var(--radius-md) !important;
+  transition: all 280ms var(--ease-snappy) !important;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.wiz-theme-card:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 6px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+.wiz-theme-card.selected {
+  border-color: var(--accent1) !important;
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.08), rgba(0, 232, 208, 0.03)) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    0 0 16px rgba(0, 232, 208, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+/* Selected theme checkmark */
+.wiz-theme-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--accent1);
+  color: #001a18;
+  font-size: 0.75rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 232, 208, 0.4);
+  animation: checkPop 280ms var(--ease-bouncy);
+}
+
+.wiz-theme-swatch {
+  height: 48px !important;
+  border-radius: var(--radius-sm) !important;
+  margin-bottom: 10px !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.wiz-theme-name {
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  letter-spacing: -0.01em;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   7. BUTTON ROW — Better Visual Separation
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-btn-row {
+  padding: 20px 24px !important;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.25) 100%) !important;
+  border-top: 1px solid var(--border-subtle) !important;
+  backdrop-filter: blur(12px) !important;
+  position: relative;
+}
+
+.wiz-btn-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+}
+
+.wiz-btn {
+  padding: 13px 32px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  min-height: 48px;
+  letter-spacing: 0.01em;
+}
+
+.wiz-btn-primary {
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent1-dark) 100%) !important;
+  color: #001a18 !important;
+  font-weight: 800 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 12px rgba(0, 232, 208, 0.30),
+    0 1px 2px rgba(0, 0, 0, 0.20) !important;
+}
+
+.wiz-btn-primary:hover {
+  background: linear-gradient(135deg, var(--accent1-light) 0%, var(--accent1) 100%) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 232, 208, 0.45),
+    0 2px 4px rgba(0, 0, 0, 0.20) !important;
+  transform: translateY(-2px);
+}
+
+.wiz-btn-secondary {
+  background: var(--surface-3) !important;
+  border: 1.5px solid var(--border-default) !important;
+  color: var(--text-primary) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 2px 4px rgba(0, 0, 0, 0.20) !important;
+}
+
+.wiz-btn-secondary:hover {
+  background: var(--surface-elevated) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 4px 12px rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-1px);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   8. START BUTTON — More Pronounced Shadow
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-btn-start {
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%) !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+  font-size: 1.15rem !important;
+  padding: 18px 48px !important;
+  border-radius: var(--radius-lg) !important;
+  letter-spacing: 0.02em;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 8px 24px rgba(0, 232, 208, 0.40),
+    0 4px 12px rgba(162, 89, 255, 0.30),
+    0 2px 4px rgba(0, 0, 0, 0.30) !important;
+  animation: wizStartPulse 2.5s ease-in-out infinite !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shine effect on start button */
+.wiz-btn-start::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.20), transparent);
+  animation: shineSweep 3s ease-in-out infinite;
+}
+
+@keyframes shineSweep {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+.wiz-btn-start:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 12px 32px rgba(0, 232, 208, 0.50),
+    0 6px 16px rgba(162, 89, 255, 0.40),
+    0 4px 8px rgba(0, 0, 0, 0.30) !important;
+}
+
+@keyframes wizStartPulse {
+  0%, 100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      0 8px 24px rgba(0, 232, 208, 0.40),
+      0 4px 12px rgba(162, 89, 255, 0.30),
+      0 2px 4px rgba(0, 0, 0, 0.30);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.30),
+      0 10px 32px rgba(0, 232, 208, 0.55),
+      0 6px 16px rgba(162, 89, 255, 0.40),
+      0 2px 4px rgba(0, 0, 0, 0.30);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   9. DROP ZONE — More Inviting & Animated
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-drop-zone {
+  border: 2px dashed var(--border-strong) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 44px 24px !important;
+  background: var(--surface-1) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 320ms var(--ease-smooth) !important;
+}
+
+/* Animated dashed border */
+.wiz-drop-zone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(0, 232, 208, 0.02) 10px,
+      rgba(0, 232, 208, 0.02) 20px
+    );
+  opacity: 0;
+  transition: opacity 320ms var(--ease-smooth);
+  pointer-events: none;
+}
+
+.wiz-drop-zone:hover, .wiz-drop-zone.drag-over {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.06) !important;
+  transform: scale(1.005);
+  box-shadow:
+    0 0 0 4px rgba(0, 232, 208, 0.10),
+    0 8px 24px rgba(0, 232, 208, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+.wiz-drop-zone:hover::before, .wiz-drop-zone.drag-over::before {
+  opacity: 1;
+  animation: dashMove 20s linear infinite;
+}
+
+@keyframes dashMove {
+  from { background-position: 0 0; }
+  to { background-position: 100px 0; }
+}
+
+.wiz-drop-zone .drop-icon {
+  font-size: 2.8rem !important;
+  margin-bottom: 12px !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transition: transform 320ms var(--ease-bouncy);
+}
+
+.wiz-drop-zone:hover .drop-icon, .wiz-drop-zone.drag-over .drop-icon {
+  transform: translateY(-6px) scale(1.1);
+  filter: drop-shadow(0 6px 16px rgba(0, 232, 208, 0.4));
+}
+
+.wiz-drop-zone .drop-text {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 4px;
+}
+
+.wiz-drop-zone .drop-hint {
+  font-size: 0.78rem !important;
+  color: var(--text-muted-enhanced) !important;
+  margin-top: 4px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   10. REVIEW CARDS — Better Visual Hierarchy
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-review-grid {
+  gap: 16px !important;
+  margin-top: 20px !important;
+}
+
+.wiz-review-card {
+  padding: 20px !important;
+  border: 1.5px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  border-radius: var(--radius-md) !important;
+  transition: all 280ms var(--ease-snappy) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.wiz-review-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent1), var(--accent2));
+  opacity: 0;
+  transition: opacity 280ms var(--ease-smooth);
+}
+
+.wiz-review-card:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 6px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+.wiz-review-card:hover::before {
+  opacity: 1;
+}
+
+.wiz-review-card .review-icon {
+  font-size: 1.8rem !important;
+  margin-bottom: 10px !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.wiz-review-card .review-label {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: var(--text-muted-enhanced) !important;
+  margin-bottom: 4px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wiz-review-card .review-value {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   11. TOGGLE SWITCH — More Polished
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-toggle-row {
+  padding: 10px 0 !important;
+  border-radius: var(--radius-sm);
+  transition: background 200ms var(--ease-smooth);
+}
+
+.wiz-toggle-row:hover {
+  background: var(--surface-1);
+}
+
+.wiz-toggle {
+  width: 50px !important;
+  height: 28px !important;
+}
+
+.wiz-toggle .slider {
+  background: var(--surface-3) !important;
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.wiz-toggle .slider::before {
+  width: 22px !important;
+  height: 22px !important;
+  top: 3px !important;
+  left: 3px !important;
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  background: linear-gradient(135deg, #ffffff, #e8e8e8);
+}
+
+.wiz-toggle input:checked + .slider {
+  background: linear-gradient(135deg, var(--accent1), var(--accent1-dark)) !important;
+  box-shadow:
+    0 0 12px rgba(0, 232, 208, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.wiz-toggle input:checked + .slider::before {
+  transform: translateX(22px) !important;
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+}
+
+.wiz-toggle-label {
+  font-size: 0.88rem !important;
+  font-weight: 500 !important;
+  color: var(--text-primary) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   12. CHECKBOX — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-checkbox input {
+  width: 18px !important;
+  height: 18px !important;
+  accent-color: var(--accent1) !important;
+  cursor: pointer;
+  border-radius: var(--radius-xs);
+}
+
+.wiz-checkbox {
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary-enhanced) !important;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  transition: background 200ms var(--ease-smooth);
+}
+
+.wiz-checkbox:hover {
+  background: var(--surface-1);
+  color: var(--text-primary) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   13. SLIDER — Better Visual Feedback
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-slider-wrap {
+  padding: 8px 0;
+}
+
+.wiz-slider {
+  height: 8px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--surface-3) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.wiz-slider::-webkit-slider-thumb {
+  width: 24px !important;
+  height: 24px !important;
+  border-radius: var(--radius-full) !important;
+  background: linear-gradient(135deg, var(--accent1-light), var(--accent1)) !important;
+  cursor: pointer !important;
+  box-shadow:
+    0 0 0 4px rgba(0, 232, 208, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  border: 2px solid #fff;
+  transition: all 200ms var(--ease-bouncy);
+}
+
+.wiz-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 0 6px rgba(0, 232, 208, 0.20),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.wiz-slider-val {
+  font-size: 0.95rem !important;
+  font-weight: 800 !important;
+  color: var(--accent1) !important;
+  min-width: 54px !important;
+  padding: 4px 10px;
+  background: rgba(0, 232, 208, 0.08);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(0, 232, 208, 0.20);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   14. RESUME BANNER — More Prominent
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-resume-banner {
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.12), rgba(162, 89, 255, 0.10)) !important;
+  border: 1.5px solid rgba(0, 232, 208, 0.30) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 18px !important;
+  text-align: center !important;
+  margin-bottom: 20px !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+  backdrop-filter: blur(8px);
+}
+
+.wiz-resume-banner .resume-icon {
+  font-size: 1.6rem !important;
+  margin-bottom: 6px !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 232, 208, 0.4));
+}
+
+.wiz-resume-banner .resume-text {
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   15. IMPORT PREVIEW — Better Stat Display
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-import-preview {
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 18px !important;
+  margin-top: 16px !important;
+}
+
+.wiz-import-preview .preview-stat {
+  padding: 8px 0 !important;
+  font-size: 0.88rem !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.wiz-import-preview .preview-stat:last-child {
+  border-bottom: none !important;
+}
+
+.wiz-import-preview .preview-stat .stat-label {
+  color: var(--text-secondary-enhanced) !important;
+  font-weight: 500 !important;
+}
+
+.wiz-import-preview .preview-stat .stat-value {
+  font-weight: 800 !important;
+  color: var(--accent1) !important;
+  font-size: 0.95rem !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   16. TEMPLATE BUTTONS — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-template-btn {
+  padding: 10px 18px !important;
+  border-radius: var(--radius-full) !important;
+  border: 1.5px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  transition: all 220ms var(--ease-smooth) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.wiz-template-btn:hover {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.08) !important;
+  color: var(--accent1) !important;
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    0 2px 6px rgba(0, 232, 208, 0.15) !important;
+}
+
+.wiz-template-btn.selected {
+  background: var(--accent1) !important;
+  color: #001a18 !important;
+  border-color: var(--accent1) !important;
+  font-weight: 800 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 2px 8px rgba(0, 232, 208, 0.30) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   17. PASSWORD OPTIONS — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-pw-opt {
+  padding: 10px 18px !important;
+  border-radius: var(--radius-full) !important;
+  border: 1.5px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  transition: all 220ms var(--ease-smooth) !important;
+}
+
+.wiz-pw-opt:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+}
+
+.wiz-pw-opt.active {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.10) !important;
+  color: var(--accent1) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   18. QUICK QUESTION CREATOR — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-quick-q {
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  border-radius: var(--radius-md) !important;
+  padding: 18px !important;
+  margin-top: 14px !important;
+}
+
+.wiz-quick-q-header {
+  margin-bottom: 14px !important;
+}
+
+.wiz-quick-q-item .wiz-input {
+  font-size: 0.85rem !important;
+  padding: 9px 12px !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   19. COLOR PICKER — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-color-pick input[type=color] {
+  width: 44px !important;
+  height: 44px !important;
+  border: 2px solid var(--border-strong) !important;
+  border-radius: var(--radius-md) !important;
+  cursor: pointer !important;
+  background: none !important;
+  padding: 2px !important;
+  transition: all 220ms var(--ease-smooth) !important;
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.wiz-color-pick input[type=color]:hover {
+  border-color: var(--accent1) !important;
+  transform: scale(1.05);
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   20. MOBILE REFINEMENTS — Touch Targets & Spacing
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Wizard welcome screen — adjust for small screens */
+  .wiz-welcome-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .wiz-welcome-sub {
+    font-size: 0.88rem !important;
+    line-height: 1.6 !important;
+    margin-bottom: 24px !important;
+  }
+
+  .wiz-welcome-logo {
+    font-size: 3rem !important;
+    margin-bottom: 18px !important;
+  }
+
+  /* Step dots — slightly smaller on mobile but still tappable */
+  .wiz-step-dot {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Mode cards — better mobile layout */
+  .wiz-mode-card {
+    padding: 22px 18px !important;
+  }
+
+  .wiz-mode-card .mode-icon {
+    font-size: 2.6rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  .wiz-mode-card .mode-name {
+    font-size: 1.05rem !important;
+  }
+
+  /* Setup options — stack on mobile */
+  .wiz-setup-choice {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .wiz-setup-opt {
+    max-width: 100% !important;
+    padding: 18px 20px !important;
+  }
+
+  /* Theme grid — 2 columns on mobile */
+  .wiz-theme-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  /* Form inputs — slightly smaller padding on mobile */
+  .wiz-input, .wiz-textarea {
+    padding: 12px 14px !important;
+    font-size: 0.92rem !important;
+  }
+
+  /* Button row — stack vertically */
+  .wiz-btn-row {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 16px !important;
+  }
+
+  .wiz-btn-row .wiz-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .wiz-btn-start {
+    padding: 16px 32px !important;
+    font-size: 1.05rem !important;
+    width: 100% !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   21. TABLET REFINEMENTS
+   ════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .wiz-mode-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .wiz-theme-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   22. ENTRANCE ANIMATIONS — Smooth Step Transitions
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-step.active {
+  animation: wizStepEnter 450ms var(--ease-snappy) !important;
+}
+
+@keyframes wizStepEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animation for cards within a step */
+.wiz-mode-cards .wiz-mode-card:nth-child(1) { animation: wizCardEnter 400ms var(--ease-snappy) 0ms both; }
+.wiz-mode-cards .wiz-mode-card:nth-child(2) { animation: wizCardEnter 400ms var(--ease-snappy) 60ms both; }
+.wiz-mode-cards .wiz-mode-card:nth-child(3) { animation: wizCardEnter 400ms var(--ease-snappy) 120ms both; }
+.wiz-mode-cards .wiz-mode-card:nth-child(4) { animation: wizCardEnter 400ms var(--ease-snappy) 180ms both; }
+
+@keyframes wizCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Stagger for review cards */
+.wiz-review-grid .wiz-review-card:nth-child(1) { animation: wizCardEnter 400ms var(--ease-snappy) 0ms both; }
+.wiz-review-grid .wiz-review-card:nth-child(2) { animation: wizCardEnter 400ms var(--ease-snappy) 80ms both; }
+.wiz-review-grid .wiz-review-card:nth-child(3) { animation: wizCardEnter 400ms var(--ease-snappy) 160ms both; }
+.wiz-review-grid .wiz-review-card:nth-child(4) { animation: wizCardEnter 400ms var(--ease-snappy) 240ms both; }
+.wiz-review-grid .wiz-review-card:nth-child(5) { animation: wizCardEnter 400ms var(--ease-snappy) 320ms both; }
+.wiz-review-grid .wiz-review-card:nth-child(6) { animation: wizCardEnter 400ms var(--ease-snappy) 400ms both; }
+
+/* Stagger for theme cards */
+.wiz-theme-grid .wiz-theme-card {
+  animation: wizCardEnter 350ms var(--ease-snappy) both;
+}
+
+.wiz-theme-grid .wiz-theme-card:nth-child(1) { animation-delay: 0ms; }
+.wiz-theme-grid .wiz-theme-card:nth-child(2) { animation-delay: 40ms; }
+.wiz-theme-grid .wiz-theme-card:nth-child(3) { animation-delay: 80ms; }
+.wiz-theme-grid .wiz-theme-card:nth-child(4) { animation-delay: 120ms; }
+.wiz-theme-grid .wiz-theme-card:nth-child(5) { animation-delay: 160ms; }
+.wiz-theme-grid .wiz-theme-card:nth-child(6) { animation-delay: 200ms; }
+.wiz-theme-grid .wiz-theme-card:nth-child(7) { animation-delay: 240ms; }
+.wiz-theme-grid .wiz-theme-card:nth-child(8) { animation-delay: 280ms; }
+
+/* ════════════════════════════════════════════════════════════════════════
+   23. REDUCED MOTION — Disable Stagger & Animations
+   ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .wiz-mode-cards .wiz-mode-card,
+  .wiz-review-grid .wiz-review-card,
+  .wiz-theme-grid .wiz-theme-card,
+  .wiz-step.active,
+  .wiz-welcome-logo,
+  .wiz-btn-start,
+  .wiz-btn-start::before,
+  .wiz-step-dot.active {
+    animation: none !important;
+  }
+
+  .wiz-drop-zone:hover .drop-icon,
+  .wiz-mode-card:hover .mode-icon,
+  .wiz-setup-opt:hover .opt-icon {
+    transform: none !important;
+  }
+}

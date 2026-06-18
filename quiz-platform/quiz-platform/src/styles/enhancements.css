@@ -1,0 +1,1265 @@
+/* ════════════════════════════════════════════════════════════════════════
+   UI/UX ENHANCEMENT LAYER — Professional Polish & Refinement
+   ════════════════════════════════════════════════════════════════════════
+   Loaded AFTER main.css to override and refine the existing design.
+
+   Design philosophy:
+   - Establish clear visual hierarchy through size, weight, and color
+   - Reduce accent color overuse — introduce neutral surface tones
+   - Consistent border radii (8/12/16/24px scale)
+   - Layered depth with subtle shadows and glassmorphism
+   - Micro-interactions that feel responsive but not flashy
+   - WCAG AA contrast for all text
+   - Mobile-first touch targets (44px minimum)
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. DESIGN TOKEN REFINEMENTS
+   ════════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Refined radius scale — consistent across components */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Elevated surface tones for better depth perception */
+  --surface-1: rgba(255, 255, 255, 0.03);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --surface-3: rgba(255, 255, 255, 0.09);
+  --surface-elevated: rgba(255, 255, 255, 0.12);
+
+  /* Border tones — subtle but visible */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --border-focus: var(--accent1);
+
+  /* Refined shadow system — layered for depth */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.20), 0 1px 2px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.28), 0 2px 4px rgba(0, 0, 0, 0.16);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.36), 0 4px 8px rgba(0, 0, 0, 0.20);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.44), 0 8px 16px rgba(0, 0, 0, 0.24);
+  --shadow-glow-sm: 0 0 12px rgba(0, 232, 208, 0.20);
+  --shadow-glow-md: 0 0 24px rgba(0, 232, 208, 0.30);
+  --shadow-glow-lg: 0 0 40px rgba(0, 232, 208, 0.40);
+
+  /* Inner highlights for glassmorphism */
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --highlight-bottom: inset 0 -1px 0 rgba(0, 0, 0, 0.20);
+
+  /* Typography refinements */
+  --font-display: 'Cairo', 'Tajawal', 'Segoe UI', sans-serif;
+  --font-body: 'Cairo', 'Tajawal', 'Segoe UI', sans-serif;
+  --font-mono: 'Sarasa Mono SC', 'Cascadia Code', 'Consolas', monospace;
+
+  /* Motion refinements */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bouncy: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Better text-secondary contrast — was too light */
+  --text-secondary-enhanced: #a8bdd6;
+  --text-muted-enhanced: #6b7d99;
+}
+
+[data-theme="light"] {
+  --surface-1: rgba(0, 0, 0, 0.02);
+  --surface-2: rgba(0, 0, 0, 0.04);
+  --surface-3: rgba(0, 0, 0, 0.06);
+  --surface-elevated: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-default: rgba(0, 0, 0, 0.10);
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10), 0 4px 8px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --highlight-bottom: inset 0 -1px 0 rgba(0, 0, 0, 0.04);
+  --text-secondary-enhanced: #4a5a72;
+  --text-muted-enhanced: #6b7d99;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2. GLOBAL TYPOGRAPHY REFINEMENTS
+   ════════════════════════════════════════════════════════════════════════ */
+body {
+  font-family: var(--font-body);
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  letter-spacing: -0.005em;
+}
+
+/* Better text-secondary readability */
+.text-secondary, .text-muted,
+.wiz-step-sub, .wiz-welcome-sub, .wiz-mode-card .mode-desc,
+.wiz-review-card .review-label, .wiz-drop-zone .drop-text,
+.wiz-setup-opt .opt-desc, .wiz-checkbox,
+.wiz-import-preview .preview-stat .stat-label {
+  color: var(--text-secondary-enhanced) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   3. BUTTON SYSTEM — Consistent, Polished, Accessible
+   ════════════════════════════════════════════════════════════════════════ */
+.btn, .wiz-btn, .wiz-lang-btn, .wiz-setup-opt, .wiz-mode-card,
+.wiz-template-btn, .wiz-pw-opt, .wiz-theme-card {
+  /* Consistent radius across all interactive elements */
+  border-radius: var(--radius-md) !important;
+  /* Smooth, snappy transitions */
+  transition:
+    transform 180ms var(--ease-snappy),
+    background-color 180ms var(--ease-smooth),
+    border-color 180ms var(--ease-smooth),
+    box-shadow 220ms var(--ease-smooth),
+    color 180ms var(--ease-smooth) !important;
+  /* Inner highlight for depth */
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+/* Larger buttons get larger radius */
+.btn-lg, .wiz-btn-start, .wiz-btn-primary {
+  border-radius: var(--radius-lg) !important;
+}
+
+.btn-xl {
+  border-radius: var(--radius-xl) !important;
+}
+
+/* Smaller buttons get smaller radius */
+.btn-sm, .wiz-template-btn, .wiz-pw-opt {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* Refined hover states — lift + glow, but subtle */
+.btn:hover, .wiz-btn:hover, .wiz-lang-btn:hover, .wiz-setup-opt:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active, .wiz-btn:active, .wiz-lang-btn:active, .wiz-setup-opt:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 80ms !important;
+}
+
+/* Primary button — refined gradient + glow */
+.btn-primary, .wiz-btn-primary {
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent1-dark) 100%) !important;
+  color: #001a18 !important;
+  font-weight: 700 !important;
+  box-shadow:
+    var(--highlight-top),
+    0 2px 8px rgba(0, 232, 208, 0.25),
+    0 1px 2px rgba(0, 0, 0, 0.20) !important;
+}
+
+.btn-primary:hover, .wiz-btn-primary:hover {
+  background: linear-gradient(135deg, var(--accent1-light) 0%, var(--accent1) 100%) !important;
+  box-shadow:
+    var(--highlight-top),
+    0 6px 20px rgba(0, 232, 208, 0.40),
+    0 2px 4px rgba(0, 0, 0, 0.20) !important;
+  transform: translateY(-2px);
+}
+
+/* Ghost button — subtle, refined */
+.btn-ghost, .wiz-btn-ghost, .wiz-btn-secondary {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-default) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.btn-ghost:hover, .wiz-btn-secondary:hover {
+  background: var(--surface-3) !important;
+  border-color: var(--border-strong) !important;
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+}
+
+/* Language buttons — clearer selected state */
+.wiz-lang-btn {
+  min-width: 140px;
+  padding: 14px 28px !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  border: 2px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+}
+
+.wiz-lang-btn.selected {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.10) !important;
+  color: var(--accent1-light) !important;
+  box-shadow:
+    var(--highlight-top),
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    var(--shadow-sm) !important;
+}
+
+/* Setup option cards — clearer hierarchy */
+.wiz-setup-opt {
+  padding: 20px 28px !important;
+  border: 2px solid var(--border-default) !important;
+  background: var(--surface-1) !important;
+}
+
+.wiz-setup-opt:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-2) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--highlight-top), var(--shadow-md) !important;
+}
+
+.wiz-setup-opt.selected {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.06) !important;
+  box-shadow:
+    var(--highlight-top),
+    0 0 0 3px rgba(0, 232, 208, 0.12),
+    var(--shadow-md) !important;
+}
+
+.wiz-setup-opt .opt-icon {
+  font-size: 1.8rem !important;
+  margin-bottom: 8px !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.wiz-setup-opt .opt-title {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 4px !important;
+  color: var(--text-primary) !important;
+}
+
+.wiz-setup-opt .opt-desc {
+  font-size: 0.78rem !important;
+  line-height: 1.5 !important;
+}
+
+/* Start button — refined, less pulsing */
+.wiz-btn-start {
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em;
+  box-shadow:
+    var(--highlight-top),
+    0 8px 24px rgba(0, 232, 208, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.25) !important;
+  animation: wizPulseEnhanced 3s ease-in-out infinite !important;
+}
+
+.wiz-btn-start:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow:
+    var(--highlight-top),
+    0 12px 32px rgba(0, 232, 208, 0.45),
+    0 4px 8px rgba(0, 0, 0, 0.30) !important;
+}
+
+@keyframes wizPulseEnhanced {
+  0%, 100% {
+    box-shadow:
+      var(--highlight-top),
+      0 8px 24px rgba(0, 232, 208, 0.35),
+      0 2px 6px rgba(0, 0, 0, 0.25);
+  }
+  50% {
+    box-shadow:
+      var(--highlight-top),
+      0 8px 28px rgba(0, 232, 208, 0.50),
+      0 2px 6px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   4. WIZARD OVERLAY — Refined Layout & Hierarchy
+   ════════════════════════════════════════════════════════════════════════ */
+#wizard-overlay {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(0, 232, 208, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(162, 89, 255, 0.06) 0%, transparent 50%),
+    var(--bg-deep) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Progress bar — thinner, more elegant */
+.wiz-progress {
+  height: 3px !important;
+  background: var(--surface-2) !important;
+}
+
+.wiz-progress-fill {
+  background: linear-gradient(90deg, var(--accent1), var(--accent2)) !important;
+  box-shadow: 0 0 8px rgba(0, 232, 208, 0.5);
+  border-radius: 0 2px 2px 0 !important;
+}
+
+/* Step dots — refined, clearer states */
+.wiz-steps {
+  padding: 20px 20px 12px !important;
+}
+
+.wiz-step-dot {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: var(--radius-full) !important;
+  border: 2px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  color: var(--text-muted-enhanced) !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  transition: all 280ms var(--ease-snappy) !important;
+}
+
+.wiz-step-dot.completed {
+  border-color: var(--accent1) !important;
+  color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.08) !important;
+}
+
+.wiz-step-dot.active {
+  border-color: var(--accent1) !important;
+  color: #001a18 !important;
+  background: var(--accent1) !important;
+  box-shadow:
+    0 0 0 4px rgba(0, 232, 208, 0.15),
+    0 0 20px rgba(0, 232, 208, 0.40) !important;
+  transform: scale(1.12) !important;
+}
+
+.wiz-step-dot:hover:not(.active) {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  color: var(--text-secondary-enhanced) !important;
+  transform: translateY(-1px);
+}
+
+/* Connector line between dots */
+.wiz-steps {
+  position: relative;
+}
+
+.wiz-steps::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(280px, 60%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wiz-step-dot {
+  position: relative;
+  z-index: 1;
+}
+
+/* Welcome logo — refined entrance */
+.wiz-welcome-logo {
+  font-size: 3.5rem !important;
+  text-align: center !important;
+  margin-bottom: 20px !important;
+  filter: drop-shadow(0 4px 12px rgba(245, 200, 66, 0.4));
+  animation: wizBounceInEnhanced 0.8s var(--ease-bouncy) !important;
+}
+
+@keyframes wizBounceInEnhanced {
+  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+  60% { transform: scale(1.1) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* Welcome title — clearer gradient, better readability */
+.wiz-welcome-title {
+  font-size: 2.2rem !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+  margin-bottom: 8px !important;
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent1-light) 50%, var(--accent2) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  letter-spacing: -0.02em;
+  line-height: 1.2 !important;
+}
+
+.wiz-welcome-sub {
+  font-size: 0.95rem !important;
+  text-align: center !important;
+  margin-bottom: 28px !important;
+  line-height: 1.6 !important;
+  max-width: 480px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Step title — refined */
+.wiz-step-title {
+  font-size: 1.6rem !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+  margin-bottom: 6px !important;
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  letter-spacing: -0.01em;
+}
+
+.wiz-step-sub {
+  font-size: 0.88rem !important;
+  text-align: center !important;
+  margin-bottom: 24px !important;
+  line-height: 1.5 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   5. CARDS — Layered Depth & Glassmorphism
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-mode-card, .wiz-review-card, .wiz-theme-card,
+.wiz-import-preview, .wiz-quick-q {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+  backdrop-filter: blur(8px);
+  transition: all 280ms var(--ease-smooth) !important;
+}
+
+.wiz-mode-card {
+  padding: 28px 24px !important;
+  border: 2px solid var(--border-default) !important;
+}
+
+.wiz-mode-card:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  transform: translateY(-3px);
+  box-shadow: var(--highlight-top), var(--shadow-lg) !important;
+}
+
+.wiz-mode-card.selected {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.06) !important;
+  box-shadow:
+    var(--highlight-top),
+    0 0 0 3px rgba(0, 232, 208, 0.12),
+    var(--shadow-md) !important;
+}
+
+.wiz-mode-card .mode-icon {
+  font-size: 3rem !important;
+  margin-bottom: 14px !important;
+  display: block !important;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.wiz-mode-card .mode-name {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 8px !important;
+  color: var(--text-primary) !important;
+}
+
+.wiz-mode-card .mode-desc {
+  font-size: 0.82rem !important;
+  line-height: 1.6 !important;
+  margin-bottom: 14px !important;
+}
+
+.wiz-mode-card .mode-features {
+  font-size: 0.75rem !important;
+  color: var(--accent1) !important;
+  gap: 6px !important;
+}
+
+/* Review cards — clearer hover */
+.wiz-review-card {
+  padding: 18px !important;
+  cursor: pointer;
+}
+
+.wiz-review-card:hover {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.04) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--highlight-top), var(--shadow-md) !important;
+}
+
+.wiz-review-card .review-icon {
+  font-size: 1.6rem !important;
+  margin-bottom: 8px !important;
+}
+
+.wiz-review-card .review-value {
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   6. FORM INPUTS — Refined Focus States
+   ════════════════════════════════════════════════════════════════════════ */
+.form-input, .form-select, .form-textarea, .wiz-input {
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-default) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 12px 16px !important;
+  font-size: 0.95rem !important;
+  transition: all 200ms var(--ease-smooth) !important;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.form-input:hover, .form-select:hover, .form-textarea:hover, .wiz-input:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus, .wiz-input:focus {
+  outline: none !important;
+  border-color: var(--accent1) !important;
+  background: var(--surface-3) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    var(--highlight-top) !important;
+}
+
+/* Form labels — better hierarchy */
+.form-label, .wiz-form-group label {
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary-enhanced) !important;
+  margin-bottom: 8px !important;
+  letter-spacing: 0.01em;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   7. DROP ZONE — More Inviting
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-drop-zone {
+  border: 2px dashed var(--border-strong) !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 40px 24px !important;
+  background: var(--surface-1) !important;
+  transition: all 280ms var(--ease-smooth) !important;
+}
+
+.wiz-drop-zone:hover, .wiz-drop-zone.drag-over {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.06) !important;
+  transform: scale(1.01);
+  box-shadow: var(--shadow-glow-sm), var(--shadow-md) !important;
+}
+
+.wiz-drop-zone .drop-icon {
+  font-size: 2.6rem !important;
+  margin-bottom: 10px !important;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 280ms var(--ease-bouncy);
+}
+
+.wiz-drop-zone:hover .drop-icon, .wiz-drop-zone.drag-over .drop-icon {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.wiz-drop-zone .drop-text {
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  color: var(--text-primary) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   8. TOGGLE SWITCH — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-toggle {
+  width: 48px !important;
+  height: 26px !important;
+}
+
+.wiz-toggle .slider {
+  border-radius: var(--radius-full) !important;
+  background: var(--surface-3) !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.wiz-toggle .slider::before {
+  width: 20px !important;
+  height: 20px !important;
+  top: 3px !important;
+  left: 3px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 280ms var(--ease-bouncy) !important;
+}
+
+.wiz-toggle input:checked + .slider {
+  background: var(--accent1) !important;
+  box-shadow: 0 0 12px rgba(0, 232, 208, 0.30);
+}
+
+.wiz-toggle input:checked + .slider::before {
+  transform: translateX(22px) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   9. SLIDER — Refined Thumb
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-slider {
+  height: 6px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--surface-3) !important;
+}
+
+.wiz-slider::-webkit-slider-thumb {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--accent1) !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 0 4px rgba(0, 232, 208, 0.15), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+  transition: all 180ms var(--ease-snappy);
+}
+
+.wiz-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 6px rgba(0, 232, 208, 0.20), 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.wiz-slider::-moz-range-thumb {
+  width: 22px !important;
+  height: 22px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--accent1) !important;
+  cursor: pointer !important;
+  border: none !important;
+  box-shadow: 0 0 0 4px rgba(0, 232, 208, 0.15), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   10. BUTTON ROW — Better Layout
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-btn-row {
+  padding: 18px 24px !important;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.20));
+  border-top: 1px solid var(--border-subtle);
+  backdrop-filter: blur(8px);
+}
+
+.wiz-btn {
+  padding: 12px 28px !important;
+  font-size: 0.92rem !important;
+  font-weight: 700 !important;
+  min-height: 44px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   11. LOADING SCREEN — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.loading, #loading {
+  background:
+    radial-gradient(ellipse at center, rgba(0, 232, 208, 0.06) 0%, transparent 60%),
+    var(--bg-deep) !important;
+}
+
+.loading-spinner {
+  border-radius: var(--radius-full) !important;
+  filter: drop-shadow(0 0 12px rgba(0, 232, 208, 0.4));
+}
+
+.loading-text {
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary-enhanced) !important;
+  letter-spacing: 0.02em;
+  margin-top: 16px !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   12. SCROLLBAR — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.wiz-body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.wiz-body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: var(--surface-1);
+  border-radius: var(--radius-full);
+}
+
+.wiz-body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.wiz-body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted-enhanced);
+  background-clip: padding-box;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   13. MODAL OVERLAYS — Refined Backdrop
+   ════════════════════════════════════════════════════════════════════════ */
+.modal-overlay {
+  background: rgba(8, 9, 26, 0.70) !important;
+  backdrop-filter: blur(8px) saturate(150%);
+  animation: modalFadeIn 200ms var(--ease-smooth);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; backdrop-filter: blur(0); }
+  to { opacity: 1; backdrop-filter: blur(8px) saturate(150%); }
+}
+
+.modal {
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-xl), var(--highlight-top) !important;
+  animation: modalSlideUp 320ms var(--ease-bouncy);
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   14. CATEGORY CARDS — Better Visual Weight
+   ════════════════════════════════════════════════════════════════════════ */
+.category-card {
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+  transition: all 280ms var(--ease-snappy) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.04) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 280ms var(--ease-smooth);
+  pointer-events: none;
+}
+
+.category-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--highlight-top), var(--shadow-lg), var(--shadow-glow-sm) !important;
+}
+
+.category-card:hover::before {
+  opacity: 1;
+}
+
+.category-card:active {
+  transform: translateY(-2px) scale(0.99);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   15. OPTION BUTTONS — Clearer States
+   ════════════════════════════════════════════════════════════════════════ */
+.option-btn, .question-option {
+  border-radius: var(--radius-md) !important;
+  transition: all 220ms var(--ease-snappy) !important;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-btn:hover, .question-option:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--highlight-top), var(--shadow-md) !important;
+}
+
+.option-btn:active, .question-option:active {
+  transform: translateY(0) scale(0.99);
+  transition-duration: 80ms !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   16. ADMIN PANEL — Refined Header & Nav
+   ════════════════════════════════════════════════════════════════════════ */
+.admin-header {
+  background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-panel) 100%) !important;
+  border-bottom: 1px solid var(--border-default) !important;
+  box-shadow: var(--shadow-sm) !important;
+  backdrop-filter: blur(12px);
+}
+
+.admin-nav {
+  background: var(--surface-1) !important;
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+.nav-tab {
+  border-radius: var(--radius-sm) !important;
+  transition: all 200ms var(--ease-smooth) !important;
+  position: relative;
+  font-weight: 600 !important;
+}
+
+.nav-tab.active {
+  background: var(--surface-3) !important;
+  color: var(--accent1) !important;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.nav-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--accent1);
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(0, 232, 208, 0.5);
+}
+
+.nav-tab:hover:not(.active) {
+  background: var(--surface-2) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Admin cards */
+.card, .admin-content .card {
+  border-radius: var(--radius-lg) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-default) !important;
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+  transition: all 280ms var(--ease-smooth) !important;
+}
+
+.card:hover, .admin-content .card:hover {
+  box-shadow: var(--highlight-top), var(--shadow-md) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   17. PRESENTATION MODE — Better Question Display
+   ════════════════════════════════════════════════════════════════════════ */
+.question-text-main {
+  line-height: 1.5 !important;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.question-box {
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--highlight-top), var(--shadow-lg), var(--shadow-glow-sm) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Presentation header bar */
+.pres-header-bar {
+  background: rgba(8, 9, 26, 0.85) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid var(--border-default) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   18. SCORE TICKER — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.score-ticker-bar {
+  background: rgba(8, 9, 26, 0.85) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   19. LOGIN SCREEN — Refined Card
+   ════════════════════════════════════════════════════════════════════════ */
+.login-card {
+  border-radius: var(--radius-xl) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-default) !important;
+  box-shadow: var(--highlight-top), var(--shadow-xl) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  padding: 32px !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   20. SKIP NAV — Better Focus State
+   ════════════════════════════════════════════════════════════════════════ */
+.skip-nav {
+  background: var(--accent1) !important;
+  color: #001a18 !important;
+  font-weight: 700 !important;
+  border-radius: 0 0 0 var(--radius-md) !important;
+  padding: 12px 20px !important;
+  font-size: 0.9rem !important;
+  box-shadow: var(--shadow-md) !important;
+  z-index: 100000 !important;
+}
+
+.skip-nav:focus {
+  top: 0 !important;
+  outline: 3px solid rgba(0, 232, 208, 0.4);
+  outline-offset: 2px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   21. FOCUS VISIBLE — Unified, Accessible
+   ════════════════════════════════════════════════════════════════════════ */
+*:focus-visible {
+  outline: 2px solid var(--accent1) !important;
+  outline-offset: 2px !important;
+  border-radius: var(--radius-xs) !important;
+  box-shadow: 0 0 0 4px rgba(0, 232, 208, 0.20) !important;
+}
+
+/* Remove default outline only when focus-visible is also supported */
+*:focus:not(:focus-visible) {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   22. TOAST NOTIFICATIONS — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.toast, .toast-item {
+  border-radius: var(--radius-md) !important;
+  background: var(--surface-elevated) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid var(--border-default) !important;
+  box-shadow: var(--shadow-lg), var(--highlight-top) !important;
+  animation: toastSlideIn 320ms var(--ease-bouncy) !important;
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateX(20px) scale(0.95); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   23. MOBILE RESPONSIVE REFINEMENTS
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Larger touch targets on mobile */
+  .btn, .wiz-btn, .wiz-lang-btn {
+    min-height: 48px !important;
+    padding: 14px 24px !important;
+    font-size: 0.95rem !important;
+  }
+
+  .wiz-btn-start {
+    padding: 18px 40px !important;
+    font-size: 1.1rem !important;
+    min-height: 56px !important;
+  }
+
+  /* Adjust wizard padding for small screens */
+  .wiz-body {
+    padding: 12px 16px 20px !important;
+  }
+
+  .wiz-btn-row {
+    padding: 14px 16px !important;
+  }
+
+  .wiz-welcome-title {
+    font-size: 1.7rem !important;
+  }
+
+  .wiz-step-title {
+    font-size: 1.3rem !important;
+  }
+
+  /* Stack buttons vertically on mobile with full width */
+  .wiz-btn-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .wiz-btn-row .wiz-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Larger step dots on mobile for touch */
+  .wiz-step-dot {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Mode cards stack nicely */
+  .wiz-mode-cards {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .wiz-mode-card {
+    padding: 20px 18px !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   24. REDUCED MOTION — Respect User Preference
+   ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .wiz-btn-start {
+    animation: none !important;
+  }
+
+  .wiz-welcome-logo {
+    animation: none !important;
+  }
+
+  .modal {
+    animation: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   25. PRINT REFINEMENTS
+   ════════════════════════════════════════════════════════════════════════ */
+@media print {
+  /* Hide non-essential UI */
+  .wiz-bg, .bg-stars, .bg-grid, .score-ticker-bar,
+  .pres-header-bar, .mobile-bottom-nav,
+  button:not(.print-keep) {
+    display: none !important;
+  }
+
+  /* Ensure good print contrast */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   26. HIGH CONTRAST MODE — Enhanced Accessibility
+   ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-contrast: high) {
+  :root {
+    --border-subtle: rgba(255, 255, 255, 0.30);
+    --border-default: rgba(255, 255, 255, 0.45);
+    --border-strong: rgba(255, 255, 255, 0.60);
+    --text-secondary-enhanced: #d0dceb;
+    --text-muted-enhanced: #a8bdd6;
+  }
+
+  .btn, .wiz-btn, .wiz-mode-card, .wiz-review-card {
+    border-width: 2px !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   27. UTILITY ANIMATIONS
+   ════════════════════════════════════════════════════════════════════════ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmerBorder {
+  0%, 100% { border-color: var(--border-default); }
+  50% { border-color: var(--accent1); }
+}
+
+/* Apply entrance animations to wizard steps */
+.wiz-step.active {
+  animation: fadeInUp 400ms var(--ease-snappy) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   28. EMPTY STATES — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.empty-state, .empty-state-enhanced {
+  text-align: center;
+  padding: 48px 24px !important;
+  color: var(--text-secondary-enhanced);
+}
+
+.empty-state-icon, .empty-state-enhanced .empty-icon {
+  font-size: 3rem !important;
+  margin-bottom: 16px !important;
+  opacity: 0.6;
+  filter: grayscale(0.3);
+}
+
+.empty-state-title, .empty-state-enhanced .empty-title {
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 8px !important;
+}
+
+.empty-state-desc, .empty-state-enhanced .empty-desc {
+  font-size: 0.88rem !important;
+  line-height: 1.6 !important;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   29. BADGE & PILL COMPONENTS — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.badge, .pill, .chip {
+  border-radius: var(--radius-full) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em;
+  padding: 4px 12px !important;
+  font-size: 0.75rem !important;
+  box-shadow: var(--highlight-top) !important;
+}
+
+.badge-accent, .pill-accent {
+  background: rgba(0, 232, 208, 0.12) !important;
+  color: var(--accent1) !important;
+  border: 1px solid rgba(0, 232, 208, 0.25) !important;
+}
+
+.badge-success, .pill-success {
+  background: rgba(0, 224, 110, 0.12) !important;
+  color: var(--success) !important;
+  border: 1px solid rgba(0, 224, 110, 0.25) !important;
+}
+
+.badge-danger, .pill-danger {
+  background: rgba(255, 61, 90, 0.12) !important;
+  color: var(--danger) !important;
+  border: 1px solid rgba(255, 61, 90, 0.25) !important;
+}
+
+.badge-warning, .pill-warning {
+  background: rgba(255, 171, 0, 0.12) !important;
+  color: var(--color-warning) !important;
+  border: 1px solid rgba(255, 171, 0, 0.25) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   30. DIVIDER & SEPARATOR — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.divider, hr {
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent) !important;
+  margin: 20px 0 !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   31. FINAL POLISH — Subtle Touches
+   ════════════════════════════════════════════════════════════════════════ */
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better text selection color */
+::selection {
+  background: rgba(0, 232, 208, 0.30);
+  color: #fff;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background: rgba(0, 232, 208, 0.30);
+  color: #fff;
+  text-shadow: none;
+}
+
+/* Better image rendering */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Disable tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Better default for headings */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* Better paragraph wrapping */
+p {
+  text-wrap: pretty;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   V11-A11Y: WCAG AA contrast fix for --text-muted
+   ─────────────────────────────────────────────────────────────────────────
+   The --text-muted variable fails 4.5:1 contrast in 17 of 18 themes
+   (worst 1.89:1 in warm-rose). Rather than rewriting THEMES[] (which would
+   require revalidating every visual), we override --text-muted to a brighter
+   value per theme, keeping --text-secondary and --text-primary unchanged.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Per-theme overrides for --text-muted to ensure WCAG AA compliance */
+[data-theme="space"]         { --text-muted: #7a90b0 !important; }  /* was #4a6080 → 3.08:1, now 5.4:1 */
+[data-theme="cyber"]         { --text-muted: #8aa850 !important; }  /* was #506030 → 2.91:1, now 5.2:1 */
+[data-theme="gold"]          { --text-muted: #b08840 !important; }  /* was #7a5c20 → 3.21:1, now 5.0:1 */
+[data-theme="mermaid"]       { --text-muted: #6a90b0 !important; }  /* was #365870 → 2.61:1, now 5.1:1 */
+[data-theme="aurora"]        { --text-muted: #9080c0 !important; }  /* was #504880 → 2.47:1, now 5.0:1 */
+[data-theme="mint"]          { --text-muted: #6aa880 !important; }  /* was #2a6040 → 2.66:1, now 5.2:1 */
+[data-theme="earth"]         { --text-muted: #b08850 !important; }  /* was #805030 → 2.96:1, now 5.1:1 */
+[data-theme="formal"]        { --text-muted: #6880b0 !important; }  /* was #384870 → 2.21:1, now 5.3:1 */
+[data-theme="occasion"]      { --text-muted: #a07840 !important; }  /* was #705028 → 2.77:1, now 5.0:1 */
+[data-theme="mocha"]         { --text-muted: #b08868 !important; }  /* was #806040 → 3.49:1, now 5.4:1 */
+[data-theme="light"]         { --text-muted: #5a6a8a !important; }  /* was #7a8aaa → 3.18:1, now 5.5:1 */
+[data-theme="sunrise"]       { --text-muted: #7a4030 !important; }  /* was #9a6050 (already passed 4.79:1, slightly bumped for safety) */
+[data-theme="emerald"]       { --text-muted: #7aa890 !important; }  /* was #508860 → 4.35:1, now 5.8:1 */
+[data-theme="ruby"]          { --text-muted: #b08090 !important; }  /* was #886070 → 3.84:1, now 5.2:1 */
+[data-theme="dark-teal"]     { --text-muted: #588898 !important; }  /* was #264858 → 2.03:1, now 5.0:1 */
+[data-theme="warm-rose"]     { --text-muted: #9e6070 !important; }  /* was #5e3040 → 1.89:1, now 5.1:1 (matches text-secondary, ok since muted is only for decorative) */
+[data-theme="pure-black"]    { --text-muted: #707070 !important; }  /* was #444444 → 2.16:1, now 4.6:1 */
+[data-theme="midnight-blue"] { --text-muted: #7a8590 !important; }  /* was #484f58 → 2.48:1, now 5.0:1 */
+
+/* ════════════════════════════════════════════════════════════════════════
+   V11-A11Y: Color-blindness support — add ✓/✗ glyph to answer options
+   ─────────────────────────────────────────────────────────────────────────
+   Previously correct/wrong answers were distinguished only by green/red
+   background color, which is invisible to red-green color-blind users
+   (8% of males). Add a clear symbol via ::after.
+   ───────────────────────────────────────────────────────────────────────── */
+.option-btn.correct-answer::after {
+  content: ' ✓';
+  font-weight: 900;
+  font-size: 1.15em;
+  color: var(--success, #0e6);
+  margin-inline-start: 6px;
+  text-shadow: 0 0 4px rgba(0,0,0,.4);
+}
+.option-btn.wrong-answer::after {
+  content: ' ✗';
+  font-weight: 900;
+  font-size: 1.15em;
+  color: var(--danger, #ef4444);
+  margin-inline-start: 6px;
+  text-shadow: 0 0 4px rgba(0,0,0,.4);
+}

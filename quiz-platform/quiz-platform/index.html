@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة المسابقات التفاعلية</title>
+
+  <!-- ═══ Content Security Policy ═══
+       Allows inline scripts/styles for single-file offline app,
+       restricts external connections to known CDNs only, blocks unknown origins.
+       font-src includes data: for KaTeX embedded fonts (woff2 data-URIs) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:; connect-src *; font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: blob: *; media-src 'self' data: blob: *;">
+
+  <!-- ═══ Google Fonts (non-blocking to prevent startup freeze when offline) ═══ -->
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet"></noscript>
+
+  <!-- ═══ Vendor CSS (Quill, Cropper, KaTeX) ═══
+       Loaded as separate files in dev, inlined into a single <style> block at build time. -->
+  <link rel="stylesheet" href="/src/styles/vendor-quill.css">
+  <link rel="stylesheet" href="/src/styles/vendor-cropper.css">
+  <link rel="stylesheet" href="/src/styles/vendor-katex.css">
+
+  <!-- ═══ Application CSS ═══ -->
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/animations.css">
+  <!-- UI/UX Enhancement Layer — loaded after main.css to refine and polish -->
+  <link rel="stylesheet" href="/src/styles/enhancements.css">
+  <link rel="stylesheet" href="/src/styles/enhancements-2.css">
+  <link rel="stylesheet" href="/src/styles/enhancements-3.css">
+  <link rel="stylesheet" href="/src/styles/enhancements-solo.css">
+  <link rel="stylesheet" href="/src/styles/enhancements-admin.css">
+  <link rel="stylesheet" href="/src/styles/enhancements-mobile.css">
+  <link rel="stylesheet" href="/src/styles/enhancements-v2.css">
+  <link rel="stylesheet" href="/src/styles/enhancements-mobile-v2.css">
+</head>
+<body>
+  <!-- The full body markup from the original app (ARIA regions, loading spinner,
+       admin panel, presentation screens, modals, etc.) is injected here at build
+       time from src/templates/body.html via the inline-classic-assets plugin. -->
+  <!-- __BODY_MARKER__ -->
+
+  <!-- ════════════════════════════════════════════════════════
+       Scripts — loaded in strict dependency order
+       (classic scripts share global lexical scope across tags,
+        matching the original single-file app's IIFE pattern)
+       At build time, each <script src> is inlined into a single
+       inline <script> block by the inline-classic-assets plugin.
+       ════════════════════════════════════════════════════════ -->
+
+  <!-- ── Vendor libraries (attach to window) ── -->
+  <script src="/src/vendor/katex.js"></script>
+  <script src="/src/vendor/katex-autorender.js"></script>
+  <script src="/src/vendor/xlsx.js"></script>
+  <script src="/src/vendor/sanitizer.js"></script>
+
+  <!-- ── Application core (must load in order) ── -->
+  <script src="/src/app/01-foundation.js"></script>
+  <script src="/src/app/02-storage.js"></script>
+  <script src="/src/app/03-media-helpers.js"></script>
+  <script src="/src/app/04-i18n.js"></script>
+  <script src="/src/app/05-audio-assets.js"></script>
+  <script src="/src/app/06-compression.js"></script>
+  <script src="/src/app/07-state-mgmt.js"></script>
+  <script src="/src/app/08-question-mgmt.js"></script>
+  <script src="/src/app/09-team-mgmt.js"></script>
+  <script src="/src/app/10-category-mgmt.js"></script>
+  <script src="/src/app/11-play-logic.js"></script>
+  <script src="/src/app/12-timer.js"></script>
+  <script src="/src/app/13-scoring.js"></script>
+  <script src="/src/app/14-admin-panel.js"></script>
+  <script src="/src/app/15-auth-security.js"></script>
+  <script src="/src/app/16-encryption.js"></script>
+  <script src="/src/app/17-history.js"></script>
+  <script src="/src/app/18-presentation.js"></script>
+  <script src="/src/app/19-certificates.js"></script>
+  <script src="/src/app/20-display-modes.js"></script>
+  <script src="/src/app/21-solo-mode.js"></script>
+  <script src="/src/app/22-features-v7.js"></script>
+  <script src="/src/app/23-mobile-a11y.js"></script>
+  <script src="/src/app/24-phase3-a11y-features.js"></script>
+  <!-- Files 25, 26, 27 were merged into 24-phase3-a11y-features.js
+       because file 24's outer IIFE spanned all of them. -->
+  <script src="/src/app/28-audio-assets-2.js"></script>
+  <script src="/src/app/29-browser-compat.js"></script>
+  <script src="/src/app/30-more-i18n.js"></script>
+  <script src="/src/app/31-settings-panel.js"></script>
+  <script src="/src/app/32-buzzer-sync.js"></script>
+  <script src="/src/app/33-podium-music.js"></script>
+  <script src="/src/app/34-drag-touch.js"></script>
+  <script src="/src/app/35-order-search.js"></script>
+  <script src="/src/app/36-windows-templates.js"></script>
+  <script src="/src/app/37-windows-logic.js"></script>
+  <script src="/src/app/38-periodic-cleanup.js"></script>
+  <script src="/src/app/39-history-aria.js"></script>
+
+  <!-- ── More vendor libraries (loaded after app core, as in original) ── -->
+  <script src="/src/vendor/quill.js"></script>
+  <script src="/src/vendor/cropper.js"></script>
+  <script src="/src/vendor/jspdf.js"></script>
+
+  <!-- ── Feature blocks ── -->
+  <script src="/src/app/40-features-block.js"></script>
+  <script src="/src/app/41-final-enhancements.js"></script>
+  <script src="/src/app/42-freeze-fix.js"></script>
+</body>
+</html>

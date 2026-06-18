@@ -1,0 +1,1753 @@
+/* ════════════════════════════════════════════════════════════════════════
+   SOLO MODE UI/UX ENHANCEMENT LAYER
+   ════════════════════════════════════════════════════════════════════════
+   Comprehensive enhancements for Solo Mode (الوضع الفردي):
+   - Solo Map: world cards, level nodes, progress indicators, stats
+   - Solo Question: topbar, timer, question text, options, confirm button
+   - Post-Answer: action buttons (next, map, retry)
+   - Solo Wizard: setup wizard for solo mode
+   - Stars/Victory overlays: animations and polish
+   - Achievements & Leaderboard buttons
+   - Mobile responsiveness
+
+   Design goals:
+   - Clear visual hierarchy with distinct primary/secondary actions
+   - Better button states (hover, active, disabled, selected)
+   - Improved readability for question text and options
+   - Consistent spacing and alignment
+   - Accessible focus states
+   - Smooth animations and micro-interactions
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. SOLO MAP — Overall Layout & Background
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-map {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(0, 232, 208, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(162, 89, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg-deep, #060818) 0%, rgba(6, 8, 24, 0.97) 100%) !important;
+}
+
+/* Header — refined with better blur and border */
+.solo-map-header {
+  background: rgba(8, 9, 26, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid var(--border-default, rgba(255, 255, 255, 0.12)) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Title bar — better spacing */
+.solo-map-title-bar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+}
+
+.solo-map-title {
+  font-size: clamp(1rem, 3vw, 1.3rem) !important;
+  font-weight: 900 !important;
+  color: var(--text-primary) !important;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.solo-map-title-icon {
+  font-size: 1.4rem !important;
+  display: inline-flex;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Stats bar — better layout */
+.solo-map-stats {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  padding: 10px 16px 14px !important;
+  flex-wrap: wrap;
+}
+
+.solo-map-stat {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  color: var(--text-secondary-enhanced, #a8bdd6) !important;
+  background: var(--surface-2, rgba(255, 255, 255, 0.06)) !important;
+  padding: 8px 16px !important;
+  border-radius: var(--radius-full, 9999px) !important;
+  border: 1px solid var(--border-default, rgba(255, 255, 255, 0.12)) !important;
+  box-shadow: var(--highlight-top, inset 0 1px 0 rgba(255, 255, 255, 0.08)), var(--shadow-xs) !important;
+  transition: all 220ms var(--ease-smooth) !important;
+}
+
+.solo-map-stat:hover {
+  background: var(--surface-3, rgba(255, 255, 255, 0.09)) !important;
+  border-color: var(--border-strong, rgba(255, 255, 255, 0.18)) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+}
+
+.solo-map-stat .solo-stat-icon {
+  font-size: 1.1rem !important;
+  display: inline-flex;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.solo-map-stat .solo-stat-val {
+  color: var(--accent1, #00e8d0) !important;
+  font-size: 0.92rem !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.01em;
+}
+
+/* Map body — better padding */
+.solo-map-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 16px 120px !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) var(--surface-1);
+}
+
+.solo-map-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.solo-map-body::-webkit-scrollbar-track {
+  background: var(--surface-1);
+  border-radius: var(--radius-full);
+}
+
+.solo-map-body::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2. SOLO WORLD CARDS — Better Visual Hierarchy
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-world {
+  position: relative;
+  margin-bottom: 20px !important;
+  background: var(--surface-2, rgba(255, 255, 255, 0.06)) !important;
+  border: 1.5px solid var(--border-default, rgba(255, 255, 255, 0.12)) !important;
+  border-radius: var(--radius-lg, 16px) !important;
+  padding: 18px 16px !important;
+  transition: all 320ms var(--ease-snappy) !important;
+  overflow: hidden;
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+}
+
+.solo-world::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px !important;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+  opacity: 0.9 !important;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2)) !important;
+}
+
+.solo-world:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--highlight-top), var(--shadow-lg) !important;
+  border-color: var(--border-strong) !important;
+}
+
+.solo-world.solo-world-locked {
+  opacity: 0.55 !important;
+  pointer-events: none;
+  filter: grayscale(0.6);
+}
+
+.solo-world.solo-world-locked::before {
+  background: var(--text-muted) !important;
+  opacity: 0.5 !important;
+}
+
+/* World header — better layout */
+.solo-world-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 14px !important;
+  cursor: default;
+}
+
+.solo-world-icon {
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: var(--radius-md, 12px) !important;
+  background: var(--surface-3, rgba(255, 255, 255, 0.09)) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem !important;
+  flex-shrink: 0;
+  border: 2px solid var(--border-strong, rgba(255, 255, 255, 0.18)) !important;
+  transition: all 280ms var(--ease-snappy);
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.solo-world:hover .solo-world-icon {
+  transform: scale(1.05) rotate(-3deg);
+  border-color: var(--accent1) !important;
+}
+
+.solo-world-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.solo-world-name {
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem) !important;
+  font-weight: 800 !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 4px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.01em;
+}
+
+.solo-world-progress {
+  height: 6px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--surface-3, rgba(255, 255, 255, 0.09)) !important;
+  overflow: hidden;
+  margin-top: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.solo-world-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full) !important;
+  transition: width 500ms var(--ease-snappy);
+  position: relative;
+  background: linear-gradient(90deg, var(--accent1), var(--accent2)) !important;
+}
+
+.solo-world-progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  animation: solo-progress-shine 2.5s infinite;
+}
+
+.solo-world-stars {
+  font-size: 0.8rem !important;
+  color: var(--text-secondary-enhanced) !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.solo-world-stars .solo-star-filled {
+  color: #f5c842;
+  filter: drop-shadow(0 0 4px rgba(245, 200, 66, 0.5));
+}
+
+.solo-world-stars .solo-star-empty {
+  color: var(--text-muted-enhanced, #6b7d99);
+}
+
+.solo-world-lock,
+.solo-world-badge {
+  font-size: 1rem !important;
+  margin-inline-start: auto;
+  flex-shrink: 0;
+}
+
+.solo-world-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 224, 110, 0.12);
+  border: 1px solid rgba(0, 224, 110, 0.25);
+  color: var(--success);
+  font-size: 0.78rem !important;
+  font-weight: 800;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   3. LEVEL NODES — Better Visual States
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-levels-path {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  justify-content: center !important;
+  position: relative;
+  padding: 8px 0 !important;
+}
+
+.solo-levels-path::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-default), var(--border-default), transparent) !important;
+  border-radius: var(--radius-full);
+  z-index: 0;
+  transform: translateY(-50%);
+}
+
+.solo-level-node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 280ms var(--ease-bouncy) !important;
+}
+
+.solo-level-node:hover:not(.solo-level-locked) {
+  transform: scale(1.12) translateY(-2px);
+}
+
+.solo-level-node:active:not(.solo-level-locked) {
+  transform: scale(0.95);
+  transition-duration: 80ms !important;
+}
+
+.solo-level-node.solo-level-locked {
+  opacity: 0.4;
+  pointer-events: none;
+  filter: grayscale(0.8);
+}
+
+.solo-level-node.solo-level-current .solo-node-circle {
+  animation: solo-pulse-current 1.8s ease-in-out infinite;
+  box-shadow:
+    0 0 0 4px rgba(0, 232, 208, 0.15),
+    0 0 0 8px rgba(0, 232, 208, 0.08),
+    0 0 20px rgba(0, 232, 208, 0.50),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.solo-node-circle {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--surface-3, rgba(255, 255, 255, 0.09)) !important;
+  border: 2.5px solid var(--border-strong, rgba(255, 255, 255, 0.18)) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem !important;
+  font-weight: 900 !important;
+  color: var(--text-primary) !important;
+  transition: all 280ms var(--ease-snappy);
+  box-shadow:
+    inset 0 1px 2px rgba(0, 0, 0, 0.2),
+    0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.solo-level-node:not(.solo-level-locked):not(.solo-level-current) .solo-node-circle:hover {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.10) !important;
+  color: var(--accent1) !important;
+  transform: scale(1.08);
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.12),
+    0 4px 12px rgba(0, 232, 208, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+.solo-node-circle.solo-node-completed {
+  border-color: #f5c842 !important;
+  background: linear-gradient(135deg, rgba(245, 200, 66, 0.18), rgba(245, 200, 66, 0.08)) !important;
+  color: #f5c842 !important;
+  box-shadow:
+    0 0 12px rgba(245, 200, 66, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.solo-node-stars {
+  display: flex;
+  gap: 1px;
+  font-size: 0.5rem !important;
+  line-height: 1;
+}
+
+.solo-node-stars .solo-node-star-filled {
+  color: #f5c842;
+  filter: drop-shadow(0 0 2px rgba(245, 200, 66, 0.5));
+}
+
+.solo-node-stars .solo-node-star-empty {
+  color: var(--text-muted-enhanced, #6b7d99);
+}
+
+.solo-level-num {
+  font-size: 0.9rem !important;
+  font-weight: 900 !important;
+}
+
+/* Difficulty indicators */
+.solo-level-node.solo-diff-easy .solo-node-circle:not(.solo-node-completed) {
+  border-color: rgba(0, 224, 110, 0.4) !important;
+}
+
+.solo-level-node.solo-diff-medium .solo-node-circle:not(.solo-node-completed) {
+  border-color: rgba(255, 145, 0, 0.4) !important;
+}
+
+.solo-level-node.solo-diff-hard .solo-node-circle:not(.solo-node-completed) {
+  border-color: rgba(255, 61, 90, 0.4) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   4. SOLO QUESTION — Topbar & Timer
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-question {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(0, 232, 208, 0.05) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(162, 89, 255, 0.04) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg-deep, #060818) 0%, rgba(6, 8, 24, 0.97) 100%) !important;
+}
+
+.solo-q-topbar {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 12px 16px !important;
+  background: rgba(8, 9, 26, 0.85) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border-bottom: 1px solid var(--border-default) !important;
+  flex-shrink: 0;
+  z-index: 2;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.solo-q-cat {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-weight: 800 !important;
+  font-size: clamp(0.85rem, 2vw, 1rem) !important;
+  color: var(--text-primary) !important;
+  overflow: hidden;
+  min-width: 0;
+  flex-shrink: 1;
+  max-width: 45%;
+}
+
+.solo-q-cat-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.solo-q-cat-icon {
+  font-size: 1.4rem !important;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.solo-q-level {
+  font-size: clamp(0.75rem, 1.8vw, 0.85rem) !important;
+  font-weight: 700 !important;
+  color: var(--text-secondary-enhanced) !important;
+  margin-inline-start: auto;
+  white-space: nowrap;
+  padding: 4px 12px;
+  background: var(--surface-2);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+}
+
+.solo-q-stars-earned {
+  display: flex;
+  gap: 2px;
+  font-size: 1rem !important;
+}
+
+.solo-q-stars-earned .solo-q-star-filled {
+  color: #f5c842;
+  filter: drop-shadow(0 0 4px rgba(245, 200, 66, 0.5));
+}
+
+.solo-q-stars-earned .solo-q-star-empty {
+  color: var(--text-muted-enhanced, #6b7d99);
+}
+
+/* Timer bar — refined */
+.solo-timer-bar {
+  height: 6px !important;
+  background: var(--surface-2, rgba(255, 255, 255, 0.06)) !important;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.solo-timer-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--danger, #ff3d5a), var(--accent1, #00e8d0)) !important;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+  transition: width 300ms linear;
+  width: 100%;
+  box-shadow: 0 0 8px rgba(0, 232, 208, 0.3);
+}
+
+.solo-timer-fill.solo-timer-low {
+  background: linear-gradient(90deg, #ff3d5a, #ff8844) !important;
+  animation: solo-timer-pulse 0.5s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(255, 136, 68, 0.5);
+}
+
+.solo-timer-number {
+  position: absolute;
+  left: 12px;
+  top: -20px;
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  color: var(--accent1) !important;
+  z-index: 2;
+  pointer-events: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  padding: 2px 8px;
+  background: rgba(8, 9, 26, 0.85);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+}
+
+.solo-timer-bar.solo-timer-critical {
+  background: rgba(255, 61, 90, 0.15) !important;
+  animation: solo-timer-bar-flash 0.4s ease-in-out infinite;
+}
+
+@keyframes solo-timer-bar-flash {
+  0%, 100% { background: rgba(255, 61, 90, 0.15); }
+  50% { background: rgba(255, 61, 90, 0.30); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   5. SOLO QUESTION — Body, Text & Options
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-q-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 12px !important;
+  gap: 16px !important;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) var(--surface-1);
+}
+
+.solo-q-text {
+  font-size: clamp(1.15rem, 4vw, 1.8rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.6 !important;
+  color: var(--text-primary) !important;
+  text-align: center;
+  max-width: 800px;
+  unicode-bidi: plaintext;
+  direction: rtl;
+  padding: 0 8px;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  animation: soloQuestionFadeIn 400ms var(--ease-snappy);
+}
+
+@keyframes soloQuestionFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.solo-q-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px !important;
+  max-width: 700px;
+  width: 100%;
+}
+
+/* Options — refined with better states */
+.solo-q-option {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 16px 18px !important;
+  border-radius: var(--radius-md, 12px) !important;
+  background: var(--surface-2, rgba(255, 255, 255, 0.06)) !important;
+  border: 2px solid var(--border-default, rgba(255, 255, 255, 0.12)) !important;
+  cursor: pointer;
+  transition: all 220ms var(--ease-snappy) !important;
+  font-size: clamp(0.92rem, 2.5vw, 1.05rem) !important;
+  font-weight: 700 !important;
+  color: var(--text-primary) !important;
+  unicode-bidi: plaintext;
+  direction: rtl;
+  text-align: start;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 56px !important;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.solo-q-option:hover:not(:disabled):not(.solo-opt-correct):not(.solo-opt-wrong) {
+  border-color: rgba(0, 232, 208, 0.5) !important;
+  background: rgba(0, 232, 208, 0.05) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--highlight-top), var(--shadow-md) !important;
+}
+
+.solo-q-option:active:not(:disabled) {
+  transform: scale(0.98) !important;
+  transition-duration: 80ms !important;
+}
+
+.solo-q-option:focus-visible {
+  outline: 2px solid var(--accent1) !important;
+  outline-offset: 2px;
+}
+
+.solo-q-option.solo-opt-selected {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.12) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    var(--highlight-top),
+    var(--shadow-md) !important;
+}
+
+.solo-q-option.solo-opt-correct {
+  border-color: var(--success, #00e06e) !important;
+  background: rgba(0, 224, 110, 0.15) !important;
+  animation: solo-opt-flash 0.5s ease;
+  box-shadow:
+    0 0 0 3px rgba(0, 224, 110, 0.15),
+    0 0 16px rgba(0, 224, 110, 0.30),
+    var(--highlight-top) !important;
+}
+
+.solo-q-option.solo-opt-wrong {
+  border-color: var(--danger, #ff3d5a) !important;
+  background: rgba(255, 61, 90, 0.12) !important;
+  animation: solo-shake 0.5s ease;
+  box-shadow:
+    0 0 0 3px rgba(255, 61, 90, 0.15),
+    0 0 16px rgba(255, 61, 90, 0.25),
+    var(--highlight-top) !important;
+}
+
+.solo-q-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.solo-q-option-letter {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: var(--radius-full) !important;
+  background: var(--surface-3, rgba(255, 255, 255, 0.09)) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem !important;
+  font-weight: 900 !important;
+  flex-shrink: 0;
+  color: var(--accent1) !important;
+  transition: all 220ms var(--ease-snappy);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--highlight-top), var(--shadow-xs);
+}
+
+.solo-q-option:hover:not(:disabled) .solo-q-option-letter,
+.solo-q-option.solo-opt-selected .solo-q-option-letter {
+  background: var(--accent1) !important;
+  color: #001a18 !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0, 232, 208, 0.40), var(--highlight-top) !important;
+}
+
+.solo-q-option.solo-opt-correct .solo-q-option-letter {
+  background: var(--success) !important;
+  color: #001a0e !important;
+}
+
+.solo-q-option.solo-opt-wrong .solo-q-option-letter {
+  background: var(--danger) !important;
+  color: #fff !important;
+}
+
+/* True/False options — special styling */
+.solo-q-option.solo-q-tf-true,
+.solo-q-option.solo-q-tf-false {
+  justify-content: center;
+  text-align: center;
+  font-size: 1.1rem !important;
+  padding: 18px 24px !important;
+}
+
+.solo-tf-icon {
+  font-size: 1.4rem;
+  margin-left: 8px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   6. SOLO QUESTION — Confirm, Skip & Back Buttons
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-q-confirm {
+  padding: 8px 16px 16px !important;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.solo-btn-confirm {
+  padding: 14px 44px !important;
+  border-radius: var(--radius-md, 12px) !important;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem) !important;
+  font-weight: 800 !important;
+  cursor: pointer;
+  transition: all 220ms var(--ease-snappy) !important;
+  border: none;
+  font-family: inherit;
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent1-dark) 100%) !important;
+  color: #001a18 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 16px rgba(0, 232, 208, 0.30),
+    0 2px 4px rgba(0, 0, 0, 0.20) !important;
+  opacity: 0.5;
+  pointer-events: none;
+  min-height: 48px;
+  letter-spacing: 0.01em;
+}
+
+.solo-btn-confirm.solo-confirm-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.solo-btn-confirm.solo-confirm-active:hover {
+  transform: translateY(-2px) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 6px 24px rgba(0, 232, 208, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.25) !important;
+}
+
+.solo-btn-confirm.solo-confirm-active:active {
+  transform: translateY(0) scale(0.98) !important;
+  transition-duration: 80ms !important;
+}
+
+.solo-q-skip {
+  text-align: center;
+  padding: 4px 0 8px;
+}
+
+.solo-btn-skip {
+  background: transparent;
+  border: 1.5px solid rgba(255, 145, 0, 0.35) !important;
+  color: #ff9100 !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  padding: 8px 20px !important;
+  border-radius: var(--radius-full) !important;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 220ms var(--ease-smooth) !important;
+  min-height: 40px;
+  box-shadow: var(--highlight-top);
+}
+
+.solo-btn-skip:hover {
+  border-color: #ff9100 !important;
+  background: rgba(255, 145, 0, 0.10) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--highlight-top), 0 2px 8px rgba(255, 145, 0, 0.20);
+}
+
+.solo-btn-skip:active {
+  transform: scale(0.96);
+  transition-duration: 80ms !important;
+}
+
+.solo-btn-back {
+  padding: 8px 20px !important;
+  border-radius: var(--radius-md, 12px) !important;
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  color: var(--text-secondary-enhanced) !important;
+  cursor: pointer;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  transition: all 220ms var(--ease-smooth) !important;
+  font-family: inherit;
+  min-height: 40px;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.solo-btn-back:hover {
+  border-color: var(--accent1) !important;
+  color: var(--accent1) !important;
+  background: var(--surface-3) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+}
+
+.solo-btn-back:active {
+  transform: scale(0.96);
+  transition-duration: 80ms !important;
+}
+
+.solo-btn-reset {
+  color: var(--danger) !important;
+  border-color: rgba(255, 61, 90, 0.4) !important;
+  font-size: 0.72rem !important;
+  padding: 6px 12px !important;
+}
+
+.solo-btn-reset:hover {
+  border-color: var(--danger) !important;
+  background: rgba(255, 61, 90, 0.10) !important;
+  color: var(--danger) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   7. POST-ANSWER BUTTONS — Refined Action Row
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-post-answer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  animation: soloPostAnswerSlide 0.4s var(--ease-bouncy) both;
+  padding: 16px 16px 8px;
+}
+
+.solo-post-answer-row {
+  display: flex !important;
+  gap: 12px !important;
+  justify-content: center !important;
+  flex-wrap: wrap;
+}
+
+.solo-post-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px !important;
+  border-radius: var(--radius-md, 12px) !important;
+  border: 1.5px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  color: var(--text-primary) !important;
+  font-size: 0.88rem !important;
+  font-weight: 800 !important;
+  cursor: pointer;
+  transition: all 220ms var(--ease-snappy) !important;
+  font-family: inherit;
+  min-width: 110px !important;
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.solo-post-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--highlight-top), var(--shadow-md) !important;
+}
+
+.solo-post-btn:active {
+  transform: scale(0.96) !important;
+  transition-duration: 80ms !important;
+}
+
+/* Next button — primary action */
+.solo-post-btn.solo-post-next {
+  background: linear-gradient(135deg, var(--accent1) 0%, var(--accent1-dark) 100%) !important;
+  color: #001a18 !important;
+  border-color: transparent !important;
+  font-weight: 900 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 16px rgba(0, 232, 208, 0.30),
+    0 2px 4px rgba(0, 0, 0, 0.20) !important;
+}
+
+.solo-post-btn.solo-post-next:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 6px 24px rgba(0, 232, 208, 0.45),
+    0 2px 6px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Map button — secondary action */
+.solo-post-btn.solo-post-map {
+  border-color: rgba(96, 165, 250, 0.35) !important;
+  color: #60a5fa !important;
+}
+
+.solo-post-btn.solo-post-map:hover {
+  background: rgba(96, 165, 250, 0.10) !important;
+  border-color: #60a5fa !important;
+  box-shadow: var(--highlight-top), 0 4px 16px rgba(96, 165, 250, 0.20) !important;
+}
+
+/* Retry button — warning action */
+.solo-post-btn.solo-post-retry {
+  border-color: rgba(255, 145, 0, 0.35) !important;
+  color: #ff9100 !important;
+}
+
+.solo-post-btn.solo-post-retry:hover {
+  background: rgba(255, 145, 0, 0.10) !important;
+  border-color: #ff9100 !important;
+  box-shadow: var(--highlight-top), 0 4px 16px rgba(255, 145, 0, 0.20) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   8. SOLO STARS OVERLAY — Better Animation & Polish
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-stars-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0, 0, 0, 0.88) !important;
+  backdrop-filter: blur(12px) saturate(150%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 40px 20px 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 350ms var(--ease-smooth);
+}
+
+.solo-stars-overlay.solo-overlay-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.solo-stars-heading {
+  font-size: clamp(1.8rem, 5vw, 2.8rem) !important;
+  font-weight: 900 !important;
+  color: var(--success, #00e06e) !important;
+  text-shadow: 0 0 24px rgba(0, 224, 110, 0.50) !important;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+  animation: soloStarsHeadingPop 0.6s var(--ease-bouncy);
+}
+
+@keyframes soloStarsHeadingPop {
+  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+  60% { transform: scale(1.15) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.solo-stars-heading.solo-heading-wrong {
+  color: var(--danger, #ff3d5a) !important;
+  text-shadow: 0 0 24px rgba(255, 61, 90, 0.50) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   9. SOLO VICTORY OVERLAY — Better Celebration
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-victory-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9100;
+  background: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(16px) saturate(180%);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.solo-victory-overlay.solo-overlay-visible {
+  display: flex;
+  animation: soloVictoryFadeIn 0.5s var(--ease-snappy);
+}
+
+@keyframes soloVictoryFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   10. SOLO CONFIRM DIALOG — Better Modal
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-confirm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9200;
+  background: rgba(0, 0, 0, 0.80) !important;
+  backdrop-filter: blur(8px) saturate(150%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 280ms var(--ease-smooth);
+}
+
+.solo-confirm-overlay.solo-overlay-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.solo-confirm-box {
+  background: var(--surface-2, rgba(255, 255, 255, 0.06)) !important;
+  border: 1.5px solid var(--border-default) !important;
+  border-radius: var(--radius-xl, 24px) !important;
+  padding: 32px 28px !important;
+  text-align: center;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--highlight-top), var(--shadow-xl) !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  animation: soloConfirmPop 0.4s var(--ease-bouncy);
+}
+
+@keyframes soloConfirmPop {
+  0% { transform: scale(0.85) translateY(20px); opacity: 0; }
+  60% { transform: scale(1.05) translateY(-5px); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   11. SOLO GUIDED WIZARD — Better Setup Flow
+   ════════════════════════════════════════════════════════════════════════ */
+#solo-guided-wizard {
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(0, 232, 208, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(162, 89, 255, 0.06) 0%, transparent 50%),
+    var(--bg-deep) !important;
+  backdrop-filter: blur(12px);
+}
+
+.solo-wiz-header {
+  padding: 20px 16px 12px !important;
+  text-align: center;
+}
+
+.solo-wiz-header-title {
+  font-size: clamp(1.2rem, 3vw, 1.5rem) !important;
+  font-weight: 900 !important;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.solo-wiz-header-sub {
+  font-size: 0.88rem !important;
+  color: var(--text-secondary-enhanced) !important;
+  line-height: 1.5;
+}
+
+.solo-wiz-step-indicator {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 14px 0;
+}
+
+.solo-wiz-step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--surface-3);
+  transition: all 280ms var(--ease-snappy);
+}
+
+.solo-wiz-step-dot.active {
+  background: var(--accent1);
+  width: 28px;
+  box-shadow: 0 0 8px rgba(0, 232, 208, 0.5);
+}
+
+.solo-wiz-body {
+  padding: 16px !important;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.solo-wiz-step {
+  display: none;
+  animation: soloWizFadeIn 0.4s var(--ease-snappy);
+}
+
+.solo-wiz-step.active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@keyframes soloWizFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.solo-wiz-step-title {
+  font-size: 1.1rem !important;
+  font-weight: 800 !important;
+  color: var(--text-primary) !important;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.solo-wiz-step-desc {
+  font-size: 0.85rem !important;
+  color: var(--text-secondary-enhanced) !important;
+  text-align: center;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+.solo-wiz-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px !important;
+  border: 2px solid var(--border-default) !important;
+  background: var(--surface-2) !important;
+  border-radius: var(--radius-lg) !important;
+  cursor: pointer;
+  transition: all 280ms var(--ease-snappy) !important;
+  width: 100%;
+  max-width: 280px;
+  text-align: center;
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+  position: relative;
+}
+
+.solo-wiz-card:hover {
+  border-color: var(--border-strong) !important;
+  background: var(--surface-3) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--highlight-top), var(--shadow-md) !important;
+}
+
+.solo-wiz-card.selected {
+  border-color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.06) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.15),
+    var(--highlight-top),
+    var(--shadow-md) !important;
+}
+
+.solo-wiz-card.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--accent1);
+  color: #001a18;
+  font-size: 0.8rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 232, 208, 0.4);
+  animation: soloCheckPop 280ms var(--ease-bouncy);
+}
+
+@keyframes soloCheckPop {
+  0% { transform: scale(0) rotate(-180deg); }
+  60% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+.solo-wiz-card-icon {
+  font-size: 2.4rem !important;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+.solo-wiz-card-title {
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  color: var(--text-primary) !important;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.solo-wiz-card-desc {
+  font-size: 0.78rem !important;
+  color: var(--text-secondary-enhanced) !important;
+  line-height: 1.5;
+}
+
+.solo-wiz-footer {
+  display: flex;
+  gap: 10px;
+  padding: 16px !important;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.20));
+  backdrop-filter: blur(8px);
+}
+
+.solo-wiz-btn {
+  padding: 12px 24px !important;
+  border-radius: var(--radius-md) !important;
+  background: var(--surface-2);
+  border: 1.5px solid var(--border-default);
+  color: var(--text-primary);
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: all 220ms var(--ease-smooth) !important;
+  font-family: inherit;
+  min-height: 48px;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.solo-wiz-btn:hover {
+  border-color: var(--accent1);
+  color: var(--accent1);
+  background: var(--surface-3);
+  transform: translateY(-1px);
+}
+
+.solo-wiz-btn.primary {
+  background: linear-gradient(135deg, var(--accent1), var(--accent1-dark)) !important;
+  color: #001a18 !important;
+  border-color: transparent !important;
+  font-weight: 800 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 12px rgba(0, 232, 208, 0.30) !important;
+}
+
+.solo-wiz-btn.primary:hover {
+  color: #001a18 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.30),
+    0 6px 20px rgba(0, 232, 208, 0.45) !important;
+  transform: translateY(-2px);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   12. SOLO FULLSCREEN MODE — Better Immersive Experience
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-question-fullscreen .solo-q-topbar {
+  padding: 16px 24px !important;
+}
+
+.solo-question-fullscreen .solo-q-body {
+  padding: 32px 24px !important;
+  gap: 24px !important;
+}
+
+.solo-question-fullscreen .solo-q-text {
+  font-size: clamp(1.5rem, 5vw, 2.4rem) !important;
+}
+
+.solo-question-fullscreen .solo-q-option {
+  padding: 20px 24px !important;
+  min-height: 64px !important;
+  font-size: clamp(1rem, 2.5vw, 1.2rem) !important;
+}
+
+.solo-question-fullscreen .solo-q-option-letter {
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 1rem !important;
+}
+
+.solo-question-fullscreen .solo-btn-confirm {
+  padding: 18px 56px !important;
+  font-size: 1.2rem !important;
+}
+
+.solo-fullscreen-btn {
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  color: var(--text-secondary-enhanced) !important;
+  padding: 8px 14px !important;
+  border-radius: var(--radius-md) !important;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  transition: all 220ms var(--ease-smooth) !important;
+  min-height: 40px;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.solo-fullscreen-btn:hover {
+  color: var(--accent1) !important;
+  border-color: var(--accent1) !important;
+  background: var(--surface-3) !important;
+}
+
+.solo-fullscreen-btn.active {
+  color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.10) !important;
+  border-color: var(--accent1) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   13. PROGRESS BAR — Refined Display
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-progress-layer {
+  padding: 8px 16px;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.solo-progress-accuracy {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 800;
+  border: 1px solid;
+}
+
+.solo-progress-accuracy.high {
+  color: #00e06e;
+  background: rgba(0, 224, 110, 0.10);
+  border-color: rgba(0, 224, 110, 0.20);
+}
+
+.solo-progress-accuracy.mid {
+  color: #ff9100;
+  background: rgba(255, 145, 0, 0.10);
+  border-color: rgba(255, 145, 0, 0.20);
+}
+
+.solo-progress-accuracy.low {
+  color: var(--danger);
+  background: rgba(255, 61, 90, 0.10);
+  border-color: rgba(255, 61, 90, 0.20);
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   14. ACHIEVEMENTS & LEADERBOARD BUTTONS — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-map-stats button,
+.solo-map-header button {
+  border-radius: var(--radius-md) !important;
+  font-weight: 700 !important;
+  transition: all 220ms var(--ease-snappy) !important;
+  min-height: 40px;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.solo-map-stats button:hover,
+.solo-map-header button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   15. SOLO CARD (admin/library) — Refined
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-card {
+  border-radius: var(--radius-lg) !important;
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  padding: 20px !important;
+  transition: all 280ms var(--ease-snappy) !important;
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+  cursor: pointer;
+}
+
+.solo-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent1) !important;
+  box-shadow:
+    0 0 0 3px rgba(0, 232, 208, 0.10),
+    var(--highlight-top),
+    0 12px 32px rgba(124, 92, 252, 0.35) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   16. MOBILE REFINEMENTS — Touch & Spacing
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Solo map — better mobile layout */
+  .solo-map-title-bar {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .solo-map-title {
+    font-size: 0.95rem !important;
+  }
+
+  .solo-map-title-icon {
+    font-size: 1.2rem !important;
+  }
+
+  .solo-map-stats {
+    gap: 8px !important;
+    padding: 8px 12px 12px !important;
+  }
+
+  .solo-map-stat {
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
+  }
+
+  .solo-map-stat .solo-stat-icon {
+    font-size: 0.95rem !important;
+  }
+
+  .solo-map-stat .solo-stat-val {
+    font-size: 0.82rem !important;
+  }
+
+  .solo-map-body {
+    padding: 12px 12px 100px !important;
+  }
+
+  /* World cards — mobile */
+  .solo-world {
+    padding: 14px 12px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .solo-world-header {
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .solo-world-icon {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 1.3rem !important;
+  }
+
+  /* Level nodes — mobile */
+  .solo-levels-path {
+    gap: 8px !important;
+  }
+
+  .solo-node-circle {
+    width: 38px !important;
+    height: 38px !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* Question screen — mobile */
+  .solo-q-topbar {
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .solo-q-cat {
+    font-size: 0.85rem !important;
+    max-width: 50%;
+  }
+
+  .solo-q-cat-icon {
+    font-size: 1.2rem !important;
+  }
+
+  .solo-q-level {
+    font-size: 0.72rem !important;
+    padding: 3px 10px;
+  }
+
+  .solo-q-body {
+    padding: 16px 12px 8px !important;
+    gap: 12px !important;
+  }
+
+  .solo-q-text {
+    font-size: clamp(1rem, 4vw, 1.3rem) !important;
+  }
+
+  .solo-q-options {
+    gap: 8px !important;
+  }
+
+  .solo-q-option {
+    padding: 12px 14px !important;
+    min-height: 48px !important;
+    font-size: 0.9rem !important;
+    gap: 10px !important;
+  }
+
+  .solo-q-option-letter {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.78rem !important;
+  }
+
+  /* Buttons — mobile touch targets */
+  .solo-btn-confirm {
+    padding: 12px 32px !important;
+    font-size: 1rem !important;
+    min-height: 48px;
+    width: 100%;
+  }
+
+  .solo-btn-skip,
+  .solo-btn-back {
+    padding: 10px 18px !important;
+    font-size: 0.78rem !important;
+    min-height: 44px;
+  }
+
+  /* Post-answer buttons — mobile */
+  .solo-post-answer {
+    padding: 12px 12px 8px;
+  }
+
+  .solo-post-answer-row {
+    gap: 8px !important;
+  }
+
+  .solo-post-btn {
+    padding: 10px 16px !important;
+    font-size: 0.82rem !important;
+    min-width: 90px !important;
+    min-height: 44px;
+    flex: 1;
+  }
+
+  /* Solo wizard — mobile */
+  .solo-wiz-header {
+    padding: 16px 12px 10px !important;
+  }
+
+  .solo-wiz-header-title {
+    font-size: 1.1rem !important;
+  }
+
+  .solo-wiz-body {
+    padding: 12px !important;
+  }
+
+  .solo-wiz-card {
+    padding: 16px 12px !important;
+  }
+
+  .solo-wiz-footer {
+    padding: 12px !important;
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .solo-wiz-btn {
+    width: 100%;
+  }
+
+  /* Stars overlay — mobile */
+  .solo-stars-overlay {
+    padding: 24px 16px 0;
+  }
+
+  .solo-stars-heading {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   17. TABLET REFINEMENTS
+   ════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .solo-q-options {
+    max-width: 600px;
+  }
+
+  .solo-map-body {
+    padding: 14px 20px 100px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   18. ANIMATIONS — Refined Keyframes
+   ════════════════════════════════════════════════════════════════════════ */
+@keyframes solo-pulse-current {
+  0%, 100% {
+    box-shadow:
+      0 0 0 4px rgba(0, 232, 208, 0.15),
+      0 0 0 8px rgba(0, 232, 208, 0.08),
+      0 0 20px rgba(0, 232, 208, 0.50),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    box-shadow:
+      0 0 0 6px rgba(0, 232, 208, 0.20),
+      0 0 0 12px rgba(0, 232, 208, 0.10),
+      0 0 28px rgba(0, 232, 208, 0.65),
+      inset 0 1px 0 rgba(255, 255, 255, 0.20);
+  }
+}
+
+@keyframes solo-timer-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes solo-opt-flash {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.04); box-shadow: 0 0 24px rgba(0, 224, 110, 0.50); }
+  100% { transform: scale(1); }
+}
+
+@keyframes solo-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+@keyframes solo-progress-shine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes soloViewFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   19. REDUCED MOTION — Respect User Preference
+   ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .solo-level-node,
+  .solo-node-circle,
+  .solo-q-option,
+  .solo-btn-confirm,
+  .solo-post-btn,
+  .solo-wiz-card,
+  .solo-world,
+  .solo-stars-overlay,
+  .solo-victory-overlay,
+  .solo-confirm-box {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .solo-level-node.solo-level-current .solo-node-circle,
+  .solo-timer-fill.solo-timer-low,
+  .solo-timer-bar.solo-timer-critical {
+    animation: none !important;
+  }
+
+  .solo-world-progress-fill::after {
+    animation: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   20. FOCUS STATES — Accessible
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-level-node:focus-visible .solo-node-circle,
+.solo-q-option:focus-visible,
+.solo-btn-confirm:focus-visible,
+.solo-btn-skip:focus-visible,
+.solo-btn-back:focus-visible,
+.solo-post-btn:focus-visible,
+.solo-wiz-card:focus-visible,
+.solo-wiz-btn:focus-visible,
+.solo-fullscreen-btn:focus-visible {
+  outline: 2px solid var(--accent1) !important;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(0, 232, 208, 0.20) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   21. DISABLED STATES — Clear Visual Feedback
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-btn-confirm:not(.solo-confirm-active),
+.solo-post-btn[disabled],
+.solo-wiz-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   22. LIGHT THEME ADJUSTMENTS
+   ════════════════════════════════════════════════════════════════════════ */
+[data-theme="light"] .solo-map,
+[data-theme="light"] .solo-question {
+  background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-panel) 100%) !important;
+}
+
+[data-theme="light"] .solo-map-header,
+[data-theme="light"] .solo-q-topbar {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+[data-theme="light"] .solo-world,
+[data-theme="light"] .solo-q-option {
+  background: rgba(255, 255, 255, 0.80) !important;
+}
+
+[data-theme="light"] .solo-stars-overlay,
+[data-theme="light"] .solo-victory-overlay,
+[data-theme="light"] .solo-confirm-overlay {
+  background: rgba(240, 245, 255, 0.92) !important;
+}
+
+[data-theme="light"] .solo-stars-heading {
+  text-shadow: none !important;
+}
+
+[data-theme="light"] .solo-confirm-box {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12) !important;
+}

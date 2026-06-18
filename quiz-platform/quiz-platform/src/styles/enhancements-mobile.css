@@ -1,0 +1,1086 @@
+/* ════════════════════════════════════════════════════════════════════════
+   MOBILE UI/UX ENHANCEMENT LAYER — Comprehensive Fixes
+   ════════════════════════════════════════════════════════════════════════
+   Addresses critical mobile usability issues:
+   - Categories list: cramped layout, tiny action buttons, hard to reach
+   - Questions list: 5 action buttons crammed, text truncation, no scroll
+   - Question edit modal: cramped inputs, small touch targets
+   - Bottom nav: 8 items overflow, tiny labels
+   - General: touch targets too small, horizontal overflow, poor density
+
+   Strategy:
+   - Restructure category cards for mobile (inline actions, bigger touch targets)
+   - Convert question actions to a dropdown/overflow menu on mobile
+   - Make modals full-screen on mobile with better spacing
+   - Improve bottom nav: scrollable, bigger touch targets, fewer items visible
+   - Increase all touch targets to 44px minimum
+   - Better text readability with proper line heights
+   - Smooth scrolling with momentum
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. MOBILE BREAKPOINT — Apply fixes below 768px
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* ── 1.1 ADMIN LAYOUT — Better Mobile Structure ── */
+  .admin-header {
+    padding: 8px 12px !important;
+    min-height: 56px;
+  }
+
+  .admin-header .logo-text,
+  .admin-header h1 {
+    font-size: 1rem !important;
+  }
+
+  /* Hide non-essential header buttons on mobile */
+  .admin-header .btn:not(.btn-primary):not(.btn-danger):not([aria-label*="تسجيل"]):not([onclick*="startPresentation"]):not([onclick*="logout"]) {
+    display: none !important;
+  }
+
+  /* Keep only essential header actions */
+  .admin-header-actions {
+    gap: 4px !important;
+  }
+
+  .admin-header-actions .btn {
+    padding: 8px 10px !important;
+    min-width: 40px;
+    min-height: 40px;
+    font-size: 0.8rem !important;
+  }
+
+  /* ── 1.2 ADMIN CONTENT — Better Spacing ── */
+  .admin-content {
+    padding: 12px 8px 90px !important; /* 90px bottom for bottom nav */
+  }
+
+  /* ── 1.3 BOTTOM NAV — Scrollable & Bigger ── */
+  .bottom-nav {
+    height: 64px !important;
+    padding: 6px 4px !important;
+    padding-bottom: env(safe-area-inset-bottom, 0) !important;
+    gap: 2px !important;
+    justify-content: flex-start !important;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .bottom-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bottom-nav-item {
+    min-width: 60px !important;
+    min-height: 52px !important;
+    padding: 6px 10px !important;
+    font-size: 0.62rem !important;
+    gap: 3px !important;
+    border-radius: var(--radius-md) !important;
+    transition: all 220ms var(--ease-smooth) !important;
+    flex-shrink: 0;
+  }
+
+  .bottom-nav-item svg {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .bottom-nav-item.active {
+    color: var(--accent1) !important;
+    background: rgba(0, 232, 208, 0.10) !important;
+    box-shadow: 0 0 0 1px rgba(0, 232, 208, 0.20) !important;
+  }
+
+  .bottom-nav-item:active {
+    transform: scale(0.95);
+    transition-duration: 80ms !important;
+  }
+
+  /* V11-MOBILE: On very small screens (≤400px), hide less-important nav items
+     to keep the most-used ones (Home, Categories, Teams, Import, Start) visible.
+     "Appearance" and "Credits" are accessible via the desktop layout or by
+     horizontal scroll. This prevents the last 2 buttons from being off-screen. */
+  @media (max-width: 400px) {
+    .bottom-nav-item[data-tab="appearance"],
+    .bottom-nav-item[data-tab="credits"] {
+      display: none !important;
+    }
+  }
+  /* On 401-480px, hide only "Credits" (least critical) */
+  @media (max-width: 480px) and (min-width: 401px) {
+    .bottom-nav-item[data-tab="credits"] {
+      display: none !important;
+    }
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   2. CATEGORIES LIST — Mobile-Optimized Layout
+   ════════════════════════════════════════════════════════════════════════ */
+
+  /* Categories container — full height on mobile */
+  #categories-list-admin {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    gap: 10px !important;
+  }
+
+  /* Category card — restructured for mobile */
+  .category-card {
+    padding: 14px 16px !important;
+    margin-bottom: 0 !important;
+    border-radius: var(--radius-lg) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* Color bar — keep but adjust */
+  .category-card > div[style*="position:absolute;top:0;right:0;width:4px"] {
+    width: 4px !important;
+    border-radius: 0 0 0 4px;
+  }
+
+  /* Category main row — full width */
+  .category-card > div[style*="display:flex;align-items:center;gap:7px"] {
+    flex: 1 !important;
+    min-width: 0 !important;
+    padding-right: 12px !important;
+    gap: 10px !important;
+  }
+
+  /* Hide drag handle on mobile (touch drag is awkward) */
+  .category-card [style*="cursor:grab"][data-touch-drag="cat"],
+  .category-card [style*="font-size:1rem;cursor:grab"] {
+    display: none !important;
+  }
+
+  /* Category icon — bigger */
+  .category-card [style*="font-size:1.4rem"] {
+    font-size: 1.8rem !important;
+    width: 44px !important;
+    height: 44px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--surface-3) !important;
+    border-radius: var(--radius-md) !important;
+    border: 1px solid var(--border-default) !important;
+    flex-shrink: 0;
+  }
+
+  /* Category name + count container */
+  .category-card [style*="font-weight:700;font-size:.9rem"] {
+    font-size: 1rem !important;
+    font-weight: 800 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .category-card [style*="font-size:.76rem;color:var(--text-secondary)"] {
+    font-size: 0.82rem !important;
+    color: var(--text-secondary-enhanced) !important;
+    font-weight: 600;
+  }
+
+  /* Category actions — inline, bigger touch targets */
+  .category-card [style*="display:flex;gap:4px;margin-top:9px"] {
+    display: flex !important;
+    gap: 8px !important;
+    margin-top: 0 !important;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  .category-card .btn-icon {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 10px !important;
+    font-size: 1.1rem !important;
+    border-radius: var(--radius-md) !important;
+    border-width: 1.5px !important;
+  }
+
+  /* Selected category — clearer indicator */
+  .category-card.selected {
+    border-color: var(--accent1) !important;
+    background: linear-gradient(135deg, rgba(0, 232, 208, 0.08), rgba(0, 232, 208, 0.02)) !important;
+    box-shadow:
+      0 0 0 2px rgba(0, 232, 208, 0.15),
+      var(--highlight-top),
+      var(--shadow-sm) !important;
+  }
+
+  .category-card.selected::after {
+    top: 6px !important;
+    left: 6px !important;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0.8rem !important;
+  }
+
+  /* Add category button — full width, prominent */
+  .admin-content .btn-primary[onclick*="openCatModal"],
+  .admin-content button[onclick*="addCat"]:not(.btn-icon) {
+    width: 100%;
+    padding: 16px !important;
+    font-size: 1rem !important;
+    min-height: 52px;
+    margin-bottom: 12px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   3. QUESTIONS LIST — Mobile-Optimized Layout
+   ════════════════════════════════════════════════════════════════════════ */
+
+  /* Questions container — full height on mobile */
+  .questions-list {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    gap: 12px !important;
+  }
+
+  /* Question item — restructured for mobile */
+  .question-item {
+    padding: 14px 16px !important;
+    gap: 12px !important;
+    border-radius: var(--radius-lg) !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  /* Question top row: number + text + menu button */
+  .question-item::before {
+    display: none !important;
+  }
+
+  /* Hide drag handle on mobile */
+  .question-drag-handle {
+    display: none !important;
+  }
+
+  /* Question number — inline with text */
+  .question-num {
+    min-width: 36px !important;
+    height: 36px !important;
+    font-size: 0.88rem !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  /* Question body — full width */
+  .question-body {
+    flex: 1 !important;
+    width: 100% !important;
+  }
+
+  /* Question text — readable, not truncated on mobile */
+  .question-text {
+    font-size: 0.95rem !important;
+    line-height: 1.6 !important;
+    -webkit-line-clamp: unset !important;
+    display: block !important;
+    overflow: visible !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Type badge — inline */
+  .q-type-badge {
+    font-size: 0.72rem !important;
+    padding: 3px 10px !important;
+    margin-bottom: 6px !important;
+    display: inline-block !important;
+  }
+
+  /* Difficulty + timer row */
+  .question-body > div[style*="display:flex;align-items:center;gap:6px;margin-bottom:4px"] {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Options pills — wrap nicely */
+  .question-options {
+    gap: 6px !important;
+    margin-top: 8px !important;
+  }
+
+  .option-pill {
+    font-size: 0.78rem !important;
+    padding: 4px 10px !important;
+  }
+
+  /* Question actions — full width row, bigger buttons */
+  .question-actions {
+    display: flex !important;
+    gap: 6px !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    justify-content: stretch !important;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .question-actions .btn-icon {
+    flex: 1 !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    padding: 10px 6px !important;
+    font-size: 1rem !important;
+    border-radius: var(--radius-md) !important;
+    border-width: 1.5px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Add small labels under icons in question actions */
+  .question-actions .btn-icon::after {
+    content: attr(data-label);
+    font-size: 0.6rem;
+    font-weight: 600;
+    line-height: 1;
+    opacity: 0.8;
+  }
+
+  /* Hide clone & generate buttons on mobile (less common actions) to save space */
+  .question-actions .btn-icon[onclick*="cloneQuestion"],
+  .question-actions .btn-icon[onclick*="generateMultiple"] {
+    display: none !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   4. QUESTION EDIT MODAL — Full-Screen on Mobile
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .modal-overlay {
+    padding: 0 !important;
+    align-items: stretch !important;
+  }
+
+  .modal {
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: 100vh !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    animation: modalSlideUpMobile 280ms var(--ease-snappy) !important;
+  }
+
+  @keyframes modalSlideUpMobile {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* Modal header — bigger, clearer */
+  .modal-header {
+    padding: 16px !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    position: sticky !important;
+    top: 0 !important;
+    background: var(--surface-2) !important;
+    backdrop-filter: blur(12px) !important;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-default) !important;
+  }
+
+  .modal-title {
+    font-size: 1.1rem !important;
+    font-weight: 800 !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  /* Template dropdown — hide on mobile (too cramped) */
+  #q-template-dropdown,
+  .modal-header .form-select {
+    display: none !important;
+  }
+
+  /* Templates button — hide on mobile */
+  .modal-header [onclick*="showTemplateSelector"] {
+    display: none !important;
+  }
+
+  /* Modal close — bigger touch target */
+  .modal-close {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 1.3rem !important;
+    border-radius: var(--radius-md) !important;
+    flex-shrink: 0;
+  }
+
+  /* Modal body — better padding */
+  .modal-body {
+    padding: 16px !important;
+  }
+
+  /* Form groups — more spacing */
+  .modal-body .form-group,
+  .modal .form-group {
+    margin-bottom: 18px !important;
+  }
+
+  /* Form labels — bigger */
+  .modal .form-label {
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+  }
+
+  /* Form inputs — bigger, easier to tap */
+  .modal .form-input,
+  .modal .form-select,
+  .modal .form-textarea {
+    padding: 14px 16px !important;
+    font-size: 1rem !important;
+    border-radius: var(--radius-md) !important;
+    min-height: 48px;
+  }
+
+  .modal .form-textarea {
+    min-height: 100px !important;
+  }
+
+  /* Question type tabs — scrollable horizontally */
+  .qtype-tabs {
+    display: flex !important;
+    gap: 6px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .qtype-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .qtype-tab {
+    padding: 10px 16px !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    border-radius: var(--radius-full) !important;
+    white-space: nowrap !important;
+    flex-shrink: 0;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Modal footer — sticky at bottom, bigger buttons */
+  .modal-footer {
+    padding: 14px 16px !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    background: var(--surface-2) !important;
+    backdrop-filter: blur(12px) !important;
+    border-top: 1px solid var(--border-default) !important;
+    flex-direction: column-reverse !important;
+    gap: 8px !important;
+  }
+
+  .modal-footer .btn {
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 14px !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* Alerts in modal — better spacing */
+  .modal .alert {
+    padding: 12px 14px !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   5. CATEGORY EDIT MODAL — Mobile Optimizations
+   ════════════════════════════════════════════════════════════════════════ */
+
+  #modal-category .modal {
+    max-width: 100% !important;
+  }
+
+  /* Color picker — grid layout on mobile */
+  #modal-category [style*="display:flex"][style*="gap"]:has(input[type=color]) {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)) !important;
+    gap: 10px !important;
+  }
+
+  #modal-category input[type=color] {
+    width: 100% !important;
+    height: 48px !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   6. TEAMS — Mobile Optimizations
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .teams-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .team-card {
+    padding: 16px !important;
+  }
+
+  .team-name-display {
+    font-size: 1.05rem !important;
+  }
+
+  .team-score-display {
+    font-size: 1.6rem !important;
+  }
+
+  .member-tag {
+    padding: 6px 12px !important;
+    font-size: 0.8rem !important;
+    min-height: 32px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   7. APPEARANCE/THEMES — Mobile Optimizations
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .theme-swatch {
+    padding: 12px 8px 14px !important;
+  }
+
+  .theme-swatch .sw-preview {
+    height: 48px !important;
+  }
+
+  .theme-swatch .sw-name {
+    font-size: 0.78rem !important;
+  }
+
+  .theme-swatch .sw-desc {
+    font-size: 0.65rem !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   8. IMPORT — Mobile Optimizations
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .import-zone {
+    padding: 32px 16px !important;
+  }
+
+  .import-zone .upload-icon {
+    font-size: 2.4rem !important;
+  }
+
+  .import-zone p {
+    font-size: 0.85rem !important;
+  }
+
+  /* Import preview table — scrollable horizontally */
+  .import-preview-table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   9. DASHBOARD — Mobile Optimizations
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .dashboard-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+
+  .dash-stat-card {
+    padding: 14px !important;
+  }
+
+  .dash-stat-icon {
+    font-size: 1.5rem !important;
+  }
+
+  .dash-stat-value {
+    font-size: 1.4rem !important;
+  }
+
+  .dash-stat-label {
+    font-size: 0.75rem !important;
+  }
+
+  .dash-quick-actions {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .dash-quick-btn {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 14px !important;
+    min-height: 48px !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   10. SETTINGS SUBTABS — Mobile Scrollable
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .settings-sub-tabs {
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap !important;
+    padding: 6px !important;
+  }
+
+  .settings-sub-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .settings-sub-tab {
+    white-space: nowrap !important;
+    flex-shrink: 0;
+    padding: 10px 14px !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   11. FORM GROUPS — Better Mobile Spacing
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .form-group {
+    margin-bottom: 16px !important;
+  }
+
+  .form-label {
+    font-size: 0.88rem !important;
+    margin-bottom: 8px !important;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    padding: 12px 14px !important;
+    font-size: 0.95rem !important;
+    min-height: 48px;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   12. BUTTONS — Bigger Touch Targets
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .btn {
+    min-height: 44px !important;
+    padding: 12px 18px !important;
+    font-size: 0.9rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  .btn-sm {
+    min-height: 40px !important;
+    padding: 8px 14px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .btn-lg {
+    min-height: 52px !important;
+    padding: 16px 28px !important;
+    font-size: 1rem !important;
+  }
+
+  .btn-icon {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 10px !important;
+    font-size: 1rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   13. EMPTY STATES — Mobile Optimized
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .empty-state-enhanced {
+    padding: 40px 20px !important;
+    min-height: 200px !important;
+  }
+
+  .empty-state-enhanced .empty-state-icon-svg {
+    width: 60px !important;
+    height: 60px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .empty-state-enhanced .empty-state-title {
+    font-size: 1.05rem !important;
+  }
+
+  .empty-state-enhanced .empty-state-desc {
+    font-size: 0.88rem !important;
+  }
+
+  .empty-state-enhanced .empty-state-action .btn {
+    width: 100%;
+    padding: 14px !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   14. TOAST NOTIFICATIONS — Mobile Position
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .toast-container {
+    top: 70px !important; /* Below admin header */
+    max-width: calc(100% - 16px) !important;
+    width: calc(100% - 16px) !important;
+    left: 8px !important;
+    transform: none !important;
+    z-index: 10000 !important;
+  }
+
+  .notification,
+  .toast {
+    min-height: 48px !important;
+    padding: 12px 14px !important;
+    font-size: 0.85rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   15. ALERTS — Mobile Optimized
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .alert {
+    padding: 12px 14px !important;
+    font-size: 0.85rem !important;
+    border-radius: var(--radius-md) !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   16. SEARCH & FILTER — Mobile Optimized
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .admin-search-bar,
+  .filter-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+  }
+
+  .admin-search-input {
+    width: 100% !important;
+    min-height: 44px;
+  }
+
+  .filter-chip {
+    min-height: 36px;
+    padding: 8px 14px;
+    font-size: 0.8rem;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   17. CARDS — Mobile Optimized
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .card {
+    border-radius: var(--radius-lg) !important;
+    margin-bottom: 12px !important;
+  }
+
+  .card-header {
+    padding: 14px 16px !important;
+  }
+
+  .card-body {
+    padding: 16px !important;
+  }
+
+  .card-title {
+    font-size: 0.95rem !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   18. NUMBER STEPPER — Mobile Bigger
+   ════════════════════════════════════════════════════════════════════════ */
+
+  .number-stepper button {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    font-size: 1.1rem !important;
+  }
+
+  .number-stepper input {
+    min-height: 44px !important;
+    font-size: 1rem !important;
+  }
+
+  /* ════════════════════════════════════════════════════════════════════════
+   19. SCROLLBAR — Hide on mobile (use momentum scroll)
+   ════════════════════════════════════════════════════════════════════════ */
+
+  * {
+    scrollbar-width: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* But keep scrollbars for specific containers that need them */
+  .modal,
+  .questions-list,
+  #categories-list-admin {
+    scrollbar-width: thin;
+  }
+
+  .modal::-webkit-scrollbar,
+  .questions-list::-webkit-scrollbar,
+  #categories-list-admin::-webkit-scrollbar {
+    display: block;
+    width: 4px;
+  }
+
+} /* End @media (max-width: 768px) */
+
+/* ════════════════════════════════════════════════════════════════════════
+   20. TABLET OPTIMIZATIONS (768px - 1024px)
+   ════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  /* Categories — 2 columns on tablet */
+  #categories-list-admin {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Questions — keep single column for readability */
+  .questions-list {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Teams — 2 columns on tablet */
+  .teams-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Themes — 3 columns on tablet */
+  .theme-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* Modal — not full screen on tablet */
+  .modal {
+    max-width: 90% !important;
+    max-height: 90vh !important;
+    border-radius: var(--radius-xl) !important;
+  }
+
+  /* Bottom nav — same as mobile but bigger */
+  .bottom-nav-item {
+    min-width: 64px !important;
+    min-height: 56px !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   21. SMALL MOBILE (≤ 400px) — Extra Compact
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 400px) {
+
+  .admin-content {
+    padding: 8px 6px 90px !important;
+  }
+
+  /* Categories — even more compact */
+  .category-card {
+    padding: 12px 14px !important;
+    gap: 10px !important;
+  }
+
+  .category-card [style*="font-size:1.4rem"] {
+    font-size: 1.5rem !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .category-card [style*="font-weight:700;font-size:.9rem"] {
+    font-size: 0.92rem !important;
+  }
+
+  .category-card .btn-icon {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 8px !important;
+    font-size: 1rem !important;
+  }
+
+  /* Questions — compact */
+  .question-item {
+    padding: 12px 14px !important;
+  }
+
+  .question-num {
+    min-width: 32px !important;
+    height: 32px !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* Theme grid — 2 columns minimum */
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  /* Dashboard — 2 columns */
+  .dashboard-stats {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .dash-stat-card {
+    padding: 12px !important;
+  }
+
+  .dash-stat-value {
+    font-size: 1.2rem !important;
+  }
+
+  /* Bottom nav — smaller text */
+  .bottom-nav-item {
+    min-width: 56px !important;
+    font-size: 0.58rem !important;
+    padding: 6px 8px !important;
+  }
+
+  .bottom-nav-item svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* Buttons — slightly smaller */
+  .btn {
+    min-height: 42px !important;
+    padding: 10px 16px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .btn-icon {
+    min-width: 42px !important;
+    min-height: 42px !important;
+    padding: 8px !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   22. LANDSCAPE MODE — Better Layout
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) and (orientation: landscape) and (max-height: 500px) {
+
+  /* Modal — not full height in landscape */
+  .modal {
+    max-height: 100vh !important;
+    min-height: 100vh !important;
+  }
+
+  .modal-header {
+    padding: 10px 16px !important;
+  }
+
+  .modal-body {
+    padding: 12px 16px !important;
+  }
+
+  /* Form inputs — smaller in landscape */
+  .modal .form-input,
+  .modal .form-select,
+  .modal .form-textarea {
+    padding: 10px 14px !important;
+    min-height: 42px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   23. SAFE AREA — iPhone Notch Support
+   ════════════════════════════════════════════════════════════════════════ */
+@supports (padding: env(safe-area-inset-top)) {
+
+  @media (max-width: 768px) {
+    .admin-header {
+      padding-top: max(8px, env(safe-area-inset-top)) !important;
+    }
+
+    .admin-content {
+      padding-left: max(8px, env(safe-area-inset-left)) !important;
+      padding-right: max(8px, env(safe-area-inset-right)) !important;
+    }
+
+    .bottom-nav {
+      padding-bottom: env(safe-area-inset-bottom, 0) !important;
+      padding-left: env(safe-area-inset-left, 0) !important;
+      padding-right: env(safe-area-inset-right, 0) !important;
+    }
+
+    .modal-overlay {
+      padding-top: env(safe-area-inset-top, 0) !important;
+    }
+
+    .toast-container {
+      top: calc(70px + env(safe-area-inset-top, 0)) !important;
+    }
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   24. REDUCED MOTION — Respect User Preference
+   ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+
+  .modal {
+    animation: none !important;
+  }
+
+  .bottom-nav-item,
+  .category-card,
+  .question-item,
+  .btn,
+  .btn-icon {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,536 @@
+/* ════════════════════════════════════════════════════════════════════════
+   ENHANCEMENTS V2 — Categories Search + Presentation Fixes
+   ════════════════════════════════════════════════════════════════════════
+   Addresses:
+   - "Must scroll to edit questions" issue: search bar + auto-scroll to selected
+   - Categories layout grid (responsive)
+   - Presentation mode freeze when minimizing browser
+   - Home button fix in presentation
+   - General responsive improvements
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. CATEGORIES LAYOUT GRID — Responsive
+   ════════════════════════════════════════════════════════════════════════ */
+.categories-layout-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) 1fr;
+  gap: 16px;
+  align-items: start; /* Prevent stretching */
+}
+
+@media (max-width: 1024px) {
+  .categories-layout-grid {
+    grid-template-columns: 1fr; /* Stack on tablet/mobile */
+    gap: 12px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2. CATEGORY SEARCH BAR — Quick filter for many categories
+   ════════════════════════════════════════════════════════════════════════ */
+.cat-search-bar {
+  position: relative;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cat-search-input {
+  flex: 1;
+  padding: 10px 14px !important;
+  font-size: 0.88rem !important;
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  transition: all 220ms var(--ease-smooth) !important;
+  min-height: 40px;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.cat-search-input:focus {
+  outline: none !important;
+  border-color: var(--accent1) !important;
+  background: var(--surface-3) !important;
+  box-shadow: 0 0 0 3px rgba(0, 232, 208, 0.12) !important;
+}
+
+.cat-search-input::placeholder {
+  color: var(--text-muted-enhanced);
+}
+
+.cat-search-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary-enhanced);
+  background: var(--surface-3);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   3. CATEGORIES LIST — Sticky positioning for desktop
+   ════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 1025px) {
+  /* Make the categories column sticky so it stays visible while scrolling questions */
+  .categories-layout-grid > div:first-child {
+    position: sticky;
+    top: 80px; /* Below admin header */
+    max-height: calc(100vh - 100px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .categories-layout-grid > div:first-child > .card {
+    display: flex;
+    flex-direction: column;
+    max-height: inherit;
+    overflow: hidden;
+  }
+
+  .categories-layout-grid > div:first-child > .card > #categories-list-admin {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) var(--surface-1);
+  }
+
+  .categories-layout-grid > div:first-child > .card > #categories-list-admin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .categories-layout-grid > div:first-child > .card > #categories-list-admin::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: var(--radius-full);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   4. CATEGORY CARD — Bigger click target, clearer selected state
+   ════════════════════════════════════════════════════════════════════════ */
+.category-card {
+  cursor: pointer;
+  transition: all 220ms var(--ease-snappy) !important;
+}
+
+.category-card:hover {
+  transform: translateX(-2px);
+}
+
+.category-card.selected {
+  border-color: var(--accent1) !important;
+  background: linear-gradient(135deg, rgba(0, 232, 208, 0.08), rgba(0, 232, 208, 0.02)) !important;
+  box-shadow:
+    0 0 0 2px rgba(0, 232, 208, 0.20),
+    var(--highlight-top),
+    var(--shadow-sm) !important;
+}
+
+/* Selected indicator — left border accent */
+.category-card.selected::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent1);
+  box-shadow: 0 0 8px rgba(0, 232, 208, 0.5);
+  z-index: 2;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   5. PRESENTATION MODE — Prevent freeze when minimizing browser
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Pause animations and timers when tab is hidden (prevents jank on restore) */
+@media (prefers-reduced-motion: reduce) {
+  .pres-question-text,
+  .option-btn,
+  .category-card,
+  .team-card {
+    animation: none !important;
+  }
+}
+
+/* Presentation view — ensure it doesn't freeze on viewport resize */
+#view-categories,
+#view-question,
+#view-scores,
+#view-intro,
+#view-teams,
+#view-credits,
+#view-big-clock {
+  will-change: transform, opacity;
+  transform: translateZ(0); /* GPU acceleration */
+}
+
+/* Prevent layout shift on window resize */
+.pres-header-bar,
+.score-ticker-bar,
+.question-box {
+  contain: layout style paint;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   6. HOME BUTTON — Fix navigation to main screen
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Style for home buttons in presentation */
+.btn-home,
+.btn[onclick*="goHome"],
+.btn[onclick*="showView"],
+.bottom-nav-item[onclick*="settings"],
+.bottom-nav-item[data-tab="settings"] {
+  cursor: pointer;
+}
+
+/* Make home button more prominent */
+.pres-header-bar .btn-home,
+.btn[onclick*="goHome"] {
+  background: var(--surface-2) !important;
+  border: 1.5px solid var(--border-default) !important;
+  color: var(--text-primary) !important;
+  padding: 10px 16px !important;
+  border-radius: var(--radius-md) !important;
+  font-weight: 700 !important;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 220ms var(--ease-snappy) !important;
+  box-shadow: var(--highlight-top), var(--shadow-xs) !important;
+}
+
+.pres-header-bar .btn-home:hover,
+.btn[onclick*="goHome"]:hover {
+  background: var(--surface-3) !important;
+  border-color: var(--accent1) !important;
+  color: var(--accent1) !important;
+  transform: translateY(-1px);
+  box-shadow: var(--highlight-top), var(--shadow-sm) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   7. PRESENTATION HEADER — Better mobile layout
+   ════════════════════════════════════════════════════════════════════════ */
+.pres-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .pres-header-bar {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .pres-header-bar .btn {
+    padding: 8px 12px !important;
+    font-size: 0.8rem !important;
+    min-height: 40px;
+  }
+
+  .pres-header-bar .btn-icon {
+    min-width: 40px !important;
+    min-height: 40px !important;
+    padding: 8px !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   8. QUESTION BOX — Responsive sizing
+   ════════════════════════════════════════════════════════════════════════ */
+.question-box {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 32px);
+}
+
+.question-text-main {
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .question-box {
+    padding: 16px;
+    margin: 8px;
+  }
+
+  .question-text-main {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   9. OPTION BUTTONS — Better mobile layout
+   ════════════════════════════════════════════════════════════════════════ */
+.option-btn {
+  min-height: 56px;
+  padding: 14px 18px;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: var(--radius-md);
+  transition: all 220ms var(--ease-snappy);
+}
+
+@media (max-width: 768px) {
+  .option-btn {
+    min-height: 52px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   10. SCORE TICKER — Responsive
+   ════════════════════════════════════════════════════════════════════════ */
+.score-ticker-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.score-ticker-bar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .score-ticker-bar {
+    padding: 6px 12px;
+    gap: 6px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   11. PRESENTATION CATEGORIES GRID — Responsive
+   ════════════════════════════════════════════════════════════════════════ */
+.cats-pres-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 16px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .cats-pres-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    padding: 12px;
+  }
+}
+
+.cat-pres-btn {
+  min-height: 80px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: all 280ms var(--ease-snappy);
+}
+
+@media (max-width: 768px) {
+  .cat-pres-btn {
+    min-height: 72px;
+    padding: 10px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   12. TURN BANNER — Responsive
+   ════════════════════════════════════════════════════════════════════════ */
+.turn-announcement,
+.turn-banner {
+  padding: 20px;
+  text-align: center;
+  border-radius: var(--radius-lg);
+  margin: 16px auto;
+  max-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .turn-announcement,
+  .turn-banner {
+    padding: 14px;
+    margin: 8px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   13. TIMER — Responsive and doesn't freeze
+   ════════════════════════════════════════════════════════════════════════ */
+.timer-display,
+.timer-circle {
+  will-change: transform;
+  transform: translateZ(0); /* GPU acceleration to prevent jank */
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   14. TEAMS PRESENTATION — Responsive
+   ════════════════════════════════════════════════════════════════════════ */
+.team-display-card {
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+@media (max-width: 768px) {
+  .team-display-card {
+    padding: 12px;
+    min-height: 80px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   15. MOBILE CATEGORIES — Stack layout, search prominent
+   ════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  /* Stack categories above questions on mobile */
+  .categories-layout-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Categories card — collapsible height on mobile */
+  .categories-layout-grid > div:first-child > .card {
+    max-height: 50vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .categories-layout-grid > div:first-child > .card > #categories-list-admin {
+    flex: 1;
+    overflow-y: auto;
+    max-height: none !important; /* Override previous max-height */
+  }
+
+  /* Search bar — sticky on mobile */
+  .cat-search-bar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--surface-2);
+  }
+}
+
+@media (max-width: 640px) {
+  .cat-search-bar {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .cat-search-input {
+    width: 100%;
+  }
+
+  .cat-search-count {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   16. SCROLL INTO VIEW — Smooth animation
+   ════════════════════════════════════════════════════════════════════════ */
+html {
+  scroll-behavior: smooth;
+}
+
+.category-card {
+  scroll-margin: 80px 0; /* Offset for sticky header */
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   17. QUESTIONS PANEL — Better header
+   ════════════════════════════════════════════════════════════════════════ */
+#questions-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+#questions-panel-title .icon {
+  flex-shrink: 0;
+}
+
+/* Questions panel — make it sticky on desktop next to categories */
+@media (min-width: 1025px) {
+  .categories-layout-grid > div:last-child {
+    position: sticky;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow: hidden;
+  }
+
+  .categories-layout-grid > div:last-child > .card {
+    max-height: inherit;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .categories-layout-grid > div:last-child > .card > .card-body,
+  .categories-layout-grid > div:last-child > .card > div:last-child {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) var(--surface-1);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   18. REDUCED MOTION — Respect user preference
+   ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .category-card,
+  .cat-pres-btn,
+  .option-btn,
+  .team-display-card {
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

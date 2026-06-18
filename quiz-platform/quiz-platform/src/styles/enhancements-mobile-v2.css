@@ -1,0 +1,762 @@
+/* ════════════════════════════════════════════════════════════════════════
+   MOBILE SCROLL & HEADER FIXES — Final Polish
+   ════════════════════════════════════════════════════════════════════════
+   Addresses:
+   - Categories list not scrollable on mobile (card overflow:hidden clips it)
+   - Presentation headers overflow on mobile (buttons inaccessible)
+   - Overlap between search bar and category buttons
+   - Headers need horizontal scroll on mobile
+
+   Strategy:
+   - Remove max-height/overflow:hidden on mobile categories card → full page scroll
+   - Make presentation headers scrollable horizontally with momentum
+   - Stack search bar properly, prevent overlap
+   - Ensure all presentation headers wrap or scroll on mobile
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. CATEGORIES LIST — Fix Mobile Scroll
+   ════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  /* Remove the card's max-height and overflow:hidden that clip the list on mobile */
+  .categories-layout-grid > div:first-child > .card {
+    max-height: none !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  /* Let the categories list grow naturally — page scroll handles it */
+  .categories-layout-grid > div:first-child > .card > #categories-list-admin {
+    max-height: none !important;
+    overflow: visible !important;
+    flex: none !important;
+  }
+
+  /* Remove sticky positioning on mobile (causes issues with page scroll) */
+  .categories-layout-grid > div:first-child {
+    position: static !important;
+    max-height: none !important;
+  }
+
+  /* Questions panel — same treatment */
+  .categories-layout-grid > div:last-child {
+    position: static !important;
+    max-height: none !important;
+  }
+
+  .categories-layout-grid > div:last-child > .card {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2. SEARCH BAR — Prevent Overlap with Category Buttons
+   ════════════════════════════════════════════════════════════════════════ */
+
+.cat-search-bar {
+  /* Ensure search bar takes full width, no overlap */
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 5;
+  /* Clear separation from card header above and list below */
+  border-bottom: 1px solid var(--border-subtle);
+  margin: 0;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-1);
+}
+
+/* On mobile, stack the search input and count vertically to prevent overlap */
+@media (max-width: 640px) {
+  .cat-search-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    padding: 10px 12px !important;
+  }
+
+  .cat-search-input {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .cat-search-count {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center;
+    display: flex !important;
+    align-items: center;
+  }
+}
+
+/* Card header — ensure "Add" button doesn't overlap with title */
+.card-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card-header .card-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-header .btn {
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .card-header .btn-sm {
+    padding: 8px 12px !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   3. PRESENTATION HEADERS — Scrollable & Wrap on Mobile
+   ════════════════════════════════════════════════════════════════════════ */
+
+.pres-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(8, 9, 26, 0.85);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid var(--border-default);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pres-header-logo {
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 40%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pres-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  /* Hide scrollbar but keep scrollable */
+  -ms-overflow-style: none;
+  max-width: 60%;
+}
+
+.pres-header-actions::-webkit-scrollbar {
+  display: none;
+}
+
+.pres-header-actions .btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Mobile-specific header fixes ── */
+@media (max-width: 768px) {
+  .pres-header-bar {
+    padding: 8px 12px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pres-header-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pres-header-logo {
+    font-size: 0.9rem;
+    max-width: none;
+    flex-shrink: 0;
+  }
+
+  .pres-header-actions {
+    max-width: none;
+    flex: 1;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  .pres-header-actions .btn {
+    padding: 8px 10px !important;
+    font-size: 0.78rem !important;
+    min-height: 38px;
+    min-width: 38px;
+  }
+
+  .pres-header-actions .btn-icon {
+    padding: 8px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  /* Hide button labels on very small screens — keep icons only */
+  .pres-header-actions .btn-label-hide-sm,
+  .pres-header-actions .btn-label-hide-xs {
+    display: none;
+  }
+
+  /* Smaller SVG icons on mobile */
+  .pres-header-actions .svg-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pres-header-bar {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .pres-header-logo {
+    font-size: 0.85rem;
+    /* Truncate long logos */
+    max-width: 35%;
+  }
+
+  .pres-header-actions .btn {
+    padding: 6px 8px !important;
+    font-size: 0.72rem !important;
+    min-height: 36px;
+    min-width: 36px;
+  }
+
+  .pres-header-actions .btn-icon {
+    min-width: 36px !important;
+    min-height: 36px !important;
+    padding: 6px !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   4. INTRO HEADER — Special Mobile Treatment
+   ════════════════════════════════════════════════════════════════════════ */
+
+.intro-header-bar {
+  /* Intro has many buttons (music, fullscreen, keyboard, remote, audience, help, control)
+     — make it scrollable on mobile */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.intro-header-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.intro-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+}
+
+.intro-header-logo {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .intro-header-bar {
+    flex-wrap: nowrap;
+  }
+
+  /* Music volume slider — hide on mobile (takes too much space) */
+  .music-vol-wrap {
+    display: none !important;
+  }
+
+  /* Music button — show only icon */
+  .music-btn .btn-label-hide-xs,
+  .music-btn #music-label {
+    display: none;
+  }
+
+  .music-btn {
+    min-width: 38px;
+    min-height: 38px;
+    padding: 8px !important;
+    justify-content: center;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   5. CATEGORIES PRESENTATION GRID — Mobile Scroll
+   ════════════════════════════════════════════════════════════════════════ */
+
+#cats-pres-grid {
+  width: 100% !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  #cats-pres-grid {
+    padding: 12px;
+    width: 100% !important;
+  }
+}
+
+/* Categories mode switcher — scrollable on mobile */
+.cats-mode-switcher {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 4px 12px;
+  margin-bottom: 8px;
+  justify-content: flex-start;
+}
+
+.cats-mode-switcher::-webkit-scrollbar {
+  display: none;
+}
+
+.cats-mode-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .cats-mode-switcher {
+    padding: 4px 8px;
+    gap: 4px;
+  }
+
+  .cats-mode-btn {
+    padding: 6px 12px;
+    font-size: 0.72rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   6. QUESTION VIEW — Mobile Header & Body
+   ════════════════════════════════════════════════════════════════════════ */
+
+#view-question .pres-header-bar {
+  /* Question view has MANY buttons — make actions scrollable */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+#view-question .pres-header-bar::-webkit-scrollbar {
+  display: none;
+}
+
+#view-question .pres-header-actions {
+  flex-wrap: nowrap;
+  flex-shrink: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+#view-question .pres-header-actions::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #view-question .pres-header-bar {
+    padding: 6px 10px;
+  }
+
+  /* Hide less-important buttons on mobile question view */
+  #view-question .pres-header-actions .btn[onclick*="showScreenHelp"],
+  #view-question .pres-header-actions .btn[onclick*="showAudiencePoll"],
+  #view-question .pres-header-actions .btn[onclick*="toggleWhiteboard"] {
+    display: none;
+  }
+
+  /* Keep essential: skip, big clock, hint, search, remote, audience, buzzer, back, home */
+  #view-question .pres-header-actions .btn {
+    padding: 6px 8px !important;
+    font-size: 0.72rem !important;
+    min-height: 36px;
+    min-width: 36px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   7. SCORES VIEW — Mobile Header
+   ════════════════════════════════════════════════════════════════════════ */
+
+#view-scores .pres-header-actions {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+#view-scores .pres-header-actions::-webkit-scrollbar {
+  display: none;
+}
+
+#view-scores .pres-header-actions .btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  #view-scores .pres-header-actions .btn {
+    padding: 8px 10px !important;
+    font-size: 0.78rem !important;
+    min-height: 38px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   8. TEAMS VIEW — Mobile Header
+   ════════════════════════════════════════════════════════════════════════ */
+
+#view-teams .pres-header-actions {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+#view-teams .pres-header-actions::-webkit-scrollbar {
+  display: none;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   9. ADMIN HEADER — Mobile Scroll
+   ════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  .admin-header {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-header::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-header > * {
+    flex-shrink: 0;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   10. TURN BANNER — Mobile Friendly
+   ════════════════════════════════════════════════════════════════════════ */
+
+.cats-turn-banner,
+.turn-announcement {
+  padding: 16px;
+  text-align: center;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-weight: 700;
+  margin: 8px 12px;
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 768px) {
+  .cats-turn-banner,
+  .turn-announcement {
+    padding: 12px;
+    margin: 6px 8px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   11. QUESTION BODY — Mobile Scroll & Sizing
+   ════════════════════════════════════════════════════════════════════════ */
+
+.question-box {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(16px, 3vw, 32px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.question-text-main {
+  font-size: clamp(1.1rem, 4vw, 1.8rem);
+  line-height: 1.5;
+  text-align: center;
+  margin-bottom: 16px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .question-box {
+    padding: 14px;
+    margin: 8px;
+  }
+
+  .question-text-main {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+}
+
+/* Question meta bar — wrap on mobile */
+.question-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+@media (max-width: 768px) {
+  .question-meta-bar {
+    gap: 6px;
+    padding: 6px 0;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   12. OPTION BUTTONS — Mobile Grid Layout
+   ════════════════════════════════════════════════════════════════════════ */
+
+.option-btn {
+  min-height: 56px;
+  padding: 14px 18px;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: var(--radius-md);
+  transition: all 220ms var(--ease-snappy);
+  text-align: start;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .option-btn {
+    min-height: 52px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   13. SCORE TICKER — Mobile Scroll
+   ════════════════════════════════════════════════════════════════════════ */
+
+.score-ticker-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.score-ticker-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.score-ticker-bar > * {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .score-ticker-bar {
+    padding: 6px 12px;
+    gap: 6px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   14. MOBILE BOTTOM NAV — Ensure Scrollable
+   ════════════════════════════════════════════════════════════════════════ */
+
+.bottom-nav {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  gap: 2px;
+  justify-content: flex-start;
+  padding: 6px 4px !important;
+  padding-bottom: env(safe-area-inset-bottom, 0) !important;
+}
+
+.bottom-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.bottom-nav-item {
+  flex-shrink: 0;
+  min-width: 60px !important;
+  min-height: 52px !important;
+  padding: 6px 10px !important;
+  font-size: 0.62rem !important;
+  gap: 3px !important;
+  border-radius: var(--radius-md) !important;
+  transition: all 220ms var(--ease-smooth) !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottom-nav-item svg {
+  width: 22px !important;
+  height: 22px !important;
+  flex-shrink: 0;
+}
+
+.bottom-nav-item.active {
+  color: var(--accent1) !important;
+  background: rgba(0, 232, 208, 0.10) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   15. ADMIN CONTENT — Mobile Scroll Fix
+   ════════════════════════════════════════════════════════════════════════ */
+
+.admin-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 90px; /* Space for bottom nav */
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    padding: 12px 8px 90px !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   16. BODY & HTML — Ensure Proper Scroll on Mobile
+   ════════════════════════════════════════════════════════════════════════ */
+
+html, body {
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  overflow-y: auto;
+  position: relative;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   17. CARD HEADER — Prevent Button Overlap
+   ════════════════════════════════════════════════════════════════════════ */
+
+.card-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-1);
+}
+
+.card-header .card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.card-header .card-title .icon {
+  flex-shrink: 0;
+}
+
+.card-header .btn {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+@media (max-width: 480px) {
+  .card-header {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .card-header .card-title {
+    font-size: 0.92rem;
+  }
+
+  .card-header .btn-sm {
+    padding: 8px 12px !important;
+    font-size: 0.78rem !important;
+    min-height: 36px;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   18. REDUCED MOTION
+   ════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .pres-header-bar,
+  .pres-header-actions,
+  .bottom-nav,
+  .score-ticker-bar,
+  .cats-mode-switcher {
+    scroll-behavior: auto;
+  }
+}
