@@ -5298,6 +5298,8 @@ function _applyTeamCardHeight(){
   }
 }
 function applyFontScale(val){
+  val=parseInt(val)||100;
+  if(val<50)val=50;if(val>200)val=200;
   document.documentElement.style.setProperty('--fs',val/100);
   const el=document.getElementById('font-scale-display');
   if(el)el.textContent=val+'%';
@@ -5306,6 +5308,15 @@ function applyFontScale(val){
   if(el2)el2.textContent=val+'%';
   const sl=document.getElementById('s-font-scale-appearance');
   if(sl)sl.value=val;
+  // V14: Persist to state so it survives page reloads
+  try{
+    if(typeof state!=='undefined'&&state&&state.settings){
+      if(state.settings.fontScale!==val){
+        state.settings.fontScale=val;
+        if(typeof saveState==='function')saveState();
+      }
+    }
+  }catch(e){try{if(typeof ErrorBus!=='undefined')ErrorBus.capture(e,'applyFontScale:save')}catch(_){}}
 }
 function updateFontScale(val){
   updateSetting('fontScale',val);
