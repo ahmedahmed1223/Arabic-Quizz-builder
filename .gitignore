@@ -12,7 +12,10 @@ pnpm-debug.log*
 .pnpm-store/
 
 # ── Build output ──
-dist/
+# Note: dist/ is intentionally NOT ignored — the built single-file HTML
+# is included in the repo so users can download/use it directly without
+# having to run a build. The build output is the distributable artifact.
+# dist/
 build/
 .output/
 .vite/

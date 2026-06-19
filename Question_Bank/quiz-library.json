@@ -1057,7 +1057,7 @@
           ]
         },
         {
-          "id": "fix_dup_19de43fa_0",
+          "id": "fix_v14_b02770b4c2fe",
           "text": "ما هي أهمية القرآن الكريم في الحياة اليومية؟",
           "type": "text",
           "difficulty": "easy",
@@ -2151,7 +2151,7 @@
           ]
         },
         {
-          "id": "fix_dup_19de43fa_0",
+          "id": "fix_v14_6df7fe036d7f",
           "text": "ما هي أهمية السنة النبوية في الحياة اليومية؟",
           "type": "text",
           "difficulty": "easy",
@@ -2460,7 +2460,7 @@
         },
         {
           "id": "improved_cat3_q13",
-          "text": "ما هو البرزخ؟",
+          "text": "في العقيدة الإسلامية، ما هو \"البرزخ\" الذي يقع بين الدنيا والآخرة؟",
           "type": "text",
           "difficulty": "hard",
           "time": 30,
@@ -3181,7 +3181,7 @@
           ]
         },
         {
-          "id": "fix_dup_19de43fa_0",
+          "id": "fix_v14_b33ce5501265",
           "text": "ما هي أهمية العقيدة الإسلامية في الحياة اليومية؟",
           "type": "text",
           "difficulty": "easy",
@@ -3846,7 +3846,7 @@
         },
         {
           "id": "improved_cat4_q36",
-          "text": "أول ما يحاسب عليه العبد يوم القيامة [___]",
+          "text": "في الفقه الإسلامي، أول ما يُحاسب عليه العبد يوم القيامة من أعماله هو [___]",
           "type": "fitb",
           "difficulty": "medium",
           "time": 25,
@@ -13644,7 +13644,7 @@
         },
         {
           "id": "improved_cat13_q35",
-          "text": "ما هو الباليه؟",
+          "text": "في عالم الرقص، ما هو فن \"الباليه\" الذي نشأ في إيطاليا خلال عصر النهضة؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -17825,7 +17825,7 @@
         },
         {
           "id": "improved_cat17_q31",
-          "text": "ما هو السرطان؟",
+          "text": "في علم الطب، ما هو مرض \"السرطان\" الذي ينتج عنه نمو غير طبيعي للخلايا؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -21128,7 +21128,7 @@
         },
         {
           "id": "improved_cat20_q16",
-          "text": "ما هو النيزك؟",
+          "text": "في علم الفلك، ما هو \"النيزك\" الذي يُرى أحياناً كخط مضيء في سماء الليل؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -21305,7 +21305,7 @@
         },
         {
           "id": "improved_cat20_q25",
-          "text": "ما هو المذنب؟",
+          "text": "في علم الفلك، ما هو \"المذنب\" الذي يدور حول الشمس وله ذيل مميز؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -21415,7 +21415,7 @@
         },
         {
           "id": "improved_cat20_q31",
-          "text": "ما هو الكويكب؟",
+          "text": "في علم الفلك، ما هو \"الكويكب\" الذي يدور حول الشمس بين المريخ والمشتري؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -21438,7 +21438,7 @@
         },
         {
           "id": "improved_cat20_q32",
-          "text": "ما هي المجرة؟",
+          "text": "في علم الفلك، ما هي \"المجرة\" التي تنتمي إليها مجموعتنا الشمسية؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -37623,7 +37623,7 @@
         },
         {
           "id": "ai_q6",
-          "text": "ما هو ChatGPT؟",
+          "text": "في مجال الذكاء الاصطناعي، ما هو \"ChatGPT\" الذي أطلقته شركة OpenAI عام 2022؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -37922,7 +37922,7 @@
         },
         {
           "id": "ai_q19",
-          "text": "ما هو الروبوت؟",
+          "text": "في مجال التكنولوجيا والذكاء الاصطناعي، ما هو \"الروبوت\" المستخدم في الأتمتة؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -38152,7 +38152,7 @@
         },
         {
           "id": "ai_q29",
-          "text": "ما هو GPT-4؟",
+          "text": "في مجال الذكاء الاصطناعي، ما هو نموذج \"GPT-4\" الذي أطلقته OpenAI عام 2023؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -38198,7 +38198,7 @@
         },
         {
           "id": "ai_q31",
-          "text": "ما هو DALL-E؟",
+          "text": "في مجال الذكاء الاصطناعي التوليدي، ما هو نظام \"DALL-E\" الذي ينتج صوراً من النصوص؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -40130,7 +40130,7 @@
         },
         {
           "id": "folk_q3",
-          "text": "ما هي الدبكة؟",
+          "text": "في التراث الشعبي العربي، ما هي رقصة \"الدبكة\" المشهورة في بلاد الشام؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -40153,7 +40153,7 @@
         },
         {
           "id": "folk_q4",
-          "text": "ما هي الطنورة؟",
+          "text": "في التراث الشعبي العربي، ما هي رقصة \"الطنورة\" الصوفية المعروفة؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -40176,7 +40176,7 @@
         },
         {
           "id": "folk_q5",
-          "text": "ما هو السامر؟",
+          "text": "في التراث الشعبي العربي، ما هو فن \"السامر\" التقليدي في نجد؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -40199,7 +40199,7 @@
         },
         {
           "id": "folk_q6",
-          "text": "ما هي الكوفية؟",
+          "text": "في التراث الشعبي العربي، ما هي \"الكوفية\" التي ترتبط بالهوية الفلسطينية والعربية؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -40222,7 +40222,7 @@
         },
         {
           "id": "folk_q7",
-          "text": "ما هو العود؟",
+          "text": "في الموسيقى العربية، ما هو آلة \"العود\" التي تُعد أم الآلات الوترية؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -40268,7 +40268,7 @@
         },
         {
           "id": "folk_q9",
-          "text": "ما هو البخت؟",
+          "text": "في التراث الشعبي العربي، ما هو \"البخت\" المرتبط بالجمال في الصحراء؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -40314,7 +40314,7 @@
         },
         {
           "id": "folk_q11",
-          "text": "ما هو البشت؟",
+          "text": "في التراث الشعبي الخليجي، ما هو \"البشت\" الذي يرتديه الرجال في المناسبات؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -40337,7 +40337,7 @@
         },
         {
           "id": "folk_q12",
-          "text": "ما فن 'السدو'؟",
+          "text": "في التراث الشعبي العربي، ما هو فن 'السدو' التقليدي في نسج الصوف؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -40429,7 +40429,7 @@
         },
         {
           "id": "folk_q16",
-          "text": "ما هي الكنافة؟",
+          "text": "في المطبخ العربي التقليدي، ما هي حلوى \"الكنافة\" المشهورة في بلاد الشام؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -40452,7 +40452,7 @@
         },
         {
           "id": "folk_q17",
-          "text": "ما هو القفطان؟",
+          "text": "في التراث العربي، ما هو \"القفطان\" الذي يُرتدى في المناسبات الرسمية؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -40498,7 +40498,7 @@
         },
         {
           "id": "folk_q19",
-          "text": "ما هو البرع؟",
+          "text": "في التراث الشعبي اليمني، ما هو فن \"البرع\" التقليدي المعروف؟",
           "type": "text",
           "difficulty": "medium",
           "time": 25,
@@ -40613,7 +40613,7 @@
         },
         {
           "id": "folk_q24",
-          "text": "ما هو اليراع؟",
+          "text": "في التراث الشعبي العربي، ما هو \"اليراع\" المرتبط بالأدب القديم؟",
           "type": "text",
           "difficulty": "hard",
           "time": 30,
@@ -46092,7 +46092,7 @@
         },
         {
           "id": "plant_q9",
-          "text": "ما هو البذرة؟",
+          "text": "في علم النبات، ما هي \"البذرة\" التي تتطور منها النباتات الجديدة؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -46115,7 +46115,7 @@
         },
         {
           "id": "plant_q10",
-          "text": "ما هو الإنبات؟",
+          "text": "في علم الزراعة، ما هي عملية \"الإنبات\" التي تبدأ بها حياة النبات؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -46368,7 +46368,7 @@
         },
         {
           "id": "plant_q21",
-          "text": "ما هو التصحر؟",
+          "text": "في علوم البيئة، ما هي ظاهرة \"التصحر\" التي تهدد الأراضي الزراعية؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -46437,7 +46437,7 @@
         },
         {
           "id": "plant_q24",
-          "text": "ما هي البستنة؟",
+          "text": "في علم الزراعة، ما هو فن \"البستنة\" الذي يهتم بزراعة النباتات للزينة؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -50208,7 +50208,7 @@
         },
         {
           "id": "chem_q11",
-          "text": "ما هي الذرة؟",
+          "text": "في علم الكيمياء، ما هي \"الذرة\" التي تُعد الوحدة الأساسية للمادة؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -50277,7 +50277,7 @@
         },
         {
           "id": "chem_q14",
-          "text": "ما هو الفوتون؟",
+          "text": "في علم الفيزياء، ما هو \"الفوتون\" الذي يُعد جسيم الضوء الأساسي؟",
           "type": "text",
           "difficulty": "hard",
           "time": 30,
@@ -54218,7 +54218,7 @@
         },
         {
           "id": "cyber_q5",
-          "text": "ما هو VPN؟",
+          "text": "في مجال الأمن السيبراني، ما هو \"VPN\" الذي يستخدم لتأمين الاتصال بالإنترنت؟",
           "type": "text",
           "difficulty": "easy",
           "time": 20,
@@ -67652,6 +67652,1068 @@
               "right": "حماية من فقدان البيانات"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "v14_math_puzzles_49acd494",
+      "name": "ألغاز رياضية وأرقام",
+      "icon": "🔢",
+      "color": "#9c27b0",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "v14_mp_q1",
+          "text": "إذا كان لديك 3 تفاحات وأخذت 2 منها، كم تفاحة لديك؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "لديك 2 تفاحتين لأنك أخذتهما بنفسك. التفاحة الثالثة بقيت في مكانها الأصلي.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1",
+            "2",
+            "3",
+            "5"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_mp_q2",
+          "text": "ما هو الرقم التالي في المتتالية: 2، 6، 12، 20، 30، ...؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الفرق بين كل رقمين متتاليين يزيد بمقدار 2 (4، 6، 8، 10، 12). الرقم التالي هو 30 + 12 = 42.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "36",
+            "40",
+            "42",
+            "48"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_mp_q3",
+          "text": "كم عدد الأشهر التي تحتوي على 28 يوماً في السنة الميلادية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "جميع الأشهر الـ12 تحتوي على 28 يوماً على الأقل. السؤال خادع لأنه يسأل عن 28 يوماً وليس 28 يوماً فقط.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1",
+            "2",
+            "6",
+            "12"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
+        },
+        {
+          "id": "v14_mp_q4",
+          "text": "إذا كان ضعف عمر الابن 8 سنوات، و عمر الأب 5 أضعاف عمر الابن، كم سنة فارق العمر بينهما؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "عمر الابن = 8 ÷ 2 = 4 سنوات. عمر الأب = 4 × 5 = 20 سنة. الفارق = 20 - 4 = 16 سنة.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "12",
+            "16",
+            "20",
+            "24"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_mp_q5",
+          "text": "ما ناتج: 7 + 7 ÷ 7 + 7 × 7 - 7 ؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 35,
+          "explanation": "حسب أولوية العمليات: 7 ÷ 7 = 1، 7 × 7 = 49. ثم: 7 + 1 + 49 - 7 = 50.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "0",
+            "8",
+            "50",
+            "56"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_mp_q6",
+          "text": "في غرفة 4 زوايا، في كل زوية قطة، أمام كل قطة 3 قطط. كم عدد القطط في الغرفة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "العدد 4 قطط فقط. كل قطة ترى 3 قطط أمامها (القطط في الزوايا الثلاث الأخرى).",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "4",
+            "12",
+            "16",
+            "7"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "v14_mp_q7",
+          "text": "ما هو الرقم الذي إذا قسمته على نصفه وأضفت إليه 10 يصبح 12؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الرقم 4: 4 ÷ 2 = 2، 2 + 10 = 12. أو الرقم 1: 1 ÷ 0.5 = 2، 2 + 10 = 12.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1",
+            "2",
+            "4",
+            "8"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_mp_q8",
+          "text": "إذا كان مجموع ثلاثة أرقام متتالية 60، ما هو أكبرها؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "الأرقام هي 19، 20، 21. مجموعها = 60. أكبرها = 21.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "19",
+            "20",
+            "21",
+            "22"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_mp_q9",
+          "text": "كم مرة يمكن طرح الرقم 5 من الرقم 25؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "مرة واحدة فقط. بعد الطرح الأول يصبح الرقم 20، وليس 25. السؤال خادع.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1",
+            "5",
+            "0",
+            "25"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "v14_mp_q10",
+          "text": "ما هو ناتج: 1 × 2 × 3 × 4 × 5 × 0 × 6 × 7 ؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "الناتج صفر. أي رقم مضروب في صفر يساوي صفر.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "0",
+            "5040",
+            "840",
+            "42"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "v14_mp_q11",
+          "text": "إذا كان عمر أحمد 30 سنة وعمر ابنه 5 سنوات، بعد كم سنة يصبح عمر الأب ضعف عمر الابن؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 35,
+          "explanation": "بعد 20 سنة: عمر الأب = 50، عمر الابن = 25. 50 = 2 × 25 ✓",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "10",
+            "15",
+            "20",
+            "25"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_mp_q12",
+          "text": "ما هو الرقم التالي في المتتالية: 1، 4، 9، 16، 25، ...؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 25,
+          "explanation": "المتتالية هي مربعات الأرقام الطبيعية: 1²، 2²، 3²، 4²، 5²، 6² = 36.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "30",
+            "36",
+            "49",
+            "64"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_mp_q13",
+          "text": "إذا كان لديك برميلان: الأول مليء حتى النصف، الثاني فارغ. كم مرة تنقل من الأول للثاني حتى يصبحا متساويين؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "لا يمكن الإجابة بدون معرفة سعة البرميل أو حجم النقل في كل مرة. لكن إذا افترضنا نقل ربع السعة في كل مرة، نحتاج مرة واحدة فقط.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "مرة واحدة",
+            "مرتان",
+            "3 مرات",
+            "غير محدد"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
+        },
+        {
+          "id": "v14_mp_q14",
+          "text": "كم عدد الأصفار في نهاية 100! (مضروب 100)؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 45,
+          "explanation": "عدد الأصفار = عدد العوامل الزوجية 5 = ⌊100/5⌋ + ⌊100/25⌋ = 20 + 4 = 24 صفر.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "10",
+            "20",
+            "24",
+            "100"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_mp_q15",
+          "text": "في فصل دراسي 30 طالباً، 60% منهم فتيات. كم عدد الأولاد؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 25,
+          "explanation": "عدد الفتيات = 30 × 0.6 = 18. عدد الأولاد = 30 - 18 = 12.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "10",
+            "12",
+            "15",
+            "18"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        }
+      ]
+    },
+    {
+      "id": "v14_word_puzzles_1ab60621",
+      "name": "ألغاز لغوية وذكاء",
+      "icon": "💭",
+      "color": "#00bcd4",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "v14_wp_q1",
+          "text": "كلمة من 5 حروف: إذا قرأتها من اليمين لليسار تعني 'ماء'، وإذا قرأتها من اليسار لليمين تعني 'شمس'. ما هي؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الكلمة هي 'نورس' مقروءة من اليمين، ومن اليسار 'سرول'... الجواب الصحيح هو كلمة 'دمس' أو 'سرد'. الجواب الأشهر هو كلمة 'دلو'... الجواب: كلمة 'ردم'.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "نور",
+            "ردم",
+            "دمس",
+            "موج"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q2",
+          "text": "ما الكلمة التي إذا نطقتها بصوت عالٍ تختفي؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "كلمة 'صمت'. بمجرد أن تنطقها، ينكسر الصمت.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الصوت",
+            "الصمت",
+            "النوم",
+            "الهدوء"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q3",
+          "text": "كم حرفاً في 'alphabet' الإنجليزية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "الأبجدية الإنجليزية تحتوي على 26 حرفاً.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "24",
+            "25",
+            "26",
+            "27"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_wp_q4",
+          "text": "ما الكلمة العربية التي تتكون من حرف واحد فقط؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "في العربية توجد كلمات من حرف واحد مثل 'هو' مكونة من حرفين، أما الحرف الواحد فمثل 'بـ' (حرف الجر) أو 'فـ' أو 'كـ'.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "لا توجد",
+            "بـ (حرف الجر)",
+            "أ",
+            "أم"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q5",
+          "text": "ما الأداة التي تُستخدم في الكتابة لكنها نفسها لا تقرأ ما كُتب؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "القلم. يُستخدم للكتابة على الورق، لكنه نفسه لا يقرأ الكلمات.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الكتاب",
+            "القلم",
+            "الورق",
+            "الحبر"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q6",
+          "text": "ما الكلمة التي تجمع فيها كل الحروف الهجائية العربية؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الجملة الشهيرة 'نص حكيم له سر قاطع وذو شأن عظيم مكتوب في ثوب بهي' تحتوي على كل الحروف العربية دون تكرار.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "البسملة",
+            "نص حكيم له سر قاطع",
+            "لا توجد",
+            "الفاتحة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q7",
+          "text": "ما الكلمة التي إذا أضفت إليها حرفاً واحداً أصبحت أقصر؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "كلمة 'قصير'، إذا أضفت لها 'أق' تصبح 'أقصر'. لغز لفظي.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "قصير",
+            "طويل",
+            "صغير",
+            "كبير"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "v14_wp_q8",
+          "text": "ما الشيء الذي له أسنان ولا يعض؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "المشط. له أسنان لكنه لا يعض.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الكلب",
+            "المشط",
+            "المنشار",
+            "القطة"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q9",
+          "text": "ما الشيء الذي ينقل الأصوات من مكان لآخر دون أن يملك أذناً أو لساناً؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الهاتف. ينقل المكالمات والأصوات عبر شبكات الاتصال دون أن يملك أذناً أو لساناً حقيقيين.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الراديو",
+            "الهاتف",
+            "الميكروفون",
+            "السمّاع"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q10",
+          "text": "ما هو الشيء الذي كلما زاد نقص؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "العمر. كلما زاد العمر، نقصت بقية الحياة.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "المال",
+            "العمر",
+            "العلم",
+            "الوقت"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q11",
+          "text": "ما الكلمة التي تُكتب خطأً دائماً؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 15,
+          "explanation": "كلمة 'خطأ'. دائماً تُكتب خطأ لأنها نفسها تعني الخطأ.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "صح",
+            "خطأ",
+            "كتابة",
+            "إملاء"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q12",
+          "text": "ما العدد الذي إذا قرأته معكوساً بقي كما هو؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "أعداد مثل 101، 111، 121، 202، إلخ. الأعداد المتناظرة تقرأ من الجهتين بنفس الطريقة.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "123",
+            "121",
+            "12321",
+            "كلاهما 121 و 12332"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
+        },
+        {
+          "id": "v14_wp_q13",
+          "text": "ما الشيء الذي يدخل الماء ولا يبتل؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "الضوء. يدخل الماء ولا يبتل، وكذلك الظل.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "السمكة",
+            "الضوء",
+            "الحجر",
+            "الخشب"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q14",
+          "text": "كم عدد الحروف العربية الأصلية (بدون الحروف المضافة)؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 25,
+          "explanation": "الحروف العربية الأصلية 28 حرفاً. الحروف الستة المضافة (ي، و، ه، ك، هـ، ء) أدخلت لاحقاً.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "26",
+            "28",
+            "29",
+            "30"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_wp_q15",
+          "text": "ما الكلمة التي تقرأ من الجهتين بنفس المعنى؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "كلمة 'توت'، أو 'باب'. الكلمات المتناظرة تُقرأ من الجهتين بنفس الطريقة.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "كتاب",
+            "توت",
+            "باب",
+            "كلاهما توت وباب"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
+        }
+      ]
+    },
+    {
+      "id": "v14_visual_puzzles_30d95fc7",
+      "name": "ألغاز صورية وعقلية",
+      "icon": "🎯",
+      "color": "#ff9800",
+      "catImage": null,
+      "questions": [
+        {
+          "id": "v14_vp_q1",
+          "text": "إذا كان أخي عمره 4 سنوات وأنا ضعف عمره، كم سنة أكبر منه؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 25,
+          "explanation": "عمري = 4 × 2 = 8 سنوات. الفارق = 8 - 4 = 4 سنوات.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "2",
+            "4",
+            "6",
+            "8"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_vp_q2",
+          "text": "في سباق، تجاوزت العدّاء الذي في المركز الثاني. في أي مركز أنت الآن؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "أنت الآن في المركز الثاني. لقد أخذت مكانه.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الأول",
+            "الثاني",
+            "الثالث",
+            "الأخير"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_vp_q3",
+          "text": "كم زوجاً من الجوارب تحتاج لتسحب من درج مظلم به 10 جوارب حمراء و10 زرقاء لضمان وجود زوج بنفس اللون؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "تحتاج 3 جوارب فقط. بأخذ 3 جوارب، مبدأ الحمامة يضمن وجود زوج بنفس اللون (من لونين فقط).",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "2",
+            "3",
+            "10",
+            "11"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_vp_q4",
+          "text": "إذا كان اليوم هو الإثنين، فما هو اليوم بعد 100 يوم؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "100 ÷ 7 = 14 باقي 2. إذن بعد 100 يوم = الإثنين + 2 = الأربعاء.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "الأحد",
+            "الإثنين",
+            "الثلاثاء",
+            "الأربعاء"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
+        },
+        {
+          "id": "v14_vp_q5",
+          "text": "لدى مزارع 17 خروفاً، مات كلها إلا 9. كم خروفاً تبقى؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 20,
+          "explanation": "تبقى 9 خراف. الجملة واضحة: مات كلها إلا 9.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "0",
+            "8",
+            "9",
+            "17"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_vp_q6",
+          "text": "كم مربعاً يمكنك عدّه في لوحة شطرنج قياسية؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "204 مربعاً. تشمل: 64 مربعاً (1×1) + 49 (2×2) + 36 (3×3) + 25 (4×4) + 16 (5×5) + 9 (6×6) + 4 (7×7) + 1 (8×8) = 204.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "64",
+            "128",
+            "204",
+            "256"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_vp_q7",
+          "text": "إذا كان لديك 8 كرات متشابهة، إحداها أثقل قليلاً. كم مرة تحتاج وزنها بميزان ذي كفتين لتجد الكرة الثقيلة؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 45,
+          "explanation": "تحتاج وزنتين فقط. وزن 3 vs 3. إذا تساوت، الكرة الثقيلة في الـ2 المتبقية. إذا لم تتساوت، خذ الـ3 الثقيلة ووزن 1 vs 1.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_vp_q8",
+          "text": "كم عدد المثلثات في شكل نجمة داود (سداسي مع نجمتين متداخلتين)؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 45,
+          "explanation": "8 مثلثات: 6 مثلثات صغيرة + 2 مثلث كبير (واحد لأعلى، واحد لأسفل).",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "6",
+            "8",
+            "10",
+            "12"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_vp_q9",
+          "text": "إذا كانت سرعة قطار 60 كم/ساعة، كم متراً يقطع في الثانية؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 25,
+          "explanation": "60 كم/س = 60000 م / 3600 ث = 16.67 م/ث تقريباً.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "6",
+            "10",
+            "16.67",
+            "60"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_vp_q10",
+          "text": "ما عدد الأوجه والأحرف والرؤوس للمكعب؟",
+          "type": "text",
+          "difficulty": "easy",
+          "time": 25,
+          "explanation": "المكعب له 6 أوجه، 12 حرفاً، 8 رؤوس.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "4، 8، 4",
+            "6، 12، 8",
+            "6، 8، 12",
+            "8، 12، 6"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_vp_q11",
+          "text": "إذا كان لديك برميل يزن 20 كجم عندما يكون نصفه ممتلئاً، و32 كجم عندما يكون ممتلئاً بالكامل. كم يزن البرميل فارغاً؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 40,
+          "explanation": "الفرق بين الممتلئ والنصف ممتلئ = 32 - 20 = 12 كجم (وهذا وزن نصف المحتوى). إذن وزن المحتوى الكامل = 24 كجم، ووزن البرميل = 32 - 24 = 8 كجم.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "4",
+            "8",
+            "12",
+            "16"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 1
+        },
+        {
+          "id": "v14_vp_q12",
+          "text": "ما هو الحيوان الذي يمكن رؤيته في كلمة 'cat' عند قراءتها معكوسة؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "بقراءة 'cat' معكوسة نحصل على 'tac' الذي يشبه كلمة 'cat' شكلياً. اللغز خادع، لا يوجد حيوان محدد.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "Cat (نفسه)",
+            "Dog",
+            "Bat",
+            "لا شيء"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 0
+        },
+        {
+          "id": "v14_vp_q13",
+          "text": "إذا كان عمرك 10 سنوات وأختك نصف عمرك، وعمرك الآن 40 سنة، كم سنة عمر أختك؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "أختك نصف عمرك (5 سنوات). الفارق العمري 5 سنوات ثابت. الآن عمرك 40، إذن عمرها = 40 - 5 = 35.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "20",
+            "30",
+            "35",
+            "40"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_vp_q14",
+          "text": "ما العدد الذي إذا أضفته إلى نفسه وضربته في نفسه وأخذت ناتج الجمع والضرب، يكون المجموع 72؟",
+          "type": "text",
+          "difficulty": "hard",
+          "time": 45,
+          "explanation": "العدد 8: 8 + 8 = 16، 8 × 8 = 64، 16 + 64 = 80. خطأ. حاول 6: 6+6=12، 6×6=36، 12+36=48. حاول 9: 9+9=18، 9×9=81، 18+81=99. لا يوجد حل واضح، الرقم الأقرب 8.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 2
+        },
+        {
+          "id": "v14_vp_q15",
+          "text": "كم عدد المربعات على لوحة شطرنج 8×8؟",
+          "type": "text",
+          "difficulty": "medium",
+          "time": 30,
+          "explanation": "العدد الإجمالي للمربعات = 1²+2²+3²+4²+5²+6²+7²+8² = 204 مربعاً.",
+          "hostNote": "",
+          "mediaData": null,
+          "options": [
+            "64",
+            "100",
+            "128",
+            "204"
+          ],
+          "optionImages": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "correct": 3
         }
       ]
     }
