@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">المسابقات</string>
+    <string name="title_activity_main">منصة المسابقات التفاعلية</string>
+    <string name="package_name">com.ahmedahmed1223.arabicquizzbuilder</string>
+    <string name="custom_url_scheme">com.ahmedahmed1223.arabicquizzbuilder</string>
+</resources>
