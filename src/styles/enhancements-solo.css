@@ -1751,3 +1751,113 @@
   border-color: var(--border) !important;
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12) !important;
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   V14 — Prominent Home Button (Solo Mode)
+   A clear gradient-styled button that replaces the old subtle ghost button.
+   • accent1 → accent2 gradient background
+   • Inline SVG home icon
+   • Strong visual presence with glow + hover lift
+   • Mobile-responsive sizing
+   • Accessible focus-visible ring
+   ════════════════════════════════════════════════════════════════════════ */
+.solo-home-prominent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #1a1410;
+  background: linear-gradient(135deg, var(--accent1, #f5c842) 0%, var(--accent2, #ff9100) 100%);
+  box-shadow:
+    0 4px 14px rgba(245, 200, 66, 0.35),
+    0 2px 6px rgba(255, 145, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  position: relative;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.solo-home-prominent::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+.solo-home-prominent:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow:
+    0 6px 22px rgba(245, 200, 66, 0.45),
+    0 3px 10px rgba(255, 145, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+.solo-home-prominent:hover::before {
+  transform: translateX(100%);
+}
+.solo-home-prominent:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+  box-shadow:
+    0 2px 8px rgba(245, 200, 66, 0.25),
+    inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.solo-home-prominent:focus-visible {
+  outline: 2px solid var(--accent1, #f5c842);
+  outline-offset: 3px;
+}
+.solo-home-prominent svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.4;
+}
+.solo-home-prominent span {
+  display: inline-block;
+}
+
+/* Full-width variant used in solo-settings panel and victory overlay */
+.solo-home-prominent-full {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 0.95rem;
+  margin-top: 12px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .solo-home-prominent {
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    border-radius: 10px;
+  }
+  .solo-home-prominent svg {
+    width: 16px;
+    height: 16px;
+  }
+  .solo-home-prominent-full {
+    padding: 11px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .solo-home-prominent,
+  .solo-home-prominent::before {
+    transition: none !important;
+    animation: none !important;
+  }
+  .solo-home-prominent:hover {
+    transform: none !important;
+  }
+}

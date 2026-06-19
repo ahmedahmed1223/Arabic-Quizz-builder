@@ -9,25 +9,44 @@
 
 <!-- Loading -->
 <div id="loading-screen">
+  <!-- V14: Animated background particles -->
+  <div class="loading-v14-particles" aria-hidden="true">
+    <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
+    <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
+    <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
+    <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
+  </div>
   <div class="loading-lang-switcher">
     <button class="i18n-switcher-btn" onclick="I18n.setLang(I18n.getCurrentLang()==='ar'?'en':'ar')" title="Switch Language">
       <span class="i18n-globe">🌐</span><span class="i18n-lang-label">English</span>
     </button>
   </div>
-  <div class="logo-text" data-i18n="loading.title">منصة المسابقات التفاعلية</div>
+  <!-- V14: Central icon ring with 3 orbiting icons -->
+  <div class="loading-v14-icon-ring" aria-hidden="true">
+    <div class="lv14-ring-core">
+      <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+    </div>
+    <span class="lv14-orbit lv14-orbit-star">⭐</span>
+    <span class="lv14-orbit lv14-orbit-trophy">🏆</span>
+    <span class="lv14-orbit lv14-orbit-check">✓</span>
+  </div>
+  <div class="logo-text loading-v14-title" data-i18n="loading.title">منصة المسابقات التفاعلية</div>
+  <div class="loading-v14-version-badge">V14</div>
   <div class="lang-selector" style="margin-top:8px">
     <button onclick="I18n.setLang('ar')" id="lang-btn-ar" class="active">العربية</button>
     <button onclick="I18n.setLang('en')" id="lang-btn-en">English</button>
   </div>
-  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+  <div class="loading-bar loading-v14-bar"><div class="loading-bar-fill loading-v14-bar-fill"></div></div>
     <div id="loading-stage" style="margin-top:16px;font-size:0.8rem;color:var(--text-muted);min-height:1.2em;transition:opacity 0.3s">جاري التحميل...</div>
     <div id="loading-tip" style="margin-top:20px;font-size:0.75rem;color:var(--text-secondary);max-width:300px;text-align:center;line-height:1.5;opacity:0.7;min-height:2.4em"></div>
-    <div id="loading-steps" style="margin-top:24px;display:flex;gap:8px;justify-content:center;align-items:center">
-      <span class="loading-step" id="load-step-0" style="width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s"></span>
-      <span class="loading-step" id="load-step-1" style="width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s"></span>
-      <span class="loading-step" id="load-step-2" style="width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s"></span>
-      <span class="loading-step" id="load-step-3" style="width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s"></span>
-      <span class="loading-step" id="load-step-4" style="width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s"></span>
+    <div id="loading-steps" class="loading-v14-steps" style="margin-top:24px;display:flex;gap:8px;justify-content:center;align-items:center">
+      <span class="loading-step lv14-step" id="load-step-0"></span>
+      <span class="loading-step lv14-step" id="load-step-1"></span>
+      <span class="loading-step lv14-step" id="load-step-2"></span>
+      <span class="loading-step lv14-step" id="load-step-3"></span>
+      <span class="loading-step lv14-step" id="load-step-4"></span>
     </div>
 </div>
 
@@ -1838,7 +1857,7 @@
         <div style="margin-bottom:10px">
           <label class="form-label">رابط المكتبة الخارجية (JSON)</label>
           <div style="display:flex;gap:8px">
-            <input type="text" id="ext-lib-url" class="form-input" dir="ltr" value="https://github.com/ahmedahmed1223/Arabic-Quizz-builder/raw/refs/heads/main/Question_Bank/quiz-library.json" style="flex:1;font-size:.85rem">
+            <input type="text" id="ext-lib-url" class="form-input" dir="ltr" value="https://raw.githubusercontent.com/ahmedahmed1223/Arabic-Quizz-builder/refs/heads/main/Question_Bank/quiz-library.json" style="flex:1;font-size:.85rem">
             <button class="btn btn-primary" onclick="fetchExternalLibrary()" id="ext-fetch-btn">جلب</button>
           </div>
           <div id="ext-lib-status" style="margin-top:4px;font-size:.78rem"></div>
@@ -2672,7 +2691,10 @@
     <!-- Sticky header -->
     <div class="solo-map-header">
       <div class="solo-map-title-bar">
-        <button class="solo-btn-back" onclick="soloGoHome()" data-i18n="solo.backHome">الرئيسية</button>
+        <button class="solo-home-prominent" onclick="soloGoHome()" data-i18n="solo.backHome" aria-label="العودة إلى الصفحة الرئيسية">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>الرئيسية</span>
+        </button>
         <div class="solo-map-title"><svg class="solo-map-title-icon" style="width:1.3rem;height:1.3rem" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" fill="#f5c842"/><circle cx="12" cy="8" r="2.2" fill="#ff9100" opacity=".6"/></svg> <span data-i18n="solo.playBtn">اللعب الفردي</span></div>
         <button class="solo-btn-back" onclick="toggleSoloSettings()" style="font-size:.78rem;padding:4px 10px;border-color:rgba(100,100,140,.3);color:var(--text-secondary)">⚙️</button>
         <button class="solo-btn-back solo-btn-reset" onclick="resetSoloProgress().then(function(ok){if(ok){renderSoloMap();}}).catch(function(e){console.error('Reset error:',e);})" data-i18n="solo.resetProgress">إعادة التعيين</button>
@@ -2863,7 +2885,10 @@
     </div>
     <button class="solo-settings-action" onclick="addOfflineQuestionBank()" id="solo-settings-add-bank">📂 إضافة بنك أسئلة</button>
     <button class="solo-settings-action" onclick="updateSoloQuestionLibrary()" id="solo-settings-update-lib">📥 تحديث مكتبة الأسئلة</button>
-    <button class="solo-settings-action danger" onclick="soloGoHome()" id="solo-settings-home">🏠 الرجوع للقائمة الرئيسية</button>
+    <button class="solo-home-prominent solo-home-prominent-full" onclick="soloGoHome()" id="solo-settings-home" aria-label="العودة إلى الصفحة الرئيسية">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>الرجوع للقائمة الرئيسية</span>
+    </button>
     <button class="solo-settings-action" onclick="toggleSoloSettings()" id="solo-settings-close" style="margin-top:10px;border-color:var(--accent1,#00e8d0);color:var(--accent1,#00e8d0)">✓ إغلاق</button>
   </div>
 </div>
@@ -3031,7 +3056,10 @@
   </div>
   <div class="solo-victory-actions">
     <button class="solo-btn solo-btn-primary" onclick="resetSoloProgress(true);closeSoloVictory();startSoloGame()" data-i18n="solo.playAgain">العب مجدداً</button>
-    <button class="solo-btn solo-btn-ghost" onclick="soloGoHome()" data-i18n="solo.home">الرئيسية</button>
+    <button class="solo-home-prominent solo-home-prominent-full" onclick="soloGoHome()" data-i18n="solo.home" aria-label="العودة إلى الصفحة الرئيسية">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>الرئيسية</span>
+    </button>
   </div>
 </div>
 

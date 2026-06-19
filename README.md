@@ -1,306 +1,375 @@
-# 🎯 منصة المسابقات التفاعلية — Quiz Platform
+# 🎯 منصة المسابقات التفاعلية
 
-> **Interactive Quiz Platform** — A fully offline-capable, single-file web app for creating and hosting engaging quiz competitions. Built with Vite, restructured from a monolithic HTML file into a clean, modular project.
+> **تطبيق ويب تفاعلي عربي بالكامل لإنشاء واستضافة مسابقات تعليمية وترفيهية ممتعة.**
+> يعمل بالكامل دون اتصال بالإنترنت، ومبني باستخدام Vite، ويُبنى كملف HTML واحد مستقل للتوزيع السهل.
 
-[![Build: Single File](https://img.shields.io/badge/build-single%20file-success)](#-build) [![License: MIT](https://img.shields.io/badge/license-MIT-blue)](#-license) [![Vite](https://img.shields.io/badge/Vite-5.x-646cff)](https://vitejs.dev/) [![Mobile Friendly](https://img.shields.io/badge/mobile-friendly-green)](#-responsive-design) [![Accessibility](https://img.shields.io/badge/a11y-WCAG%20AA-orange)](#-accessibility)
-
----
-
-## 📖 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Quick Start](#-quick-start)
-- [Build](#-build)
-- [Responsive Design](#-responsive-design)
-- [Accessibility](#-accessibility)
-- [Browser Support](#-browser-support)
-- [Contributing](#-contributing)
-- [License](#-license)
+[![البناء: ملف واحد](https://img.shields.io/badge/البناء-ملف%20واحد-success)](#-البناء) [![الرخصة: MIT](https://img.shields.io/badge/الرخصة-MIT-blue)](#-الرخصة) [![Vite](https://img.shields.io/badge/Vite-5.x-646cff)](https://vitejs.dev/) [![متوافق مع الجوال](https://img.shields.io/badge/الجوال-متوافق-green)](#-التصميم-المتجاوب) [![إمكانية الوصول](https://img.shields.io/badge/إمكانية%20الوصول-WCAG%20AA-orange)](#-إمكانية-الوصول) [![الإصدار V14](https://img.shields.io/badge/الإصدار-V14-ff9100)](#-v14--إصدار-جديد)
 
 ---
 
-## 🌟 Overview
+## 📑 فهرس المحتويات
 
-This project is an **Arabic-first interactive quiz platform** that supports:
-
-- **Team competitions** with scoring, lifelines, and tiebreakers
-- **Solo mode** with level progression, stars, and achievements
-- **Multiple question types**: text, true/false, fill-in-blank, order, match, math, Quran, image, audio, video
-- **Multiple display modes**: grid, list, hidden cards, Jeopardy board, fortune wheel
-- **Presentation mode** with projector/second-screen support via Remote Control + Audience Display
-- **Offline-capable** — works completely without internet after first load
-
-Originally a 6.4 MB single-file HTML app (40,139 lines), it has been **restructured into a clean, multi-file Vite project** that builds back to a single self-contained HTML file for offline distribution.
-
----
-
-## ✨ Features
-
-### 🎮 Game Modes
-- **Team Mode** — Multiple teams compete with turn-based play, scoring, lifelines (50/50, skip, extra time)
-- **Solo Mode** — Single player progresses through levels with stars, achievements, and leaderboard
-- **Training Mode** — No timer, instant answer reveal for practice
-
-### 📝 Question Types
-- Text multiple choice (4 options)
-- True/False
-- Fill in the blank
-- Order (arrange items)
-- Match (pair items)
-- Math (with KaTeX rendering)
-- Quran memorization
-- Image-based
-- Audio-based
-- Video-based
-
-### 🎨 Display Modes
-- **Grid** — Classic card grid
-- **List** — Vertical list view
-- **Hidden Cards** — Mystery flip cards
-- **Jeopardy Board** — Value-based selection (100-500 points)
-- **Fortune Wheel** — Spinning wheel for random selection
-
-### 🛠 Admin Panel
-- **Dashboard** with stats, charts, quick actions
-- **Categories management** with search, drag-reorder, bulk import
-- **Questions editor** with type-specific UI, templates, preview
-- **Teams management** with members, colors, scores
-- **Themes** — 19 built-in themes + custom theme editor
-- **Import/Export** — JSON, Excel (XLSX), Google Sheets, encrypted backups
-- **Settings** — Timer, scoring, sounds, accessibility, certificates
-
-### 🎯 Presentation Features
-- **Fullscreen mode** for projectors
-- **Remote Control** window (phone-friendly)
-- **Audience Display** window (second screen)
-- **Buzzer mode** for live competitions
-- **Whiteboard** overlay
-- **Audience Poll** (simulated)
-- **QR Code** generator for joining
-- **Winner Certificate** with PDF export
-
-### 🌐 Internationalization
-- **Arabic** (RTL, primary)
-- **English** (LTR)
-- Switchable at runtime, persisted
+- [نظرة عامة](#-نظرة-عامة)
+- [الإصدار V14 — جديد!](#-v14--إصدار-جديد)
+- [أبرز المميزات](#-أبرز-المميزات)
+- [التقنيات المستخدمة](#-التقنيات-المستخدمة)
+- [هيكل المشروع](#-هيكل-المشروع)
+- [التشغيل السريع](#-التشغيل-السريع)
+- [البناء والإنتاج](#-البناء-والإنتاج)
+- [التصميم المتجاوب](#-التصميم-المتجاوب)
+- [إمكانية الوصول](#-إمكانية-الوصول)
+- [دعم المتصفحات](#-دعم-المتصفحات)
+- [المساهمة في المشروع](#-المساهمة-في-المشروع)
+- [الرخصة](#-الرخصة)
+- [شكر وتقدير](#-شكر-وتقدير)
 
 ---
 
-## 🛠 Tech Stack
+## 🌟 نظرة عامة
 
-| Layer | Technology |
+هذا المشروع هو **منصة مسابقات تفاعلية عربية الأصل** تدعم:
+
+- **مسابقات الفرق**: مع نظام نقاط، أدوات مساعدة (50/50، تخطي، وقت إضافي)، وكسر التعادل
+- **الوضع الفردي**: تقدم اللاعب عبر المستويات مع النجوم والإنجازات ولوحة المتصدرين
+- **أنواع متعددة من الأسئلة**: نصي، صح/خطأ، أكمل الفراغ، ترتيب، توصيل، رياضيات، قرآن، صور، صوت، فيديو
+- **أنماط عرض متعددة**: شبكة، قائمة، بطاقات مخفية، لوحة جيوباردي، عجلة الحظ
+- **وضع العرض التقديمي**: دعم البروجكتر والشاشة الثانية عبر التحكم عن بُعد + شاشة الجمهور
+- **يعمل دون اتصال**: يعمل بالكامل دون إنترنت بعد التحميل الأول
+
+بدأ المشروع كملف HTML واحد ضخم (6.4 ميجابايت، 40,139 سطر)، وتم **إعادة هيكلته كمشروع Vite نظيف متعدد الملفات** يُبنى مرة أخرى كملف HTML واحد مستقل للتوزيع دون اتصال.
+
+---
+
+## 🚀 V14 — إصدار جديد!
+
+الإصدار V14 يجلب تحديثات شاملة لتجربة المستخدم وواجهة المستخدم:
+
+### 1️⃣ إصلاح رابط المكتبة الخارجية
+
+تم تحديث الرابط الافتراضي إلى:
+```
+https://raw.githubusercontent.com/ahmedahmed1223/Arabic-Quizz-builder/refs/heads/main/Question_Bank/quiz-library.json
+```
+
+تم التحقق من عمل الجلب بنجاح: **61 قسماً، 3258 سؤالاً** محمّلة بنجاح. كما يدعم الكود تحويل روابط `github.com/.../raw/` تلقائياً إلى `raw.githubusercontent.com` لتفادي مشاكل CORS.
+
+### 2️⃣ مكتبة الأسئلة المدمجة المُثرَاة (ملف منفصل)
+
+- **ملف جديد**: `src/app/11-builtin-library.js`
+- **السابق**: 18 قسماً، 313 سؤالاً
+- **الحالي**: 20 قسماً، 318 سؤالاً (مزيج من المحتوى المنسّق + 5 أقسام أصلية جديدة)
+- **5 أقسام أصلية جديدة**:
+  - 🌍 **الجغرافيا والبلدان** (12 سؤالاً)
+  - 🔬 **العلوم الحديثة** (12 سؤالاً)
+  - 💻 **التكنولوجيا والحاسوب** (10 أسئلة)
+  - ⚽ **الرياضة** (8 أسئلة)
+  - 🍽️ **الأطعمة والتغذية** (8 أسئلة)
+- **جميع مُعرّفات الأسئلة فريدة** (0 تكرارات)
+- **أنواع الأسئلة المدعومة**: نصي، صح/خطأ، أكمل الفراغ، ترتيب، توصيل، قرآن، رياضيات
+
+### 3️⃣ شاشة التحميل العصرية (V14)
+
+- **ملف جديد**: `src/styles/loading-v14.css`
+- 12 جسيم خلفية عائم متحرك
+- حلقة أيقونات مركزية مع 3 أيقونات تدور حولها (نجمة، كأس، علامة صح)
+- عنوان بتدرّج لوني مع تأثير لمعان
+- شريط تقدم عصري مع لمعان
+- نقاط مراحل نابضة
+- شارة الإصدار (V14)
+- يحترم تفضيل `prefers-reduced-motion`
+
+### 4️⃣ مكتبة الأيقونات (123 أيقونة SVG عصرية)
+
+- **ملف جديد**: `src/app/00-icon-library.js`
+- تصميم خطّي مستوحى من Lucide
+- **التصنيفات**: تنقّل، أنواع المحتوى، مستخدمون، ألعاب، تواصل، حالة، ملفات، وقت، واجهة، رياضيات، قرآن، رياضة، طعام، تخطيط
+- عرض تلقائي عبر سمة `data-icon`
+- **واجهة برمجية**: `Icon.render(name)`, `Icon.html(name)`, `Icon.renderAll()`
+- **بدون أي اعتماديات خارجية** — كل مسارات SVG مضمّنة
+
+### 5️⃣ الوضع الفردي — زر الرئيسية البارز
+
+- تحديث زر `soloGoHome()` إلى نمط بارز بتدرّج لوني
+- إضافة أيقونة SVG للمنزل
+- ظهور واضح بخلفية متدرجة من accent1 إلى accent2
+- تحسين `aria-label` لإمكانية الوصول
+- متجاوب مع الجوال
+
+---
+
+## ✨ أبرز المميزات
+
+### 🎮 أنماط اللعب
+
+- **وضع الفرق**: تتنافس فرق متعددة بأدوار تبادلية مع نظام نقاط وأدوات مساعدة (50/50، تخطي، وقت إضافي)
+- **الوضع الفردي**: تقدم لاعب واحد عبر المستويات مع نجوم وإنجازات ولوحة متصدرين
+- **وضع التدريب**: بدون مؤقت، كشف فوري للإجابة للتمرين
+
+### 📝 أنواع الأسئلة
+
+- اختيار من متعدد (4 خيارات)
+- صح / خطأ
+- أكمل الفراغ
+- الترتيب (ترتيب العناصر)
+- التوصيل (مطابقة العناصر)
+- رياضيات (مع عرض KaTeX)
+- حفظ القرآن
+- أسئلة بالصور
+- أسئلة بالصوت
+- أسئلة بالفيديو
+
+### 🎨 أنماط العرض
+
+- **شبكة**: شبكة بطاقات كلاسيكية
+- **قائمة**: عرض قائمة عمودية
+- **بطاقات مخفية**: بطاقات قلب غامضة
+- **لوحة جيوباردي**: اختيار حسب القيمة (100-500 نقطة)
+- **عجلة الحظ**: عجلة دوارة للاختيار العشوائي
+
+### 🛠 لوحة الإدارة
+
+- **لوحة معلومات** بإحصائيات ورسوم بيانية وإجراءات سريعة
+- **إدارة الأقسام** مع بحث، إعادة ترتيب بالسحب، استيراد جماعي
+- **محرر الأسئلة** بواجهة مخصصة لكل نوع، قوالب، ومعاينة
+- **إدارة الفرق** بأعضاء، ألوان، ونقاط
+- **السمات**: 19 سمة جاهزة + محرر سمات مخصص
+- **استيراد/تصدير**: JSON، Excel (XLSX)، Google Sheets، نسخ احتياطية مشفّرة
+- **الإعدادات**: المؤقت، النقاط، الأصوات، إمكانية الوصول، الشهادات
+
+### 🎯 ميزات العرض التقديمي
+
+- وضع ملء الشاشة للبروجكترات
+- نافذة التحكم عن بُعد (مناسبة للهاتف)
+- نافذة شاشة الجمهور (شاشة ثانية)
+- وضع الجرس للمسابقات الحية
+- طبقة سبورة
+- تصويت الجمهور (محاكى)
+- مولّد رمز QR للانضمام
+- شهادة الفائز بتصدير PDF
+
+### 🌐 التدويل اللغوي
+
+- **العربية** (RTL، أساسي)
+- **الإنجليزية** (LTR)
+- قابل للتبديل أثناء التشغيل، ويُحفظ تلقائياً
+
+---
+
+## 🛠 التقنيات المستخدمة
+
+| الطبقة | التقنية |
 |---|---|
-| **Build Tool** | Vite 5.x |
-| **Single-File Output** | Custom `vite-plugin-inline-classic-assets.js` |
-| **Vendor Libraries** | KaTeX 0.16.11, SheetJS (XLSX) 0.18.5, Quill, Cropper.js 1.6.1, jsPDF 2.5.1, SortableJS 1.15.6, LZ-String 1.5.0 |
-| **Fonts** | Cairo, Tajawal, Amiri, Noto Naskh Arabic (Google Fonts) |
-| **Storage** | IndexedDB (media) + LocalStorage (state) + LZ-String compression |
-| **Security** | SHA-256 password hashing (Web Crypto), HTML sanitizer, CSP |
+| **أداة البناء** | Vite 5.x |
+| **الناتج بملف واحد** | `vite-plugin-inline-classic-assets.js` (مخصص) |
+| **مكتبات الطرف الثالث** | KaTeX 0.16.11، SheetJS (XLSX) 0.18.5، Quill، Cropper.js 1.6.1، jsPDF 2.5.1، SortableJS 1.15.6، LZ-String 1.5.0 |
+| **الخطوط** | Cairo، Tajawal، Amiri، Noto Naskh Arabic (Google Fonts) |
+| **التخزين** | IndexedDB (للوسائط) + LocalStorage (للحالة) + ضغط LZ-String |
+| **الأمان** | تجزئة كلمات المرور بـ SHA-256 (Web Crypto)، مُنظّف HTML، CSP |
 
 ---
 
-## 🗂 Project Structure
+## 🗂 هيكل المشروع
 
 ```
-quiz-platform/
-├── index.html                          # Main HTML entry
-├── package.json                        # Dependencies & scripts
-├── vite.config.js                      # Vite build configuration
-├── vite-plugin-inline-classic-assets.js  # Custom plugin: inlines everything for single-file output
-├── .gitignore                          # Git ignore rules
-├── README.md                           # This file
+arabic-quizz-builder/
+├── index.html                          # نقطة الدخول HTML الرئيسية
+├── package.json                        # الاعتماديات والسكربتات
+├── vite.config.js                      # إعدادات بناء Vite
+├── vite-plugin-inline-classic-assets.js  # إضافة مخصصة لتضمين كل شيء في ملف واحد
+├── .gitignore                          # قواعد تجاهل Git
+├── README.md                           # هذا الملف
 │
-├── scripts/                            # Build & maintenance scripts
-│   ├── extract_sections.py             # Extract sections from original HTML
-│   ├── move_to_project.py              # Move files into src/ layout
-│   ├── strip_wrappers.py               # Strip <script>/<style> wrappers
-│   ├── check_syntax.mjs                # Verify each file's JS syntax
-│   ├── find_unbalanced.mjs             # Locate unbalanced braces/parens
-│   ├── check_boundaries.py             # Check brace/paren balance
-│   └── ... (more maintenance scripts)
+├── scripts/                            # سكربتات البناء والصيانة
+│   ├── extract_sections.py             # استخراج الأقسام من HTML الأصلي
+│   ├── move_to_project.py              # نقل الملفات إلى تخطيط src/
+│   ├── strip_wrappers.py               # إزالة أغلفة <script>/<style>
+│   ├── check_syntax.mjs                # التحقق من صحة بناء كل ملف JS
+│   ├── find_unbalanced.mjs             # تحديد موقع الأقواس غير المتوازنة
+│   ├── check_boundaries.py             # فحص توازن الأقواس
+│   └── ... (المزيد من سكربتات الصيانة)
 │
 └── src/
-    ├── styles/                         # All CSS (vendor + app + enhancements)
-    │   ├── vendor-quill.css            # Quill WYSIWYG editor styles
-    │   ├── vendor-cropper.css          # Cropper.js styles
-    │   ├── vendor-katex.css            # KaTeX math styles (with embedded fonts)
-    │   ├── main.css                    # Main application CSS (~5000 lines)
-    │   ├── animations.css              # V10 animation performance CSS
-    │   ├── enhancements.css            # UI/UX enhancement layer 1 (design system)
-    │   ├── enhancements-2.css          # Enhancement layer 2 (screen-specific)
-    │   ├── enhancements-3.css          # Enhancement layer 3 (final polish)
-    │   ├── enhancements-solo.css       # Solo mode enhancements
-    │   ├── enhancements-admin.css      # Admin panel enhancements
-    │   ├── enhancements-mobile.css     # Mobile responsiveness v1
-    │   ├── enhancements-v2.css         # Categories search + presentation fixes
-    │   └── enhancements-mobile-v2.css  # Mobile scroll & header fixes
+    ├── styles/                         # كل CSS (طرف ثالث + تطبيق + تحسينات)
+    │   ├── vendor-quill.css            # أنماط محرر Quill
+    │   ├── vendor-cropper.css          # أنماط Cropper.js
+    │   ├── vendor-katex.css            # أنماط KaTeX (مع خطوط مضمّنة)
+    │   ├── main.css                    # CSS الرئيسي للتطبيق (~5000 سطر)
+    │   ├── animations.css              # CSS لأداء الحركات V10
+    │   ├── enhancements.css            # طبقة تحسين UI/UX 1
+    │   ├── enhancements-2.css          # طبقة تحسين 2
+    │   ├── enhancements-3.css          # طبقة تحسين 3
+    │   ├── enhancements-solo.css       # تحسينات الوضع الفردي
+    │   ├── enhancements-admin.css      # تحسينات لوحة الإدارة
+    │   ├── enhancements-mobile.css     # التجاوب مع الجوال v1
+    │   ├── enhancements-v2.css         # إصلاحات البحث والعرض
+    │   ├── enhancements-mobile-v2.css  # إصلاحات التمرير والرأس
+    │   └── loading-v14.css             # [V14 جديد] شاشة التحميل العصرية
     │
-    ├── vendor/                         # Third-party libraries
+    ├── vendor/                         # مكتبات الطرف الثالث
     │   ├── katex.js                    # KaTeX v0.16.11
-    │   ├── katex-autorender.js         # KaTeX auto-render
+    │   ├── katex-autorender.js         # العرض التلقائي لـ KaTeX
     │   ├── xlsx.js                     # SheetJS v0.18.5
-    │   ├── sanitizer.js                # HTML sanitizer
+    │   ├── sanitizer.js                # مُنظّف HTML
     │   ├── quill.js                    # Quill WYSIWYG
     │   ├── cropper.js                  # Cropper.js v1.6.1
     │   └── jspdf.js                    # jsPDF v2.5.1
     │
-    ├── app/                            # Application JavaScript (38 modules)
-    │   ├── 01-foundation.js            # APP_VERSION, V7 Foundation (Store, ErrorBus, etc.)
-    │   ├── 02-storage.js               # IndexedDB Media Storage
-    │   ├── 03-media-helpers.js         # Unified media helpers
-    │   ├── 04-i18n.js                  # Internationalization (Arabic/English)
-    │   ├── 05-audio-assets.js          # Embedded background music
-    │   ├── 06-compression.js           # LZ-String compression
-    │   ├── 07-state-mgmt.js            # State management
-    │   ├── 08-question-mgmt.js         # Question CRUD
-    │   ├── 09-team-mgmt.js             # Team management
-    │   ├── 10-category-mgmt.js         # Category management
-    │   ├── 11-play-logic.js            # Main game flow
-    │   ├── 12-timer.js                 # Timer system
-    │   ├── 13-scoring.js               # Scoring + audit log
-    │   ├── 14-admin-panel.js           # Admin panel + view switching
-    │   ├── 15-auth-security.js         # Password hashing + auth
-    │   ├── 16-encryption.js            # Encryption + state + categories/questions render
-    │   ├── 17-history.js               # Encrypted export/import + session history
-    │   ├── 18-presentation.js          # Presentation mode
-    │   ├── 19-certificates.js          # Certificates + podium
-    │   ├── 20-display-modes.js         # Display modes (Grid, List, Hidden, Jeopardy, Wheel)
-    │   ├── 21-solo-mode.js             # Solo mode option selection + leaderboard
-    │   ├── 22-features-v7.js           # V7 features (badges, hints, search, solo)
-    │   ├── 23-mobile-a11y.js           # Mobile + accessibility + event delegation
-    │   ├── 24-phase3-a11y-features.js  # Phase 3: color blindness, charts, Google Sheets
-    │   ├── 28-audio-assets-2.js        # V11 embedded sounds
-    │   ├── 29-browser-compat.js        # Browser compatibility check
-    │   ├── 30-more-i18n.js             # Additional i18n keys
-    │   ├── 31-settings-panel.js        # Settings panel
-    │   ├── 32-buzzer-sync.js           # Cross-tab buzzer sync
-    │   ├── 33-podium-music.js          # Podium music
-    │   ├── 34-drag-touch.js            # Touch drag for options
-    │   ├── 35-order-search.js          # Order question + search
-    │   ├── 36-windows-templates.js     # Review Console + Audience Display templates
-    │   ├── 37-windows-logic.js         # Window logic + visibility handling
-    │   ├── 38-periodic-cleanup.js      # Performance: virtual scroll, lazy tabs, cleanup
-    │   ├── 39-history-aria.js          # History API + ARIA + spinner
-    │   ├── 40-features-block.js        # Five features: External Lib, WYSIWYG, Image Crop, Undo/Redo, Report Export
-    │   ├── 41-final-enhancements.js    # Theme editor, animations, dashboard
-    │   └── 42-freeze-fix.js            # Anti-freeze on browser minimize + Home button fix
+    ├── app/                            # جافاسكربت التطبيق (43 وحدة)
+    │   ├── 00-icon-library.js          # [V14 جديد] مكتبة أيقونات SVG (123 أيقونة)
+    │   ├── 01-foundation.js            # APP_VERSION، V7 Foundation (Store، ErrorBus، إلخ.)
+    │   ├── 02-storage.js               # تخزين الوسائط في IndexedDB
+    │   ├── 03-media-helpers.js         # مساعدات الوسائط الموحدة
+    │   ├── 04-i18n.js                  # التدويل (عربي/إنجليزي)
+    │   ├── 05-audio-assets.js          # موسيقى خلفية مضمّنة
+    │   ├── 06-compression.js           # ضغط LZ-String
+    │   ├── 07-state-mgmt.js            # إدارة الحالة
+    │   ├── 08-question-mgmt.js         # عمليات CRUD للأسئلة
+    │   ├── 09-team-mgmt.js             # إدارة الفرق
+    │   ├── 10-category-mgmt.js         # إدارة الأقسام
+    │   ├── 11-builtin-library.js       # [V14 جديد] مكتبة الأسئلة المدمجة (منفصلة)
+    │   ├── 11-play-logic.js            # تدفق اللعبة الرئيسي
+    │   ├── 12-timer.js                 # نظام المؤقت
+    │   ├── 13-scoring.js               # النقاط + سجل التدقيق
+    │   ├── 14-admin-panel.js           # لوحة الإدارة + تبديل العرض
+    │   ├── 15-auth-security.js         # تجزئة كلمات المرور + المصادقة
+    │   ├── 16-encryption.js            # التشفير + الحالة + عرض الأقسام/الأسئلة
+    │   ├── 17-history.js               # تصدير/استيراد مشفّر + سجل الجلسات
+    │   ├── 18-presentation.js          # وضع العرض التقديمي
+    │   ├── 19-certificates.js          # الشهادات + منصة الفائزين
+    │   ├── 20-display-modes.js         # أنماط العرض (شبكة، قائمة، مخفي، جيوباردي، عجلة)
+    │   ├── 21-solo-mode.js             # خيارات الوضع الفردي + لوحة المتصدرين
+    │   ├── 22-features-v7.js           # ميزات V7 (شارات، تلميحات، بحث، فردي)
+    │   ├── 23-mobile-a11y.js           # الجوال + إمكانية الوصول + تفويض الأحداث
+    │   ├── 24-phase3-a11y-features.js  # المرحلة 3: عمى الألوان، رسوم، Google Sheets
+    │   ├── 28-audio-assets-2.js        # أصوات مضمّنة V11
+    │   ├── 29-browser-compat.js        # فحص توافق المتصفح
+    │   ├── 30-more-i18n.js             # مفاتيح i18n إضافية
+    │   ├── 31-settings-panel.js        # لوحة الإعدادات
+    │   ├── 32-buzzer-sync.js           # مزامنة الجرس بين التبويبات
+    │   ├── 33-podium-music.js          # موسيقى منصة الفائزين
+    │   ├── 34-drag-touch.js            # السحب باللمس للخيارات
+    │   ├── 35-order-search.js          # ترتيب الأسئلة + البحث
+    │   ├── 36-windows-templates.js     # قوالب Review Console + Audience Display
+    │   ├── 37-windows-logic.js         # منطق النوافذ + معالجة الرؤية
+    │   ├── 38-periodic-cleanup.js      # الأداء: تمرير افتراضي، تبويبات كسولة، تنظيف
+    │   ├── 39-history-aria.js          # API السجل + ARIA + spinner
+    │   ├── 40-features-block.js        # ميزات: مكتبة خارجية، WYSIWYG، اقتصاص صور، تراجع/إعادة، تصدير تقارير
+    │   ├── 41-final-enhancements.js    # محرر السمات، الحركات، لوحة المعلومات
+    │   └── 42-freeze-fix.js            # منع التجمد عند تصغير المتصفح + إصلاح زر الرئيسية
     │
     └── templates/
-        ├── body.html                   # Full body markup
-        ├── head-meta.html              # Original head meta (reference)
-        └── tail.html                   # Closing tags (reference)
+        ├── body.html                   # كامل ترميز body
+        ├── head-meta.html              # ميتا head الأصلي (مرجع)
+        └── tail.html                   # أوسمة الإغلاق (مرجع)
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🚀 التشغيل السريع
 
-### Prerequisites
+### المتطلبات الأساسية
 
 - **Node.js 18+**
-- **npm 9+** (or pnpm/yarn)
+- **npm 9+** (أو pnpm/yarn)
 
-### Installation
+### التثبيت
 
 ```bash
-git clone <your-repo-url>
-cd quiz-platform
+git clone https://github.com/ahmedahmed1223/Arabic-Quizz-builder.git
+cd Arabic-Quizz-builder
 npm install
 ```
 
-### Development
+### التطوير
 
 ```bash
 npm run dev
 ```
 
-Opens Vite dev server at `http://localhost:5173`.
+يفتح خادم تطوير Vite على `http://localhost:5173`.
 
-### Default Login
+### تسجيل الدخول الافتراضي
 
-- **Password**: `1234` (can be changed in Settings)
+- **كلمة المرور**: `1234` (يمكن تغييرها من الإعدادات)
 
 ---
 
-## 📦 Build
+## 📦 البناء والإنتاج
 
-### Single-File Build (Production)
+### البناء كملف واحد (الإنتاج)
 
 ```bash
 npm run build
 ```
 
-Produces **`dist/index.html`** — a single self-contained HTML file (~7 MB) with all CSS, JS, and the body template inlined. Works completely offline.
+يُنتج **`dist/index.html`** — ملف HTML واحد مستقل (~7 ميجابايت) مع كل CSS و JS وقالب body مضمّنة. يعمل بالكامل دون اتصال.
 
-### Preview Build
+### معاينة البناء
 
 ```bash
 npm run preview
 ```
 
-### Verify Single-File Output Works Offline
+### التحقق من عمل الناتج دون اتصال
 
 ```bash
-# Open the built file directly — should work with no network
+# افتح الملف المبني مباشرة — يجب أن يعمل دون شبكة
 open dist/index.html          # macOS
 xdg-open dist/index.html      # Linux
 start dist/index.html         # Windows
 ```
 
-### How the Build Works
+### كيف يعمل البناء
 
-The custom Vite plugin (`vite-plugin-inline-classic-assets.js`):
+إضافة Vite المخصصة (`vite-plugin-inline-classic-assets.js`):
 
-1. **Inlines every `<script src="/src/...">`** as inline `<script>` blocks (preserves shared-global-scope IIFE pattern)
-2. **Inlines every `<link rel="stylesheet" href="/src/...">`** as inline `<style>` blocks
-3. **Replaces `<!-- __BODY_MARKER__ -->`** with the body template
-4. **Base64-encodes scripts with control characters** (XLSX, jsPDF) to avoid parse5 errors
+1. **تضمين كل `<script src="/src/...">`** ككتل `<script>` مضمّنة (يحافظ على نمط IIFE للنطاق المعجمي المشترك)
+2. **تضمين كل `<link rel="stylesheet" href="/src/...">`** ككتل `<style>` مضمّنة
+3. **استبدال `<!-- __BODY_MARKER__ -->`** بقالب body
+4. **ترميز base64 للسكربتات ذات أحرف التحكم** (XLSX، jsPDF) لتفادي أخطاء parse5
 
 ---
 
-## 📱 Responsive Design
+## 📱 التصميم المتجاوب
 
-The app is fully responsive with breakpoints at:
+التطبيق متجاوب بالكامل مع نقاط التوقف التالية:
 
-| Breakpoint | Target | Layout Changes |
+| نقطة التوقف | الهدف | تغييرات التخطيط |
 |---|---|---|
-| ≤ 400px | Small phones | Compact spacing, 2-column grids |
-| ≤ 640px | Phones | Single column, full-width buttons, stacked layouts |
-| 641-768px | Large phones / small tablets | 2-column grids where appropriate |
-| 769-1024px | Tablets | 2-3 column grids, adjusted spacing |
-| ≥ 1025px | Desktop | Multi-column layouts, sticky sidebars |
+| ≤ 400px | الهواتف الصغيرة | تباعد مضغوط، شبكات من عمودين |
+| ≤ 640px | الهواتف | عمود واحد، أزرار بعرض كامل، تخطيطات مكدسة |
+| 641-768px | الهواتف الكبيرة / الأجهزة اللوحية الصغيرة | شبكات من عمودين حيثما كان مناسباً |
+| 769-1024px | الأجهزة اللوحية | شبكات من 2-3 أعمدة، تباعد معدّل |
+| ≥ 1025px | سطح المكتب | تخطيطات متعددة الأعمدة، أشرطة جانبية ثابتة |
 
-### Mobile-Specific Features
+### ميزات خاصة بالجوال
 
-- **Touch targets** ≥ 44px (WCAG recommended)
-- **Bottom navigation** (scrollable, replaces top tabs on mobile)
-- **Full-screen modals** with slide-up animation
-- **Horizontal scrollable headers** (presentation mode)
-- **Safe-area support** for iPhone notch
-- **Momentum scrolling** with hidden scrollbars
-- **Sticky search bar** in categories management
-
----
-
-## ♿ Accessibility
-
-- **WCAG AA contrast** for all text
-- **Focus-visible rings** on all interactive elements
-- **ARIA live regions** for score updates and announcements
-- **Screen reader support** with proper labels
-- **Keyboard navigation** (arrow keys, Enter, Escape, number keys for options)
-- **High contrast mode** support (`prefers-contrast: high`)
-- **Reduced motion** support (`prefers-reduced-motion: reduce`)
-- **Skip to main content** link
-- **Color blindness filters** (protanopia, deuteranopia, tritanopia)
-- **Font size slider** (50%-200%)
+- **أهداف لمس** ≥ 44px (موصى به من WCAG)
+- **تنقل سفلي** (قابل للتمرير، يحل محل التبويبات العلوية على الجوال)
+- **نوافذ منبثقة بملء الشاشة** مع حركة انزلاق لأعلى
+- **رؤوس قابلة للتمرير أفقياً** (وضع العرض)
+- **دعم المنطقة الآمنة** لشاشات iPhone ذات الشق
+- **تمرير زخمي** مع إخفاء أشرطة التمرير
+- **شريط بحث ثابت** في إدارة الأقسام
 
 ---
 
-## 🌐 Browser Support
+## ♿ إمكانية الوصول
+
+- **تباين WCAG AA** لكل النصوص
+- **حلقات focus-visible** على كل العناصر التفاعلية
+- **مناطق ARIA الحية** لتحديثات النقاط والإعلانات
+- **دعم قارئ الشاشة** مع تسميات مناسبة
+- **التنقل بلوحة المفاتيح** (مفاتيح الأسهم، Enter، Escape، مفاتيح الأرقام للخيارات)
+- **دعم الوضع عالي التباين** (`prefers-contrast: high`)
+- **دعم تقليل الحركة** (`prefers-reduced-motion: reduce`)
+- **رابط تخطي إلى المحتوى الرئيسي**
+- **مرشحات عمى الألوان** (بروتانوبيا، ديوتيرانوبيا، ترايتانوبيا)
+- **شريط تمرير حجم الخط** (50%-200%)
+
+---
+
+## 🌐 دعم المتصفحات
 
 - **Chrome/Edge 90+** ✅
 - **Firefox 88+** ✅
@@ -308,61 +377,85 @@ The app is fully responsive with breakpoints at:
 - **Mobile Safari 14+** ✅
 - **Chrome Android 90+** ✅
 
-Uses modern APIs: IndexedDB, Web Crypto, BroadcastChannel, MutationObserver, CSS Grid, backdrop-filter.
+يستخدم واجهات API حديثة: IndexedDB، Web Crypto، BroadcastChannel، MutationObserver، CSS Grid، backdrop-filter.
 
 ---
 
-## 🤝 Contributing
+## 🤝 المساهمة في المشروع
 
-1. **Fork** the repository
-2. **Create a feature branch**: `git checkout -b feature/amazing-feature`
-3. **Edit files** in `src/app/` (keep numbered prefix for load order)
-4. **Run syntax check**: `node scripts/check_syntax.mjs`
-5. **Build**: `npm run build`
-6. **Test** the output both on desktop and mobile
-7. **Commit** your changes
-8. **Open a Pull Request**
+1. **اعمل Fork** للمستودع
+2. **أنشئ فرع ميزة**: `git checkout -b feature/amazing-feature`
+3. **حرّر الملفات** في `src/app/` (حافظ على البادئة الرقمية لترتيب التحميل)
+4. **شغّل فحص البناء**: `node scripts/check_syntax.mjs`
+5. **ابنِ**: `npm run build`
+6. **اختبر** الناتج على سطح المكتب والجوال معاً
+7. **اعمل commit** لتغييراتك
+8. **افتح Pull Request**
 
-### Coding Standards
+### معايير البرمجة
 
-- **Arabic-first** — UI text in Arabic, with English translations in i18n
-- **RTL support** — All layouts must work in RTL mode
-- **Offline-capable** — No external dependencies at runtime
-- **Progressive enhancement** — Core features work without JavaScript enhancements
-- **Accessibility** — All new features must be keyboard-navigable and screen-reader-friendly
-
----
-
-## 📜 License
-
-MIT — see embedded library licenses (KaTeX, XLSX, Quill, Cropper, jsPDF, SortableJS, LZ-String) for third-party terms.
+- **العربية أولاً** — نصوص الواجهة بالعربية، مع ترجمات إنجليزية في i18n
+- **دعم RTL** — كل التخطيطات يجب أن تعمل في وضع RTL
+- **يعمل دون اتصال** — لا اعتماديات خارجية أثناء التشغيل
+- **التحسين التدريجي** — الميزات الأساسية تعمل دون تحسينات جافاسكربت
+- **إمكانية الوصول** — كل ميزة جديدة يجب أن تكون قابلة للتنقل بلوحة المفاتيح وصديقة لقارئ الشاشة
 
 ---
 
-## 🙏 Acknowledgments
+## 📜 الرخصة
 
-Built with:
-- [Vite](https://vitejs.dev/) — Build tool
-- [KaTeX](https://katex.org/) — Math typesetting
-- [SheetJS](https://sheetjs.com/) — Excel import/export
-- [Quill](https://quilljs.com/) — Rich text editor
-- [Cropper.js](https://fengyuanchen.github.io/cropperjs/) — Image cropping
-- [jsPDF](https://github.com/parallax/jsPDF) — PDF generation
-- [SortableJS](https://sortablejs.github.io/Sortable/) — Drag-and-drop
-- [LZ-String](https://github.com/pieroxy/lz-string/) — Compression
+MIT — انظر تراخيص المكتبات المضمّنة (KaTeX، XLSX، Quill، Cropper، jsPDF، SortableJS، LZ-String) لشروط الطرف الثالث.
 
 ---
 
-## 📊 Project Stats
+## 🙏 شكر وتقدير
 
-| Metric | Value |
+بُني باستخدام:
+- [Vite](https://vitejs.dev/) — أداة البناء
+- [KaTeX](https://katex.org/) — تنسيق الرياضيات
+- [SheetJS](https://sheetjs.com/) — استيراد/تصدير Excel
+- [Quill](https://quilljs.com/) — محرر نصوص غني
+- [Cropper.js](https://fengyuanchen.github.io/cropperjs/) — اقتصاص الصور
+- [jsPDF](https://github.com/parallax/jsPDF) — توليد PDF
+- [SortableJS](https://sortablejs.github.io/Sortable/) — السحب والإفلات
+- [LZ-String](https://github.com/pieroxy/lz-string/) — الضغط
+- [Lucide](https://lucide.dev/) — مصدر الإلهام لمكتبة الأيقونات V14
+
+---
+
+## 📊 إحصائيات المشروع
+
+| المقياس | القيمة |
 |---|---|
-| Total source files | 60+ |
-| Application JS modules | 38 |
-| CSS enhancement layers | 10 |
-| Vendor libraries | 7 |
-| Build output size | ~7 MB (single file) |
-| Languages supported | 2 (Arabic, English) |
-| Themes | 19 built-in + custom |
-| Question types | 10 |
-| Display modes | 5 |
+| إجمالي الملفات المصدرية | 65+ |
+| وحدات JS للتطبيق | 43 |
+| طبقات تحسين CSS | 11 |
+| مكتبات الطرف الثالث | 7 |
+| **أيقونات SVG مضمّنة (V14)** | **159** |
+| **أقسام المكتبة المدمجة (V14)** | **20** |
+| **أسئلة المكتبة المدمجة (V14)** | **318** |
+| **أقسام المكتبة الخارجية** | **61** |
+| **أسئلة المكتبة الخارجية** | **3258** |
+| حجم ناتج البناء | ~7 ميجابايت (ملف واحد) |
+| اللغات المدعومة | 2 (عربي، إنجليزي) |
+| السمات | 19 جاهزة + مخصص |
+| أنواع الأسئلة | 10 |
+| أنماط العرض | 5 |
+
+---
+
+## 📬 التواصل والدعم
+
+- 🐞 **الإبلاغ عن الأخطاء**: [GitHub Issues](https://github.com/ahmedahmed1223/Arabic-Quizz-builder/issues)
+- 💬 **الاقتراحات**: نرحب بـ Pull Requests والاقتراحات
+- ⭐ **أعجبك المشروع؟** لا تنسَ إضافة ⭐ على GitHub!
+
+---
+
+<div align="center">
+
+**صُنع بـ ❤️ للمجتمع العربي التعليمي**
+
+[🌟 ابدأ الآن](#-التشغيل-السريع) · [📖 الوثائق](#-نظرة-عامة) · [🤝 المساهمة](#-المساهمة-في-المشروع) · [📜 الرخصة](#-الرخصة)
+
+</div>

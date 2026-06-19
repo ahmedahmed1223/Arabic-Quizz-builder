@@ -1,0 +1,266 @@
+/* ════════════════════════════════════════════════════════════
+   V14 — Modern Loading Screen
+   Modern animated loading screen with:
+   • Animated background particles (12 floating dots)
+   • Central icon ring with 3 orbiting icons (star, trophy, check)
+   • Gradient title with shimmer animation
+   • Modern progress bar with shimmer effect
+   • Pulsing step dots
+   • Version badge (V14)
+   • Respects prefers-reduced-motion
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── Animated Background Particles ─── */
+.loading-v14-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.lv14-particle {
+  position: absolute;
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent1, #f5c842) 0%, transparent 70%);
+  opacity: 0.45;
+  animation: lv14-float 14s linear infinite;
+}
+.lv14-particle:nth-child(1)  { left: 10%; top: 90%; animation-delay:  0s;   animation-duration: 13s; }
+.lv14-particle:nth-child(2)  { left: 20%; top: 90%; animation-delay:  1.2s; animation-duration: 15s; width: 8px; height: 8px; }
+.lv14-particle:nth-child(3)  { left: 30%; top: 90%; animation-delay:  2.5s; animation-duration: 17s; }
+.lv14-particle:nth-child(4)  { left: 40%; top: 90%; animation-delay:  3.7s; animation-duration: 12s; width: 5px; height: 5px; }
+.lv14-particle:nth-child(5)  { left: 50%; top: 90%; animation-delay:  4.9s; animation-duration: 16s; }
+.lv14-particle:nth-child(6)  { left: 60%; top: 90%; animation-delay:  6.1s; animation-duration: 14s; width: 9px; height: 9px; }
+.lv14-particle:nth-child(7)  { left: 70%; top: 90%; animation-delay:  7.3s; animation-duration: 18s; }
+.lv14-particle:nth-child(8)  { left: 80%; top: 90%; animation-delay:  8.5s; animation-duration: 13s; width: 5px; height: 5px; }
+.lv14-particle:nth-child(9)  { left: 90%; top: 90%; animation-delay:  9.7s; animation-duration: 15s; }
+.lv14-particle:nth-child(10) { left: 15%; top: 90%; animation-delay: 10.9s; animation-duration: 17s; width: 7px; height: 7px; }
+.lv14-particle:nth-child(11) { left: 65%; top: 90%; animation-delay: 12.1s; animation-duration: 14s; }
+.lv14-particle:nth-child(12) { left: 85%; top: 90%; animation-delay: 13.3s; animation-duration: 16s; width: 6px; height: 6px; }
+
+@keyframes lv14-float {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 0.55; }
+  90%  { opacity: 0.45; }
+  100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
+}
+
+/* ─── Central Icon Ring with Orbiting Icons ─── */
+.loading-v14-icon-ring {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 18px;
+  z-index: 1;
+}
+.lv14-ring-core {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 200, 66, 0.18) 0%, rgba(245, 200, 66, 0.04) 70%, transparent 100%);
+  border: 2px solid rgba(245, 200, 66, 0.35);
+  box-shadow:
+    0 0 0 8px rgba(245, 200, 66, 0.05),
+    0 0 30px rgba(245, 200, 66, 0.25),
+    inset 0 0 18px rgba(255, 152, 0, 0.18);
+  color: var(--accent1, #f5c842);
+  animation: lv14-ring-pulse 2.4s ease-in-out infinite;
+}
+@keyframes lv14-ring-pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 8px rgba(245,200,66,.05), 0 0 30px rgba(245,200,66,.25), inset 0 0 18px rgba(255,152,0,.18); }
+  50%      { transform: scale(1.05); box-shadow: 0 0 0 14px rgba(245,200,66,.03), 0 0 42px rgba(245,200,66,.35), inset 0 0 24px rgba(255,152,0,.25); }
+}
+
+.lv14-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border-radius: 50%;
+  background: rgba(20, 22, 30, 0.85);
+  border: 1px solid rgba(245, 200, 66, 0.4);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 12px rgba(245, 200, 66, 0.2);
+  transform-origin: 0 0;
+}
+.lv14-orbit-star   { animation: lv14-orbit-1 6s linear infinite; }
+.lv14-orbit-trophy { animation: lv14-orbit-2 8s linear infinite; }
+.lv14-orbit-check  { animation: lv14-orbit-3 10s linear infinite; }
+
+@keyframes lv14-orbit-1 {
+  from { transform: rotate(0deg)   translateX(58px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(58px) rotate(-360deg); }
+}
+@keyframes lv14-orbit-2 {
+  from { transform: rotate(120deg) translateX(58px) rotate(-120deg); }
+  to   { transform: rotate(480deg) translateX(58px) rotate(-480deg); }
+}
+@keyframes lv14-orbit-3 {
+  from { transform: rotate(240deg) translateX(58px) rotate(-240deg); }
+  to   { transform: rotate(600deg) translateX(58px) rotate(-600deg); }
+}
+
+/* ─── Gradient Title with Shimmer ─── */
+.loading-v14-title {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(110deg, var(--accent1, #f5c842) 0%, var(--accent2, #ff9100) 35%, #fff5d6 50%, var(--accent2, #ff9100) 65%, var(--accent1, #f5c842) 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: lv14-shimmer 3.5s linear infinite;
+}
+@keyframes lv14-shimmer {
+  to { background-position: -250% center; }
+}
+
+/* ─── Version Badge ─── */
+.loading-v14-version-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 2px 12px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent1, #f5c842), var(--accent2, #ff9100));
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(245, 200, 66, 0.35);
+  z-index: 1;
+  position: relative;
+}
+
+/* ─── Modern Progress Bar with Shimmer ─── */
+.loading-v14-bar {
+  width: 240px !important;
+  height: 4px !important;
+  border-radius: 4px !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  position: relative;
+}
+.loading-v14-bar-fill {
+  background: linear-gradient(90deg, var(--accent2, #ff9100), var(--accent1, #f5c842)) !important;
+  position: relative;
+  overflow: hidden;
+  animation: loading-progress 1.5s ease forwards;
+}
+.loading-v14-bar-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+  animation: lv14-bar-shimmer 1.5s linear infinite;
+}
+@keyframes lv14-bar-shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+/* ─── Pulsing Step Dots ─── */
+.loading-v14-steps .lv14-step {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50%;
+  background: var(--border, rgba(255, 255, 255, 0.12)) !important;
+  transition: all 0.3s ease;
+  animation: lv14-step-pulse 1.6s ease-in-out infinite;
+}
+.loading-v14-steps .lv14-step:nth-child(1) { animation-delay: 0s; }
+.loading-v14-steps .lv14-step:nth-child(2) { animation-delay: 0.2s; }
+.loading-v14-steps .lv14-step:nth-child(3) { animation-delay: 0.4s; }
+.loading-v14-steps .lv14-step:nth-child(4) { animation-delay: 0.6s; }
+.loading-v14-steps .lv14-step:nth-child(5) { animation-delay: 0.8s; }
+
+.loading-v14-steps .lv14-step.active {
+  background: var(--accent1, #f5c842) !important;
+  box-shadow: 0 0 12px var(--accent1, #f5c842), 0 0 4px var(--accent2, #ff9100);
+  transform: scale(1.3);
+}
+.loading-v14-steps .lv14-step.done {
+  background: var(--accent1, #f5c842) !important;
+  opacity: 0.7;
+}
+
+@keyframes lv14-step-pulse {
+  0%, 100% { transform: scale(1);   opacity: 0.5; }
+  50%      { transform: scale(1.2); opacity: 0.9; }
+}
+
+/* ─── Reduce motion: respect user preference ─── */
+@media (prefers-reduced-motion: reduce) {
+  .lv14-particle,
+  .lv14-ring-core,
+  .lv14-orbit,
+  .loading-v14-title,
+  .loading-v14-bar-fill::after,
+  .loading-v14-steps .lv14-step {
+    animation: none !important;
+  }
+  .loading-v14-bar-fill {
+    animation: loading-progress 1.5s ease forwards !important;
+  }
+  .lv14-ring-core {
+    transform: scale(1) !important;
+  }
+  .loading-v14-title {
+    -webkit-text-fill-color: var(--accent1, #f5c842);
+    color: var(--accent1, #f5c842);
+  }
+}
+
+/* ─── Mobile responsiveness ─── */
+@media (max-width: 480px) {
+  .loading-v14-icon-ring {
+    width: 88px;
+    height: 88px;
+    margin-bottom: 14px;
+  }
+  .lv14-ring-core {
+    width: 88px;
+    height: 88px;
+  }
+  .lv14-ring-core svg {
+    width: 28px;
+    height: 28px;
+  }
+  .lv14-orbit {
+    width: 24px;
+    height: 24px;
+    font-size: 13px;
+  }
+  @keyframes lv14-orbit-1 {
+    from { transform: rotate(0deg)   translateX(46px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(46px) rotate(-360deg); }
+  }
+  @keyframes lv14-orbit-2 {
+    from { transform: rotate(120deg) translateX(46px) rotate(-120deg); }
+    to   { transform: rotate(480deg) translateX(46px) rotate(-480deg); }
+  }
+  @keyframes lv14-orbit-3 {
+    from { transform: rotate(240deg) translateX(46px) rotate(-240deg); }
+    to   { transform: rotate(600deg) translateX(46px) rotate(-600deg); }
+  }
+  .loading-v14-title {
+    font-size: 2.2rem !important;
+  }
+  .loading-v14-bar {
+    width: 200px !important;
+  }
+}

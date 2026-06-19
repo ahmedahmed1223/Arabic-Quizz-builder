@@ -924,7 +924,7 @@ const I18n=(function(){
       'admin.wizardRelaunchDesc':'أعد ضبط الإعدادات الأولى من خلال المعالج التوجيهي',
       // Import Tab
       'admin.builtinLibrary':'مكتبة الأسئلة المدمجة',
-      'admin.builtinLibraryDesc':'مكتبة جاهزة تحتوي على 13 أقسام و245 سؤال متنوع',
+      'admin.builtinLibraryDesc':'مكتبة جاهزة تحتوي على 20 قسماً و318 سؤال متنوع (V14)',
       'admin.loadLibrary':'📚 تحميل مكتبة الأسئلة',
       'admin.importExcel':'استيراد من Excel',
       'admin.excelDropText':'اسحب ملف Excel هنا أو انقر للاختيار',
@@ -2120,7 +2120,7 @@ const I18n=(function(){
       'admin.wizardRelaunchDesc':'Reset initial settings through the setup wizard',
       // Import Tab
       'admin.builtinLibrary':'Built-in Question Library',
-      'admin.builtinLibraryDesc':'A ready-made library with 13 categories and 245 diverse questions',
+      'admin.builtinLibraryDesc':'A ready-made library with 20 categories and 318 diverse questions (V14)',
       'admin.loadLibrary':'📚 Load Question Library',
       'admin.importExcel':'Import from Excel',
       'admin.excelDropText':'Drag an Excel file here or click to select',

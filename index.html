@@ -36,6 +36,8 @@
   <link rel="stylesheet" href="/src/styles/enhancements-mobile.css">
   <link rel="stylesheet" href="/src/styles/enhancements-v2.css">
   <link rel="stylesheet" href="/src/styles/enhancements-mobile-v2.css">
+  <!-- V14: Modern loading screen styles -->
+  <link rel="stylesheet" href="/src/styles/loading-v14.css">
 </head>
 <body>
   <!-- The full body markup from the original app (ARIA regions, loading spinner,
@@ -58,6 +60,8 @@
   <script src="/src/vendor/sanitizer.js"></script>
 
   <!-- ── Application core (must load in order) ── -->
+  <!-- V14: Icon library loaded first so all later scripts can use Icon.render() -->
+  <script src="/src/app/00-icon-library.js"></script>
   <script src="/src/app/01-foundation.js"></script>
   <script src="/src/app/02-storage.js"></script>
   <script src="/src/app/03-media-helpers.js"></script>
@@ -68,6 +72,8 @@
   <script src="/src/app/08-question-mgmt.js"></script>
   <script src="/src/app/09-team-mgmt.js"></script>
   <script src="/src/app/10-category-mgmt.js"></script>
+  <!-- V14: BUILTIN_LIBRARY is now in a separate file, loaded BEFORE 11-play-logic.js -->
+  <script src="/src/app/11-builtin-library.js"></script>
   <script src="/src/app/11-play-logic.js"></script>
   <script src="/src/app/12-timer.js"></script>
   <script src="/src/app/13-scoring.js"></script>
