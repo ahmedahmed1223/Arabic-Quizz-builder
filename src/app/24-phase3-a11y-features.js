@@ -761,6 +761,10 @@ if(_origRecordAnswer){
   window.recordAnswer=function(teamId,isCorrect,timeUsed){
     _origRecordAnswer.apply(this,arguments);
     try{
+      // V14.3: Only announce team score updates when in team/competition mode
+      // In solo mode, team announcements are confusing — solo has its own announce
+      var soloActive=typeof _soloAnswered!=='undefined' && !document.getElementById('view-solo-question')?.classList.contains('hidden');
+      if(soloActive)return;
       var team=(state.teams||[]).find(function(t){return t.id===teamId;});
       var liveEl=document.getElementById('aria-score-updates');
       if(team&&liveEl){liveEl.textContent=(team.name||'فريق')+' — '+(isCorrect?'إجابة صحيحة!':'إجابة خاطئة')+(team.score!==undefined?' — النتيجة: '+team.score:'');}

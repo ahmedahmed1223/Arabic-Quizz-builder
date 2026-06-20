@@ -635,6 +635,17 @@ function submitSoloAnswer(answer){
     btn.disabled=true;
     btn.classList.remove('solo-opt-selected');
   });
+  // V14.3: Announce correct answer to screen readers (parity with team mode)
+  try{
+    var _soloCorrectOpt=document.querySelector('.solo-q-option.solo-opt-correct');
+    if(_soloCorrectOpt&&typeof announce==='function'&&typeof I18n!=='undefined'){
+      var _correctText=_soloCorrectOpt.textContent.trim();
+      var _msg=isCorrect
+        ? I18n.t('solo.correctAnswer','✅ إجابة صحيحة! ') + _correctText
+        : I18n.t('ui.correctAnswerLabel','الإجابة الصحيحة: ') + _correctText;
+      announce(_msg,'assertive');
+    }
+  }catch(e){try{if(typeof ErrorBus!=='undefined')ErrorBus.capture(e,'submitSoloAnswer:announce')}catch(_){}}
 }
 
 function showSoloStarsOverlay(isCorrect, stars, timeUsed, q){
