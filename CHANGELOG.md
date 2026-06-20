@@ -12,8 +12,19 @@
 
 ### 🆕 مُضاف
 
+#### تطبيق أندرويد APK جاهز للتنزيل
+- 📱 ملف APK جاهز للتنزيل في `releases/quiz-platform-v14.2-android.apk` (7.3 ميجابايت)
+- ✅ تم بناؤه واختباره بنجاح: 9/9 اختبارات داخلية، 0 أخطاء
+- ✅ حزمة: `com.ahmedahmed1223.arabicquizzbuilder`
+- ✅ الاسم: المسابقات (بالعربية)
+- ✅ targetSdkVersion: 35 (Android 15)
+- ✅ minSdkVersion: 23 (Android 6.0+)
+- ✅ يدعم: 64 قسماً، 3303 سؤالاً، 159 أيقونة، 44 وحدة JS
+- ✅ الأذونات: INTERNET, VIBRATE, ACCESS_NETWORK_STATE
+- ✅ شاشة كاملة immersive، تسريع عتادي، إبقاء الشاشة مضاءة
+
 #### دعم أندرويد عبر Capacitor
-- ✨ تكامل كامل مع **Capacitor 8.4** لبناء تطبيق أندرويد أصلي
+- ✨ تكامل كامل مع **Capacitor 7.6** لبناء تطبيق أندرويد أصلي
 - 📱 ملف `capacitor.config.json` بإعدادات مُحسّنة (RTL، شاشة بداية، شريط حالة)
 - 🎯 `MainActivity.java` مخصص: شاشة كاملة (Immersive)، تسريع عتادي، إبقاء الشاشة مضاءة
 - 🔐 ملف `network_security_config.xml` للسماح بالاتصال الخارجي (raw.githubusercontent.com)
