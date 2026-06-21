@@ -335,21 +335,23 @@ function updateLoadStage(){
     var tipEl=document.getElementById('loading-tip');
     if(stageEl)stageEl.textContent=s.msg;
     if(tipEl)tipEl.textContent=s.tip;
-    // Update step dots
+    // V14.4: Update step dots with proper classes
     var stepEl=document.getElementById('load-step-'+_loadStageIdx);
     if(stepEl){
-      stepEl.style.background='var(--accent1)';
-      stepEl.style.width='12px';
-      stepEl.style.height='12px';
-      stepEl.style.boxShadow='0 0 8px var(--accent1)';
-    }
-    // Mark previous steps as completed
-    for(var i=0;i<_loadStageIdx;i++){
-      var prevStep=document.getElementById('load-step-'+i);
-      if(prevStep){
-        prevStep.style.background='var(--accent1)';
-        prevStep.style.opacity='0.6';
+      // Remove done class from all, add active to current
+      document.querySelectorAll('.lv14-step').forEach(function(el){el.classList.remove('active','done');});
+      stepEl.classList.add('active');
+      // Mark previous steps as done
+      for(var i=0;i<_loadStageIdx;i++){
+        var prevStep=document.getElementById('load-step-'+i);
+        if(prevStep)prevStep.classList.add('done');
       }
+    }
+    // V14.4: Update progress percentage text
+    var progressEl=document.getElementById('lv14-progress-text');
+    if(progressEl){
+      var pct=Math.round(((_loadStageIdx+1)/_loadStages.length)*100);
+      progressEl.textContent=pct+'%';
     }
     _loadStageIdx++;
   }catch(e){}

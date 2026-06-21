@@ -1397,6 +1397,11 @@ function startSoloGame(){
     state.soloProgress.startTime=Date.now();
   }
   _saveSoloProgress();
+  // V14.4: Clear stale team-mode aria-live announcements when entering solo mode
+  try{
+    var ariaScoreEl=document.getElementById('aria-score-updates');
+    if(ariaScoreEl)ariaScoreEl.textContent='';
+  }catch(e){}
   showView('solo-map');
 }
 

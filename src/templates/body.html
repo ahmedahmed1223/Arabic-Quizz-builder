@@ -9,45 +9,68 @@
 
 <!-- Loading -->
 <div id="loading-screen">
-  <!-- V14: Animated background particles -->
+  <!-- V14.4: Enhanced animated background with multiple layers -->
   <div class="loading-v14-particles" aria-hidden="true">
     <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
     <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
     <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
     <span class="lv14-particle"></span><span class="lv14-particle"></span><span class="lv14-particle"></span>
   </div>
+  <!-- V14.4: Floating ambient shapes for depth -->
+  <div class="lv14-ambient-shapes" aria-hidden="true">
+    <span class="lv14-shape lv14-shape-1"></span>
+    <span class="lv14-shape lv14-shape-2"></span>
+    <span class="lv14-shape lv14-shape-3"></span>
+  </div>
   <div class="loading-lang-switcher">
-    <button class="i18n-switcher-btn" onclick="I18n.setLang(I18n.getCurrentLang()==='ar'?'en':'ar')" title="Switch Language">
+    <button class="i18n-switcher-btn" onclick="I18n.setLang(I18n.getCurrentLang()==='ar'?'en':'ar')" title="Switch Language" aria-label="تبديل اللغة">
       <span class="i18n-globe">🌐</span><span class="i18n-lang-label">English</span>
     </button>
   </div>
-  <!-- V14: Central icon ring with 3 orbiting icons -->
+  <!-- V14.4: Enhanced central icon with 3D depth effect -->
   <div class="loading-v14-icon-ring" aria-hidden="true">
+    <div class="lv14-ring-glow"></div>
     <div class="lv14-ring-core">
-      <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
       </svg>
     </div>
     <span class="lv14-orbit lv14-orbit-star">⭐</span>
     <span class="lv14-orbit lv14-orbit-trophy">🏆</span>
     <span class="lv14-orbit lv14-orbit-check">✓</span>
+    <!-- V14.4: Rotating dashed ring -->
+    <svg class="lv14-rotating-ring" viewBox="0 0 120 120" aria-hidden="true">
+      <circle cx="60" cy="60" r="55" fill="none" stroke="rgba(245,200,66,0.25)" stroke-width="1.5" stroke-dasharray="4 8" stroke-linecap="round"/>
+    </svg>
   </div>
   <div class="logo-text loading-v14-title" data-i18n="loading.title">منصة المسابقات التفاعلية</div>
+  <!-- V14.4: Subtitle/tagline -->
+  <div class="lv14-subtitle" data-i18n="loading.subtitle">مسابقة المعرفة الكبرى</div>
   <div class="loading-v14-version-badge">V14</div>
-  <div class="lang-selector" style="margin-top:8px">
+  <div class="lang-selector" style="margin-top:10px">
     <button onclick="I18n.setLang('ar')" id="lang-btn-ar" class="active">العربية</button>
     <button onclick="I18n.setLang('en')" id="lang-btn-en">English</button>
   </div>
-  <div class="loading-bar loading-v14-bar"><div class="loading-bar-fill loading-v14-bar-fill"></div></div>
-    <div id="loading-stage" style="margin-top:16px;font-size:0.8rem;color:var(--text-muted);min-height:1.2em;transition:opacity 0.3s">جاري التحميل...</div>
-    <div id="loading-tip" style="margin-top:20px;font-size:0.75rem;color:var(--text-secondary);max-width:300px;text-align:center;line-height:1.5;opacity:0.7;min-height:2.4em"></div>
-    <div id="loading-steps" class="loading-v14-steps" style="margin-top:24px;display:flex;gap:8px;justify-content:center;align-items:center">
+  <!-- V14.4: Progress section with percentage -->
+  <div class="lv14-progress-section">
+    <div class="loading-bar loading-v14-bar"><div class="loading-bar-fill loading-v14-bar-fill"></div></div>
+    <div class="lv14-progress-percent" id="lv14-progress-text">0%</div>
+  </div>
+    <div id="loading-stage" style="margin-top:14px;font-size:0.82rem;color:var(--text-muted);min-height:1.2em;transition:opacity 0.3s;font-weight:600">جاري التحميل...</div>
+    <div id="loading-tip" style="margin-top:18px;font-size:0.75rem;color:var(--text-secondary);max-width:320px;text-align:center;line-height:1.6;opacity:0.7;min-height:2.4em;padding:0 16px"></div>
+    <div id="loading-steps" class="loading-v14-steps" style="margin-top:22px;display:flex;gap:10px;justify-content:center;align-items:center">
       <span class="loading-step lv14-step" id="load-step-0"></span>
       <span class="loading-step lv14-step" id="load-step-1"></span>
       <span class="loading-step lv14-step" id="load-step-2"></span>
       <span class="loading-step lv14-step" id="load-step-3"></span>
       <span class="loading-step lv14-step" id="load-step-4"></span>
     </div>
+  <!-- V14.4: Footer credit -->
+  <div class="lv14-footer" aria-hidden="true">
+    <span class="lv14-footer-dot"></span>
+    <span data-i18n="loading.footer">منصة عربية تفاعلية</span>
+    <span class="lv14-footer-dot"></span>
+  </div>
 </div>
 
 <!-- ════════════════════════════════════════════════════════

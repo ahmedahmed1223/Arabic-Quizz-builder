@@ -9,6 +9,8 @@ const I18n=(function(){
       'app.shortTitle':'منصة المسابقات',
       // Loading
       'loading.title':'منصة المسابقات التفاعلية',
+      'loading.subtitle':'مسابقة المعرفة الكبرى',
+      'loading.footer':'منصة عربية تفاعلية',
       // Language
       'lang.ar':'العربية',
       'lang.en':'English',
@@ -1205,6 +1207,8 @@ const I18n=(function(){
       'app.shortTitle':'Quiz Platform',
       // Loading
       'loading.title':'Interactive Quiz Platform',
+      'loading.subtitle':'Grand Knowledge Quiz',
+      'loading.footer':'Interactive Arabic Platform',
       // Language
       'lang.ar':'العربية',
       'lang.en':'English',

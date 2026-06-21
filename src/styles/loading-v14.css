@@ -1,13 +1,18 @@
 /* ════════════════════════════════════════════════════════════
-   V14 — Modern Loading Screen
+   V14.4 — Enhanced Modern Loading Screen
    Modern animated loading screen with:
    • Animated background particles (12 floating dots)
-   • Central icon ring with 3 orbiting icons (star, trophy, check)
+   • Floating ambient shapes for depth (3 blurred shapes)
+   • Central icon ring with glow, 3D depth, 3 orbiting icons
+   • Rotating dashed ring around the icon
    • Gradient title with shimmer animation
-   • Modern progress bar with shimmer effect
-   • Pulsing step dots
-   • Version badge (V14)
+   • Subtitle/tagline below title
+   • Modern progress bar with percentage indicator
+   • Pulsing step dots with active/done states
+   • Version badge (V14) with glow
+   • Footer credit with decorative dots
    • Respects prefers-reduced-motion
+   • Mobile responsive (390px+)
    ════════════════════════════════════════════════════════════ */
 
 /* ─── Animated Background Particles ─── */
@@ -27,6 +32,7 @@
   background: radial-gradient(circle, var(--accent1, #f5c842) 0%, transparent 70%);
   opacity: 0.45;
   animation: lv14-float 14s linear infinite;
+  will-change: transform, opacity;
 }
 .lv14-particle:nth-child(1)  { left: 10%; top: 90%; animation-delay:  0s;   animation-duration: 13s; }
 .lv14-particle:nth-child(2)  { left: 20%; top: 90%; animation-delay:  1.2s; animation-duration: 15s; width: 8px; height: 8px; }
@@ -48,111 +54,235 @@
   100% { transform: translateY(-110vh) translateX(40px); opacity: 0; }
 }
 
-/* ─── Central Icon Ring with Orbiting Icons ─── */
+/* ─── V14.4: Floating Ambient Shapes (for depth) ─── */
+.lv14-ambient-shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.lv14-shape {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.15;
+  animation: lv14-shape-drift 20s ease-in-out infinite;
+}
+.lv14-shape-1 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent1, #f5c842);
+  top: -50px;
+  right: -80px;
+  animation-delay: 0s;
+}
+.lv14-shape-2 {
+  width: 250px;
+  height: 250px;
+  background: var(--accent2, #ff9100);
+  bottom: -60px;
+  left: -60px;
+  animation-delay: 5s;
+}
+.lv14-shape-3 {
+  width: 200px;
+  height: 200px;
+  background: #a259ff;
+  top: 40%;
+  left: 60%;
+  animation-delay: 10s;
+  opacity: 0.08;
+}
+@keyframes lv14-shape-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, -20px) scale(1.1); }
+  66%      { transform: translate(-20px, 30px) scale(0.95); }
+}
+
+/* ─── V14.4: Central Icon Ring with Enhanced 3D Depth ─── */
 .loading-v14-icon-ring {
   position: relative;
-  width: 110px;
-  height: 110px;
-  margin-bottom: 18px;
-  z-index: 1;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 22px;
+  z-index: 2;
 }
+
+/* V14.4: Outer glow halo */
+.lv14-ring-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 200, 66, 0.15) 0%, transparent 70%);
+  animation: lv14-glow-pulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes lv14-glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.08); }
+}
+
 .lv14-ring-core {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 110px;
-  height: 110px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(245, 200, 66, 0.18) 0%, rgba(245, 200, 66, 0.04) 70%, transparent 100%);
-  border: 2px solid rgba(245, 200, 66, 0.35);
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(245, 200, 66, 0.25) 0%, transparent 50%),
+    radial-gradient(circle, rgba(245, 200, 66, 0.18) 0%, rgba(245, 200, 66, 0.04) 70%, transparent 100%);
+  border: 2px solid rgba(245, 200, 66, 0.4);
   box-shadow:
     0 0 0 8px rgba(245, 200, 66, 0.05),
-    0 0 30px rgba(245, 200, 66, 0.25),
-    inset 0 0 18px rgba(255, 152, 0, 0.18);
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(245, 200, 66, 0.3),
+    inset 0 0 24px rgba(255, 152, 0, 0.2),
+    inset 0 2px 8px rgba(255, 255, 255, 0.1);
   color: var(--accent1, #f5c842);
   animation: lv14-ring-pulse 2.4s ease-in-out infinite;
+  z-index: 2;
 }
 @keyframes lv14-ring-pulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 8px rgba(245,200,66,.05), 0 0 30px rgba(245,200,66,.25), inset 0 0 18px rgba(255,152,0,.18); }
-  50%      { transform: scale(1.05); box-shadow: 0 0 0 14px rgba(245,200,66,.03), 0 0 42px rgba(245,200,66,.35), inset 0 0 24px rgba(255,152,0,.25); }
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+/* V14.4: Rotating dashed ring */
+.lv14-rotating-ring {
+  position: absolute;
+  inset: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  animation: lv14-rotate 12s linear infinite;
+  z-index: 1;
+}
+@keyframes lv14-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 .lv14-orbit {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
   border-radius: 50%;
-  background: rgba(20, 22, 30, 0.85);
-  border: 1px solid rgba(245, 200, 66, 0.4);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 12px rgba(245, 200, 66, 0.2);
+  background: rgba(20, 22, 30, 0.9);
+  border: 1.5px solid rgba(245, 200, 66, 0.45);
+  box-shadow: 
+    0 2px 12px rgba(0, 0, 0, 0.5), 
+    0 0 16px rgba(245, 200, 66, 0.25),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
   transform-origin: 0 0;
+  z-index: 3;
 }
 .lv14-orbit-star   { animation: lv14-orbit-1 6s linear infinite; }
 .lv14-orbit-trophy { animation: lv14-orbit-2 8s linear infinite; }
 .lv14-orbit-check  { animation: lv14-orbit-3 10s linear infinite; }
 
 @keyframes lv14-orbit-1 {
-  from { transform: rotate(0deg)   translateX(58px) rotate(0deg); }
-  to   { transform: rotate(360deg) translateX(58px) rotate(-360deg); }
+  from { transform: rotate(0deg)   translateX(62px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(62px) rotate(-360deg); }
 }
 @keyframes lv14-orbit-2 {
-  from { transform: rotate(120deg) translateX(58px) rotate(-120deg); }
-  to   { transform: rotate(480deg) translateX(58px) rotate(-480deg); }
+  from { transform: rotate(120deg) translateX(62px) rotate(-120deg); }
+  to   { transform: rotate(480deg) translateX(62px) rotate(-480deg); }
 }
 @keyframes lv14-orbit-3 {
-  from { transform: rotate(240deg) translateX(58px) rotate(-240deg); }
-  to   { transform: rotate(600deg) translateX(58px) rotate(-600deg); }
+  from { transform: rotate(240deg) translateX(62px) rotate(-240deg); }
+  to   { transform: rotate(600deg) translateX(62px) rotate(-600deg); }
 }
 
-/* ─── Gradient Title with Shimmer ─── */
+/* ─── V14.4: Gradient Title with Enhanced Shimmer ─── */
 .loading-v14-title {
   position: relative;
-  z-index: 1;
-  background: linear-gradient(110deg, var(--accent1, #f5c842) 0%, var(--accent2, #ff9100) 35%, #fff5d6 50%, var(--accent2, #ff9100) 65%, var(--accent1, #f5c842) 100%);
+  z-index: 2;
+  background: linear-gradient(110deg, 
+    var(--accent1, #f5c842) 0%, 
+    var(--accent2, #ff9100) 25%, 
+    #fff5d6 50%, 
+    var(--accent2, #ff9100) 75%, 
+    var(--accent1, #f5c842) 100%);
   background-size: 250% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
   animation: lv14-shimmer 3.5s linear infinite;
+  text-shadow: 0 0 40px rgba(245, 200, 66, 0.3);
+  filter: drop-shadow(0 2px 8px rgba(245, 200, 66, 0.2));
 }
 @keyframes lv14-shimmer {
   to { background-position: -250% center; }
 }
 
-/* ─── Version Badge ─── */
+/* ─── V14.4: Subtitle/Tagline ─── */
+.lv14-subtitle {
+  position: relative;
+  z-index: 2;
+  margin-top: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.6));
+  letter-spacing: 0.5px;
+  opacity: 0;
+  animation: lv14-fade-in-up 0.8s ease 0.3s forwards;
+}
+@keyframes lv14-fade-in-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── V14.4: Version Badge with Glow ─── */
 .loading-v14-version-badge {
   display: inline-block;
-  margin-top: 8px;
-  padding: 2px 12px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1px;
+  margin-top: 10px;
+  padding: 3px 14px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
   color: #fff;
   background: linear-gradient(135deg, var(--accent1, #f5c842), var(--accent2, #ff9100));
   border-radius: 999px;
-  box-shadow: 0 2px 8px rgba(245, 200, 66, 0.35);
-  z-index: 1;
+  box-shadow: 
+    0 2px 10px rgba(245, 200, 66, 0.4),
+    0 0 20px rgba(255, 145, 0, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  z-index: 2;
   position: relative;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* ─── Modern Progress Bar with Shimmer ─── */
+/* ─── V14.4: Progress Section with Percentage ─── */
+.lv14-progress-section {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
 .loading-v14-bar {
-  width: 240px !important;
-  height: 4px !important;
-  border-radius: 4px !important;
+  width: 280px !important;
+  height: 6px !important;
+  border-radius: 6px !important;
   background: rgba(255, 255, 255, 0.08) !important;
   overflow: hidden;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
-  z-index: 1;
+  box-shadow: 
+    inset 0 1px 3px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
 }
 .loading-v14-bar-fill {
@@ -160,12 +290,14 @@
   position: relative;
   overflow: hidden;
   animation: loading-progress 1.5s ease forwards;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(245, 200, 66, 0.5);
 }
 .loading-v14-bar-fill::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.5) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
   animation: lv14-bar-shimmer 1.5s linear infinite;
 }
 @keyframes lv14-bar-shimmer {
@@ -173,14 +305,26 @@
   to   { transform: translateX(100%); }
 }
 
-/* ─── Pulsing Step Dots ─── */
+/* V14.4: Progress percentage text */
+.lv14-progress-percent {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent1, #f5c842);
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+  min-height: 1em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── V14.4: Pulsing Step Dots ─── */
 .loading-v14-steps .lv14-step {
   width: 10px !important;
   height: 10px !important;
   border-radius: 50%;
-  background: var(--border, rgba(255, 255, 255, 0.12)) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
   transition: all 0.3s ease;
   animation: lv14-step-pulse 1.6s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 .loading-v14-steps .lv14-step:nth-child(1) { animation-delay: 0s; }
 .loading-v14-steps .lv14-step:nth-child(2) { animation-delay: 0.2s; }
@@ -190,27 +334,67 @@
 
 .loading-v14-steps .lv14-step.active {
   background: var(--accent1, #f5c842) !important;
-  box-shadow: 0 0 12px var(--accent1, #f5c842), 0 0 4px var(--accent2, #ff9100);
-  transform: scale(1.3);
+  box-shadow: 
+    0 0 14px var(--accent1, #f5c842), 
+    0 0 6px var(--accent2, #ff9100);
+  transform: scale(1.4);
 }
 .loading-v14-steps .lv14-step.done {
   background: var(--accent1, #f5c842) !important;
-  opacity: 0.7;
+  opacity: 0.6;
+  box-shadow: 0 0 6px rgba(245, 200, 66, 0.3);
 }
 
 @keyframes lv14-step-pulse {
-  0%, 100% { transform: scale(1);   opacity: 0.5; }
-  50%      { transform: scale(1.2); opacity: 0.9; }
+  0%, 100% { transform: scale(1);   opacity: 0.4; }
+  50%      { transform: scale(1.25); opacity: 0.85; }
+}
+
+/* ─── V14.4: Footer Credit ─── */
+.lv14-footer {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: var(--text-muted, rgba(255, 255, 255, 0.3));
+  letter-spacing: 0.3px;
+  z-index: 2;
+  opacity: 0.7;
+}
+.lv14-footer-dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent1, #f5c842);
+  opacity: 0.5;
+}
+
+/* ─── V14.4: Loading screen container improvements ─── */
+#loading-screen {
+  background: 
+    radial-gradient(ellipse at 20% 30%, rgba(245, 200, 66, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(255, 145, 0, 0.03) 0%, transparent 50%),
+    var(--bg-deep, #08091a);
 }
 
 /* ─── Reduce motion: respect user preference ─── */
 @media (prefers-reduced-motion: reduce) {
   .lv14-particle,
   .lv14-ring-core,
+  .lv14-ring-glow,
   .lv14-orbit,
+  .lv14-rotating-ring,
+  .lv14-shape,
   .loading-v14-title,
   .loading-v14-bar-fill::after,
-  .loading-v14-steps .lv14-step {
+  .loading-v14-steps .lv14-step,
+  .lv14-subtitle {
     animation: none !important;
   }
   .loading-v14-bar-fill {
@@ -223,44 +407,123 @@
     -webkit-text-fill-color: var(--accent1, #f5c842);
     color: var(--accent1, #f5c842);
   }
+  .lv14-subtitle {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ─── Mobile responsiveness ─── */
 @media (max-width: 480px) {
   .loading-v14-icon-ring {
-    width: 88px;
-    height: 88px;
+    width: 96px;
+    height: 96px;
+    margin-bottom: 18px;
+  }
+  .lv14-ring-core {
+    width: 96px;
+    height: 96px;
+  }
+  .lv14-ring-core svg {
+    width: 32px;
+    height: 32px;
+  }
+  .lv14-orbit {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
+  }
+  @keyframes lv14-orbit-1 {
+    from { transform: rotate(0deg)   translateX(50px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+  }
+  @keyframes lv14-orbit-2 {
+    from { transform: rotate(120deg) translateX(50px) rotate(-120deg); }
+    to   { transform: rotate(480deg) translateX(50px) rotate(-480deg); }
+  }
+  @keyframes lv14-orbit-3 {
+    from { transform: rotate(240deg) translateX(50px) rotate(-240deg); }
+    to   { transform: rotate(600deg) translateX(50px) rotate(-600deg); }
+  }
+  .loading-v14-title {
+    font-size: 2rem !important;
+  }
+  .lv14-subtitle {
+    font-size: 0.9rem;
+  }
+  .loading-v14-bar {
+    width: 220px !important;
+  }
+  .lv14-shape {
+    filter: blur(40px);
+  }
+  .lv14-shape-1 {
+    width: 200px;
+    height: 200px;
+  }
+  .lv14-shape-2 {
+    width: 180px;
+    height: 180px;
+  }
+  .lv14-shape-3 {
+    width: 140px;
+    height: 140px;
+  }
+  .lv14-footer {
+    font-size: 0.65rem;
+    bottom: 16px;
+  }
+}
+
+/* ─── V14.4: Small mobile (≤ 360px) ─── */
+@media (max-width: 360px) {
+  .loading-v14-icon-ring {
+    width: 84px;
+    height: 84px;
     margin-bottom: 14px;
   }
   .lv14-ring-core {
-    width: 88px;
-    height: 88px;
+    width: 84px;
+    height: 84px;
   }
   .lv14-ring-core svg {
     width: 28px;
     height: 28px;
   }
-  .lv14-orbit {
-    width: 24px;
-    height: 24px;
-    font-size: 13px;
-  }
-  @keyframes lv14-orbit-1 {
-    from { transform: rotate(0deg)   translateX(46px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(46px) rotate(-360deg); }
-  }
-  @keyframes lv14-orbit-2 {
-    from { transform: rotate(120deg) translateX(46px) rotate(-120deg); }
-    to   { transform: rotate(480deg) translateX(46px) rotate(-480deg); }
-  }
-  @keyframes lv14-orbit-3 {
-    from { transform: rotate(240deg) translateX(46px) rotate(-240deg); }
-    to   { transform: rotate(600deg) translateX(46px) rotate(-600deg); }
-  }
   .loading-v14-title {
-    font-size: 2.2rem !important;
+    font-size: 1.7rem !important;
+  }
+  .lv14-subtitle {
+    font-size: 0.82rem;
   }
   .loading-v14-bar {
-    width: 200px !important;
+    width: 180px !important;
+  }
+  @keyframes lv14-orbit-1 {
+    from { transform: rotate(0deg)   translateX(44px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(44px) rotate(-360deg); }
+  }
+  @keyframes lv14-orbit-2 {
+    from { transform: rotate(120deg) translateX(44px) rotate(-120deg); }
+    to   { transform: rotate(480deg) translateX(44px) rotate(-480deg); }
+  }
+  @keyframes lv14-orbit-3 {
+    from { transform: rotate(240deg) translateX(44px) rotate(-240deg); }
+    to   { transform: rotate(600deg) translateX(44px) rotate(-600deg); }
+  }
+}
+
+/* ─── V14.4: High contrast mode support ─── */
+@media (prefers-contrast: high) {
+  .lv14-particle,
+  .lv14-shape {
+    opacity: 0.6;
+  }
+  .lv14-ring-core {
+    border-width: 3px;
+    border-color: var(--accent1, #f5c842);
+  }
+  .loading-v14-version-badge {
+    box-shadow: 0 0 0 2px #fff;
   }
 }
