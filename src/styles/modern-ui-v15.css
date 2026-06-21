@@ -1093,3 +1093,513 @@ a:hover{ color: var(--accent1-light) !important; }
     border-width: 2px !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   V15.1 — RESPONSIVE TOP BARS (flex-wrap + adaptive icon sizing)
+   ═══════════════════════════════════════════════════════════════════
+   Problem: On small screens, top header bars use overflow:auto or
+   display:none for action buttons, causing:
+   - Horizontal scrolling instead of wrapping
+   - Hidden critical actions (start presentation, language, logout)
+   - Cramped icons with truncated text
+
+   Solution: Enable flex-wrap, scale icon buttons, hide non-essential
+   labels on very small screens, keep all actions accessible.
+   ───────────────────────────────────────────────────────────────── */
+
+/* ══ ADMIN HEADER — Make actions visible & wrap on small screens ══ */
+.admin-header{
+  flex-wrap: wrap !important;
+  height: auto !important;
+  min-height: 68px !important;
+  padding: 10px 16px !important;
+  gap: 8px !important;
+  overflow: visible !important;
+}
+
+/* Override the display:none rule from main.css @media(max-width:1024px)
+   so admin-header-actions remain accessible on tablets & mobile */
+@media (max-width: 1024px){
+  .admin-header .admin-header-actions{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    justify-content: flex-end !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  .admin-nav{
+    display: flex !important; /* Restore top tabs on tablet */
+    overflow-x: auto !important;
+  }
+}
+
+@media (max-width: 768px){
+  .admin-header{
+    padding: 8px 12px !important;
+  }
+  .admin-header-actions{
+    gap: 3px !important;
+  }
+  /* OVERRIDE enhancements-mobile.css rule that hides non-essential buttons.
+     Show ALL admin header buttons on mobile as compact icon buttons. */
+  .admin-header .btn:not(.btn-primary):not(.btn-danger):not([aria-label*="تسجيل"]):not([onclick*="startPresentation"]):not([onclick*="logout"]){
+    display: inline-flex !important;
+  }
+  /* Compact icon buttons in admin header on mobile */
+  .admin-header-actions .btn,
+  .admin-header-actions .btn-sm,
+  .admin-header-actions button{
+    padding: 6px 10px !important;
+    font-size: .72rem !important;
+    min-height: 36px !important;
+    min-width: 36px !important;
+    gap: 3px !important;
+  }
+  .admin-header-actions .btn svg,
+  .admin-header-actions button svg{
+    width: 16px !important;
+    height: 16px !important;
+  }
+  /* Hide text labels on icon+text buttons, keep icons only */
+  .admin-header-actions .btn span:not(.sr-only),
+  .admin-header-actions button span:not(.sr-only):not(.i18n-lang-label){
+    display: none !important;
+  }
+  /* But keep text for important buttons (logout, language) */
+  .admin-header-actions .btn[id*="logout"],
+  .admin-header-actions .i18n-switcher-btn span,
+  .admin-header-actions .i18n-switcher-btn .i18n-lang-label{
+    display: inline !important;
+  }
+  /* Logo smaller on mobile */
+  .admin-logo{
+    font-size: .9rem !important;
+  }
+  .admin-logo-icon{
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
+@media (max-width: 480px){
+  .admin-header{
+    padding: 6px 10px !important;
+  }
+  .admin-header-actions .btn,
+  .admin-header-actions button{
+    padding: 5px 8px !important;
+    font-size: .68rem !important;
+    min-height: 32px !important;
+    min-width: 32px !important;
+  }
+  .admin-header-actions .btn svg,
+  .admin-header-actions button svg{
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+/* ══ PRESENTATION HEADER BAR — flex-wrap on small screens ══ */
+.pres-header-bar{
+  flex-wrap: wrap !important;
+  height: auto !important;
+  min-height: 64px !important;
+  padding: 8px clamp(8px, 2vw, 16px) !important;
+  gap: 6px !important;
+  overflow: visible !important;
+  position: fixed !important;
+}
+
+.pres-header-actions{
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  justify-content: flex-end !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.pres-header-logo{
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  max-width: 60% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 768px){
+  .pres-header-bar{
+    padding: 6px 10px !important;
+  }
+  .pres-header-actions .btn,
+  .pres-header-actions .btn-sm,
+  .pres-header-actions .music-btn,
+  .pres-header-actions button{
+    padding: 6px 9px !important;
+    font-size: .72rem !important;
+    min-height: 36px !important;
+    min-width: 36px !important;
+    gap: 3px !important;
+  }
+  .pres-header-actions .btn svg,
+  .pres-header-actions button svg{
+    width: 16px !important;
+    height: 16px !important;
+  }
+  /* Hide button text labels, keep icons */
+  .pres-header-actions .btn span:not(.sr-only),
+  .pres-header-actions button span:not(.sr-only){
+    display: none !important;
+  }
+  /* Keep music icon visible */
+  .pres-header-actions .music-btn::before{
+    content: '🎵' !important;
+    font-size: 1rem !important;
+  }
+  .pres-header-logo{
+    font-size: .78rem !important;
+    max-width: 50% !important;
+  }
+}
+
+@media (max-width: 480px){
+  .pres-header-bar{
+    padding: 5px 8px !important;
+  }
+  .pres-header-actions .btn,
+  .pres-header-actions button{
+    padding: 5px 7px !important;
+    font-size: .68rem !important;
+    min-height: 32px !important;
+    min-width: 32px !important;
+  }
+  .pres-header-actions .btn svg,
+  .pres-header-actions button svg{
+    width: 14px !important;
+    height: 14px !important;
+  }
+}
+
+/* ══ SOLO QUESTION TOPBAR — already has flex-wrap, refine sizing ══ */
+.solo-q-topbar{
+  flex-wrap: wrap !important;
+  padding: 8px 12px !important;
+  gap: 6px !important;
+}
+
+@media (max-width: 768px){
+  .solo-q-topbar{
+    padding: 6px 10px !important;
+  }
+  .solo-q-cat{
+    font-size: .82rem !important;
+    max-width: 100% !important;
+    flex: 1 1 100% !important;
+    order: 1 !important;
+  }
+  .solo-q-level{
+    font-size: .72rem !important;
+    margin-inline-start: 0 !important;
+    order: 3 !important;
+  }
+  .solo-q-stars-earned{
+    order: 2 !important;
+    margin-inline-start: auto !important;
+  }
+}
+
+/* ══ SCORE TICKER — wrap on small screens ══ */
+#score-ticker,
+.score-ticker-bar{
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+}
+
+@media (max-width: 768px){
+  #score-ticker,
+  .score-ticker-bar{
+    padding: 6px 10px !important;
+    gap: 4px !important;
+  }
+  .ticker-name{
+    font-size: .78rem !important;
+  }
+  .ticker-score{
+    font-size: 1rem !important;
+  }
+}
+
+/* ══ ADMIN NAV TABS — better small-screen behavior ══ */
+@media (max-width: 768px){
+  .admin-nav{
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: thin !important;
+    padding: 0 12px !important;
+  }
+  .nav-tab{
+    padding: 10px 12px !important;
+    font-size: .78rem !important;
+    white-space: nowrap !important;
+  }
+  .nav-tab svg{
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
+/* ══ BOTTOM NAV — better text wrapping & sizing ══ */
+.bottom-nav{
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  scrollbar-width: none !important;
+  justify-content: flex-start !important;
+}
+.bottom-nav::-webkit-scrollbar{ display: none !important; }
+
+@media (max-width: 480px){
+  .bottom-nav-item{
+    padding: 4px 6px !important;
+    font-size: .58rem !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    gap: 2px !important;
+  }
+  .bottom-nav-item svg{
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .bottom-nav-item span{
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ══ INTRO HEADER — wrap on small screens ══ */
+.intro-header-bar,
+.intro-header-actions{
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+}
+
+@media (max-width: 768px){
+  .intro-header-actions{
+    gap: 3px !important;
+  }
+  .intro-header-actions .btn,
+  .intro-header-actions button{
+    padding: 6px 10px !important;
+    font-size: .72rem !important;
+    min-height: 36px !important;
+    min-width: 36px !important;
+  }
+}
+
+/* ══ GENERAL: Ensure all header action buttons have minimum tap target ══ */
+.admin-header-actions .btn,
+.pres-header-actions .btn,
+.intro-header-actions .btn,
+.solo-q-topbar button,
+.score-ticker-bar button{
+  min-height: 36px !important;
+  min-width: 36px !important;
+  touch-action: manipulation !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ══ NOTIFICATION BELL — better tap target on mobile ══ */
+.notification-bell{
+  min-width: 40px !important;
+  min-height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+@media (max-width: 480px){
+  .notification-bell{
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+}
+
+/* ══ MODAL HEADER — wrap on small screens ══ */
+.modal-header{
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  padding: 16px 20px !important;
+}
+
+@media (max-width: 480px){
+  .modal-header{
+    padding: 12px 14px !important;
+  }
+  .modal-title{
+    font-size: 1rem !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+/* ══ CARD HEADER — wrap on small screens ══ */
+.card-header{
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+@media (max-width: 480px){
+  .card-header{
+    padding-bottom: 10px !important;
+    margin-bottom: 12px !important;
+  }
+  .card-title{
+    font-size: .9rem !important;
+    flex: 1 1 100% !important;
+  }
+}
+
+/* ══ FORM ROWS — stack on small screens ══ */
+@media (max-width: 480px){
+  .form-row{
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+}
+
+/* ══ SETTINGS SUBTABS — wrap & scroll on small screens ══ */
+.settings-subtabs,
+.settings-tabs-row{
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+@media (max-width: 768px){
+  .settings-subtabs .settings-subtab,
+  .settings-tabs-row button{
+    padding: 8px 12px !important;
+    font-size: .78rem !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+/* ══ QUESTION SCREEN TOOLBAR — wrap on small screens ══ */
+.q-toolbar,
+.question-toolbar,
+.lifelines-bar{
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  justify-content: center !important;
+}
+
+@media (max-width: 480px){
+  .lifelines-bar{
+    gap: 4px !important;
+  }
+  .lifeline-btn{
+    padding: 6px 8px !important;
+    min-width: 48px !important;
+    max-width: 70px !important;
+  }
+  .lifeline-btn .ll-icon{
+    font-size: 1rem !important;
+  }
+  .lifeline-btn .ll-label{
+    font-size: .6rem !important;
+  }
+}
+
+/* ══ TURN BANNER / OVERLAY — responsive text sizing ══ */
+@media (max-width: 480px){
+  .turn-overlay-name{
+    font-size: clamp(2rem, 12vw, 4rem) !important;
+  }
+  .turn-overlay-sub{
+    font-size: .9rem !important;
+  }
+}
+
+/* ══ PODIUM — responsive sizing ══ */
+@media (max-width: 480px){
+  .podium-stage{
+    gap: 6px !important;
+    padding: 10px !important;
+  }
+  .podium-position{
+    font-size: 1.2rem !important;
+  }
+  .podium-name{
+    font-size: .9rem !important;
+  }
+}
+
+/* ══ CATEGORIES GRID — better mobile layout ══ */
+@media (max-width: 480px){
+  .cat-grid,
+  .categories-grid{
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+  .category-card{
+    padding: 14px 10px !important;
+  }
+  .category-card .cat-icon,
+  .category-card .mode-icon{
+    font-size: 1.8rem !important;
+  }
+  .category-card .cat-name,
+  .category-card .mode-name{
+    font-size: .82rem !important;
+  }
+}
+
+/* ══ QUESTION OPTIONS — stack on very small screens ══ */
+@media (max-width: 380px){
+  .q-options-grid,
+  .question-options{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ══ SCROLLBAR POLISH for horizontal tab strips ══ */
+.admin-nav,
+.pres-header-actions,
+.bottom-nav,
+.settings-subtabs{
+  scrollbar-width: thin !important;
+  scrollbar-color: var(--border) transparent !important;
+}
+
+.admin-nav::-webkit-scrollbar,
+.pres-header-actions::-webkit-scrollbar,
+.bottom-nav::-webkit-scrollbar,
+.settings-subtabs::-webkit-scrollbar{
+  height: 3px !important;
+}
+
+.admin-nav::-webkit-scrollbar-thumb,
+.pres-header-actions::-webkit-scrollbar-thumb,
+.bottom-nav::-webkit-scrollbar-thumb,
+.settings-subtabs::-webkit-scrollbar-thumb{
+  background: var(--border) !important;
+  border-radius: 3px !important;
+}
+
+/* ══ SAFE AREA INSETS for iOS notch devices ══ */
+@supports (padding: env(safe-area-inset-top)){
+  .admin-header,
+  .pres-header-bar,
+  .solo-q-topbar{
+    padding-top: max(8px, env(safe-area-inset-top)) !important;
+  }
+  .bottom-nav{
+    padding-bottom: env(safe-area-inset-bottom, 0) !important;
+  }
+}
