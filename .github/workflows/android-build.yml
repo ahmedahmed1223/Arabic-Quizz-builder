@@ -7,9 +7,8 @@ on:
   workflow_dispatch: # Allows manual triggers from GitHub Actions UI
 
 permissions:
-  contents: write # Required to upload APKs to GitHub Releases
+  contents: write # Required to commit and push changes back to repo
 
-# تحسين: تجميع المتغيرات الثابتة في الأعلى لتسهيل تحديث إصدار أدوات الأندرويد مستقبلاً
 env:
   ANDROID_BUILD_TOOLS_VERSION: "34.0.0"
 
@@ -20,6 +19,8 @@ jobs:
     steps:
       - name: Checkout Code Repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js Env
         uses: actions/setup-node@v4
@@ -32,7 +33,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: '21'
-          cache: 'gradle' # 🚀 تحسين: تفعيل الكاش لملفات جاردل لتسريع عمليات البناء القادمة بنسبة تصل إلى 50%
+          cache: 'gradle'
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -43,6 +44,25 @@ jobs:
       - name: Compile Vite Web Application Assets
         run: npm run build
 
+      # أتمتة إنشاء وتخصيص ملف index.html في مجلد dist
+      - name: Automate index.html Creation in dist Folder
+        run: |
+          mkdir -p dist
+          cat << 'EOF' > dist/index.html
+          <!DOCTYPE html>
+          <html lang="ar" dir="rtl">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Arabic Quiz Builder</title>
+          </head>
+          <body>
+              <div id="app"></div>
+          </body>
+          </html>
+          EOF
+          echo "✅ تم إنشاء ملف dist/index.html"
+
       - name: Synchronize Web Assets to Capacitor Android Project
         run: npx cap sync android
 
@@ -50,64 +70,47 @@ jobs:
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon # 🚀 تحسين: تعطيل الـ Daemon لتوفير استهلاك الذاكرة العشوائية وتحسين أداء السيرفر في بيئة الـ CI
+          ./gradlew assembleRelease --no-daemon
 
       - name: Generate On-The-Fly KeyStore and Sign APK
         id: sign_apk
         run: |
-          # إنشاء مجلد المخرجات مبكراً
           mkdir -p ./releases
           
-          # توليد مفتاح التوقيع المؤقت
           keytool -genkey -v -keystore release.keystore -alias playkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=ArabicQuizBuilder, O=QuizApp, C=SA"
           
-          # 🚀 تحسين: دمج أمر البحث في سطر واحد لفحص الملف غير الموقع أو العادي مباشرة مع إضافة فحص ذكي للخطأ
           APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" -o -name "*.apk" | head -n 1)
           
           if [ -z "$APK_PATH" ]; then
             echo "❌ خطأ حرِج: لم يتم العثور على ملف APK الناتج من عملية البناء!"
             exit 1
           fi
-          echo "Found compiled APK path: $APK_PATH"
           
-          # نسخ الملف لبدء العمل عليه
           cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
           
-          # تعريف مسار أدوات البناء عبر المتغير العام المحسن
           BUILD_TOOLS="${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}"
           
-          # محاذاة وتوقيع الـ APK
           $BUILD_TOOLS/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk
           $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-signed-release.apk ./releases/arabic-quiz-release-aligned.apk
           $BUILD_TOOLS/apksigner verify ./releases/arabic-quiz-signed-release.apk
           
-          # 🚀 تحسين: تنظيف المجلد وحذف الملفات الوسيطة والمفتاح المؤقت ليبقى مجلد releases يحتوي فقط على التطبيق النهائي الموقّع
+          # تنظيف الملفات المؤقتة وإبقاء الـ APK النهائي فقط داخل مجلد releases
           rm -f ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk release.keystore
+          echo "✅ تم تجهيز وتوقيع الـ APK بنجاح في مجلد releases"
+
+      # رفع وحفظ التغييرات مباشرة للمستودع (دون توليد Release)
+      - name: Commit and Push generated files back to repository
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          echo "✅ APK successfully compiled, signed and saved clean to ./releases/"
-
-      - name: Upload Compile Artifact for Build Retention
-        uses: actions/upload-artifact@v4
-        with:
-          name: arabic-quiz-signed-release-apk
-          path: ./releases/arabic-quiz-signed-release.apk
-
-      - name: Publish Automatically to GitHub Release Section
-        uses: softprops/action-gh-release@v2
-        if: github.ref == 'refs/heads/main'
-        with:
-          files: ./releases/arabic-quiz-signed-release.apk
-          tag_name: android-v14.0.0-run-${{ github.run_number }}
-          name: "الإصدار الأوتوماتيكي #${{ github.run_number }}"
-          body: |
-            🎉 تم بناء وتوقيع حزمة الـ APK بنجاح وبشكل مؤتمت بالكامل!
-            **تفاصيل هذه النسخة:**
-            - **تاريخ البناء:** ${{ github.event.head_commit.timestamp || 'مبني يدوياً' }}
-            - **رقم التشغيل في CI/CD:** ${{ github.run_number }}
-            - **المعرّف الكودي المعماري للمطور:** `com.ahmedahmed1223.arabicquizzbuilder`
-            - **التوقيع الذاتي:** مفعل تلقائياً لملاءمة جميع الأجهزة والمنصات.
-            حمل ملف الـ APK المرفق للتثبيت مباشرة على الهواتف الذكية وأجهزة الأندرويد.
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # إضافة ملف index.html ومجلد releases بالإجبار
+          git add dist/index.html releases/arabic-quiz-signed-release.apk -f
+          
+          # التحقق من وجود تغييرات حقيقية لتفادي توقف السيرفر عند التكرار
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 أتمتة: تحديث ملفات البناء ومجلد الـ releases محلياً"
+            git push origin main
+          fi
