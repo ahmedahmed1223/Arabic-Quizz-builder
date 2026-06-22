@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual triggers from GitHub Actions UI
 
 permissions:
-  contents: write
+  contents: write # Required to commit and push changes back to repo
 
 env:
   ANDROID_BUILD_TOOLS_VERSION: "34.0.0"
@@ -48,7 +48,6 @@ jobs:
       - name: Compile Vite Web Application Assets
         run: npm run build
 
-      # 🚀 خطوة فحص ذكية: طباعة حجم ملف index.html الناتج للتأكد من دمج الأكواد داخله
       - name: Verify Single File Build Size
         run: |
           echo "=== فحص حجم الملفات الناتجة من Vite ==="
@@ -79,19 +78,20 @@ jobs:
           cp "$APK_PATH" ./releases/arabic-quiz-signed-release.apk
           BUILD_TOOLS="${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}"
           
-          # توقيع الملف مباشرة
+          # توقيع الملف وحفظه مباشرة في مجلد releases خارج المستودع
           $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 ./releases/arabic-quiz-signed-release.apk
           $BUILD_TOOLS/apksigner verify ./releases/arabic-quiz-signed-release.apk
           rm -f release.keystore
 
-      # رفع وحفظ التغييرات ومجلد dist ومجلد releases للمستودع
+      # 🚀 تصحيح خطأ الـ Git وضمان رفع المجلدات بشكل منفصل وسليم
       - name: Commit and Push generated files back to repository
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # إضافة المجلدات بالإجبار لتخطي الـ .gitignore إن وجد
-          git add dist/releases/arabic-quiz-signed-release.apk -f
+          # تم إضافة مسافة واضحة ومستقلة بين المجلدين ليفهمها Git كمسارين منفصلين
+          git add dist/ -f
+          git add releases/ -f
           
           if git diff-index --quiet HEAD --; then
             echo "No changes to commit"
