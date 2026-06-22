@@ -42,21 +42,21 @@ jobs:
       - name: Install NPM Dependencies
         run: npm ci
 
-      # Ensure old local build directories are fully wiped before compiling
+      # تنظيف مجلدات البناء القديمة تماماً من السيرفر
       - name: Clean Old Build and Release Directories
         run: |
           rm -rf dist
           rm -rf releases
 
-      # Build the web application (vite-plugin-singlefile outputs index.html here)
+      # بناء مشروع Vite لإنتاج ملف index.html المدمج بالكامل
       - name: Compile Vite Web Application Assets
         run: npm run build
 
       - name: Verify Single File Build Size
         run: |
-          echo "=== Checking Vite generated file size ==="
+          echo "=== فحص حجم الملفات الناتجة في مجلد dist ==="
           ls -lh dist/
-          echo "========================================="
+          echo "========================================"
 
       - name: Synchronize Web Assets to Capacitor Android Project
         run: npx cap sync android
@@ -76,35 +76,34 @@ jobs:
           
           APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" -o -name "*.apk" | head -n 1)
           if [ -z "$APK_PATH" ]; then
-            echo "❌ Critical Error: Compiled APK not found!"
+            echo "❌ خطأ حرج: لم يتم العثور على ملف APK الناتج!"
             exit 1
           fi
           
           cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
           BUILD_TOOLS="${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}"
           
-          # Force overwrite the exact same filename every single run
           $BUILD_TOOLS/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk
           $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-signed-release.apk ./releases/arabic-quiz-release-aligned.apk
           $BUILD_TOOLS/apksigner verify ./releases/arabic-quiz-signed-release.apk
           
-          # Clear out temporary unaligned/aligned files and keystores completely
           rm -f ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk release.keystore
 
-      # Commit and push changes safely
+      # 🚀 التعديل الجوهري: إجبار Git على إزالة حظر dist ورفع ملف index.html بالتأكيد
       - name: Commit and Push generated files back to repository
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Force track both clean directories separately
-          git add dist/ -f
-          git add releases/ -f
+          # إزالة مجلد dist وملف index.html من ذاكرة الحظر المؤقتة للـ Git وإضافتهما كلياً بالإجبار
+          git rm -r --cached dist/ || true
+          git add -f dist/index.html
+          git add -f releases/arabic-quiz-signed-release.apk
           
-          if git diff-index --quiet HEAD --; then
-            echo "No changes detected. Skipping commit."
+          # الفحص برمجياً إذا كان هناك أي تحديث في الملفات
+          if git diff --staged --quiet; then
+            echo "لا توجد تغييرات لإضافتها للمستودع."
           else
-            # 🚀 CRITICAL: [skip ci] prevents the action from triggering an infinite deployment loop
-            git commit -m "🤖 automation: update singlefile bundle and overwrite production APK [skip ci]"
+            git commit -m "🤖 أتمتة: تحديث إجباري لملف الـ Single File index.html وتطبيق الـ APK [skip ci]"
             git push origin main
           fi
