@@ -1817,3 +1817,279 @@
 [data-theme="light"] .import-zone {
   background: rgba(0, 0, 0, 0.02) !important;
 }
+
+/* ════════════════════════════════════════════════════════════════════════
+   22. STATS GRID & SELECTED ELEMENT VIP DESIGN EFFECTS
+   ════════════════════════════════════════════════════════════════════════ */
+#stats-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)) !important;
+  gap: 16px !important;
+}
+
+#stats-grid .stat-card {
+  background: var(--surface-2, var(--bg-panel)) !important;
+  border: 1.5px solid var(--border-default, var(--border)) !important;
+  border-radius: var(--radius-lg, 16px) !important;
+  padding: 16px 12px !important;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 300ms var(--ease-snappy, cubic-bezier(0.19, 1, 0.22, 1)) !important;
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.15)) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#stats-grid .stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent1, #00e8d0);
+  opacity: 0.85;
+}
+
+#stats-grid .stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), var(--highlight-top) !important;
+  border-color: var(--border-strong, var(--accent1)) !important;
+}
+
+/* Individual card accents for #stats-grid direct child cards (Case 1) */
+#stats-grid .stat-card:nth-of-type(1)::before {
+  background: linear-gradient(90deg, var(--accent1, #00e8d0), #00b4d8) !important;
+}
+#stats-grid .stat-card:nth-of-type(1) div:nth-of-type(2) {
+  text-shadow: 0 0 15px rgba(0, 232, 208, 0.35) !important;
+}
+
+#stats-grid .stat-card:nth-of-type(2)::before {
+  background: linear-gradient(90deg, var(--accent2, #f5c842), #ff9f1c) !important;
+}
+#stats-grid .stat-card:nth-of-type(2) div:nth-of-type(2) {
+  text-shadow: 0 0 15px rgba(245, 200, 66, 0.35) !important;
+}
+
+#stats-grid .stat-card:nth-of-type(3)::before {
+  background: linear-gradient(90deg, var(--success, #00e676), #059669) !important;
+}
+#stats-grid .stat-card:nth-of-type(3) div:nth-of-type(2) {
+  text-shadow: 0 0 15px rgba(0, 230, 118, 0.35) !important;
+}
+
+/* Focused UI element - 4th child (Credits/Sessions card) */
+#stats-grid .stat-card:nth-of-type(4)::before {
+  background: linear-gradient(90deg, #a78bfa, #7c5cfc) !important;
+}
+#stats-grid .stat-card:nth-of-type(4) {
+  border-color: rgba(167, 139, 250, 0.35) !important;
+}
+#stats-grid .stat-card:nth-of-type(4):hover {
+  border-color: #a78bfa !important;
+}
+
+#stats-grid .stat-card:nth-of-type(4) > div:nth-of-type(2) {
+  font-size: 1.7rem !important;
+  font-weight: 900 !important;
+  color: #a78bfa !important;
+  text-shadow: 0 0 12px rgba(167, 139, 250, 0.5), 0 0 20px rgba(124, 92, 252, 0.25) !important;
+  animation: pulse-glow-purple 2.5s ease-in-out infinite alternate !important;
+  transform: scale(1.01);
+  margin: 4px 0 !important;
+}
+
+#stats-grid .stat-card:nth-of-type(4) > div:nth-of-type(1) {
+  font-size: 1.5rem !important;
+  transform: scale(1.02);
+  filter: drop-shadow(0 2px 6px rgba(167, 139, 250, 0.2));
+  margin-bottom: 4px !important;
+}
+
+#stats-grid .stat-card:nth-of-type(4) > div:nth-of-type(3) {
+  font-weight: 700 !important;
+  color: var(--text-primary, #ffffff) !important;
+}
+
+/* Case 2: Dashboard stats inside .dashboard-stats (Sessions) */
+.dashboard-stats .dash-stat-card {
+  transition: all 300ms var(--ease-snappy, cubic-bezier(0.19, 1, 0.22, 1)) !important;
+}
+
+.dashboard-stats .dash-stat-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), var(--highlight-top) !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-questions::before {
+  background: linear-gradient(90deg, var(--accent2, #f5c842), #ff9f1c) !important;
+}
+.dashboard-stats .dash-stat-card.stat-questions > .dash-stat-value {
+  color: var(--accent2, #f5c842) !important;
+  text-shadow: 0 0 15px rgba(245, 200, 66, 0.35) !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-categories::before {
+  background: linear-gradient(90deg, var(--accent1, #00e8d0), #00b4d8) !important;
+}
+.dashboard-stats .dash-stat-card.stat-categories > .dash-stat-value {
+  color: var(--accent1, #00e8d0) !important;
+  text-shadow: 0 0 15px rgba(0, 232, 208, 0.35) !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-teams::before {
+  background: linear-gradient(90deg, #7c5cfc, #a78bfa) !important;
+}
+.dashboard-stats .dash-stat-card.stat-teams > .dash-stat-value {
+  color: #a78bfa !important;
+  text-shadow: 0 0 15px rgba(124, 92, 252, 0.35) !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-sessions {
+  border-top-color: transparent !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-sessions::before {
+  background: linear-gradient(90deg, #10b981, #059669) !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-sessions:hover {
+  border-color: #10b981 !important;
+}
+
+/* Targeted Sessions element value glow design */
+.dashboard-stats .dash-stat-card.stat-sessions > .dash-stat-value {
+  font-size: 1.7rem !important;
+  font-weight: 900 !important;
+  color: #10b981 !important;
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.5), 0 0 20px rgba(5, 150, 105, 0.25) !important;
+  animation: pulse-glow-green 2.5s ease-in-out infinite alternate !important;
+  transform: scale(1.01);
+  margin: 4px 0 !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-sessions > .dash-stat-icon {
+  font-size: 1.5rem !important;
+  transform: scale(1.02);
+  filter: drop-shadow(0 2px 6px rgba(16, 185, 129, 0.2));
+  margin-bottom: 4px !important;
+}
+
+.dashboard-stats .dash-stat-card.stat-sessions > .dash-stat-label {
+  font-weight: 700 !important;
+  color: var(--text-primary, #ffffff) !important;
+}
+
+/* Animations declarations */
+@keyframes pulse-glow-purple {
+  0% {
+    text-shadow: 0 0 12px rgba(167, 139, 250, 0.45), 0 0 20px rgba(124, 92, 252, 0.2);
+    transform: scale(1.02);
+  }
+  100% {
+    text-shadow: 0 0 24px rgba(167, 139, 250, 0.85), 0 0 40px rgba(124, 92, 252, 0.5);
+    transform: scale(1.08);
+  }
+}
+
+@keyframes pulse-glow-green {
+  0% {
+    text-shadow: 0 0 12px rgba(16, 185, 129, 0.45), 0 0 20px rgba(5, 150, 105, 0.2);
+    transform: scale(1.02);
+  }
+  100% {
+    text-shadow: 0 0 24px rgba(16, 185, 129, 0.85), 0 0 40px rgba(5, 150, 105, 0.5);
+    transform: scale(1.08);
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   23. SOLO SETTINGS DASHBOARD & PIE CHART CONTAINER FIT
+   ════════════════════════════════════════════════════════════════════════ */
+
+/* Turn off the tiny grid on #stats-grid when it contains full settings dashboard panels,
+   restoring full-width flexible vertical stacking and proper containment. */
+#stats-grid:has(.dashboard-stats),
+#stats-grid:has(.dash-chart-section),
+#stats-grid:has(.dash-status-card) {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Style the pie chart into a gorgeous, high-contrast modern donut chart */
+.dash-pie-chart {
+  width: 154px !important;
+  height: 154px !important;
+  border-radius: 50% !important;
+  position: relative !important;
+  margin: 16px auto !important;
+  aspect-ratio: 1 / 1 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), inset 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+  transition: transform 300ms cubic-bezier(0.19, 1, 0.22, 1) !important;
+}
+
+.dash-pie-chart:hover {
+  transform: scale(1.04) !important;
+}
+
+/* Center cutout circle forming the donut hole */
+.dash-pie-chart::after {
+  content: '' !important;
+  position: absolute !important;
+  inset: 24% !important;
+  background: var(--bg-surface, var(--bg-panel, #0c0c14)) !important;
+  border-radius: 50% !important;
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.7), 0 1px 1px rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Polished styling for pie chart legend items */
+.dash-legend {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-top: 16px !important;
+  justify-content: center !important;
+}
+
+.dash-legend-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary, #b3b3b3) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.06) !important;
+  padding: 5px 12px !important;
+  border-radius: 8px !important;
+  transition: all 250ms cubic-bezier(0.19, 1, 0.22, 1) !important;
+}
+
+.dash-legend-item:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  transform: translateY(-2px) !important;
+  color: var(--text-primary, #ffffff) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.dash-legend-dot {
+  width: 9px !important;
+  height: 9px !important;
+  border-radius: 50% !important;
+  filter: drop-shadow(0 0 4px currentColor) !important;
+}
+
+
