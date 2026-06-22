@@ -371,7 +371,12 @@ TimerRegistry.setInterval(function(){
     AudioMixer.cleanup();
     // Clean up any dangling audio elements that have ended (not paused — paused could be intentional)
     var _audioEls=document.querySelectorAll('audio');
-    var _protectedEls=new Set([window._qAudioEl,window._quranAudio,window._tenseAudioEl,_customMusicEl].filter(Boolean));
+    var _protectedEls=new Set([
+      typeof window !== 'undefined' && window._qAudioEl ? window._qAudioEl : null,
+      typeof window !== 'undefined' && window._quranAudio ? window._quranAudio : null,
+      typeof window !== 'undefined' && window._tenseAudioEl ? window._tenseAudioEl : null,
+      typeof _customMusicEl !== 'undefined' ? _customMusicEl : null
+    ].filter(Boolean));
     _audioEls.forEach(function(el){
       if(el.ended&&!_protectedEls.has(el)){
         try{el.src='';el.load();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_57")}catch(_){}}

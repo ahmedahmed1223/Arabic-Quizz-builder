@@ -1041,15 +1041,8 @@ function soloGoHome(){
   if(starsOverlay) starsOverlay.classList.remove('solo-overlay-visible');
   const settingsPanel=document.getElementById('solo-settings-panel');
   if(settingsPanel) settingsPanel.classList.remove('solo-overlay-visible');
-  // V15-fix: Navigate to solo-map instead of login for better UX
-  // Solo players shouldn't need to re-enter password every time they go "home"
-  try{
-    if(state&&state.settings&&state.settings.pwLevel==='none'){
-      showView('intro');
-    }else{
-      showView('solo-map');
-    }
-  }catch(e){showView('solo-map');}
+  // the home button in the solo mode screen should redirect the user to the program's intro screen unconditionally
+  showView('intro');
 }
 
 // ════════════════════════════════════════════════════════

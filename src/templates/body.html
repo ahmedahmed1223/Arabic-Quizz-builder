@@ -2733,14 +2733,24 @@
           <span data-i18n="solo.backHome">الرئيسية</span>
         </button>
         <div class="solo-map-title"><svg class="solo-map-title-icon" style="width:1.3rem;height:1.3rem" viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" fill="#f5c842"/><circle cx="12" cy="8" r="2.2" fill="#ff9100" opacity=".6"/></svg> <span data-i18n="solo.playBtn">اللعب الفردي</span></div>
-        <button class="solo-btn-back" onclick="toggleSoloSettings()" style="font-size:.78rem;padding:4px 10px;border-color:rgba(100,100,140,.3);color:var(--text-secondary)">⚙️</button>
+        <button class="solo-btn-back" onclick="toggleSoloSettings()" style="font-size:.78rem;padding:4px 10px;border-color:rgba(100,100,140,.3);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
         <button class="solo-btn-back solo-btn-reset" onclick="resetSoloProgress().then(function(ok){if(ok){renderSoloMap();}}).catch(function(e){console.error('Reset error:',e);})" data-i18n="solo.resetProgress">إعادة التعيين</button>
       </div>
       <div id="solo-extra-btns" style="display:flex;gap:6px;justify-content:center;margin-top:6px">
-        <button class="solo-btn-back" onclick="showAchievementModal()" style="font-size:.78rem;padding:4px 10px;border-color:rgba(255,152,0,.3);color:#ff9800">🏆 الإنجازات</button>
-        <button class="solo-btn-back" onclick="showLeaderboardModal()" style="font-size:.78rem;padding:4px 10px;border-color:rgba(0,230,118,.3);color:#00e676">🏅 لوحة المتصدرين</button>
-        <button class="solo-btn-back" id="solo-btn-review" onclick="showSpacedRepetitionView()" style="display:none;font-size:.78rem;padding:4px 10px;border-color:rgba(0,212,255,.3);color:#00d4ff">📝 مراجعة الأخطاء</button>
-        <button class="solo-btn-back" id="solo-btn-quicksetup" onclick="showSoloGuidedWizard()" style="display:none;font-size:.78rem;padding:4px 10px;border-color:rgba(162,89,255,.3);color:#a259ff">✨ إعداد سريع</button>
+        <button class="solo-btn-back" onclick="showAchievementModal()" style="font-size:.78rem;padding:4px 10px;border-color:rgba(255,152,0,.3);color:#ff9800;display:flex;align-items:center;gap:4px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1rem;height:1rem"><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10"></path><path d="M17 4v8c0 2.8-2.2 5-5 5s-5-2.2-5-5V4"></path><path d="M7 6H3v2c0 2.8 2.2 5 5 5h3"></path><path d="M17 6h4v2c0 2.8-2.2 5-5 5h-3"></path></svg> الإنجازات
+        </button>
+        <button class="solo-btn-back" onclick="showLeaderboardModal()" style="font-size:.78rem;padding:4px 10px;border-color:rgba(0,230,118,.3);color:#00e676;display:flex;align-items:center;gap:4px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1rem;height:1rem"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg> لوحة المتصدرين
+        </button>
+        <button class="solo-btn-back" id="solo-btn-review" onclick="showSpacedRepetitionView()" style="display:none;font-size:.78rem;padding:4px 10px;border-color:rgba(0,212,255,.3);color:#00d4ff;display:flex;align-items:center;gap:4px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1rem;height:1rem"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg> مراجعة الأخطاء
+        </button>
+        <button class="solo-btn-back" id="solo-btn-quicksetup" onclick="showSoloGuidedWizard()" style="display:none;font-size:.78rem;padding:4px 10px;border-color:rgba(162,89,255,.3);color:#a259ff;display:flex;align-items:center;gap:4px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1rem;height:1rem"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 6.91 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> إعداد سريع
+        </button>
       </div>
       <div class="solo-map-stats">
         <div class="solo-map-stat">
@@ -2780,7 +2790,9 @@
   <div class="solo-question" id="solo-question-container">
     <!-- Top bar -->
     <div class="solo-q-topbar">
-      <button class="solo-btn-back" onclick="soloReturnToMap()" aria-label="العودة للرئيسية" style="padding:4px 10px;font-size:.75rem">←</button>
+      <button class="solo-btn-back" onclick="soloReturnToMap()" aria-label="العودة للرئيسية" style="padding:4px 10px;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
       <div class="solo-q-cat">
         <span class="solo-q-cat-icon" id="solo-q-cat-icon">📚</span>
         <span id="solo-q-cat-name" class="solo-q-cat-name">القسم</span>
@@ -2803,9 +2815,13 @@
         <span id="solo-streak-count" style="color:#f5c842;font-weight:900">0</span>
       </div>
       <!-- Fullscreen toggle button -->
-      <button class="solo-fullscreen-btn" onclick="toggleSoloFullscreen()" aria-label="ملء الشاشة" id="solo-fullscreen-btn" title="ملء الشاشة">⛶</button>
+      <button class="solo-fullscreen-btn" onclick="toggleSoloFullscreen()" aria-label="ملء الشاشة" id="solo-fullscreen-btn" title="ملء الشاشة" style="display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+      </button>
       <!-- Settings gear button -->
-      <button class="solo-settings-btn" onclick="toggleSoloSettings()" aria-label="الإعدادات" id="solo-settings-gear">⚙</button>
+      <button class="solo-settings-btn" onclick="toggleSoloSettings()" aria-label="الإعدادات" id="solo-settings-gear" style="display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+      </button>
     </div>
     <!-- V15: Mini progress bar showing position in current category -->
     <div style="height:3px;background:var(--bg-deep,#0a0e1a);width:100%;overflow:hidden">
@@ -2852,15 +2868,13 @@
     </div>
     <!-- Power-Ups / Lifelines (تجميد الوقت / الفرصة المزدوجة) -->
     <div class="solo-lifelines-bar" id="solo-lifelines-bar" style="display:flex; justify-content:center; align-items:center; gap:16px; padding:8px 12px; background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.07); flex-wrap:wrap;">
-      <button id="solo-powerup-freeze" class="solo-powerup-btn" onclick="useSoloPowerup('freeze')" title="تجميد الوقت (يمكن استخدامها مرة في الجولة)" style="display:flex; align-items:center; gap:6px; background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.3); color:#00b4d8; padding:6px 12px; border-radius:12px; font-weight:800; cursor:pointer; font-size:var(--font-size-sm, 0.85rem); transition:all 0.2s ease; border-style:solid;">
-        <span>❄️</span>
-        <span data-i18n="solo.powerup.freeze">تجميد الوقت</span>
-        <span id="solo-freeze-count" style="background:#0a0e1a; padding:1px 6px; border-radius:8px; font-size:0.75rem;">1</span>
+      <button id="solo-powerup-freeze" class="solo-powerup-btn" onclick="useSoloPowerup('freeze')" title="تجميد الوقت (يمكن استخدامها مرة في الجولة)" style="display:flex; align-items:center; gap:6px; background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.3); color:#00b4d8; padding:6px 16px; border-radius:12px; font-weight:800; cursor:pointer; transition:all 0.2s ease; border-style:solid; justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem"><circle cx="12" cy="12" r="10"></circle><path d="M10 15V9m4 6V9"></path></svg>
+        <span id="solo-freeze-count" style="background:#0a0e1a; padding:2px 8px; border-radius:8px; font-size:0.85rem; margin-right:4px;">1</span>
       </button>
-      <button id="solo-powerup-double" class="solo-powerup-btn" onclick="useSoloPowerup('double')" title="الفرصة المزدوجة (يمكن استخدامها مرة في الجولة)" style="display:flex; align-items:center; gap:6px; background:rgba(224,64,251,0.15); border:1px solid rgba(224,64,251,0.3); color:#e040fb; padding:6px 12px; border-radius:12px; font-weight:800; cursor:pointer; font-size:var(--font-size-sm, 0.85rem); transition:all 0.2s ease; border-style:solid;">
-        <span>🔄</span>
-        <span data-i18n="solo.powerup.double">الفرصة المزدوجة</span>
-        <span id="solo-double-count" style="background:#0a0e1a; padding:1px 6px; border-radius:8px; font-size:0.75rem;">1</span>
+      <button id="solo-powerup-double" class="solo-powerup-btn" onclick="useSoloPowerup('double')" title="الفرصة المزدوجة (يمكن استخدامها مرة في الجولة)" style="display:flex; align-items:center; gap:6px; background:rgba(224,64,251,0.15); border:1px solid rgba(224,64,251,0.3); color:#e040fb; padding:6px 16px; border-radius:12px; font-weight:800; cursor:pointer; transition:all 0.2s ease; border-style:solid; justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:1.2rem;height:1.2rem"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+        <span id="solo-double-count" style="background:#0a0e1a; padding:2px 8px; border-radius:8px; font-size:0.85rem; margin-right:4px;">1</span>
       </button>
     </div>
     <!-- Question body -->
