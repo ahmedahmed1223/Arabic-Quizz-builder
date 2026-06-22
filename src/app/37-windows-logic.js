@@ -1710,6 +1710,9 @@ try{
   AppState.computed('activeTeamIndex',['settings'],()=>state.currentTeamIndex);
 }catch(e){console.warn('[V9] Computed props init:',e);}
 
+// V14: Sync certificate settings UI once logic code is parsed
+try{if(typeof _syncCertSettingsUI==='function')_syncCertSettingsUI();}catch(e){}
+
 console.info('%c Quiz Platform V9 ready ','background:#222;color:#0f0;font-weight:bold','— V9: i18n + Video + Audio/Video Attachments + Quiz namespace');
 
 // ╔══════════════════════════════════════════════════════════════════╗

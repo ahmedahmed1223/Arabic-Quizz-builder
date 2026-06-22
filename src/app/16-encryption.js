@@ -244,8 +244,8 @@ function renderAdmin(){
   restoreBackupInterval();
   initSessionStats();
   restoreV5Settings();        // ← sync V5 settings UI
-  // Sync certificate settings UI
-  _syncCertSettingsUI();
+  // Sync certificate settings UI safely
+  if(typeof _syncCertSettingsUI==='function')_syncCertSettingsUI();
   // Restore custom theme panel visibility
   const ctp=document.getElementById('custom-theme-panel');
   if(ctp) ctp.style.display=(s.theme==='custom')?'block':'none';
