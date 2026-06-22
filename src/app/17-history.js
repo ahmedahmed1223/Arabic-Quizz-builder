@@ -338,13 +338,25 @@ function openUserGuide(){
       </ul>
     `}
   ];
-  const html=sections.map(s=>`
-    <div style="margin-bottom:16px">
-      <div style="font-size:1rem;font-weight:800;color:var(--accent1);margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)">${s.title}</div>
-      <div style="font-size:.88rem;line-height:1.8;color:var(--text-secondary)">${s.content}</div>
+  const html=`
+    <div class="user-guide-container" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:16px;">
+      ${sections.map(s=>`
+        <div class="guide-card" style="background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,0.05);transition:transform 0.2s, box-shadow 0.2s">
+          <h3 style="font-size:1.05rem;font-weight:800;color:var(--accent1);margin-top:0;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;">${s.title}</h3>
+          <div class="guide-card-content" style="font-size:0.9rem;line-height:1.7;color:var(--text-secondary)">${s.content}</div>
+        </div>
+      `).join('')}
     </div>
-  `).join('');
-  openGenericModal('📖 دليل المستخدم — منصة المسابقات التفاعلية v12',html);
+    <style>
+      .guide-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+      .guide-card-content ul { padding-inline-start: 24px; margin-top: 8px; margin-bottom: 8px; }
+      .guide-card-content li { margin-bottom: 6px; }
+      .guide-card-content table th { background: rgba(0,0,0,0.03); color: var(--text-color); font-weight: 700; }
+      .guide-card-content table td, .guide-card-content table th { padding: 8px !important; }
+      [data-theme="dark"] .guide-card-content table th { background: rgba(255,255,255,0.05); }
+    </style>
+  `;
+  openGenericModal('📖 دليل المستخدم — منصة المسابقات التفاعلية v12',html, { maxWidth: '850px' });
 }
 
 /* ══ Focus Trap for Modals ══ */
@@ -370,13 +382,20 @@ function removeFocusTrap(modalEl){
   delete modalEl._trapHandler;
 }
 
-function openGenericModal(title,content){
+function openGenericModal(title,content, options){
   let m=document.getElementById('modal-generic');
   if(!m){
     m=document.createElement('div');m.id='modal-generic';m.className='modal-overlay hidden';
-    m.innerHTML='<div class="modal" style="max-width:560px"><div class="modal-header"><div class="modal-title" id="generic-modal-title"></div><button class="modal-close" onclick="closeModal(\'modal-generic\')">✕</button></div><div id="generic-modal-body" style="max-height:60vh;overflow-y:auto"></div></div>';
+    m.innerHTML='<div class="modal" id="generic-modal-box" style="max-width:560px"><div class="modal-header"><div class="modal-title" id="generic-modal-title"></div><button class="modal-close" onclick="closeModal(\'modal-generic\')">✕</button></div><div id="generic-modal-body" class="smooth-scroll" style="max-height:70vh;overflow-y:auto;padding-left:4px;padding-right:4px;"></div></div>';
     document.body.appendChild(m);
   }
+  
+  if (options && options.maxWidth) {
+    document.getElementById('generic-modal-box').style.maxWidth = options.maxWidth;
+  } else {
+    document.getElementById('generic-modal-box').style.maxWidth = '560px'; // default
+  }
+
   document.getElementById('generic-modal-title').textContent=title;
   document.getElementById('generic-modal-body').innerHTML=content;
   openModal('modal-generic');
