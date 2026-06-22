@@ -528,6 +528,61 @@ function submitSoloAnswer(answer){
     isCorrect=Number(answer)===Number(q.correct);
   }
   
+  // Intercept for Double Chance Power-up
+  if (window._soloDoubleChanceActive && !isCorrect) {
+    window._soloDoubleChanceActive = false; // Consume it
+    _soloAnswered = false;
+    _soloTransitioning = false;
+    
+    // Highlight the selected answer as incorrect immediately
+    var wrongVal = q.type==='tf' ? (answer===true||answer==='true'?'true':'false') : String(answer);
+    document.querySelectorAll('.solo-q-option').forEach(function(btn) {
+      if (btn.dataset.idx === wrongVal) {
+        btn.classList.add('solo-opt-wrong');
+        btn.disabled = true;
+        btn.classList.remove('solo-opt-selected');
+      }
+    });
+
+    // Reset selected answer so they have to choose another
+    _soloSelectedAnswer = null;
+    var confirmBtn = document.getElementById('solo-confirm-btn');
+    if (confirmBtn) confirmBtn.classList.remove('solo-confirm-active');
+    
+    // Restore confirm & skip button containers
+    var skipArea = document.getElementById('solo-q-skip');
+    if (skipArea) skipArea.style.display = '';
+    var confirmArea = document.getElementById('solo-q-confirm');
+    if (confirmArea) confirmArea.style.display = '';
+
+    // Play wrong sound only or custom feedback sound to indicate second chance
+    try {
+      if (typeof playSound === 'function' && !_soloSettings.muted) {
+        playSound('wrong');
+      }
+    } catch(e) {}
+    
+    // Disable double chance button visually
+    var doubleBtn = document.getElementById('solo-powerup-double');
+    if (doubleBtn) {
+      doubleBtn.style.opacity = '0.3';
+      doubleBtn.disabled = true;
+      doubleBtn.classList.add('powerup-used');
+    }
+    var doubleCountEl = document.getElementById('solo-double-count');
+    if (doubleCountEl) doubleCountEl.textContent = '0';
+    
+    // Give them a fresh 15 seconds to answer if time isn't frozen
+    if (!window._soloTimeFrozen) {
+      startSoloTimer(15);
+    }
+    
+    if (typeof toast === 'function') {
+      toast('🔄 الفرصة المزدوجة نشطة! لديك محاولة إضافية و15 ثانية!', 'warning');
+    }
+    return;
+  }
+  
   // Play sound effect (respect mute setting)
   try{
     if(typeof playSound==='function'&&!_soloSettings.muted){
@@ -1476,6 +1531,8 @@ showSoloStarsOverlay=function(isCorrect,stars,timeUsed,q){
 var _origRenderSoloQuestion=renderSoloQuestion;
 renderSoloQuestion=function(cat,q,qIdx){
   _origRenderSoloQuestion(cat,q,qIdx);
+  // Reset solo powerups for the fresh question
+  if (typeof resetSoloPowerups === 'function') resetSoloPowerups();
   // Update progress bar
   updateSoloProgressBar();
   // Update score bar

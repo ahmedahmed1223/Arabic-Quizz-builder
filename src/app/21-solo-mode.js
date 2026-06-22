@@ -1,4 +1,86 @@
 // ── Solo option selection (select-then-confirm pattern) ──
+window._soloTimeFrozen = false;
+window._soloDoubleChanceActive = false;
+window._soloFreezeCount = 1;
+window._soloDoubleCount = 1;
+
+window.useSoloPowerup = function(type) {
+  if (typeof _soloAnswered !== 'undefined' && _soloAnswered) return;
+  if (_soloAnswered) return;
+  if (type === 'freeze') {
+    if (window._soloFreezeCount <= 0 || window._soloTimeFrozen) return;
+    window._soloTimeFrozen = true;
+    window._soloFreezeCount = 0;
+    
+    const freezeBtn = document.getElementById('solo-powerup-freeze');
+    if (freezeBtn) {
+      freezeBtn.style.opacity = '0.3';
+      freezeBtn.disabled = true;
+      freezeBtn.classList.add('powerup-used');
+    }
+    const freezeCountEl = document.getElementById('solo-freeze-count');
+    if (freezeCountEl) freezeCountEl.textContent = '0';
+    
+    const timerFill = document.getElementById('solo-timer-fill');
+    if (timerFill) {
+      timerFill.style.background = '#00b4d8';
+      timerFill.style.boxShadow = '0 0 12px #00b4d8';
+    }
+    
+    if (typeof toast === 'function') {
+      toast('❄️ تم تجميد الوقت بنجاح!', 'info');
+    }
+  } else if (type === 'double') {
+    if (window._soloDoubleCount <= 0 || window._soloDoubleChanceActive) return;
+    window._soloDoubleChanceActive = true;
+    window._soloDoubleCount = 0;
+    
+    const doubleBtn = document.getElementById('solo-powerup-double');
+    if (doubleBtn) {
+      doubleBtn.style.boxShadow = '0 0 12px #e040fb';
+      doubleBtn.style.borderColor = '#e040fb';
+    }
+    const doubleCountEl = document.getElementById('solo-double-count');
+    if (doubleCountEl) doubleCountEl.textContent = 'نشط 🔄';
+    
+    if (typeof toast === 'function') {
+      toast('🔄 الفرصة المزدوجة نشطة الآن لربح هذا السؤال!', 'warning');
+    }
+  }
+};
+
+window.resetSoloPowerups = function() {
+  window._soloTimeFrozen = false;
+  window._soloDoubleChanceActive = false;
+  window._soloFreezeCount = 1;
+  window._soloDoubleCount = 1;
+  
+  const freezeBtn = document.getElementById('solo-powerup-freeze');
+  const doubleBtn = document.getElementById('solo-powerup-double');
+  const freezeCountEl = document.getElementById('solo-freeze-count');
+  const doubleCountEl = document.getElementById('solo-double-count');
+  const timerFill = document.getElementById('solo-timer-fill');
+  
+  if (freezeBtn) {
+    freezeBtn.disabled = false;
+    freezeBtn.style.opacity = '1';
+    freezeBtn.classList.remove('powerup-used');
+  }
+  if (doubleBtn) {
+    doubleBtn.disabled = false;
+    doubleBtn.style.opacity = '1';
+    doubleBtn.style.boxShadow = '';
+    doubleBtn.style.borderColor = '';
+    doubleBtn.classList.remove('powerup-used');
+  }
+  if (freezeCountEl) freezeCountEl.textContent = '1';
+  if (doubleCountEl) doubleCountEl.textContent = '1';
+  if (timerFill) {
+    timerFill.style.background = '';
+    timerFill.style.boxShadow = '';
+  }
+};
+
 function soloSelectOption(btn,value){
   if(_soloAnswered) return;
   // Deselect all other options
@@ -38,6 +120,7 @@ function startSoloTimer(seconds){
   if(timerBar) timerBar.classList.remove('solo-timer-critical-flash');
   
   _soloTimerInterval=setInterval(()=>{
+    if(window._soloTimeFrozen) return; // Freeze timer!
     remaining--;
     if(timerNumEl) timerNumEl.textContent=remaining;
     if(barEl){
