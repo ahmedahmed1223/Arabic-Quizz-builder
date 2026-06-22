@@ -114,9 +114,13 @@
       updateExtLibLastUpdate();
     }catch(e){
       (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[ExtLib] Fetch error:') : console.error('[ExtLib] Fetch error:', e));
+      let friendlyError = e.message;
+      if (!navigator.onLine || (friendlyError && friendlyError.toLowerCase().includes('fetch')) || (friendlyError && friendlyError.toLowerCase().includes('network'))) {
+        friendlyError = 'غير متصل بالإنترنت، يرجى التحقق من الشبكة';
+      }
       // Retry logic
       if(attempt<EXT_LIB_MAX_RETRIES&&e.name!=='AbortError'){
-        statusEl.innerHTML='<span class="ext-status-warning">⚠️ خطأ: '+e.message+' — إعادة المحاولة تلقائياً...</span>';
+        statusEl.innerHTML='<span class="ext-status-warning">⚠️ خطأ: '+friendlyError+' — إعادة المحاولة تلقائياً...</span>';
         setTimeout(function(){_extLibFetchInProgress=false;window.fetchExternalLibrary(attempt);},EXT_LIB_RETRY_DELAY*attempt);
         return;
       }
@@ -150,7 +154,7 @@
         }
       }catch(cacheErr){console.warn('[ExtLib] Cache read error:',cacheErr);}
       if(!cacheLoaded){
-        statusEl.innerHTML='<span class="ext-status-error">✗ خطأ: '+e.message+' <button class="btn btn-ghost btn-sm" onclick="fetchExternalLibrary()" style="font-size:.75rem;margin-right:4px">أعد المحاولة</button></span>';
+        statusEl.innerHTML='<span class="ext-status-error">✗ خطأ: '+friendlyError+' <button class="btn btn-ghost btn-sm" onclick="fetchExternalLibrary()" style="font-size:.75rem;margin-right:4px">أعد المحاولة</button></span>';
       }
     }finally{
       fetchBtn.disabled=false;

@@ -149,23 +149,9 @@
   });
 
   // ── 6. Network status indicator ──
+  // Removed un-closeable offline indicator as per user request
   function updateNetworkStatus(){
-    var online = navigator.onLine;
-    var indicator = document.getElementById('network-status-indicator');
-    if (!indicator) {
-      // Create indicator if not exists
-      indicator = document.createElement('div');
-      indicator.id = 'network-status-indicator';
-      indicator.style.cssText = 'position:fixed;bottom:8px;left:8px;z-index:9998;padding:4px 10px;border-radius:12px;font-size:.7rem;font-weight:600;background:rgba(0,0,0,.7);color:#fff;backdrop-filter:blur(8px);opacity:0;transition:opacity .3s;pointer-events:none';
-      document.body.appendChild(indicator);
-    }
-    if (!online) {
-      indicator.textContent = '📴 غير متصل — الوضع الأوفلاين';
-      indicator.style.background = 'rgba(244,67,54,.85)';
-      indicator.style.opacity = '1';
-    } else {
-      indicator.style.opacity = '0';
-    }
+    // No-op
   }
   window.addEventListener('online', updateNetworkStatus);
   window.addEventListener('offline', updateNetworkStatus);
