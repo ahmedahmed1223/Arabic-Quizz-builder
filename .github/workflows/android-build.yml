@@ -42,17 +42,21 @@ jobs:
       - name: Install NPM Dependencies
         run: npm ci
 
-      - name: Clean Old Dist Directory
-        run: rm -rf dist
+      # Ensure old local build directories are fully wiped before compiling
+      - name: Clean Old Build and Release Directories
+        run: |
+          rm -rf dist
+          rm -rf releases
 
+      # Build the web application (vite-plugin-singlefile outputs index.html here)
       - name: Compile Vite Web Application Assets
         run: npm run build
 
       - name: Verify Single File Build Size
         run: |
-          echo "=== فحص حجم الملفات الناتجة من Vite ==="
+          echo "=== Checking Vite generated file size ==="
           ls -lh dist/
-          echo "========================================"
+          echo "========================================="
 
       - name: Synchronize Web Assets to Capacitor Android Project
         run: npx cap sync android
@@ -67,35 +71,40 @@ jobs:
         id: sign_apk
         run: |
           mkdir -p ./releases
+          
           keytool -genkey -v -keystore release.keystore -alias playkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=ArabicQuizBuilder, O=QuizApp, C=SA"
           
           APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" -o -name "*.apk" | head -n 1)
           if [ -z "$APK_PATH" ]; then
-            echo "❌ خطأ حرِج: لم يتم العثور على ملف APK الناتج!"
+            echo "❌ Critical Error: Compiled APK not found!"
             exit 1
           fi
           
-          cp "$APK_PATH" ./releases/arabic-quiz-signed-release.apk
+          cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
           BUILD_TOOLS="${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}"
           
-          # توقيع الملف وحفظه مباشرة في مجلد releases خارج المستودع
-          $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 ./releases/arabic-quiz-signed-release.apk
+          # Force overwrite the exact same filename every single run
+          $BUILD_TOOLS/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk
+          $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-signed-release.apk ./releases/arabic-quiz-release-aligned.apk
           $BUILD_TOOLS/apksigner verify ./releases/arabic-quiz-signed-release.apk
-          rm -f release.keystore
+          
+          # Clear out temporary unaligned/aligned files and keystores completely
+          rm -f ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk release.keystore
 
-      # 🚀 تصحيح خطأ الـ Git وضمان رفع المجلدات بشكل منفصل وسليم
+      # Commit and push changes safely
       - name: Commit and Push generated files back to repository
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # تم إضافة مسافة واضحة ومستقلة بين المجلدين ليفهمها Git كمسارين منفصلين
+          # Force track both clean directories separately
           git add dist/ -f
           git add releases/ -f
           
           if git diff-index --quiet HEAD --; then
-            echo "No changes to commit"
+            echo "No changes detected. Skipping commit."
           else
-            git commit -m "🤖 أتمتة: تحديث ملف الـ Single File ومجلد الـ releases محلياً"
+            # 🚀 CRITICAL: [skip ci] prevents the action from triggering an infinite deployment loop
+            git commit -m "🤖 automation: update singlefile bundle and overwrite production APK [skip ci]"
             git push origin main
           fi
