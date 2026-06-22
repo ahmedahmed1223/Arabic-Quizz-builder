@@ -55,6 +55,126 @@ jobs:
           
           # Find compiled release APK
           APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            APK_PATH=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          fi
+          echo "Found compiled APK path: $APK_PATH"
+          
+          # Create releases folder in the root path
+          mkdir -p ./releases
+          
+          # Copy unaligned APK to the new folder
+          cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
+          
+          # Align APK
+          ${ANDROID_HOME}/build-tools/34.0.0/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk
+          
+          # Sign APK and output to the final releases path
+          ${ANDROID_HOME}/build-tools/34.0.0/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-signed-release.apk ./releases/arabic-quiz-release-aligned.apk
+          
+          # Verify signed APK
+          ${ANDROID_HOME}/build-tools/34.0.0/apksigner verify ./releases/arabic-quiz-signed-release.apk
+          
+          echo "APK successfully compiled, signed and saved to ./releases/"
+
+      - name: Upload Compile Artifact for Build Retention
+        uses: actions/upload-artifact@v4
+        with:
+          name: arabic-quiz-signed-release-apk
+          path: ./releases/arabic-quiz-signed-release.apk
+
+      - name: Publish Automatically to GitHub Release Section
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          files: ./releases/arabic-quiz-signed-release.apk
+          tag_name: android-v14.0.0-run-${{ github.run_number }}
+          name: "الإصدار الأوتوماتيكي #${{ github.run_number }}"
+          body: |
+            🎉 تم بناء وتوقيع حزمة الـ APK بنجاح وبشكل مؤتمت بالكامل!
+            **تفاصيل هذه النسخة:**
+            - **تاريخ البناء:** ${{ github.event.head_commit.timestamp || 'مبني يدوياً' }}
+            - **رقم التشغيل في CI/CD:** ${{ github.run_number }}
+            - **المعرّف الكودي المعماري للمطور:** `com.ahmedahmed1223.arabicquizzbuilder`
+            - **التوقيع الذاتي:** مفعل تلقائياً لملاءمة جميع الأجهزة والمنصات.
+            حمل ملف الـ APK المرفق للتثبيت مباشرة على الهواتف الذكية وأجهزة الأندرويد.
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Create a secure auto-signing keystore for debug/release-testing
+          [span_20](start_span)keytool -genkey -v -keystore release.keystore -alias playkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=ArabicQuizBuilder, O=QuizApp, C=SA"[span_20](end_span)
+          
+          # Find compiled release APK
+          [span_21](start_span)APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" | head -n 1)[span_21](end_span)
+          if [ -z "$APK_PATH" ]; then
+            [span_22](start_span)APK_PATH=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)[span_22](end_span)
+          fi
+          [span_23](start_span)echo "Found compiled APK path: $APK_PATH"[span_23](end_span)
+          
+          # إنشاء مجلد releases في المسار الرئيسي للمستودع
+          mkdir -p ./releases
+          
+          # نسخ الملف غير المحاذى إلى المجلد الجديد
+          cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
+          
+          # Align APK
+          [span_24](start_span)${ANDROID_HOME}/build-tools/34.0.0/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk[span_24](end_span)
+          
+          # Sign APK وتوجيه الناتج النهائي داخل مجلد releases
+          [span_25](start_span)${ANDROID_HOME}/build-tools/34.0.0/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-signed-release.apk ./releases/arabic-quiz-release-aligned.apk[span_25](end_span)
+          
+          # Verify signed APK
+          [span_26](start_span)${ANDROID_HOME}/build-tools/34.0.0/apksigner verify ./releases/arabic-quiz-signed-release.apk[span_26](end_span)
+          
+          [span_27](start_span)echo "APK successfully compiled, signed and saved to ./releases/"[span_27](end_span)
+
+      - name: Upload Compile Artifact for Build Retention
+        [span_28](start_span)uses: actions/upload-artifact@v4[span_28](end_span)
+        with:
+          [span_29](start_span)name: arabic-quiz-signed-release-apk[span_29](end_span)
+          path: ./releases/arabic-quiz-signed-release.apk
+
+      - name: Publish Automatically to GitHub Release Section
+        [span_30](start_span)uses: softprops/action-gh-release@v2[span_30](end_span)
+        [span_31](start_span)if: github.ref == 'refs/heads/main'[span_31](end_span)
+        with:
+          files: ./releases/arabic-quiz-signed-release.apk
+          [span_32](start_span)tag_name: android-v14.0.0-run-${{ github.run_number }}[span_32](end_span)
+          [span_33](start_span)name: "الإصدار الأوتوماتيكي #${{ github.run_number }}"[span_33](end_span)
+          [span_34](start_span)body: |[span_34](end_span)
+            [span_35](start_span)🎉 تم بناء وتوقيع حزمة الـ APK بنجاح وبشكل مؤتمت بالكامل[span_35](end_span)!
+            **[span_36](start_span)تفاصيل هذه النسخة:**[span_36](end_span)
+            - **تاريخ البناء:** ${{ github.event.head_commit.timestamp || [span_37](start_span)'مبني يدوياً' }}[span_37](end_span)
+            - **[span_38](start_span)رقم التشغيل في CI/CD:** ${{ github.run_number }}[span_38](end_span)
+            - **[span_39](start_span)المعرّف الكودي المعماري للمطور:** `com.ahmedahmed1223.arabicquizzbuilder`[span_39](end_span)
+            - **[span_40](start_span)التوقيع الذاتي:** مفعل تلقائياً لملاءمة جميع الأجهزة والمنصات.[span_40](end_span)
+            [span_41](start_span)حمل ملف الـ APK المرفق للتثبيت مباشرة على الهواتف الذكية وأجهزة الأندرويد.[span_41](end_span)
+          [span_42](start_span)draft: false[span_42](end_span)
+          [span_43](start_span)prerelease: false[span_43](end_span)
+        env:
+          [span_44](start_span)GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}[span_44](end_span)
+
+      - name: Compile Vite Web Application Assets
+        run: npm run build
+
+      - name: Synchronize Web Assets to Capacitor Android Project
+        run: npx cap sync android
+
+      - name: Build Unsigned Release Android Package (APK)
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease
+
+      - name: Generate On-The-Fly KeyStore and Sign APK
+        id: sign_apk
+        run: |
+          # Create a secure auto-signing keystore for debug/release-testing
+          keytool -genkey -v -keystore release.keystore -alias playkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=ArabicQuizBuilder, O=QuizApp, C=SA"
+          
+          # Find compiled release APK
+          APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" | head -n 1)
           if [ -empty "$APK_PATH" ]; then
             APK_PATH=$(find android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
           fi
