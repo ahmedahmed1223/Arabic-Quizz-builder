@@ -28,7 +28,7 @@
     window.init=function(){
       _origInit.apply(this,arguments);
       if(window._pendingHashView){
-        try{showView(window._pendingHashView,true);}catch(e){console.error("[Error]",e);}
+        try{showView(window._pendingHashView,true);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
         window._pendingHashView=null;
       }
     };
@@ -42,7 +42,7 @@ document.addEventListener('keydown',function(e){
 });
 // ═══ ARIA live announcements for accessibility ═══
 function announceToARIA(message){
-  try{const r=document.getElementById('aria-live-region');if(r)r.textContent=message;}catch(e){console.error("[Error]",e);}
+  try{const r=document.getElementById('aria-live-region');if(r)r.textContent=message;}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }
 
 // ═══ Progress Spinner Utilities ═══
@@ -114,7 +114,7 @@ function showImportPreview(data){
       const cb=document.getElementById('s-high-contrast');
       if(cb)cb.checked=true;
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 })();
 
 // ═══ Move inline handlers to addEventListener ═══

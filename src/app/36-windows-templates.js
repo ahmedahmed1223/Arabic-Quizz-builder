@@ -51,13 +51,13 @@ function initRemoteControl(){
       }
     }
     else if(m.action==='confetti'){
-      try{launchConfetti(150);}catch(e){console.error("[Error]",e);}
+      try{launchConfetti(150);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
     else if(m.action==='whiteboard'){
       toggleWhiteboard();
     }
     else if(m.action==='resetBuzzer'){
-      try{resetBuzzer();}catch(e){console.error("[Error]",e);}
+      try{resetBuzzer();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       _pushRemoteState();
     }
     else if(m.action==='tiebreaker'){startTiebreakerRound();_pushRemoteState();}
@@ -245,9 +245,9 @@ body{font-family:'Cairo',sans-serif;background:#09091f;color:#e0e0ff;direction:$
 <div class="rc-header">
   <div class="rc-status" id="rc-dot"></div>
   <div class="rc-title">📡 ${t('remote.title','لوحة التحكم عن بُعد')}</div>
-  <button id="rc-back-btn" onclick="try{window.close();}catch(e){console.error("[Error]",e);}" style="display:none;position:fixed;top:8px;${isAr?'left':'right'}:8px;z-index:100;padding:4px 12px;border-radius:8px;border:1px solid #2a2a5a;background:rgba(19,19,58,.85);color:#aaa;font-family:Cairo,sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;opacity:.6;transition:opacity .2s;backdrop-filter:blur(4px)" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.6'">← ${t('nav.backToQuiz','رجوع للمسابقة')}</button>
+  <button id="rc-back-btn" onclick="try{window.close();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}" style="display:none;position:fixed;top:8px;${isAr?'left':'right'}:8px;z-index:100;padding:4px 12px;border-radius:8px;border:1px solid #2a2a5a;background:rgba(19,19,58,.85);color:#aaa;font-family:Cairo,sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;opacity:.6;transition:opacity .2s;backdrop-filter:blur(4px)" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.6'">← ${t('nav.backToQuiz','رجوع للمسابقة')}</button>
 </div>
-<script>try{if(window.opener)document.getElementById('rc-back-btn').style.display='block';}catch(e){console.error("[Error]",e);}<\/script>
+<script>try{if(window.opener)document.getElementById('rc-back-btn').style.display='block';}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}<\/script>
 <div class="rc-turn-bar" id="rc-turn-bar"><span style="color:#555">${t('audience.waiting','في انتظار بدء المسابقة...')}</span></div>
 <div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:4px 14px;background:#0a0a22;border-bottom:1px solid #2a2a5a;font-size:.65rem;color:#666;flex-wrap:wrap" id="rc-section-bar">
   <span id="rc-sec-status">⚪ ${t('remote.ready','جاهز')}</span>
@@ -502,12 +502,12 @@ function _pushRemoteState(){
     payload._ts=Date.now();
     // Primary: BroadcastChannel
     if(_remoteChannel){
-      try{_remoteChannel.postMessage({action:'state_update',payload:payload});}catch(e){console.error("[Error]",e);}
+      try{_remoteChannel.postMessage({action:'state_update',payload:payload});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
     // Secondary: localStorage fallback for cross-origin audience windows
-    try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){console.error("[Error]",e);}
+    try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // Tertiary: sessionStorage for same-tab recovery
-    try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){console.error("[Error]",e);}
+    try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // Push directly to open audience/remote windows via window reference
     // V12-fix: Push to audience window — silently handle errors (window may still be loading)
     if(_audienceWin&&!_audienceWin.closed){
@@ -515,14 +515,14 @@ function _pushRemoteState(){
         if(typeof _audienceWin.updateAll==='function'){_audienceWin.updateAll(payload);}
       }catch(e){/* silently ignore — audience window may still be loading or cross-origin */}
       // V15-fix: Also push via postMessage as additional fallback (works even when direct call fails)
-      try{_audienceWin.postMessage({action:'audience_state_update',payload:payload},'*');}catch(e){console.error("[Error]",e);}
+      try{_audienceWin.postMessage({action:'audience_state_update',payload:payload},'*');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
     if(_remoteWin&&!_remoteWin.closed){
       try{
         if(typeof _remoteWin.updateUI==='function'){_remoteWin.updateUI(payload);}
       }catch(e){/* silently ignore — remote window may still be loading */}
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }
 
 // Function called by audience screen via window.opener to get current state
@@ -653,11 +653,11 @@ function showAudienceScreen(){
     try{
       var payload=_buildRemoteState();payload._ts=Date.now();
       if(_remoteChannel)_remoteChannel.postMessage({action:'state_update',payload:payload});
-      try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){console.error("[Error]",e);}
-      try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){console.error("[Error]",e);}
+      try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+      try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       // V15-fix: Also push via postMessage for popup reliability
-      try{_audienceWin.postMessage({action:'audience_state_update',payload:payload},'*');}catch(e){console.error("[Error]",e);}
-    }catch(e){console.error("[Error]",e);}
+      try{_audienceWin.postMessage({action:'audience_state_update',payload:payload},'*');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   },800);
   // V11-fix: Wait for audience window to be ready before pushing initial state
   // The audience window's updateAll function is defined inside a <script> that may not
@@ -666,13 +666,13 @@ function showAudienceScreen(){
   try{
     _audienceWin.addEventListener('DOMContentLoaded',function(){
       _audReady=true;
-      setTimeout(function(){try{_pushRemoteState();}catch(e){console.error("[Error]",e);}},120);
+      setTimeout(function(){try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}},120);
     });
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Fallback: also push after a delay in case DOMContentLoaded already fired or isn't supported
-  setTimeout(function(){try{_pushRemoteState();}catch(e){console.error("[Error]",e);}},1500);
+  setTimeout(function(){try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}},1500);
   // Immediate attempt (may silently fail if window not ready — that's OK, fallbacks cover it)
-  setTimeout(function(){try{_pushRemoteState();}catch(e){console.error("[Error]",e);}},300);
+  setTimeout(function(){try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}},300);
   toast(I18n.t('toast.audienceWindowOpen'),'success');
 }
 
@@ -861,9 +861,9 @@ body{font-family:'Cairo',sans-serif;background:#0a0a1a;color:#e8e8ff;direction:$
 <div class="aud-header">
   <div class="aud-status" id="aud-dot"></div>
   <div class="aud-title">${t('audience.title','🖥 شاشة الجمهور')}</div>
-  <button id="aud-back-btn" onclick="try{window.close();}catch(e){console.error("[Error]",e);}" style="display:none;position:fixed;top:8px;${isAr?'left':'right'}:8px;z-index:100;padding:4px 12px;border-radius:8px;border:1px solid #2a2a5a;background:rgba(19,19,58,.85);color:#aaa;font-family:Cairo,sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;opacity:.6;transition:opacity .2s;backdrop-filter:blur(4px)" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.6'">← ${t('nav.backToQuiz','رجوع للمسابقة')}</button>
+  <button id="aud-back-btn" onclick="try{window.close();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}" style="display:none;position:fixed;top:8px;${isAr?'left':'right'}:8px;z-index:100;padding:4px 12px;border-radius:8px;border:1px solid #2a2a5a;background:rgba(19,19,58,.85);color:#aaa;font-family:Cairo,sans-serif;font-size:.7rem;font-weight:700;cursor:pointer;opacity:.6;transition:opacity .2s;backdrop-filter:blur(4px)" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.6'">← ${t('nav.backToQuiz','رجوع للمسابقة')}</button>
 </div>
-<script>try{if(window.opener)document.getElementById('aud-back-btn').style.display='block';}catch(e){console.error("[Error]",e);}<\/script>
+<script>try{if(window.opener)document.getElementById('aud-back-btn').style.display='block';}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}<\/script>
 
 <!-- Section Status Bar -->
 <div class="aud-section-bar" id="aud-section-bar">
@@ -979,7 +979,7 @@ function _audiencePlaySound(type,vol){
       g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.4);
       o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.4);
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }
 // Resume AudioContext on user interaction (required by browser autoplay policy)
 document.addEventListener('click',function(){try{_audGetAudioCtx();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_229")}catch(_){}}},{once:true});
@@ -1053,7 +1053,7 @@ function init(){
       // V10-fix: Store interval ID for cleanup
       var _bcPingInterval=setInterval(function(){try{ch.postMessage({action:'ping'});}catch(e){clearInterval(_bcPingInterval);}},3000);
       _audIntervals.push(_bcPingInterval);
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
   // Fallback: poll localStorage every 1.5s — always active for reliability (V15-fix)
   // Previously only ran when !_connectionHealthy, which caused missed updates
@@ -1066,7 +1066,7 @@ function init(){
           currentS=parsed;updateAll(parsed);_lastMsgTime=Date.now();_connectionHealthy=true;
         }
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   },1500));
   // V15-fix: Also poll sessionStorage as additional fallback
   _audIntervals.push(setInterval(function(){
@@ -1078,7 +1078,7 @@ function init(){
           currentS=parsed2;updateAll(parsed2);_lastMsgTime=Date.now();_connectionHealthy=true;
         }
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   },2000));
   // V10-fix: Cleanup all intervals on page unload
   window.addEventListener('unload',function(){_audIntervals.forEach(function(id){clearInterval(id);});try{if(ch)ch.close();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_233")}catch(_){}}});
@@ -1133,7 +1133,7 @@ function init(){
           currentS=freshState2;updateAll(freshState2);_lastMsgTime=Date.now();_connectionHealthy=true;
         }
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   },5000));
 }
 function switchAudTab(idx,el){
@@ -1257,9 +1257,9 @@ function updateAll(s){
 
   // ── ALWAYS update: section bar, results ticker, scoreboard, category overview ──
   // V15-fix: Wrap each update in try-catch to prevent one error from blocking the rest
-  try{updateSectionBar(s);}catch(e){console.error("[Error]",e);}
-  try{updateResultsTicker(s);}catch(e){console.error("[Error]",e);}
-  try{updateCategoryOverview(s);}catch(e){console.error("[Error]",e);}
+  try{updateSectionBar(s);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+  try{updateResultsTicker(s);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+  try{updateCategoryOverview(s);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   var waiting=document.getElementById('aud-waiting');
   var content=document.getElementById('aud-comp-content');

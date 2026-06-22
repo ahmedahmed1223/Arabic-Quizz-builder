@@ -95,7 +95,7 @@ const AppState=(function(){
           if(_valueChanged(cp.value,newVal)){
             cp.value=newVal;
             const cbs=_watchers.get('computed:'+name);
-            if(cbs)cbs.forEach(cb=>{try{cb(newVal,cp.value,name);}catch(e){console.error("[Error]",e);}});
+            if(cbs)cbs.forEach(cb=>{try{cb(newVal,cp.value,name);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}});
           }
         }catch(e){ErrorBus.capture(e,'AppState.computed:'+name);}
       }

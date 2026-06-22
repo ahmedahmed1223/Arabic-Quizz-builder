@@ -1,6 +1,6 @@
 // ── BroadcastChannel for cross-tab buzzer sync ──
 var _buzzerChannel=null;
-try{_buzzerChannel=new BroadcastChannel('quiz-buzzer');}catch(e){console.error("[Error]",e);}
+try{_buzzerChannel=new BroadcastChannel('quiz-buzzer');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 if(_buzzerChannel){
   _buzzerChannel.onmessage=function(ev){
     if(!ev||!ev.data)return;
@@ -18,7 +18,7 @@ function buzzIn(teamId){
   state.buzzerWinner=teamId;
   const team=state.teams.find(t=>t.id===teamId);if(!team)return;
   // Broadcast to other tabs
-  try{if(_buzzerChannel)_buzzerChannel.postMessage({type:'buzz',teamId:teamId});}catch(e){console.error("[Error]",e);}
+  try{if(_buzzerChannel)_buzzerChannel.postMessage({type:'buzz',teamId:teamId});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Flash the winner button
   const btn=document.getElementById('buzzer-'+teamId);
   if(btn)btn.classList.add('buzzed');
@@ -36,7 +36,7 @@ function buzzIn(teamId){
 function resetBuzzer(){
   state.buzzerWinner=null;
   // Broadcast reset to other tabs
-  try{if(_buzzerChannel)_buzzerChannel.postMessage({type:'reset'});}catch(e){console.error("[Error]",e);}
+  try{if(_buzzerChannel)_buzzerChannel.postMessage({type:'reset'});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   document.getElementById('buzzer-winner-banner').classList.add('hidden');
   document.getElementById('buzzer-subtitle').style.opacity='1';
   renderBuzzerGrid();

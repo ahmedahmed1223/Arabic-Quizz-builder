@@ -94,7 +94,7 @@ setTimeout(function(){
         try{showView('login');}catch(e4){console.error('[Init] EMERGENCY: showView failed too:',e4);}
       }
     }
-  }catch(e){console.error('[Init] EMERGENCY error:',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Init] EMERGENCY error:') : console.error('[Init] EMERGENCY error:', e));}
 },8000);
 
 // ═══════════════════════════════════════════════════════

@@ -157,7 +157,7 @@ function checkBrowserCompat(){
     };
 
   }catch(e){
-    try{ErrorBus.capture(e,'checkBrowserCompat');}catch(_){console.error('[BrowserCompat] Fatal:',e);}
+    try{ErrorBus.capture(e,'checkBrowserCompat');}catch(_){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[BrowserCompat] Fatal:') : console.error('[BrowserCompat] Fatal:', e));}
   }
 }
 
@@ -207,12 +207,12 @@ function _initApp(){
       console.info('[Init] State loading complete');
     }).catch(function(e){
       _loadStateDone=true;
-      console.error('[Init] loadState async error:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Init] loadState async error:') : console.error('[Init] loadState async error:', e));
     });
     console.info('[Init] State loading started');
   }catch(e){
     _loadStateDone=true;
-    console.error('[Init] loadState error:',e);
+    (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Init] loadState error:') : console.error('[Init] loadState error:', e));
   }
   
   // Step 1.5: Default embedded background music is available at runtime via DEFAULT_BG_MUSIC
@@ -293,13 +293,13 @@ function _initApp(){
           try{var _loginView=document.getElementById('view-login');if(_loginView)_loginView.classList.add('hidden');}catch(e){}
           // V15-fix: Hide all other views that might have been shown by error handlers
           try{var _views=document.querySelectorAll('[id^=\"view-\"]');_views.forEach(function(v){if(v.id!=='wizard-overlay')v.classList.add('hidden');});}catch(e){}
-          try{Wizard.show();}catch(e){console.error('[Init] Wizard show error:',e);}
+          try{Wizard.show();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Init] Wizard show error:') : console.error('[Init] Wizard show error:', e));}
           return;
         }
       }catch(e){console.warn('[Init] Wizard check error:',e);}
       // Normal flow: show login
       window._wizardFirstRunPending=false; // Clear flag — not a first run
-      try{showView('login');console.info('[Init] Login view shown');}catch(e){console.error('[Init] showView error:',e);}
+      try{showView('login');console.info('[Init] Login view shown');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Init] showView error:') : console.error('[Init] showView error:', e));}
       // Feature 2a: Set initial history state so back button works from first navigation
       try{history.replaceState({view:window._currentView||'login'},'','#'+(window._currentView||'login'));}catch(e){}
     };
@@ -379,7 +379,7 @@ TimerRegistry.setTimeout(function(){updateLoadStage();},1800,'v13-load-5');
         _showInitialView();
       }
     }catch(e){
-      console.error('[Init] Loading dismiss error:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Init] Loading dismiss error:') : console.error('[Init] Loading dismiss error:', e));
       // Emergency fallback
       try{_showInitialView();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_215")}catch(_){}}
     }
@@ -396,21 +396,21 @@ TimerRegistry.setTimeout(function(){updateLoadStage();},1800,'v13-load-5');
       _dismissLoading();
     }
   },2000);
-  try{populateColorSwatches('color-swatches','cat-color-input',CAT_COLORS);}catch(e){console.error("[Error]",e);}
-  try{populateColorSwatches('team-color-swatches','team-color-input',TEAM_COLORS);}catch(e){console.error("[Error]",e);}
-  try{restoreBackupInterval();}catch(e){console.error("[Error]",e);}
-  try{initSessionStats();}catch(e){console.error("[Error]",e);}
-  try{restoreV5Settings();}catch(e){console.error("[Error]",e);}
-  try{restoreCustomThemeVars();}catch(e){console.error("[Error]",e);}
+  try{populateColorSwatches('color-swatches','cat-color-input',CAT_COLORS);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+  try{populateColorSwatches('team-color-swatches','team-color-input',TEAM_COLORS);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+  try{restoreBackupInterval();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+  try{initSessionStats();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+  try{restoreV5Settings();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+  try{restoreCustomThemeVars();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Initialize settings sub-tabs (show dashboard, hide others)
-  try{var _firstSubtab=document.querySelector('.settings-subtab.active');switchSettingsSubtab('dashboard',_firstSubtab);}catch(e){console.error("[Error]",e);}
+  try{var _firstSubtab=document.querySelector('.settings-subtab.active');switchSettingsSubtab('dashboard',_firstSubtab);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Show custom panel if custom theme active
   try{
     if(state&&state.settings&&state.settings.theme==='custom'){
       const p=document.getElementById('custom-theme-panel');
       if(p)p.style.display='block';
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   document.addEventListener('fullscreenchange',()=>{
     if(!document.fullscreenElement){const h=document.getElementById('fs-hint');if(h)h.classList.remove('show')}
   });

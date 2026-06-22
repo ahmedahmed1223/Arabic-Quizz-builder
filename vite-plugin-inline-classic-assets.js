@@ -89,6 +89,17 @@ export function inlineClassicAssets() {
       order: 'pre',
       handler(html, ctx) {
         const isBuild = !ctx || !ctx.server;
+        
+        // 3. Always Replace body marker (even in DEV)
+        const bodyContent = readBodyTemplate();
+        if (bodyContent) {
+          const cleaned = bodyContent
+            .replace(/^\s*<body>\s*/, '')
+            .replace(/\s*<\/body>\s*$/, '');
+          html = html.replace('<!-- __BODY_MARKER__ -->', cleaned);
+          console.log('  ✓ injected body template (dev/build)');
+        }
+
         if (!isBuild) {
           return html;
         }
@@ -131,15 +142,7 @@ export function inlineClassicAssets() {
           }
         );
 
-        // 3. Replace body marker
-        const bodyContent = readBodyTemplate();
-        if (bodyContent) {
-          const cleaned = bodyContent
-            .replace(/^\s*<body>\s*/, '')
-            .replace(/\s*<\/body>\s*$/, '');
-          html = html.replace('<!-- __BODY_MARKER__ -->', cleaned);
-          console.log('  ✓ inline body template');
-        }
+        // Body marker replacement moved above to run in both dev and build
 
         console.log(`[inline-classic-assets] Done. Inlined ${inlinedScripts} scripts, ${inlinedStyles} styles.`);
         return html;

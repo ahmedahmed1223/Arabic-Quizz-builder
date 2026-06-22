@@ -1,0 +1,6 @@
+{
+  "name": "Arabic Quiz Builder",
+  "description": "Interactive Quiz Platform with 64 categories and 3303 questions. Works offline.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

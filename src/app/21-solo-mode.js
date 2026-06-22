@@ -51,7 +51,7 @@ function startSoloTimer(seconds){
       if(timerBar) timerBar.classList.add('solo-timer-critical-flash');
       if(timerNumEl) timerNumEl.classList.add('solo-timer-number-critical');
       // Warning haptic + subtle tick sound
-      try{if(navigator.vibrate)navigator.vibrate(15);}catch(e){console.error("[Error]",e);}
+      try{if(navigator.vibrate)navigator.vibrate(15);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       if(!_soloSettings.muted){
         try{
           const ctx=getAudioCtx();
@@ -64,7 +64,7 @@ function startSoloTimer(seconds){
             osc.start();osc.stop(ctx.currentTime+0.06);
             osc.onended=function(){osc.disconnect();gain.disconnect();};
           }
-        }catch(e){console.error("[Error]",e);}
+        }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }
     }else{
       if(timerBar) timerBar.classList.remove('solo-timer-critical-flash');

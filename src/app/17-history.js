@@ -73,8 +73,8 @@ function importEncrypted(e){
       _lastSavedJSON='';
       if(!_idbLoadDone){_idbLoadDone=true;_pendingSaveNeeded=false;}
       try{await saveStateSync();}catch(e){console.warn('[importEncrypted] saveStateSync error:',e);}
-      try{if(typeof MediaDB!=='undefined')await MediaDB.saveAllMedia();}catch(e){console.error("[Error]",e);}
-      try{if(typeof MediaDB!=='undefined')await MediaDB.saveCoreData();}catch(e){console.error("[Error]",e);}
+      try{if(typeof MediaDB!=='undefined')await MediaDB.saveAllMedia();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+      try{if(typeof MediaDB!=='undefined')await MediaDB.saveCoreData();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       // V10.3-fix: Also save primary state to IDB for persistence guarantee
       try{
         if(typeof MediaDB!=='undefined'){
@@ -118,7 +118,7 @@ function saveSessionHistory(){
   if(!Array.isArray(history))history=[];
   history.unshift(session);
   if(history.length>20)history=history.slice(0,20);
-  try{localStorage.setItem('quiz_session_history',JSON.stringify(history));}catch(e){console.error('[History] save failed:',e);}
+  try{localStorage.setItem('quiz_session_history',JSON.stringify(history));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[History] save failed:') : console.error('[History] save failed:', e));}
 }
 function showSessionHistory(){
   let history=[];

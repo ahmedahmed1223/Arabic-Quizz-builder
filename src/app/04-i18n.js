@@ -2427,7 +2427,7 @@ const I18n=(function(){
         state.settings.language=langCode;
         if(typeof saveState==='function')saveState();
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // Update dir/lang on html
     const isRTL=langCode==='ar';
     document.documentElement.dir=isRTL?'rtl':'ltr';
@@ -2435,7 +2435,7 @@ const I18n=(function(){
     document.body.classList.toggle('dir-ltr',!isRTL);
     document.body.classList.toggle('dir-rtl',isRTL);
     // Update page title
-    try{document.title=t('app.title')+' — '+(state?.settings?.name||'');}catch(e){console.error("[Error]",e);}
+    try{document.title=t('app.title')+' — '+(state?.settings?.name||'');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // Apply all data-i18n elements
     apply();
     // Notify app
@@ -2451,7 +2451,7 @@ const I18n=(function(){
       const varsAttr=el.getAttribute('data-i18n-vars');
       let vars=null;
       if(varsAttr){
-        try{vars=JSON.parse(varsAttr);}catch(e){console.error("[Error]",e);}
+        try{vars=JSON.parse(varsAttr);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }
       // Support comma-separated keys and attrs for multiple translations on one element
       const keys=keyStr.split(',').map(k=>k.trim());

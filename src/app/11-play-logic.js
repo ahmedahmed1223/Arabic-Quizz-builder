@@ -77,7 +77,7 @@ function loadBuiltinLibrary(mode){
         });
       });
       if(idbPromises.length>0)Promise.all(idbPromises).catch(function(e){_logErr(e,'MediaDB:libraryImport-PromiseAll')});
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
   // V10-fix: Use saveStateSync instead of debounced saveState for library import
   _lastSavedJSON='';
@@ -521,7 +521,7 @@ async function loadState(){
       if(_pendingSaveNeeded){_pendingSaveNeeded=false;try{saveState();}catch(e2){console.warn('[loadState] Pending save failed after IDB load:',e2);}}
       // V9: Periodic cleanup of orphaned IDB keys (every 10 loads, ~1% chance each time)
       if(Math.random()<0.1)try{MediaDB.pruneOrphaned();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_71")}catch(_){}}
-      try{MediaDB.saveCoreData().catch(function(e){_logErr(e,'MediaDB:saveCoreData-loadState')});}catch(e){console.error("[Error]",e);}
+      try{MediaDB.saveCoreData().catch(function(e){_logErr(e,'MediaDB:saveCoreData-loadState')});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }).catch(function(){clearTimeout(_loadMediaTimeout);_idbLoadDone=true;if(_pendingSaveNeeded){_pendingSaveNeeded=false;try{saveState();}catch(e2){console.warn('[loadState] Pending save failed after IDB error:',e2);}}});}catch(e){clearTimeout(_loadMediaTimeout);_idbLoadDone=true;if(_pendingSaveNeeded){_pendingSaveNeeded=false;try{saveState();}catch(e2){console.warn('[loadState] Pending save failed after IDB exception:',e2);}}}
     try{applyCatCardScale(state.settings.catCardSize||100)}catch(e){try{ErrorBus.capture(e,"catch#10")}catch(e2){_logErr(e2,'loadState:catCardScale-inner')}}
     try{_applyTeamCardHeight()}catch(e){try{ErrorBus.capture(e,"catch#11")}catch(e2){_logErr(e2,'loadState:teamCardHeight-inner')}}

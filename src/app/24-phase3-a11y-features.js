@@ -1527,7 +1527,7 @@ function importFromGoogleSheet(mode){
         mode:mode,
         categories:state.categories.map(function(c){return{id:c.id,name:c.name,qCount:c.questions.length};})
       })).catch(function(e){_logErr(e,'MediaDB:setGSheetsImport')});
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   // Save state

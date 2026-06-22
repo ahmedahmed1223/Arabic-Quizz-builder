@@ -14,7 +14,8 @@
     "cap:open": "npx cap open android",
     "android:build": "npm run build && npx cap sync android && npx cap open android",
     "android:release": "npm run build && npx cap sync android && cd android && ./gradlew assembleRelease",
-    "android:debug": "npm run build && npx cap sync android && cd android && ./gradlew assembleDebug"
+    "android:debug": "npm run build && npx cap sync android && cd android && ./gradlew assembleDebug",
+    "lint": "eslint src"
   },
   "keywords": [
     "quiz",
@@ -29,6 +30,9 @@
   "author": "Quiz Platform Team",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^9.39.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "vite": "^5.4.10",
     "vite-plugin-singlefile": "^2.0.3"
   },

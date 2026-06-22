@@ -1066,7 +1066,7 @@ function _saveSoloProgress(){
       }
     }else{
       // Log instead of re-throwing — solo mode shouldn't crash mid-level
-      console.error('[Solo] save failed (non-quota):',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Solo] save failed (non-quota):') : console.error('[Solo] save failed (non-quota):', e));
       if(typeof toast==='function') toast('تعذّر حفظ التقدم — قد تفقد آخر تغيير','warning');
     }
   }
@@ -1521,7 +1521,7 @@ function renderSoloQuestion(cat, q, qIdx){
       }
       // videoRef (IndexedDB) — attempt async load
       if(q.videoRef&&typeof MediaDB!=='undefined'){
-        try{MediaDB.get(q.videoRef).then(d=>{if(d?.data){const safeD=_safeMediaSrc(d.data);if(safeD){mediaEl.innerHTML=`<video src="${safeD}" controls playsinline style="max-width:100%;max-height:280px;border-radius:12px;background:#000"></video>`;mediaEl.style.display='block';}}}).catch((e)=>{_logErr(e,'MediaDB:getVideoRef')});}catch(e){console.error("[Error]",e);}
+        try{MediaDB.get(q.videoRef).then(d=>{if(d?.data){const safeD=_safeMediaSrc(d.data);if(safeD){mediaEl.innerHTML=`<video src="${safeD}" controls playsinline style="max-width:100%;max-height:280px;border-radius:12px;background:#000"></video>`;mediaEl.style.display='block';}}}).catch((e)=>{_logErr(e,'MediaDB:getVideoRef')});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }
     }
   }
@@ -1586,7 +1586,7 @@ function renderSoloQuestion(cat, q, qIdx){
   
   // Math rendering with KaTeX
   if(q.type==='math'&&window.renderMathInElement){
-    try{renderMathInElement(textEl,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'',display:false}]});}catch(e){console.error("[Error]",e);}
+    try{renderMathInElement(textEl,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'',display:false}]});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
   
   // Start timer (respect soloTimerEnabled setting)

@@ -230,10 +230,11 @@ const Wizard=(function(){
     if(backBtn)backBtn.style.visibility=idx<=0?'hidden':'visible';
     if(nextBtn){
       if(idx>=steps.length-1){
-        nextBtn.style.display='none';
+        nextBtn.style.display='';
+        nextBtn.innerHTML='🚀 '+(t('startBtn', 'ابدأ المسابقة')||'ابدأ المسابقة');
       }else{
         nextBtn.style.display='';
-        nextBtn.textContent=t('nextBtn');
+        nextBtn.textContent=t('nextBtn', 'التالي ⟪');
       }
     }
   }
@@ -255,6 +256,8 @@ const Wizard=(function(){
       if(_currentStep>_maxStep)_maxStep=_currentStep;
       _showStep();
       _autoSaveProgress();
+    } else {
+      finish(); // Start the quiz since it's the last step
     }
   }
   function prev(){
@@ -275,7 +278,7 @@ const Wizard=(function(){
     });
     _applyI18n();
     // Also update the app's I18n (guard to prevent infinite loop)
-    try{if(typeof I18n!=='undefined'&&I18n.getCurrentLang()!==lang)I18n.setLang(lang);}catch(e){console.error("[Error]",e);}
+    try{if(typeof I18n!=='undefined'&&I18n.getCurrentLang()!==lang)I18n.setLang(lang);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   // ── Setup mode ──
@@ -338,7 +341,7 @@ const Wizard=(function(){
           _importedData={categories:JSON.parse(JSON.stringify(BUILTIN_LIBRARY))};
           _showImportPreview();
         }
-      }catch(e){console.error("[Error]",e);}
+      }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }else{
       const libInfo=document.getElementById('wiz-solo-lib-info');
       if(libInfo)libInfo.style.display='none';
@@ -379,7 +382,7 @@ const Wizard=(function(){
     data.fontScale=parseInt(val);
     const display=document.getElementById('wiz-font-val');
     if(display)display.textContent=val+'%';
-    try{if(typeof applyFontScale==='function')applyFontScale(parseInt(val));}catch(e){console.error("[Error]",e);}
+    try{if(typeof applyFontScale==='function')applyFontScale(parseInt(val));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   // ── Theme selection ──
@@ -405,7 +408,7 @@ const Wizard=(function(){
         try{
           document.body.setAttribute('data-theme',theme.id);
           if(typeof applyTheme==='function')applyTheme(theme.id);
-        }catch(e){console.error("[Error]",e);}
+        }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
         // Update color pickers
         const cp=document.getElementById('wiz-color-primary');
         const cs=document.getElementById('wiz-color-secondary');
@@ -426,7 +429,7 @@ const Wizard=(function(){
         document.documentElement.style.setProperty('--accent2',cs.value);
         data.customAccent=cp.value;
         data.customAccent2=cs.value;
-      }catch(e){console.error("[Error]",e);}
+      }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
   }
 
@@ -477,7 +480,7 @@ const Wizard=(function(){
     }
     // Update UI
     _syncUIFromData();
-    try{if(typeof toast==='function')toast(tpl==='quick'?t('templateToastQuick'):tpl==='tv'?t('templateToastTv'):t('templateToastEdu'),'success');}catch(e){console.error("[Error]",e);}
+    try{if(typeof toast==='function')toast(tpl==='quick'?t('templateToastQuick'):tpl==='tv'?t('templateToastTv'):t('templateToastEdu'),'success');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   // ── Sync UI from data ──
@@ -530,7 +533,7 @@ const Wizard=(function(){
           _importedData=_parseCSV(text);
         }
         _showImportPreview();
-        try{if(typeof toast==='function')toast('✅ '+file.name,'success');}catch(e){console.error("[Error]",e);}
+        try{if(typeof toast==='function')toast('✅ '+file.name,'success');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }catch(err){
         try{if(typeof toast==='function')toast('❌ '+err.message,'error');}catch(e){try{ErrorBus.capture(e,"catch#AUTO_213")}catch(_){}}
       }
@@ -543,13 +546,13 @@ const Wizard=(function(){
     const urlEl=document.getElementById('wiz-gsheets-url');
     const fetchBtn=document.getElementById('wiz-gsheets-fetch-btn');
     const url=urlEl?urlEl.value.trim():'';
-    if(!url){try{toast(I18n.t('gsheets.invalidURL'),'danger');}catch(e){console.error("[Error]",e);}return;}
+    if(!url){try{toast(I18n.t('gsheets.invalidURL'),'danger');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}return;}
 
     // Build CSV URL from Google Sheets URL
     var sheetId=null;
     var m=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
     if(m)sheetId=m[1];
-    if(!sheetId){try{toast(I18n.t('gsheets.invalidURL'),'danger');}catch(e){console.error("[Error]",e);}return;}
+    if(!sheetId){try{toast(I18n.t('gsheets.invalidURL'),'danger');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}return;}
 
     var csvUrl='https://docs.google.com/spreadsheets/d/'+sheetId+'/gviz/tq?tqx=out:csv';
 
@@ -558,7 +561,7 @@ const Wizard=(function(){
       const resp=await fetch(csvUrl);
       if(!resp.ok)throw new Error('HTTP '+resp.status);
       const csv=await resp.text();
-      if(!csv||!csv.trim()){try{toast(I18n.t('gsheets.noData'),'warning');}catch(e){console.error("[Error]",e);}return;}
+      if(!csv||!csv.trim()){try{toast(I18n.t('gsheets.noData'),'warning');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}return;}
 
       // Use the global parseGoogleSheetsCSV if available, otherwise fallback
       if(typeof parseGoogleSheetsCSV==='function'){
@@ -567,9 +570,9 @@ const Wizard=(function(){
         _importedData=_parseCSV(csv);
       }
       _showImportPreview();
-      try{toast(I18n.t('gsheets.success'),'success');}catch(e){console.error("[Error]",e);}
+      try{toast(I18n.t('gsheets.success'),'success');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }catch(err){
-      try{toast(I18n.t('gsheets.error')+': '+err.message,'danger');}catch(e){console.error("[Error]",e);}
+      try{toast(I18n.t('gsheets.error')+': '+err.message,'danger');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }finally{
       if(fetchBtn){fetchBtn.disabled=false;fetchBtn.textContent=I18n.t('gsheets.fetchBtn','جلب');}
     }
@@ -635,7 +638,7 @@ const Wizard=(function(){
     _sampleData=samples[type];
     _importedData=_sampleData;
     _showImportPreview();
-    try{if(typeof toast==='function')toast('✅ '+t('sample'+type.charAt(0).toUpperCase()+type.slice(1)),'success');}catch(e){console.error("[Error]",e);}
+    try{if(typeof toast==='function')toast('✅ '+t('sample'+type.charAt(0).toUpperCase()+type.slice(1)),'success');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   // ── Quick question creator ──
@@ -695,7 +698,7 @@ const Wizard=(function(){
     try{
       const progress={step:_currentStep,setupMode:_setupMode,lang:_lang,data:{...data},pwLevel:_pwLevel,maxStep:_maxStep};
       localStorage.setItem('quiz_v4_wizard_progress',JSON.stringify(progress));
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   // ── Resume progress ──
@@ -715,11 +718,11 @@ const Wizard=(function(){
         setSetupMode(_setupMode);
         _showStep();
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   function discardProgress(){
-    try{localStorage.removeItem('quiz_v4_wizard_progress');}catch(e){console.error("[Error]",e);}
+    try{localStorage.removeItem('quiz_v4_wizard_progress');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     document.getElementById('wiz-resume-banner').style.display='none';
   }
 
@@ -732,7 +735,7 @@ const Wizard=(function(){
         if(banner)banner.style.display='block';
         return true;
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     return false;
   }
 
@@ -758,7 +761,7 @@ const Wizard=(function(){
     console.info('[Wizard] finish() called — completing setup...');
     // Validate password
     if(_pwLevel!=='none'&&!validatePassword()){
-      try{if(typeof toast==='function')toast(t('pwMismatch'),'error');}catch(e){console.error("[Error]",e);}
+      try{if(typeof toast==='function')toast(t('pwMismatch'),'error');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       return;
     }
 
@@ -818,7 +821,7 @@ const Wizard=(function(){
               });}
             });
             state.categories=libCopy;
-          }catch(e){console.error('[Wizard] Library auto-load error:',e);}
+          }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] Library auto-load error:') : console.error('[Wizard] Library auto-load error:', e));}
         }
 
         // Add quick questions as a category
@@ -835,17 +838,17 @@ const Wizard=(function(){
         // Save state
         if(typeof saveState==='function')saveState();
       }
-    }catch(e){console.error('[Wizard] Error applying settings:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] Error applying settings:') : console.error('[Wizard] Error applying settings:', e));}
 
     // Mark setup as done
-    try{localStorage.setItem('quiz_v4_setup_done','1');}catch(e){console.error("[Error]",e);}
+    try{localStorage.setItem('quiz_v4_setup_done','1');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // Clear wizard progress
-    try{localStorage.removeItem('quiz_v4_wizard_progress');}catch(e){console.error("[Error]",e);}
+    try{localStorage.removeItem('quiz_v4_wizard_progress');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
     // Handle "don't show again"
     const dontShow=document.getElementById('wiz-dont-show');
     if(dontShow&&dontShow.checked){
-      try{localStorage.setItem('quiz_v4_wizard_never_show','1');}catch(e){console.error("[Error]",e);}
+      try{localStorage.setItem('quiz_v4_wizard_never_show','1');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
 
     // Hide wizard overlay
@@ -859,10 +862,10 @@ const Wizard=(function(){
       if(typeof applyTheme==='function')applyTheme(data.theme);
       if(typeof applyFontScale==='function')applyFontScale(data.fontScale);
       document.body.setAttribute('data-theme',data.theme);
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
     // Apply language
-    try{if(typeof I18n!=='undefined')I18n.setLang(data.language);}catch(e){console.error("[Error]",e);}
+    try{if(typeof I18n!=='undefined')I18n.setLang(data.language);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
     // Show appropriate view based on competition mode
     try{
@@ -877,12 +880,12 @@ const Wizard=(function(){
           showView('login');
         }
       }
-    }catch(e){console.error('[Wizard] Error showing view:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] Error showing view:') : console.error('[Wizard] Error showing view:', e));}
 
     // Refresh admin UI
     try{
       if(typeof _refreshAdminUI==='function')_refreshAdminUI();
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   // ── First run check ──
@@ -919,7 +922,7 @@ const Wizard=(function(){
         if(state.settings.llSkip!==undefined)data.llSkip=state.settings.llSkip;
         if(state.settings.llTime!==undefined)data.llTime=state.settings.llTime;
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
     // Show overlay
     const overlay=document.getElementById('wizard-overlay');
@@ -956,7 +959,7 @@ const Wizard=(function(){
     try{
       localStorage.removeItem('quiz_v4_setup_done');
       localStorage.removeItem('quiz_v4_wizard_progress');
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     _currentStep=1;_maxStep=1;_quickQCount=0;_importedData=null;_sampleData=null;
     // Reset data to defaults
     Object.assign(data,{
@@ -991,7 +994,7 @@ const Wizard=(function(){
       localStorage.setItem('quiz_templates',JSON.stringify(templates));
       if(typeof toast==='function') toast(I18n.t('wizard.templateSaved','تم حفظ القالب!'),'success');
       _renderSavedTemplates();
-    }catch(e){console.error('[Wizard] saveAsTemplate error:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] saveAsTemplate error:') : console.error('[Wizard] saveAsTemplate error:', e));}
   }
 
   function loadTemplate(tplId){
@@ -1006,7 +1009,7 @@ const Wizard=(function(){
       // Sync UI with loaded data
       _syncUIFromData();
       if(typeof toast==='function') toast(I18n.t('wizard.templateLoaded','تم تحميل القالب!'),'success');
-    }catch(e){console.error('[Wizard] loadTemplate error:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] loadTemplate error:') : console.error('[Wizard] loadTemplate error:', e));}
   }
 
   function deleteTemplate(tplId){
@@ -1016,7 +1019,7 @@ const Wizard=(function(){
       templates=templates.filter(function(t){return t.id!==tplId;});
       localStorage.setItem('quiz_templates',JSON.stringify(templates));
       _renderSavedTemplates();
-    }catch(e){console.error('[Wizard] deleteTemplate error:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] deleteTemplate error:') : console.error('[Wizard] deleteTemplate error:', e));}
   }
 
   function _renderSavedTemplates(){
@@ -1029,7 +1032,7 @@ const Wizard=(function(){
       container.innerHTML=templates.map(function(tpl){
         return '<span class="wiz-saved-template-chip" onclick="Wizard.loadTemplate(\''+tpl.id+'\')">'+tpl.name+'<span class="chip-delete" onclick="event.stopPropagation();Wizard.deleteTemplate(\''+tpl.id+'\')">✕</span></span>';
       }).join('');
-    }catch(e){console.error('[Wizard] _renderSavedTemplates error:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] _renderSavedTemplates error:') : console.error('[Wizard] _renderSavedTemplates error:', e));}
   }
 
   function _syncUIFromData(){
@@ -1045,7 +1048,7 @@ const Wizard=(function(){
       var llSkip=document.getElementById('wiz-ll-skip');if(llSkip)llSkip.checked=data.llSkip!==0;
       var llTime=document.getElementById('wiz-ll-time');if(llTime)llTime.checked=data.llTime!==0;
       var fontSlider=document.getElementById('wiz-font-slider');if(fontSlider){fontSlider.value=data.fontScale||100;updateFontScale(data.fontScale||100);}
-    }catch(e){console.error('[Wizard] _syncUIFromData error:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Wizard] _syncUIFromData error:') : console.error('[Wizard] _syncUIFromData error:', e));}
   }
 
   return {

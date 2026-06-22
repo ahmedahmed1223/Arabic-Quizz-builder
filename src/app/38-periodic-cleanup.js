@@ -128,11 +128,11 @@ var _origSwitchTab   = (typeof switchTab==='function')? switchTab : null;
 if(_origSwitchTab){
   (function(){
     var _lazyHandlers = {
-      categories: function(){ try{ renderCategoriesAdmin(); }catch(e){console.error("[Error]",e);} },
-      teams:      function(){ try{ renderTeamsAdmin(); }catch(e){console.error("[Error]",e);} },
-      credits:    function(){ try{ renderCreditsAdmin(); }catch(e){console.error("[Error]",e);} },
-      appearance: function(){ try{ if(typeof renderThemeGrid==='function') renderThemeGrid(); }catch(e){console.error("[Error]",e);} },
-      settings:   function(){ try{ renderAdmin(); renderStatsGrid(); }catch(e){console.error("[Error]",e);} },
+      categories: function(){ try{ renderCategoriesAdmin(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));} },
+      teams:      function(){ try{ renderTeamsAdmin(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));} },
+      credits:    function(){ try{ renderCreditsAdmin(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));} },
+      appearance: function(){ try{ if(typeof renderThemeGrid==='function') renderThemeGrid(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));} },
+      settings:   function(){ try{ renderAdmin(); renderStatsGrid(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));} },
       import:     function(){} // No extra rendering needed
     };
 
@@ -147,7 +147,7 @@ if(_origSwitchTab){
       if(!_lazyTabRendered[tabName]){
         _lazyTabRendered[tabName] = true;
         if(_lazyHandlers[tabName]){
-          try{ _lazyHandlers[tabName](); }catch(e){console.error("[Error]",e);}
+          try{ _lazyHandlers[tabName](); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
         }
       }
     };
@@ -230,7 +230,7 @@ var SmartSave = (function(){
         }
       });
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   // Hook into _saveStateNow to detect when save completes
   try{
@@ -246,7 +246,7 @@ var SmartSave = (function(){
         }
       }, 600, 'smartSave-poll');
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   return {
     markDirty: markDirty,
@@ -364,11 +364,11 @@ TimerRegistry.setInterval(function _phase4Cleanup(){
     if(state && state.gameActive){
       cleanupMemory();
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }, 300000, 'phase4-cleanup');
 
 // Initial storage check after load
-setTimeout(function(){ try{ checkStorageUsage(); }catch(e){console.error("[Error]",e);} }, 3000);
+setTimeout(function(){ try{ checkStorageUsage(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));} }, 3000);
 
 
 // ────────────────────────────────────────────────────────
@@ -388,7 +388,7 @@ var PerfMonitor = (function(){
   function start(label){
     try{
       _marks[label] = performance.now();
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
 
   function end(label){
@@ -495,7 +495,7 @@ var PerfMonitor = (function(){
         });
       }
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   // Track save operations
   try{
@@ -504,7 +504,7 @@ var PerfMonitor = (function(){
       // We detect saves by watching the debounce timer
       // This is indirect but safe
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   return {
     start: start,
@@ -571,7 +571,7 @@ try{
     '.option-btn{contain:layout style paint;}'
   ].join('\n');
   document.head.appendChild(_phase4Style);
-}catch(e){console.error("[Error]",e);}
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 
 // ────────────────────────────────────────────────────────
@@ -647,33 +647,33 @@ try{
     // Instead, we provide a utility that callers can opt into
     window.checkBadgesIdle = function(teamId){
       IdleTasks.schedule(function(){
-        try{ _origCheckBadges(teamId); }catch(e){console.error("[Error]",e);}
+        try{ _origCheckBadges(teamId); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }, {label:'checkBadges:'+teamId, timeout:3000});
     };
   }
-}catch(e){console.error("[Error]",e);}
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 // 2. Stats refreshing → idle
 try{
   if(typeof refreshTeamStatsIfVisible==='function'){
     window.refreshTeamStatsIdle = function(){
       IdleTasks.schedule(function(){
-        try{ refreshTeamStatsIfVisible(); }catch(e){console.error("[Error]",e);}
+        try{ refreshTeamStatsIfVisible(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }, {label:'refreshTeamStats', timeout:2000});
     };
   }
-}catch(e){console.error("[Error]",e);}
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 // 3. Backup operations → idle
 try{
   if(typeof doBackupNow==='function'){
     window.doBackupNowIdle = function(auto, compact){
       IdleTasks.schedule(function(){
-        try{ doBackupNow(auto, compact); }catch(e){console.error("[Error]",e);}
+        try{ doBackupNow(auto, compact); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }, {label:'doBackupNow', timeout:10000, priority:'low'});
     };
   }
-}catch(e){console.error("[Error]",e);}
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 // 4. Orphaned IDB cleanup → idle
 try{
@@ -697,19 +697,19 @@ try{
       }
     }, 600000, 'idb-prune');
   }
-}catch(e){console.error("[Error]",e);}
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 // 5. Storage usage check → idle
 try{
   window.checkStorageUsageIdle = function(){
     IdleTasks.schedule(function(){
-      try{ var info = checkStorageUsage(); if(info) console.info('[Phase4] Storage: '+info.pct+'% ('+info.bytes+' bytes)'); }catch(e){console.error("[Error]",e);}
+      try{ var info = checkStorageUsage(); if(info) console.info('[Phase4] Storage: '+info.pct+'% ('+info.bytes+' bytes)'); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }, {label:'checkStorageUsage', priority:'low'});
   };
   // Run idle storage check every 5 minutes
   // V10-fix: Register with TimerRegistry for clean shutdown
-  TimerRegistry.setInterval(function(){ try{ window.checkStorageUsageIdle(); }catch(e){console.error("[Error]",e);} }, 300000, 'storage-check');
-}catch(e){console.error("[Error]",e);}
+  TimerRegistry.setInterval(function(){ try{ window.checkStorageUsageIdle(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));} }, 300000, 'storage-check');
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 
 // ────────────────────────────────────────────────────────
@@ -727,7 +727,7 @@ try{
     // For lists under threshold, use original renderer
     if(cat.questions.length <= VirtualList.VIRTUAL_THRESHOLD){
       if(_activeVirtualList){
-        try{ _activeVirtualList.destroy(); }catch(e){console.error("[Error]",e);}
+        try{ _activeVirtualList.destroy(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
         _activeVirtualList = null;
       }
       if(_origRenderQuestionsAdmin) _origRenderQuestionsAdmin(catId);
@@ -799,7 +799,7 @@ try{
 
     // Destroy previous virtual list
     if(_activeVirtualList){
-      try{ _activeVirtualList.destroy(); }catch(e){console.error("[Error]",e);}
+      try{ _activeVirtualList.destroy(); }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
 
     // Create virtual list
@@ -866,9 +866,9 @@ try{
         }
         _lastSaveTimer = _saveStateTimer;
       }
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }, 500, 'perf-save-tracker');
-}catch(e){console.error("[Error]",e);}
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 
 // ────────────────────────────────────────────────────────
@@ -884,7 +884,7 @@ try{
     window.Quiz.checkStorageUsage = checkStorageUsage;
     window.Quiz.perf            = PerfMonitor; // Quick access: Quiz.perf.report()
   }
-}catch(e){console.error("[Error]",e);}
+}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
 console.info(
   '%c Phase 4 Ready ','background:#1a1a2e;color:#0ff;font-weight:bold',

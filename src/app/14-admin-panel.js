@@ -34,7 +34,7 @@ function goToAdmin(){
 
 function showView(name,_noHistory){
   // History API support: push state unless navigating via popstate
-  if(!_noHistory){try{history.pushState({view:name},'','#'+name);}catch(e){console.error("[Error]",e);}}
+  if(!_noHistory){try{history.pushState({view:name},'','#'+name);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
   // Phase 4.1: Invalidate DOM element cache on view change
   invalidateQCache();
   window._prevView=window._currentView||'scores';window._currentView=name;
@@ -255,14 +255,14 @@ function showView(name,_noHistory){
     if(name==='admin'||name==='login') state.gameActive=false;
   }
   // Render view-specific content (each wrapped individually to prevent one failure from breaking others)
-  if(name==='admin'){try{renderAdmin();}catch(e){console.error('[showView] renderAdmin error:',e);}}
-  if(name==='intro'){try{renderIntro();}catch(e){console.error('[showView] renderIntro error:',e);}}
-  if(name==='teams'){try{renderTeamsSlide();}catch(e){console.error('[showView] renderTeamsSlide error:',e);}}
-  if(name==='categories'){try{renderCatsSlide();}catch(e){console.error('[showView] renderCatsSlide error:',e);}}
-  if(name==='scores'){try{renderScoresSlide();}catch(e){console.error('[showView] renderScoresSlide error:',e);}}
-  if(name==='credits'){try{renderCreditsSlide();}catch(e){console.error('[showView] renderCreditsSlide error:',e);}}
-  if(name==='teamstats'){try{renderTeamStats();}catch(e){console.error('[showView] renderTeamStats error:',e);}}
-  if(name==='solo-map'){try{renderSoloMap();}catch(e){console.error('[showView] renderSoloMap error:',e);}}
+  if(name==='admin'){try{renderAdmin();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderAdmin error:') : console.error('[showView] renderAdmin error:', e));}}
+  if(name==='intro'){try{renderIntro();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderIntro error:') : console.error('[showView] renderIntro error:', e));}}
+  if(name==='teams'){try{renderTeamsSlide();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderTeamsSlide error:') : console.error('[showView] renderTeamsSlide error:', e));}}
+  if(name==='categories'){try{renderCatsSlide();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderCatsSlide error:') : console.error('[showView] renderCatsSlide error:', e));}}
+  if(name==='scores'){try{renderScoresSlide();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderScoresSlide error:') : console.error('[showView] renderScoresSlide error:', e));}}
+  if(name==='credits'){try{renderCreditsSlide();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderCreditsSlide error:') : console.error('[showView] renderCreditsSlide error:', e));}}
+  if(name==='teamstats'){try{renderTeamStats();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderTeamStats error:') : console.error('[showView] renderTeamStats error:', e));}}
+  if(name==='solo-map'){try{renderSoloMap();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] renderSoloMap error:') : console.error('[showView] renderSoloMap error:', e));}}
   // Hide competition overlays when entering solo mode
   if(name==='solo-map'||name==='solo-question'){
     try{
@@ -283,14 +283,14 @@ function showView(name,_noHistory){
   }
   // Start background music for solo mode if enabled
   if((name==='solo-map'||name==='solo-question')&&state.settings.soloBgMusic!==false&&!_soloSettings.muted&&!state.musicPlaying){
-    try{startMusic(state.settings.musicType||'builtin');}catch(e){console.error('[showView] solo bgm error:',e);}
+    try{startMusic(state.settings.musicType||'builtin');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[showView] solo bgm error:') : console.error('[showView] solo bgm error:', e));}
   }
-  if(presViews.includes(name)){try{updateTicker();}catch(e){console.error("[Error]",e);}}
+  if(presViews.includes(name)){try{updateTicker();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
   // Push state to audience/remote screens on view change
-  try{_pushRemoteState();}catch(e){console.error("[Error]",e);}
+  try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // V15-fix: Additional delayed push for views that indicate active quiz (categories, question)
   if((name==='categories'||name==='question')&&state.gameActive){
-    setTimeout(function(){try{_pushRemoteState();}catch(e){console.error("[Error]",e);}},200);
+    setTimeout(function(){try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}},200);
   }
   }catch(err){console.error('[showView] error for "'+name+'":', err);}
   // Show bottom nav only in admin view (visible on mobile/tablet)

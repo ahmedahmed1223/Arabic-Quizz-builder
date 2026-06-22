@@ -90,10 +90,10 @@
           }
           // If timer expired while hidden, handle it
           if(state.timeLeft <= 0){
-            try{ handleTimerEnd(); }catch(e){ console.error('[FreezeFix] timer end error:', e); }
+            try{ handleTimerEnd(); }catch(e){ (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[FreezeFix] timer end error:') : console.error('[FreezeFix] timer end error:', e)); }
           }else if(!state.timerInterval){
             // Restart timer interval if it was lost
-            try{ startTimer(state.timeLeft, true); }catch(e){ console.error('[FreezeFix] restart timer error:', e); }
+            try{ startTimer(state.timeLeft, true); }catch(e){ (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[FreezeFix] restart timer error:') : console.error('[FreezeFix] restart timer error:', e)); }
           }
         }
       }
@@ -107,7 +107,7 @@
             if(typeof loadQuestion === 'function' && state.currentTeamIndex != null){
               loadQuestion(state.currentCatId, state.currentQIndex, state.currentTeamIndex);
             }
-          }catch(e){ console.error('[FreezeFix] re-render question error:', e); }
+          }catch(e){ (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[FreezeFix] re-render question error:') : console.error('[FreezeFix] re-render question error:', e)); }
         }
       }
 
@@ -117,7 +117,7 @@
           _pushRemoteState();
         }
       }catch(e){ /* silent */ }
-    }catch(e){ console.error('[FreezeFix] restore error:', e); }
+    }catch(e){ (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[FreezeFix] restore error:') : console.error('[FreezeFix] restore error:', e)); }
   }
 
   // ── Helper: Force reflow to unfreeze visual state ──
@@ -213,7 +213,7 @@
       try{
         _origGoToAdmin.apply(this, arguments);
       }catch(e){
-        console.error('[HomeButtonFix] goToAdmin error:', e);
+        (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[HomeButtonFix] goToAdmin error:') : console.error('[HomeButtonFix] goToAdmin error:', e));
         // Fallback: directly show admin view
         try{
           if(typeof showView === 'function'){

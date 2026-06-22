@@ -92,7 +92,7 @@ async function checkStorageHealth(){
     }
     result.lsKeyCount=_lsKeyCount;
     result.lsTotalBytes=_lsTotalBytes;
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Check IndexedDB — V10-fix: use safe set/delete instead of savePrimaryState which overwrites _primary_core
   try{
     if(typeof MediaDB!=='undefined'&&MediaDB.set){
@@ -109,7 +109,7 @@ async function checkStorageHealth(){
       result.idbKeyCount=_idbEst.items||0;
       result.idbTotalBytes=_idbEst.bytes||0;
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Estimate storage
   try{
     if(navigator.storage&&navigator.storage.estimate){
@@ -118,14 +118,14 @@ async function checkStorageHealth(){
       result.quotaMB=((est.quota||1)/1048576).toFixed(1);
       result.availableMB=(Math.max(0,(est.quota||0)-(est.usage||0))/1048576).toFixed(1);
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Count categories and questions
   try{
     if(typeof state!=='undefined'&&state.categories){
       result.categories=state.categories.length;
       result.questions=state.categories.reduce((s,c)=>s+(c.questions||[]).length,0);
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   return result;
 }
 // V10.2: Enhanced storage monitor V2 with detailed LS + IDB breakdown
@@ -135,7 +135,7 @@ async function showStorageMonitorV2(){
   const idbStatus=health.idbOk?'✅':'❌';
   // V10.2: Also get IDB size estimate with key list
   var idbSize={bytes:0,items:0,keys:[],usedMB:'0.00'};
-  try{idbSize=await MediaDB.estimateSize();}catch(e){console.error("[Error]",e);}
+  try{idbSize=await MediaDB.estimateSize();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   var lsUsage=getStorageUsage();
   // V10.2: List localStorage quiz keys
   var lsQuizKeys=[];
@@ -147,7 +147,7 @@ async function showStorageMonitorV2(){
         lsQuizKeys.push({key:_k,size:(_v?_v.length*2:0),compressed:_k.endsWith('_lz')});
       }
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   var lsQuizSizeBytes=lsQuizKeys.reduce(function(s,k){return s+k.size;},0);
   var isAr=typeof state!=='undefined'&&state.settings.language!=='en';
   var dir=isAr?'rtl':'ltr';
@@ -199,7 +199,7 @@ function _checkStorageBeforeSave(){
         }
       }).catch(function(e){_logErr(e,'storage:estimate')});
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }
 
 async function _saveStateNow(){
@@ -259,7 +259,7 @@ async function _saveStateNow(){
     // Previous code called MediaDB.saveAllMedia() on EVERY no-op save, causing
     // 500+ IDB round-trips per save on media-heavy quizzes.
     if(typeof _mediaDirty!=='undefined' && _mediaDirty){
-      try{MediaDB.saveAllMedia().then(function(){_mediaDirty=false;}).catch(function(e){_logErr(e,'MediaDB:saveAllMedia-dirtyCheck')});}catch(e){console.error("[Error]",e);}
+      try{MediaDB.saveAllMedia().then(function(){_mediaDirty=false;}).catch(function(e){_logErr(e,'MediaDB:saveAllMedia-dirtyCheck')});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
     return;
   }
@@ -374,7 +374,7 @@ async function _saveStateNow(){
       }
     }
   }catch(e){try{ErrorBus.capture(e,"catch#3")}catch(e2){_logErr(e2,'saveState:catch3-inner')}}
-  try{await MediaDB.saveCoreData();}catch(e){console.error("[Error]",e);}
+  try{await MediaDB.saveCoreData();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // ── V9.2: Also save primary state to IndexedDB (replaces localStorage as primary) ──
   try{
     // Save FULL state to IDB (with media references) — this is the authoritative backup
@@ -384,7 +384,7 @@ async function _saveStateNow(){
     await MediaDB.savePrimaryState(coreStr,_decompressForIDB(catImgData),_decompressForIDB(teamImgData));
     // V10-fix: Only mark state as saved after IDB primary save succeeds
     _lastSavedJSON=fingerprint;
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // V10-fix: Now safe to remove LS image/audio keys — IDB has confirmed the data
   // V10.2-fix: Only remove if IDB media was verified (not just "attempted")
   if(_idbMediaVerified){
@@ -399,7 +399,7 @@ async function _saveStateNow(){
   ['customMusicData','customCorrectData','customWrongData','customTenseData','podiumMusicData','wheelMusicData'].forEach(function(k){
     _audioMeta[k]=!!state.settings[k]; // just save boolean flag, not the actual data
   });
-  try{localStorage.setItem('quiz_v4_audio_meta',JSON.stringify(_audioMeta))}catch(e){console.error("[Error]",e);}
+  try{localStorage.setItem('quiz_v4_audio_meta',JSON.stringify(_audioMeta))}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Auto-save notification (only after app is fully loaded, max every 60s)
   try{/* auto-save notification removed — save is invisible */}catch(e){}
   // V11-fix: Clear the debounce timer id so SmartSave polling can detect completion
@@ -424,7 +424,7 @@ async function saveStateAsync(){
         toast(I18n.t('toast.storageOver90',{used:usedMB.toFixed(1),quota:quotaMB.toFixed(1)}),'danger');
       }
     }
-    try{await saveStateSync();}catch(e){console.error("[Error]",e);}  // V10.3-fix: properly await the async save
+    try{await saveStateSync();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}  // V10.3-fix: properly await the async save
     return true;
   }catch(e){ErrorBus.capture(e,'saveStateAsync');return false;}
 }

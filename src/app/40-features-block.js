@@ -110,10 +110,10 @@
         libState.lastUrl=url;
         libState.dataHash=JSON.stringify(data).length;
         localStorage.setItem(EXT_LIB_STORAGE_KEY,JSON.stringify(libState));
-      }catch(e){console.error('[ExtLib] Save state error:',e);}
+      }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[ExtLib] Save state error:') : console.error('[ExtLib] Save state error:', e));}
       updateExtLibLastUpdate();
     }catch(e){
-      console.error('[ExtLib] Fetch error:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[ExtLib] Fetch error:') : console.error('[ExtLib] Fetch error:', e));
       // Retry logic
       if(attempt<EXT_LIB_MAX_RETRIES&&e.name!=='AbortError'){
         statusEl.innerHTML='<span class="ext-status-warning">⚠️ خطأ: '+e.message+' — إعادة المحاولة تلقائياً...</span>';
@@ -213,7 +213,7 @@
         localStorage.setItem(EXT_LIB_STORAGE_KEY,JSON.stringify(libState));
       }catch(e){}
     }catch(e){
-      console.error('[ExtLib] Import error:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[ExtLib] Import error:') : console.error('[ExtLib] Import error:', e));
       toast('خطأ في الاستيراد: '+e.message,'danger');
     }
   };
@@ -294,7 +294,7 @@
       const updateOnOpenEl=document.getElementById('ext-update-on-open');
       if(updateOnOpenEl&&typeof state!=='undefined'&&state.settings) updateOnOpenEl.checked=state.settings.extUpdateOnOpen===true;
       updateExtLibLastUpdate();
-    }catch(e){console.error('[ExtLib] Startup check error:',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[ExtLib] Startup check error:') : console.error('[ExtLib] Startup check error:', e));}
   }
 
   // V14: Notification suggesting update when import tab opens
@@ -562,7 +562,7 @@
         settings:JSON.parse(JSON.stringify(state.settings||{})),
         timestamp:Date.now()
       };
-    }catch(e){console.error('[Undo] captureState error:',e);return null;}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Undo] captureState error:') : console.error('[Undo] captureState error:', e));return null;}
   }
 
   function _restoreState(snapshot){
@@ -808,7 +808,7 @@
       doc.save((compName||'quiz')+'-report.pdf');
       toast('تم تصدير التقرير بصيغة PDF بنجاح','success');
     }catch(e){
-      console.error('[PDF Export] Error:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[PDF Export] Error:') : console.error('[PDF Export] Error:', e));
       toast('خطأ في تصدير PDF: '+e.message,'danger');
     }
   };
@@ -876,7 +876,7 @@
       XLSX.writeFile(wb,(compName)+'-report.xlsx');
       toast('تم تصدير التقرير بصيغة Excel بنجاح','success');
     }catch(e){
-      console.error('[Excel Export] Error:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[Excel Export] Error:') : console.error('[Excel Export] Error:', e));
       toast('خطأ في تصدير Excel: '+e.message,'danger');
     }
   };

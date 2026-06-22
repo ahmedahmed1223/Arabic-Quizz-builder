@@ -155,12 +155,25 @@ function renderSpacedRepetitionSection(){
 //  BUG REPORT SYSTEM
 // ═══════════════════════════════════════════════════════════════
 function _getBugReports(){
-  if(!state.bugReports) state.bugReports=[];
+  if(!state.bugReports) {
+    try {
+      var d=localStorage.getItem('quiz_bug_reports');
+      state.bugReports = d ? JSON.parse(d) : [];
+    } catch(e) {
+      state.bugReports = [];
+    }
+  }
   return state.bugReports;
 }
 
-function _saveBugReports(){
-  if(!state.bugReports) state.bugReports=[];
+function _saveBugReports(customReports){
+  if(customReports) state.bugReports = customReports;
+  if(!state.bugReports) state.bugReports = [];
+  try {
+    localStorage.setItem('quiz_bug_reports', JSON.stringify(state.bugReports));
+  } catch(e) {
+    try{ErrorBus.capture(e,"localStorage:saveBugReports")}catch(_){}
+  }
   saveState();
 }
 
@@ -178,28 +191,36 @@ function reportBug(questionId,catId,questionText){
   document.body.insertAdjacentHTML('beforeend',html);
 }
 
-function submitBugReport(questionId,catId){
-  const typeEl=document.getElementById('bug-type-select');
-  const descEl=document.getElementById('bug-desc-input');
-  if(!typeEl||!descEl)return;
-  const type=typeEl.value;
-  const desc=descEl.value.trim();
-  if(!desc){descEl.style.borderColor='var(--danger)';return;}
-  const reports=_getBugReports();
+function submitBugReport(qId,catId){
+  var typeEl=document.getElementById('bug-type-select')||document.getElementById('bug-report-type');
+  var descEl=document.getElementById('bug-desc-input')||document.getElementById('bug-report-desc');
+  if(!typeEl||!descEl){
+    if(typeof toast==='function')toast(t ? t('toast.reportSendError') : 'خطأ في إرسال البلاغ','danger');
+    return;
+  }
+  var type=typeEl.value;
+  var desc=descEl.value.trim();
+  if(!desc){
+    descEl.style.borderColor='var(--danger)';
+    if(typeof toast==='function')toast(t ? t('toast.reportDescRequired') : 'يرجى كتابة وصف الخطأ','danger');
+    return;
+  }
+  var reports=_getBugReports();
   reports.push({
-    id:'br_'+Date.now(),
-    questionId:questionId,
-    catId:catId,
+    id:'br_'+Date.now()+'_'+Math.random().toString(36).substr(2,5),
+    questionId:qId||null,
+    catId:catId||null,
     type:type,
     description:desc,
     status:'pending',
     createdAt:Date.now(),
     resolvedAt:null
   });
-  _saveBugReports();
-  const modal=document.querySelector('.bug-report-modal');
-  if(modal)modal.remove();
-  if(typeof toast==='function')toast(I18n.t('bugReport.submitted','تم إرسال البلاغ'),'success');
+  _saveBugReports(reports);
+  var overlayModal=document.querySelector('.bug-report-modal');
+  if(overlayModal)overlayModal.remove();
+  try{if(typeof closeModal==='function')closeModal('modal-bug-report');}catch(e){}
+  if(typeof toast==='function')toast(t ? t('toast.reportSent') : 'تم إرسال البلاغ بنجام','success');
 }
 
 function renderBugReportsTab(){
@@ -308,21 +329,22 @@ function applyTemplate(type){
 }
 
 function cloneQuestion(catId,qIdx){
-  const cat=state.categories.find(c=>c.id===catId);
+  var cat=state.categories.find(function(c){return c.id===catId;});
   if(!cat||!cat.questions[qIdx])return;
-  const orig=cat.questions[qIdx];
-  const clone=JSON.parse(JSON.stringify(orig));
+  var orig=cat.questions[qIdx];
+  var clone=JSON.parse(JSON.stringify(orig));
   // Regenerate the question ID
-  clone.id='q_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+  clone.id=Date.now().toString(36)+Math.random().toString(36).substr(2,5);
   // Regenerate IDs for nested objects (match pairs, order items, etc.)
-  if(Array.isArray(clone.pairs)) clone.pairs=clone.pairs.map(p=>({...p,id:p.id?'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,6):undefined}));
-  if(Array.isArray(clone.items)) clone.items=clone.items.map(item=>({...item,id:item.id?'item_'+Date.now()+'_'+Math.random().toString(36).slice(2,6):undefined}));
-  if(clone.matchData&&Array.isArray(clone.matchData.pairs)) clone.matchData.pairs=clone.matchData.pairs.map(p=>({...p,id:p.id?'p_'+Date.now()+'_'+Math.random().toString(36).slice(2,6):undefined}));
-  clone.text=clone.text+' (نسخة)';
+  if(Array.isArray(clone.pairs)) clone.pairs=clone.pairs.map(function(p){var np=Object.assign({},p);if(p.id)np.id='p_'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);return np;});
+  if(Array.isArray(clone.items)) clone.items=clone.items.map(function(item){var ni=Object.assign({},item);if(item.id)ni.id='item_'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);return ni;});
+  if(clone.matchData&&Array.isArray(clone.matchData.pairs)) clone.matchData.pairs=clone.matchData.pairs.map(function(p){var np=Object.assign({},p);if(p.id)np.id='p_'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);return np;});
+  // Append " (نسخة)" to question text
+  if(clone.text)clone.text=clone.text.replace(/ \(نسخة\)*$/,'')+' (نسخة)';
   cat.questions.splice(qIdx+1,0,clone);
   saveState();
   renderQuestionsAdmin(catId);
-  if(typeof toast==='function')toast(I18n.t('toast.questionCloned','تم استنساخ السؤال'),'success');
+  if(typeof toast==='function')toast(t('toast.questionCloned'),'success');
 }
 
 function generateVariants(catId,qIdx,count){
@@ -511,7 +533,7 @@ function submitSoloAnswer(answer){
     if(typeof playSound==='function'&&!_soloSettings.muted){
       playSound(isCorrect?'correct':'wrong');
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   
   // Update streak system
   soloStreakUpdate(isCorrect);
@@ -701,7 +723,7 @@ function showSoloStarsOverlay(isCorrect, stars, timeUsed, q){
       if(scrollContent) scrollContent.appendChild(badge);
     }
     // Haptic feedback
-    try{if(navigator.vibrate)navigator.vibrate(50);}catch(e){console.error("[Error]",e);}
+    try{if(navigator.vibrate)navigator.vibrate(50);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // Animate earned stars
     if(star1&&stars>=1) setTimeout(()=>star1.classList.add('solo-star-earned'),200);
     if(star2&&stars>=2) setTimeout(()=>star2.classList.add('solo-star-earned'),450);
@@ -717,7 +739,7 @@ function showSoloStarsOverlay(isCorrect, stars, timeUsed, q){
       heading.classList.add('solo-heading-wrong');
     }
     // Haptic feedback - double pulse for wrong
-    try{if(navigator.vibrate)navigator.vibrate([100,50,100]);}catch(e){console.error("[Error]",e);}
+    try{if(navigator.vibrate)navigator.vibrate([100,50,100]);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // Show 0 stars (keep empty stars, don't show X)
     if(pointsEl) pointsEl.textContent=I18n.t('solo.tryAgain','حاول مرة أخرى');
     if(timeEl) timeEl.textContent=Math.round(timeUsed)+'s';
@@ -742,7 +764,7 @@ function showSoloStarsOverlay(isCorrect, stars, timeUsed, q){
       worldBadge.textContent=I18n.t('solo.worldComplete','عالم مكتمل!') + ' ' + (cat.name||'');
       overlay.style.position='relative';
       overlay.appendChild(worldBadge);
-      try{if(navigator.vibrate)navigator.vibrate([50,50,100]);}catch(e){console.error("[Error]",e);}
+      try{if(navigator.vibrate)navigator.vibrate([50,50,100]);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
   }
 }
@@ -758,7 +780,7 @@ function soloNextLevel(){
   try{
     _saveSoloProgress();
     saveState();
-  }catch(e){console.error('[soloNextLevel] save error:',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[soloNextLevel] save error:') : console.error('[soloNextLevel] save error:', e));}
   
   // Hide stars overlay before navigating
   const starsOverlay=document.getElementById('solo-stars-overlay');
@@ -833,7 +855,7 @@ function soloCustomConfirm(message){
     dialog.onclick=(e)=>{if(e.target===dialog){dialog.classList.remove('solo-overlay-visible');_soloConfirmResolver=null;resolve(false);}};
     textEl.textContent=message;
     // Apply i18n after handlers are set — only updates text, not onclick
-    try{I18n.apply();}catch(e){console.error("[Error]",e);}
+    try{I18n.apply();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     dialog.classList.add('solo-overlay-visible');
   });
 }
@@ -1189,7 +1211,7 @@ function updateSoloQuestionLibrary(){
       toast(I18n.t('solo.updateLibNoData','لا توجد مكتبة مدمجة للتحديث'),'error');
     }
   }catch(e){
-    console.error('[updateSoloQuestionLibrary]',e);
+    (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[updateSoloQuestionLibrary]') : console.error('[updateSoloQuestionLibrary]', e));
     toast(t('toast.updateError'),'error');
   }
 }
@@ -1235,7 +1257,7 @@ function addOfflineQuestionBank(){
     };
     input.click();
   }catch(e){
-    console.error('[addOfflineQuestionBank]',e);
+    (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[addOfflineQuestionBank]') : console.error('[addOfflineQuestionBank]', e));
     toast(t('toast.importFileError'),'danger');
   }
 }
@@ -1324,7 +1346,7 @@ function updateSoloProgressBar(){
         jRow.style.display='flex';
       }
     }
-  }catch(e){console.error('[updateSoloProgressBar]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[updateSoloProgressBar]') : console.error('[updateSoloProgressBar]', e));}
 }
 
 // ── Feature 5: Visual Effects ──
@@ -1354,7 +1376,7 @@ function spawnParticleBurst(element,color){
       container.appendChild(p);
     }
     setTimeout(function(){if(container.parentNode)container.parentNode.removeChild(container);},1000);
-  }catch(e){console.error('[spawnParticleBurst]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[spawnParticleBurst]') : console.error('[spawnParticleBurst]', e));}
 }
 
 function spawnRippleEffect(element){
@@ -1368,7 +1390,7 @@ function spawnRippleEffect(element){
     ripple.style.cssText='position:fixed;left:'+cx+'px;top:'+cy+'px;pointer-events:none;z-index:9999;';
     document.body.appendChild(ripple);
     setTimeout(function(){if(ripple.parentNode)ripple.parentNode.removeChild(ripple);},700);
-  }catch(e){console.error('[spawnRippleEffect]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[spawnRippleEffect]') : console.error('[spawnRippleEffect]', e));}
 }
 
 function applyZoomPulse(element){
@@ -1378,7 +1400,7 @@ function applyZoomPulse(element){
     void element.offsetWidth; // force reflow
     element.classList.add('solo-zoom-pulse');
     setTimeout(function(){element.classList.remove('solo-zoom-pulse');},600);
-  }catch(e){console.error('[applyZoomPulse]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[applyZoomPulse]') : console.error('[applyZoomPulse]', e));}
 }
 
 // ── Score bar with animated counter ──
@@ -1399,7 +1421,7 @@ function updateSoloScoreBar(newScore){
     scoreEl.textContent=newScore;
     scoreEl.classList.add('bump');
     setTimeout(function(){scoreEl.classList.remove('bump');},500);
-  }catch(e){console.error('[updateSoloScoreBar]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[updateSoloScoreBar]') : console.error('[updateSoloScoreBar]', e));}
 }
 
 // ── Override showSoloStarsOverlay to use 3-button layout and visual effects ──
@@ -1438,7 +1460,7 @@ showSoloStarsOverlay=function(isCorrect,stars,timeUsed,q){
       if(wrongBtn){
         spawnRippleEffect(wrongBtn);
       }
-    }catch(e){console.error('[visual effects]',e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[visual effects]') : console.error('[visual effects]', e));}
   }
 
   // Update score bar
@@ -1541,7 +1563,7 @@ renderSoloQuestion=function(cat,q,qIdx){
           wrongBtn.classList.add('answer-shake');
           setTimeout(function(){wrongBtn.classList.remove('answer-shake');},600);
         }
-      }catch(e){console.error('[enhanced visual effects]',e);}
+      }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[enhanced visual effects]') : console.error('[enhanced visual effects]', e));}
     }
 
     // Update progress bar (with accuracy)
@@ -1573,7 +1595,7 @@ function spawnAnswerParticleBurst(element,color){
       container.appendChild(p);
     }
     setTimeout(function(){if(container.parentNode)container.parentNode.removeChild(container);},1100);
-  }catch(e){console.error('[spawnAnswerParticleBurst]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[spawnAnswerParticleBurst]') : console.error('[spawnAnswerParticleBurst]', e));}
 }
 
 function spawnAnswerRipple(element){
@@ -1594,7 +1616,7 @@ function spawnAnswerRipple(element){
         },delay);
       })(i*150);
     }
-  }catch(e){console.error('[spawnAnswerRipple]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[spawnAnswerRipple]') : console.error('[spawnAnswerRipple]', e));}
 }
 
 // ── Feature 3: Enhanced Multi-Layer Progress Bar with Accuracy ──
@@ -1638,7 +1660,7 @@ updateSoloProgressBar=function(){
       else if(accuracyPct>=40) accuracyBadge.classList.add('mid');
       else accuracyBadge.classList.add('low');
     }
-  }catch(e){console.error('[updateSoloProgressBar accuracy]',e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[updateSoloProgressBar accuracy]') : console.error('[updateSoloProgressBar accuracy]', e));}
 };
 
 // ── Feature 4: Full-Screen Question Mode (Mobile) ──
@@ -2024,14 +2046,8 @@ function showLeaderboardModal(filter){
 }
 
 // ════════════════════════════════════════════════════════
-//  BUG REPORT SYSTEM
+//  BUG REPORT SYSTEM UI
 // ════════════════════════════════════════════════════════
-function _getBugReports(){
-  try{var d=localStorage.getItem('quiz_bug_reports');return d?JSON.parse(d):[];}catch(e){return[];}
-}
-function _saveBugReports(reports){
-  try{localStorage.setItem('quiz_bug_reports',JSON.stringify(reports));}catch(e){_logErr(e,'localStorage:saveBugReports')}
-}
 function showBugReportModal(qId,catId){
   qId=qId||null;catId=catId||null;
   var html='<div style="padding:20px">';
@@ -2059,32 +2075,6 @@ function showBugReportModal(qId,catId){
   }
   document.getElementById('bug-report-content').innerHTML=html;
   openModal('modal-bug-report');
-}
-function submitBugReport(qId,catId){
-  // Unified version - handles both UI patterns (inline modal + overlay modal)
-  var typeEl=document.getElementById('bug-report-type')||document.getElementById('bug-type-select');
-  var descEl=document.getElementById('bug-report-desc')||document.getElementById('bug-desc-input');
-  if(!typeEl||!descEl){toast(t('toast.reportSendError'),'danger');return;}
-  var type=typeEl.value;
-  var desc=descEl.value.trim();
-  if(!desc){descEl.style.borderColor='var(--danger)';toast(t('toast.reportDescRequired'),'danger');return;}
-  var reports=_getBugReports();
-  reports.push({
-    id:Date.now().toString(36)+Math.random().toString(36).substr(2,5),
-    questionId:qId||null,
-    catId:catId||null,
-    type:type,
-    description:desc,
-    status:'pending',
-    createdAt:Date.now(),
-    resolvedAt:null
-  });
-  _saveBugReports(reports);
-  // Close whichever modal pattern is active
-  var overlayModal=document.querySelector('.bug-report-modal');
-  if(overlayModal)overlayModal.remove();
-  try{closeModal('modal-bug-report');}catch(e){try{ErrorBus.capture(e,"catch#AUTO_115")}catch(_){}}
-  toast(t('toast.reportSent'),'success');
 }
 function renderBugReportsAdmin(){
   var el=document.getElementById('tab-reports');
@@ -2439,7 +2429,7 @@ async function resetSoloProgress(skipConfirm){
   _soloTimedOut=false;
   _soloTransitioning=false;
   _soloPrevLockedWorlds=null;
-  if(_soloAudioEl){try{_soloAudioEl.pause();}catch(e){console.error("[Error]",e);}_soloAudioEl=null;}
+  if(_soloAudioEl){try{_soloAudioEl.pause();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}_soloAudioEl=null;}
   // Reset progress data
   state.soloProgress=null;
   initSoloProgress();
@@ -4070,7 +4060,7 @@ function selectOption(idx){
   state.usedQuestions[state.currentCatId].add(state.currentQIndex);
   updateTicker();
   // Push state to audience/remote screens immediately
-  try{_pushRemoteState();}catch(e){console.error("[Error]",e);}
+  try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // ── V5: Update undo button ──
   updateUndoBtn();
   // Enhanced answer reveal animations
@@ -4392,7 +4382,7 @@ function _confirmNextNoDeduct(){
   if(!state.usedQuestions[state.currentCatId])state.usedQuestions[state.currentCatId]=new Set();
   state.usedQuestions[state.currentCatId].add(state.currentQIndex);
   state.answered=true;
-  try{_pushRemoteState();}catch(e){console.error("[Error]",e);}
+  try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   nextQuestion();
 }
 function _confirmNextWithDeduct(){
@@ -4409,7 +4399,7 @@ function _confirmNextWithDeduct(){
   if(!state.usedQuestions[state.currentCatId])state.usedQuestions[state.currentCatId]=new Set();
   state.usedQuestions[state.currentCatId].add(state.currentQIndex);
   state.answered=true;
-  try{_pushRemoteState();}catch(e){console.error("[Error]",e);}
+  try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   nextQuestion();
 }
 
@@ -4759,7 +4749,7 @@ function handleTimerEnd(){
       updateTicker();updateUndoBtn();
     }
     // V11-fix: Push state to audience/remote screens
-    try{_pushRemoteState();}catch(e){console.error("[Error]",e);}
+    try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   } else if(action==='notify'){
     showTimeUpOverlay();
     // Also mark as answered so the question doesn't remain in limbo
@@ -4773,7 +4763,7 @@ function handleTimerEnd(){
       updateTicker();updateUndoBtn();
     }
     // V11-fix: Push state to audience/remote screens
-    try{_pushRemoteState();}catch(e){console.error("[Error]",e);}
+    try{_pushRemoteState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
   // 'all': show overlay ONCE with a slight delay (after reveal animation)
   if(action==='all'){
@@ -4805,7 +4795,7 @@ function clearQuestionState(){
     .forEach(a=>{if(a){try{a.pause();a.src='';a.load();}catch(e){try{ErrorBus.capture(e,"catch#28")}catch(_){}}}});
   // Stop video player if running
   var vPlayer=document.getElementById('q-video-player');
-  if(vPlayer){try{vPlayer.pause();vPlayer.currentTime=0;if(vPlayer._blobUrl){URL.revokeObjectURL(vPlayer._blobUrl);vPlayer._blobUrl=null;}}catch(e){console.error("[Error]",e);}}
+  if(vPlayer){try{vPlayer.pause();vPlayer.currentTime=0;if(vPlayer._blobUrl){URL.revokeObjectURL(vPlayer._blobUrl);vPlayer._blobUrl=null;}}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
   window._tenseMusicActive=false; // also reset this flag
   // ── 2. Cancel all running timers/intervals ──
   if(state.timerInterval){clearInterval(state.timerInterval);state.timerInterval=null;}
@@ -5154,14 +5144,14 @@ function loadCustomAudio(input,key,nameId){
           idbPromises.push(MediaDB.set('s_'+k,audioData[k]).catch(function(e){_logErr(e,'MediaDB:setAudioData')}));
         }
       });
-      if(idbPromises.length>0)Promise.all(idbPromises).then(function(){try{saveState();}catch(e){console.error("[Error]",e);}}).catch(function(e){_logErr(e,'MediaDB:audioPromiseAll')});
+      if(idbPromises.length>0)Promise.all(idbPromises).then(function(){try{saveState();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}).catch(function(e){_logErr(e,'MediaDB:audioPromiseAll')});
     }
     // Save only metadata flags to localStorage (NOT the actual audio data)
     var _audioMeta={};
     ['customMusicData','customCorrectData','customWrongData','customTenseData','podiumMusicData','wheelMusicData'].forEach(function(k){
       _audioMeta[k]=!!state.settings[k];
     });
-    try{localStorage.setItem('quiz_v4_audio_meta',JSON.stringify(_audioMeta))}catch(e){console.error("[Error]",e);}
+    try{localStorage.setItem('quiz_v4_audio_meta',JSON.stringify(_audioMeta))}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     toast(I18n.t('toast.audioFileLoaded'),'success');
     if(key==='customMusicData'&&state.settings.musicType!=='custom')updateSetting('musicType','custom');
   };
@@ -5229,7 +5219,7 @@ function clearCustomAudio(key,nameId){
   document.getElementById(nameId).textContent=I18n.t('admin.notChosen')||'لم يُختر بعد';
   // Also clear from IndexedDB
   if(typeof MediaDB!=='undefined'){
-    try{MediaDB['delete']('s_'+key).catch(function(e){_logErr(e,'MediaDB:deleteAudioKey')});}catch(e){console.error("[Error]",e);}
+    try{MediaDB['delete']('s_'+key).catch(function(e){_logErr(e,'MediaDB:deleteAudioKey')});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
   try{localStorage.removeItem('quiz_v4_audio')}catch(e){_logErr(e,'localStorage:removeAudioKey')}
   // V14: Update metadata flags in localStorage only (actual data in IndexedDB)
@@ -5237,7 +5227,7 @@ function clearCustomAudio(key,nameId){
   ['customMusicData','customCorrectData','customWrongData','customTenseData','podiumMusicData','wheelMusicData'].forEach(function(k){
     _audioMeta[k]=!!state.settings[k];
   });
-  try{localStorage.setItem('quiz_v4_audio_meta',JSON.stringify(_audioMeta))}catch(e){console.error("[Error]",e);}
+  try{localStorage.setItem('quiz_v4_audio_meta',JSON.stringify(_audioMeta))}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   toast(I18n.t('toast.audioFileDeleted'),'info');
 }
 // V12: Test embedded tense music preview
@@ -5258,7 +5248,7 @@ function testEmbeddedTenseMusic(){
   }).catch(()=>{toast(I18n.t('toast.audioPlayFailed')||'فشل تشغيل الصوت','danger');});
 }
 function stopEmbeddedTenseMusic(){
-  if(_embeddedTenseTestEl){try{_embeddedTenseTestEl.pause();_embeddedTenseTestEl.currentTime=0;}catch(e){console.error("[Error]",e);}}
+  if(_embeddedTenseTestEl){try{_embeddedTenseTestEl.pause();_embeddedTenseTestEl.currentTime=0;}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
   _embeddedTenseTestEl=null;
   const playBtn=document.getElementById('test-btn-embedded-tense');
   const stopBtn=document.getElementById('stop-btn-embedded-tense');
@@ -5383,7 +5373,7 @@ function toggleMediaAttachment(q){
     if(lbl)lbl.textContent='⏸ إيقاف المرفق';
   }else{
     // Stop
-    try{_presMediaAttachEl.pause();_presMediaAttachEl.currentTime=0}catch(e){console.error("[Error]",e);}
+    try{_presMediaAttachEl.pause();_presMediaAttachEl.currentTime=0}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     if(_presMediaAttachEl instanceof HTMLVideoElement&&_presMediaAttachEl.parentNode){
       _presMediaAttachEl.parentNode.removeChild(_presMediaAttachEl);
     }
@@ -5586,27 +5576,9 @@ function applyQuestionTemplate(id){
       toast(t('toast.templateNotFound'),'warning');
     }
   }catch(e){
-    console.error('[applyQuestionTemplate] Error:',e);
+    (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[applyQuestionTemplate] Error:') : console.error('[applyQuestionTemplate] Error:', e));
     toast(t('toast.templateApplyError',{msg:e.message}),'danger');
   }
-}
-function cloneQuestion(catId,qIdx){
-  var cat=state.categories.find(function(c){return c.id===catId;});
-  if(!cat||!cat.questions[qIdx])return;
-  var orig=cat.questions[qIdx];
-  var clone=JSON.parse(JSON.stringify(orig));
-  // Regenerate the question ID
-  clone.id=Date.now().toString(36)+Math.random().toString(36).substr(2,5);
-  // Regenerate IDs for nested objects (match pairs, order items, etc.)
-  if(Array.isArray(clone.pairs)) clone.pairs=clone.pairs.map(function(p){var np=Object.assign({},p);if(p.id)np.id='p_'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);return np;});
-  if(Array.isArray(clone.items)) clone.items=clone.items.map(function(item){var ni=Object.assign({},item);if(item.id)ni.id='item_'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);return ni;});
-  if(clone.matchData&&Array.isArray(clone.matchData.pairs)) clone.matchData.pairs=clone.matchData.pairs.map(function(p){var np=Object.assign({},p);if(p.id)np.id='p_'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);return np;});
-  // Append " (نسخة)" to question text
-  if(clone.text)clone.text=clone.text.replace(/ \(نسخة\)*$/,'')+' (نسخة)';
-  cat.questions.splice(qIdx+1,0,clone);
-  saveState();
-  renderQuestionsAdmin(catId);
-  toast(t('toast.questionCloned'),'success');
 }
 function generateMultipleQuestions(catId,qIdx,count){
   count=count||3;
@@ -5817,11 +5789,11 @@ function loadQuestionMedia(input,mediaType){
 function clearQuestionMedia(mediaType){
   // Clean up IndexedDB blob reference if video was stored there
   if(_qMediaDataTemp&&_qMediaDataTemp.refKey&&typeof MediaDB!=='undefined'){
-    try{MediaDB['delete'](_qMediaDataTemp.refKey).catch(function(e){_logErr(e,'MediaDB:deleteQuestionMediaRef')});}catch(e){console.error("[Error]",e);}
+    try{MediaDB['delete'](_qMediaDataTemp.refKey).catch(function(e){_logErr(e,'MediaDB:deleteQuestionMediaRef')});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
   // Revoke blob URL if fallback was used
   if(_qMediaDataTemp&&_qMediaDataTemp._isBlobUrl&&_qMediaDataTemp.data){
-    try{URL.revokeObjectURL(_qMediaDataTemp.data);}catch(e){console.error("[Error]",e);}
+    try{URL.revokeObjectURL(_qMediaDataTemp.data);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   }
   _qMediaDataTemp=null;
   if(mediaType==='image'){document.getElementById('q-image-preview').style.display='none';document.getElementById('q-image-preview-img').src=''}
@@ -5831,7 +5803,7 @@ function clearQuestionMedia(mediaType){
 function testQuestionVideo(){
   if(!_qMediaDataTemp||_qMediaDataTemp.type!=='video'){toast(I18n.t('toast.noVideo'),'info');return}
   if(_customVideoTestEl&&!_customVideoTestEl.paused){stopQuestionVideoTest();return;}
-  if(_customVideoTestEl){try{_customVideoTestEl.pause()}catch(e){console.error("[Error]",e);}}
+  if(_customVideoTestEl){try{_customVideoTestEl.pause()}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
   _customVideoTestEl=document.createElement('video');
   // Handle both blob reference and data URL
   if(_qMediaDataTemp.refKey){
@@ -5866,8 +5838,8 @@ function testQuestionVideo(){
 }
 function stopQuestionVideoTest(){
   if(_customVideoTestEl){
-    try{_customVideoTestEl.pause();_customVideoTestEl.currentTime=0}catch(e){console.error("[Error]",e);}
-    if(_customVideoTestEl._blobUrl){try{URL.revokeObjectURL(_customVideoTestEl._blobUrl);}catch(e){console.error("[Error]",e);}}
+    try{_customVideoTestEl.pause();_customVideoTestEl.currentTime=0}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+    if(_customVideoTestEl._blobUrl){try{URL.revokeObjectURL(_customVideoTestEl._blobUrl);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
     _customVideoTestEl=null;
   }
   const stopBtn=document.getElementById('stop-btn-qVideo');
@@ -5928,7 +5900,7 @@ function loadMediaAttachment(input,mediaType){
 }
 function clearMediaAttachment(){
   _mediaAttachmentTemp=null;
-  if(_customMediaAttachEl){try{_customMediaAttachEl.pause();_customMediaAttachEl=null}catch(e){console.error("[Error]",e);}}
+  if(_customMediaAttachEl){try{_customMediaAttachEl.pause();_customMediaAttachEl=null}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
   document.getElementById('q-media-attach-preview').style.display='none';
   document.getElementById('test-btn-mediaAttach').style.display='none';
   document.getElementById('clear-btn-mediaAttach').style.display='none';
@@ -5940,7 +5912,7 @@ function clearMediaAttachment(){
 function testMediaAttachment(){
   if(!_mediaAttachmentTemp){toast(I18n.t('media.noAttachment')||'لا يوجد مرفق وسائط','info');return}
   if(_customMediaAttachEl&&!_customMediaAttachEl.paused){stopMediaAttachmentTest();return;}
-  if(_customMediaAttachEl){try{_customMediaAttachEl.pause()}catch(e){console.error("[Error]",e);}}
+  if(_customMediaAttachEl){try{_customMediaAttachEl.pause()}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
   // Handle refKey (data in IndexedDB)
   if(_mediaAttachmentTemp.refKey&&typeof MediaDB!=='undefined'){
     MediaDB.get(_mediaAttachmentTemp.refKey).then(function(blobOrData){
@@ -5979,7 +5951,7 @@ function testMediaAttachment(){
   }).catch(()=>toast(I18n.t('media.playFailed')||'تعذّر تشغيل المرفق','danger'));
 }
 function stopMediaAttachmentTest(){
-  if(_customMediaAttachEl){try{_customMediaAttachEl.pause();_customMediaAttachEl.currentTime=0}catch(e){console.error("[Error]",e);}_customMediaAttachEl=null;}
+  if(_customMediaAttachEl){try{_customMediaAttachEl.pause();_customMediaAttachEl.currentTime=0}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}_customMediaAttachEl=null;}
   const stopBtn=document.getElementById('stop-btn-mediaAttach');
   const playBtn=document.getElementById('test-btn-mediaAttach');
   if(stopBtn)stopBtn.classList.add('hidden');
@@ -6213,7 +6185,7 @@ function _playDefaultSoundFallback(key,vol){
       g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.5);
       o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.5);
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }
 // V11: Initialize default sounds from uploaded files into IndexedDB
 function _initDefaultSounds(){
@@ -6310,9 +6282,9 @@ function playSound(type){
           _effectAudioEl.currentTime=0;_effectAudioEl.volume=.6;
           _effectAudioEl.play().catch(function(){});
           // Stop after 2 seconds (short clip) and release memory
-          var _mp3CleanupTimer=setTimeout(function(){try{if(_effectAudioEl){_effectAudioEl.pause();_effectAudioEl.src='';_effectAudioEl.load();_effectAudioEl=null;}}catch(e){console.error("[Error]",e);}},2000);
+          var _mp3CleanupTimer=setTimeout(function(){try{if(_effectAudioEl){_effectAudioEl.pause();_effectAudioEl.src='';_effectAudioEl.load();_effectAudioEl=null;}}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}},2000);
           return;
-        }catch(e){console.error("[Error]",e);}
+        }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }
       // Fallback to rich chime if no MP3
       playRichChime(ctx);return;
@@ -6378,7 +6350,7 @@ function playRichChime(ctx){
     sg.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+1.2);
     shimmer.connect(sg);sg.connect(ctx.destination);
     shimmer.start(ctx.currentTime+.4);shimmer.stop(ctx.currentTime+1.2);
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }
 // Track Web Audio effect nodes for cleanup
 let _webAudioEffectNodes=[];

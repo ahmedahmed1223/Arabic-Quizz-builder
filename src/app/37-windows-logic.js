@@ -1411,7 +1411,7 @@ document.addEventListener('visibilitychange',()=>{
         updateTimerDisplay(state.timeLeft,state.timerTotal);
         // V11-fix: If timer expired while tab was hidden, handle it now
         if(state.timeLeft<=0){
-          try{handleTimerEnd();}catch(e){console.error("[Error]",e);}
+          try{handleTimerEnd();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
         }
       }
       _pushRemoteState();
@@ -1422,10 +1422,10 @@ document.addEventListener('visibilitychange',()=>{
       state.timeLeft=Math.max(0,(state._timerStartLeft||state.timerTotal||30)-elapsed2);
       updateTimerDisplay(state.timeLeft,state.timerTotal);
       if(state.timeLeft<=0){
-        try{handleTimerEnd();}catch(e){console.error("[Error]",e);}
+        try{handleTimerEnd();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }else if(state.timeLeft>0){
         // Restart the timer interval
-        try{startTimer(state.timeLeft,true);}catch(e){console.error("[Error]",e);}
+        try{startTimer(state.timeLeft,true);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }
       _pushRemoteState();
     }
@@ -1622,7 +1622,7 @@ window.Quiz={
       }
       return false;
     }catch(e){
-      console.error('Quiz.importAll failed:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, 'Quiz.importAll failed:') : console.error('Quiz.importAll failed:', e));
       return false;
     }
   },

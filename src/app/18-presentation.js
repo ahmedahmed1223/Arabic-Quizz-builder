@@ -47,7 +47,7 @@ function getStorageUsage(){
       const val=localStorage.getItem(key);
       if(val)totalSize+=key.length+val.length;
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   // Rough byte estimate (2 bytes per char for UTF-16)
   const usedBytes=totalSize*2;
   const maxBytes=5*1024*1024; // Typical 5MB limit
@@ -64,7 +64,7 @@ async function showStorageMonitor(){
 
   // V10: Get IndexedDB size estimate
   var idbInfo={bytes:0,items:0,keys:[],usedMB:'0.00'};
-  try{if(typeof MediaDB!=='undefined')idbInfo=await MediaDB.estimateSize();}catch(e){console.error("[Error]",e);}
+  try{if(typeof MediaDB!=='undefined')idbInfo=await MediaDB.estimateSize();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   // V10: Get navigator.storage.estimate for total storage quota
   var totalUsedMB='—', totalQuotaMB='—', totalPct=0;
@@ -75,7 +75,7 @@ async function showStorageMonitor(){
       totalQuotaMB=((est.quota||0)/1048576).toFixed(1);
       totalPct=est.quota?Math.round((est.usage||0)/(est.quota||1)*100):0;
     }
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   // V10.3: Detailed localStorage key listing
   var lsKeyDetails=[];
@@ -89,10 +89,10 @@ async function showStorageMonitor(){
       }
     }
     lsKeyDetails.sort(function(a,b){return b.sizeBytes-a.sizeBytes;});
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   var lsKeys={quiz:0,other:0};
-  try{lsKeyDetails.forEach(function(d){if(d.key.indexOf('quiz')===0)lsKeys.quiz++;else lsKeys.other++;});}catch(e){console.error("[Error]",e);}
+  try{lsKeyDetails.forEach(function(d){if(d.key.indexOf('quiz')===0)lsKeys.quiz++;else lsKeys.other++;});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   // V10.3: IDB primary state check
   var idbPrimaryStatus=I18n.t('storage.idbUnknown');
@@ -139,7 +139,7 @@ async function showStorageMonitor(){
         '<div style="width:'+barW+'%;height:100%;background:'+barC+';border-radius:4px"></div></div>'+
         '<span style="min-width:50px;text-align:left;direction:ltr">'+d.sizeKB+' KB</span></div>';
     }).join('');
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   // V10.3: IDB key listing
   var idbKeysHtml='';
@@ -150,7 +150,7 @@ async function showStorageMonitor(){
       return '<span style="display:inline-block;padding:2px 6px;margin:2px;border-radius:4px;background:var(--bg-panel);font-size:.7rem;direction:ltr">'+k+'</span>';
     }).join('');
     if(idbKeys.length>10)idbKeysHtml+='<span style="font-size:.7rem;color:var(--text-muted)"> +'+( idbKeys.length-10)+' more</span>';
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
   var html=`<div style="direction:${dir};line-height:1.7">
     <!-- Total Storage (navigator.storage) -->
@@ -480,7 +480,7 @@ function exportDataZip(){
           for(var i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
           zip.file('media/'+prefix+'.'+ext,bytes);
           mediaCount++;
-        }catch(e){console.error("[Error]",e);}
+        }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }
     }
   }
@@ -552,8 +552,8 @@ function importZIP(e){
         if(!_idbLoadDone){_idbLoadDone=true;_pendingSaveNeeded=false;}
         try{await saveStateSync();}catch(e){console.warn('[importZIP] saveStateSync error:',e);}
         // Also save ALL media to IDB immediately
-        try{if(typeof MediaDB!=='undefined')await MediaDB.saveAllMedia();}catch(e){console.error("[Error]",e);}
-        try{if(typeof MediaDB!=='undefined')await MediaDB.saveCoreData();}catch(e){console.error("[Error]",e);}
+        try{if(typeof MediaDB!=='undefined')await MediaDB.saveAllMedia();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+        try{if(typeof MediaDB!=='undefined')await MediaDB.saveCoreData();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
         // V10.2-fix: Save primary state to IDB
         try{
           if(typeof MediaDB!=='undefined'){
@@ -579,8 +579,8 @@ function importZIP(e){
         document.body.setAttribute('data-theme',state.settings.theme||'space');
         applyThemeCSS(state.settings.theme||'space');
         applyFontScale(state.settings.fontScale||100);
-        try{applyCatCardScale(state.settings.catCardSize||100)}catch(e){console.error("[Error]",e);}
-        if(state.settings.theme==='custom'){try{restoreCustomThemeVars()}catch(e){console.error("[Error]",e);}}
+        try{applyCatCardScale(state.settings.catCardSize||100)}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+        if(state.settings.theme==='custom'){try{restoreCustomThemeVars()}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
         renderAdmin();
         toast(I18n.t('toast.dataImported')+' (ZIP)','success');
       }catch(e2){toast(I18n.t('toast.dataError')+e2.message,'danger');}
@@ -698,7 +698,7 @@ function importJSON(e){
                       delete q.mediaData;
                     }).catch(function(e){_logErr(e,'MediaDB:setVideoRef-importJSON')}));
                   })(q,refKey,blob);
-                }catch(e){console.error("[Error]",e);}
+                }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
               }
             });
           }
@@ -746,8 +746,8 @@ function importJSON(e){
       // V10.2-fix: Await saveStateSync to prevent race condition with concurrent IDB writes
       try{await saveStateSync();}catch(e){console.warn('[importJSON] saveStateSync error:',e);}
       // Also save ALL media to IDB immediately (ensures everything is in IDB)
-      try{if(typeof MediaDB!=='undefined')await MediaDB.saveAllMedia();}catch(e){console.error("[Error]",e);}
-      try{if(typeof MediaDB!=='undefined')await MediaDB.saveCoreData();}catch(e){console.error("[Error]",e);}
+      try{if(typeof MediaDB!=='undefined')await MediaDB.saveAllMedia();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+      try{if(typeof MediaDB!=='undefined')await MediaDB.saveCoreData();}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       // V10.1: Save proper primary state to IDB with catImg and teamImg data
       // This replaces the previous incomplete save that passed null for images
       try{
@@ -799,13 +799,13 @@ function importJSON(e){
       document.body.setAttribute('data-theme',state.settings.theme||'space');
       applyThemeCSS(state.settings.theme||'space');
       applyFontScale(state.settings.fontScale||100);
-      try{applyCatCardScale(state.settings.catCardSize||100)}catch(e){console.error("[Error]",e);}
-      if(state.settings.theme==='custom'){try{restoreCustomThemeVars()}catch(e){console.error("[Error]",e);}}
+      try{applyCatCardScale(state.settings.catCardSize||100)}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+      if(state.settings.theme==='custom'){try{restoreCustomThemeVars()}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
 
       renderAdmin();
       toast(I18n.t('toast.dataImported')||'تم استيراد البيانات بنجاح','success');
     }catch(e){
-      console.error('[importJSON] Error:',e);
+      (typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, '[importJSON] Error:') : console.error('[importJSON] Error:', e));
       toast(I18n.t('error.importFailed')||'خطأ في الملف: '+e.message,'danger');
     }finally{
       try{if(typeof hideLoading==='function')hideLoading();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_97")}catch(_){}}
@@ -819,13 +819,13 @@ function clearAllData(){confirmAction(typeof I18n!=='undefined'?I18n.t('clear.co
     state.categories=[];state.teams=[];state.credits=[];
     saveState();
     // V10-fix: Await IDB clear to prevent stale data contamination
-    try{if(typeof MediaDB!=='undefined'){await MediaDB.clearAll();}}catch(e){console.error("[Error]",e);}
+    try{if(typeof MediaDB!=='undefined'){await MediaDB.clearAll();}}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     // V10-fix: also clear all other localStorage keys that clearAllData should remove
     try{
       ['quiz_v4_progress','quiz_pwd_salt','quiz_session_history','quiz_custom_palettes',
        'quiz_v7_migrated_at','quiz_audience_state','quiz_v4_audio','quiz_app_version',
        'quiz_v4','quiz_v4_lz','quiz_v4_catimg','quiz_v4_catimg_lz','quiz_v4_teamimg','quiz_v4_teamimg_lz'
       ].forEach(function(k){try{localStorage.removeItem(k);}catch(e){_logErr(e,'localStorage:clearAllData')}});
-    }catch(e){console.error("[Error]",e);}
+    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     renderAdmin();toast(typeof I18n!=='undefined'?I18n.t('clear.done'):'تم المسح','info');
   },'🗑️',typeof I18n!=='undefined'?I18n.t('clear.all'):'مسح الكل')}

@@ -20,7 +20,7 @@
         if((catImgRaw&&catImgRaw.length>1000)||(teamImgRaw&&teamImgRaw.length>1000)||(audioRaw&&audioRaw.length>1000)){
           _needsIDBMigrate=true;
         }
-      }catch(e){console.error("[Error]",e);}
+      }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 
       // Auto-migrate large LS data to IDB if needed
       if(_needsIDBMigrate&&typeof MediaDB!=='undefined'){
@@ -42,7 +42,7 @@
           }).catch(function(e){
             console.warn('[V10 Migration] Migration failed:',e);
           });
-        }catch(e){console.error("[Error]",e);}
+        }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       }
 
       // Clean up truly obsolete keys from very old versions
@@ -53,10 +53,10 @@
             localStorage.removeItem(k);
           }
         });
-      }catch(e){console.error("[Error]",e);}
+      }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
 
     // Update stored version
     localStorage.setItem('quiz_app_version',currentVer);
-  }catch(e){console.error("[Error]",e);}
+  }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 })();
