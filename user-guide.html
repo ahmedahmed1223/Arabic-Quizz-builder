@@ -193,30 +193,33 @@ kbd{display:inline-flex;align-items:center;justify-content:center;background:var
 .mobile-toc-panel .toc-title{font-size:.72rem;font-weight:900;color:var(--txt3);letter-spacing:.1em;text-transform:uppercase;padding:12px 20px 6px}
 
 @media(max-width:768px){
-  .site-header{height:56px;padding:0 12px}
-  .header-brand{font-size:.85rem}
-  .header-nav{gap:2px}
-  .nav-pill{padding:5px 10px;font-size:.72rem}
-  .page-wrapper{padding:24px 12px 80px}
+  .site-header{height:60px;padding:0 14px}
+  .header-brand{font-size:.9rem}
+  .header-nav{gap:4px}
+  .nav-pill{padding:8px 12px;font-size:.78rem; min-height: 40px; display: inline-flex; align-items: center; justify-content: center;}
+  .page-wrapper{padding:24px 14px 80px}
   .hero{padding:40px 16px 48px;margin-bottom:40px}
-  .hero h1{font-size:clamp(1.6rem,5vw,2.8rem)}
-  .hero p{font-size:.95rem}
-  .hero-stat{padding:12px 18px;min-width:90px}
-  .hero-stat .num{font-size:1.5rem}
-  .section{margin-bottom:40px}
-  .section-header{gap:10px;margin-bottom:20px;padding-bottom:12px}
-  .section-icon{width:38px;height:38px;font-size:1.1rem}
-  .section-title{font-size:1.15rem}
-  .cards-grid{grid-template-columns:1fr;gap:12px}
-  .card{padding:16px}
-  .step{flex-direction:column;gap:10px;padding:18px 0}
-  .step-num{width:34px;height:34px;font-size:.85rem}
-  .feature-item{flex-direction:column;gap:8px;padding:12px 14px}
-  .themes-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
-  .shortcut-grid{grid-template-columns:1fr;gap:8px}
-  table{font-size:.78rem}
-  th,td{padding:8px 10px}
-  .back-top{bottom:20px;left:20px;width:40px;height:40px;font-size:1rem}
+  .hero h1{font-size:clamp(1.8rem,6vw,2.8rem); margin-bottom: 24px}
+  .hero p{font-size:.95rem; line-height: 1.8;}
+  .hero-stat{padding:14px 18px;min-width:100px}
+  .hero-stat .num{font-size:1.6rem}
+  .section{margin-bottom:48px}
+  .section-header{gap:12px;margin-bottom:24px;padding-bottom:14px}
+  .section-icon{width:42px;height:42px;font-size:1.2rem}
+  .section-title{font-size:1.25rem}
+  .cards-grid{grid-template-columns:1fr;gap:16px}
+  .card{padding:20px}
+  .step{flex-direction:column;gap:12px;padding:20px 0}
+  .step-num{width:38px;height:38px;font-size:.9rem}
+  .feature-item{flex-direction:column;gap:10px;padding:16px}
+  .themes-grid{grid-template-columns:1fr;gap:12px}
+  .shortcut-grid{grid-template-columns:1fr;gap:12px}
+  .table-wrap { width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  table{font-size:.85rem}
+  th,td{padding:12px 14px; min-height: 44px;}
+  .back-top{bottom:24px;left:24px;width:48px;height:48px;font-size:1.1rem}
+  .mobile-toc-btn { width: 52px; height: 52px; bottom: 24px; right: 24px; font-size: 1.4rem; padding: 0; box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  .mobile-toc-panel .toc-item { padding: 14px 24px; font-size: .95rem; min-height: 48px; display: flex; align-items: center; }
 }
 @media(max-width:480px){
   .hero-stats{gap:8px}
@@ -2406,7 +2409,6 @@ sendCommand('ping');
     <div class="toc-title">محتويات الدليل</div>
     <a class="toc-item" href="#overview">🗺️ نظرة عامة</a>
     <a class="toc-item" href="#whats-new-v13">🆕 الجديد في V13</a>
-    <a class="toc-item active" href="#whats-new-v13">🆕 الجديد في V13</a>
     <a class="toc-item" href="#whats-new-v12">🆕 الجديد في V12</a>
     <a class="toc-item" href="#whats-new-v11">🆕 الجديد في V11</a>
     <a class="toc-item" href="#whats-new-v10">🆕 الجديد في V10</a>
@@ -2448,12 +2450,12 @@ sendCommand('ping');
 <script>
 (function(){
   // Active TOC + Nav tracking
-  var tocLinks=document.querySelectorAll('.toc-sticky .toc-item');
-  var sections=document.querySelectorAll('section[id]');
+  var tocLinks=document.querySelectorAll('.toc-sticky .toc-item, .mobile-toc-panel .toc-item');
+  var sections=document.querySelectorAll('section[id], h2[id], h3[id]');
   var navPills=document.querySelectorAll('.header-nav .nav-pill');
   function updateActive(){
     var current='';
-    sections.forEach(function(s){if(window.scrollY>=s.offsetTop-120)current=s.id});
+    sections.forEach(function(s){if(window.scrollY>=s.offsetTop-140)current=s.id});
     tocLinks.forEach(function(l){l.classList.toggle('active',l.getAttribute('href')==='#'+current)});
     navPills.forEach(function(p){p.classList.toggle('active',p.getAttribute('href')==='#'+current)});
   }
