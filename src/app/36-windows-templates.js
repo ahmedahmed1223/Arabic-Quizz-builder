@@ -486,6 +486,7 @@ var _lastPushTime=0;
 var _soundChannel=null;
 try{_soundChannel=new BroadcastChannel('quiz_remote_v1');}catch(e){try{ErrorBus.capture(e,"catch#AUTO_226")}catch(_){}}
 var _pushPending=false;
+window._pushRemoteState = _pushRemoteState;
 function _pushRemoteState(){
   var now=Date.now();
   // Throttle: only push at most every 50ms (near-instantaneous for remote control)

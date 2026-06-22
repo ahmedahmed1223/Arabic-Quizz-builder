@@ -660,4 +660,7 @@ const MigrationV7=(function(){
   try{MigrationV7.migrate();}catch(e){_logErr(e,'MigrationV7:migrateAutoRun')}
 })();
 
+// V15.2: Safe global stubs to prevent ReferenceErrors from script dependency loading orders
+window._pushRemoteState = window._pushRemoteState || function() {};
+
 // ─── END V7 FOUNDATION ─────────────────────────────────────
