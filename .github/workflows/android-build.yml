@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Allows manual triggers from GitHub Actions UI
+  workflow_dispatch:
 
 permissions:
-  contents: write # Required to commit and push changes back to repo
+  contents: write
 
 env:
   ANDROID_BUILD_TOOLS_VERSION: "34.0.0"
@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          clean: true
 
       - name: Set up Node.js Env
         uses: actions/setup-node@v4
@@ -41,27 +42,18 @@ jobs:
       - name: Install NPM Dependencies
         run: npm ci
 
+      - name: Clean Old Dist Directory
+        run: rm -rf dist
+
       - name: Compile Vite Web Application Assets
         run: npm run build
 
-      # أتمتة إنشاء وتخصيص ملف index.html في مجلد dist
-      - name: Automate index.html Creation in dist Folder
+      # 🚀 خطوة فحص ذكية: طباعة حجم ملف index.html الناتج للتأكد من دمج الأكواد داخله
+      - name: Verify Single File Build Size
         run: |
-          mkdir -p dist
-          cat << 'EOF' > dist/index.html
-          <!DOCTYPE html>
-          <html lang="ar" dir="rtl">
-          <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Arabic Quiz Builder</title>
-          </head>
-          <body>
-              <div id="app"></div>
-          </body>
-          </html>
-          EOF
-          echo "✅ تم إنشاء ملف dist/index.html"
+          echo "=== فحص حجم الملفات الناتجة من Vite ==="
+          ls -lh dist/
+          echo "========================================"
 
       - name: Synchronize Web Assets to Capacitor Android Project
         run: npx cap sync android
@@ -76,41 +68,34 @@ jobs:
         id: sign_apk
         run: |
           mkdir -p ./releases
-          
           keytool -genkey -v -keystore release.keystore -alias playkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=ArabicQuizBuilder, O=QuizApp, C=SA"
           
           APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" -o -name "*.apk" | head -n 1)
-          
           if [ -z "$APK_PATH" ]; then
-            echo "❌ خطأ حرِج: لم يتم العثور على ملف APK الناتج من عملية البناء!"
+            echo "❌ خطأ حرِج: لم يتم العثور على ملف APK الناتج!"
             exit 1
           fi
           
-          cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
-          
+          cp "$APK_PATH" ./releases/arabic-quiz-signed-release.apk
           BUILD_TOOLS="${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}"
           
-          $BUILD_TOOLS/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk
-          $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-signed-release.apk ./releases/arabic-quiz-release-aligned.apk
+          # توقيع الملف مباشرة
+          $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 ./releases/arabic-quiz-signed-release.apk
           $BUILD_TOOLS/apksigner verify ./releases/arabic-quiz-signed-release.apk
-          
-          # تنظيف الملفات المؤقتة وإبقاء الـ APK النهائي فقط داخل مجلد releases
-          rm -f ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk release.keystore
-          echo "✅ تم تجهيز وتوقيع الـ APK بنجاح في مجلد releases"
+          rm -f release.keystore
 
-      # رفع وحفظ التغييرات مباشرة للمستودع (دون توليد Release)
+      # رفع وحفظ التغييرات ومجلد dist ومجلد releases للمستودع
       - name: Commit and Push generated files back to repository
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # إضافة ملف index.html ومجلد releases بالإجبار
-          git add dist/index.html releases/arabic-quiz-signed-release.apk -f
+          # إضافة المجلدات بالإجبار لتخطي الـ .gitignore إن وجد
+          git add dist/releases/arabic-quiz-signed-release.apk -f
           
-          # التحقق من وجود تغييرات حقيقية لتفادي توقف السيرفر عند التكرار
           if git diff-index --quiet HEAD --; then
             echo "No changes to commit"
           else
-            git commit -m "🤖 أتمتة: تحديث ملفات البناء ومجلد الـ releases محلياً"
+            git commit -m "🤖 أتمتة: تحديث ملف الـ Single File ومجلد الـ releases محلياً"
             git push origin main
           fi
