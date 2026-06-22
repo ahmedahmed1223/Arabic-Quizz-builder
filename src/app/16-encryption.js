@@ -166,6 +166,8 @@ function renderAdmin(){
   // Sync new checkboxes
   const _sShowSoloReview=document.getElementById('s-show-solo-review');if(_sShowSoloReview)_sShowSoloReview.checked=s.showSoloReview===true;
   const _sShowSoloQuickSetup=document.getElementById('s-show-solo-quicksetup');if(_sShowSoloQuickSetup)_sShowSoloQuickSetup.checked=s.showSoloQuickSetup===true;
+  const _sSoloEnableFreeze=document.getElementById('s-solo-enable-freeze');if(_sSoloEnableFreeze)_sSoloEnableFreeze.checked=s.soloEnableFreeze!==false;
+  const _sSoloEnableDouble=document.getElementById('s-solo-enable-double');if(_sSoloEnableDouble)_sSoloEnableDouble.checked=s.soloEnableDouble!==false;
   const _sShowBugReports=document.getElementById('s-show-bug-reports-tab');if(_sShowBugReports)_sShowBugReports.checked=s.showBugReportsTab===true;
   const _sShowErrorScreen=document.getElementById('s-show-error-screen');if(_sShowErrorScreen)_sShowErrorScreen.checked=s.showErrorScreen===true;
   const csEl=document.getElementById('s-credits-style');if(csEl)csEl.value=s.creditsStyle||'normal';

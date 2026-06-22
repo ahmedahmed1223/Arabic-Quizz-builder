@@ -1401,6 +1401,16 @@
                   onchange="state.settings.showSoloQuickSetup=this.checked;saveState()">
                 <span class="text-sm text-muted">إظهار الإعداد السريع في الوضع الفردي</span>
               </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <input type="checkbox" id="s-solo-enable-freeze" style="width:16px;height:16px;accent-color:var(--accent1)"
+                  onchange="state.settings.soloEnableFreeze=this.checked;saveState();syncSoloPowerupsUI();">
+                <span class="text-sm text-muted">تفعيل وسيلة مساعدة "تجميد الوقت" ❄️</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <input type="checkbox" id="s-solo-enable-double" style="width:16px;height:16px;accent-color:var(--accent2)"
+                  onchange="state.settings.soloEnableDouble=this.checked;saveState();syncSoloPowerupsUI();">
+                <span class="text-sm text-muted">تفعيل وسيلة مساعدة "الفرصة المزدوجة" 🔄</span>
+              </div>
             </div>
           </div>
           <div class="form-group">

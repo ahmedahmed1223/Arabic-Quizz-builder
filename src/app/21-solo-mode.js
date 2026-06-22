@@ -79,6 +79,26 @@ window.resetSoloPowerups = function() {
     timerFill.style.background = '';
     timerFill.style.boxShadow = '';
   }
+  
+  if (typeof syncSoloPowerupsUI === 'function') {
+    syncSoloPowerupsUI();
+  }
+};
+
+window.syncSoloPowerupsUI = function() {
+  const freezeEnabled = typeof state !== 'undefined' && state.settings && state.settings.soloEnableFreeze !== false;
+  const doubleEnabled = typeof state !== 'undefined' && state.settings && state.settings.soloEnableDouble !== false;
+  
+  const freezeBtn = document.getElementById('solo-powerup-freeze');
+  const doubleBtn = document.getElementById('solo-powerup-double');
+  const bar = document.getElementById('solo-lifelines-bar');
+  
+  if (freezeBtn) freezeBtn.style.display = freezeEnabled ? 'flex' : 'none';
+  if (doubleBtn) doubleBtn.style.display = doubleEnabled ? 'flex' : 'none';
+  
+  if (bar) {
+    bar.style.display = (freezeEnabled || doubleEnabled) ? 'flex' : 'none';
+  }
 };
 
 function soloSelectOption(btn,value){
