@@ -1513,6 +1513,7 @@ function enableFocusHighlight(container) {
     ar: {
       title: "💡 المساعد المعرفي الذكي ومؤشرات الأداء",
       offlineBadge: "🟢 متصل محلياً ويعمل بالكامل دون إنترنت",
+      offlineBadgeWarning: "🟡 يعمل بالكامل دون إنترنت — الشبكة الخارجية غير متصلة",
       checklistTitle: "خطوات إعداد المسابقة التفاعلية",
       stepName: "اسم ومعلومات المسابقة",
       stepNameCompleted: "🟢 تمت تسمية المسابقة بنجاح",
@@ -1535,11 +1536,21 @@ function enableFocusHighlight(container) {
       inspirationQuote2: "كل إناء يضيق بما جعل فيه إلا وعاء العلم فإنه يتسع.",
       inspirationQuote3: "من لم يذق مر التعلم سويعات، تجرع ذل الجهل طول حياته.",
       inspirationQuote4: "رأس مالي علمي، وسلاحي عقلي وصبري ومثابرتي.",
-      inspirationQuote5: "العلم ينير الطريق للقلوب والعقول، والجهل يظلم مسيرات المجتمعات."
+      inspirationQuote5: "العلم ينير الطريق للقلوب والعقول، والجهل يظلم مسيرات المجتمعات.",
+      alertsHubTitle: "🚨 التوجيه الذكي والإرشادات الحية للتشغيل",
+      alertNoName: "لم تختر اسمًا مخصصًا للمسابقة حتى الآن. سيظهر الاسم بشكل افتراضي كـ 'المسابقة'. تذكر تخصيصه في تبويب 'عام'!",
+      alertNoCats: "بنك الأسئلة فارغ تمامًا! يُتطلب إضافة قسم واحد وأسئلته، أو الانتقال لعلامة تبويب 'استيراد' لتحميل مسابقة جاهزة بنقرة واحدة.",
+      alertNoTeams: "لا توجد فرق لعب مضافة حتى الآن! أضف فريقًا واحدًا على الأقل من تبويب 'الفرق' لتشغيل لوحة عرض النقاط.",
+      alertNoAudience: "💡 فكرة لتقديم أفضل: شاشة الجمهور مغلقة حاليًا. انقر 'بدء العرض والتصيير' أو 'فتح شاشة الجمهور' لعرض الأسئلة بملء الشاشة.",
+      alertAudienceConnected: "🖥️ شاشة الجمهور متصلة ومفتوحة حاليًا في نافذة منفصلة بنجاح.",
+      alertBatteryLow: "⚠️ تنبيه طاقة منخفض: طاقة البطارية أقل من 15% ({level}%). يرجى توصيل الشاحن فورًا لضمان سلامة العرض الرسومي وتفادي توقفه تلقائيًا.",
+      alertBatteryCharging: "⚡ حماية الطاقة نشطة: البطارية متصلة بالشاحن الآن ومحمية ({level}%).",
+      alertBatteryOk: "🔋 حالة الطاقة مستقرة: شحن الجهاز {level}% ويعمل بأقصى كفاءة للمؤثرات البصرية."
     },
     en: {
       title: "💡 Smart Cognitive Assistant & Diagnostics Hub",
       offlineBadge: "🟢 Connected locally & working 100% offline",
+      offlineBadgeWarning: "🟡 Offline-ready — External network is disconnected",
       checklistTitle: "Setup Checklist Progress",
       stepName: "Quiz Info & Title",
       stepNameCompleted: "🟢 Quiz named successfully",
@@ -1562,12 +1573,59 @@ function enableFocusHighlight(container) {
       inspirationQuote2: "Every vessel shrinks with what runs into it, except for the vessel of knowledge, which expands.",
       inspirationQuote3: "He who has not tasted the bitterness of learning for an hour, will swallow the humiliation of ignorance for an eternity.",
       inspirationQuote4: "My capital is my knowledge, and my weapon is my intellect and patience.",
-      inspirationQuote5: "Knowledge lights the path for hearts and minds, while ignorance darkens our journey."
+      inspirationQuote5: "Knowledge lights the path for hearts and minds, while ignorance darkens our journey.",
+      alertsHubTitle: "🚨 Intelligent Directives & Live Runtime Alerts",
+      alertNoName: "Your quiz uses the default name. Consider editing it in the 'General' subtab for a customized branding/title!",
+      alertNoCats: "The question bank is empty! You must define at least one category, or go to 'Import' to ingest standard templates instantly.",
+      alertNoTeams: "No teams defined yet! Go to the 'Teams' tab and add at least one playing group to enable scoreboards.",
+      alertNoAudience: "💡 Presentation Tip: Audience screen is closed. Click 'Start presentation' or open it via projection tools to show questions on external screens.",
+      alertAudienceConnected: "🖥️ Audience projection window is fully connected and projected on second screen successfully.",
+      alertBatteryLow: "⚠️ Low power warning: Device battery is under 15% ({level}%). Please plug in your charger to assure buttery-smooth canvas animations and safeguard your session.",
+      alertBatteryCharging: "⚡ Power safety active: Battery is connected and charging ({level}%).",
+      alertBatteryOk: "🔋 Stable power: Device power is at {level}% and calibrated for optimal visual effects speed."
     }
   };
 
   // Select a random quote index that persists per session/refresh
   var quoteIndex = Math.floor(Math.random() * 6);
+
+  // Monitor battery state locally
+  var batteryState = { level: 100, charging: true, supported: false };
+
+  function initBatteryMonitoring() {
+    if (typeof navigator !== 'undefined' && navigator.getBattery) {
+      navigator.getBattery().then(function(batt) {
+        batteryState.supported = true;
+        batteryState.level = Math.round(batt.level * 100);
+        batteryState.charging = batt.charging;
+        
+        function update() {
+          batteryState.level = Math.round(batt.level * 100);
+          batteryState.charging = batt.charging;
+          try {
+            if (typeof window.renderEnhancedDashboardUX === 'function') {
+              window.renderEnhancedDashboardUX();
+            }
+          } catch(e) {}
+        }
+        
+        batt.addEventListener('levelchange', update);
+        batt.addEventListener('chargingchange', update);
+        update();
+      }).catch(function() {});
+    }
+  }
+
+  // Initialize battery monitoring immediately
+  initBatteryMonitoring();
+
+  // Listen to network status changes
+  window.addEventListener('online', function() {
+    try { if (typeof window.renderEnhancedDashboardUX === 'function') window.renderEnhancedDashboardUX(); } catch(e) {}
+  });
+  window.addEventListener('offline', function() {
+    try { if (typeof window.renderEnhancedDashboardUX === 'function') window.renderEnhancedDashboardUX(); } catch(e) {}
+  });
 
   function getLocalStorageSizeInKB() {
     var total = 0;
@@ -1613,7 +1671,7 @@ function enableFocusHighlight(container) {
         dashGroup.appendChild(hub);
       }
 
-      // Inject custom scoped CSS styles for diagnostics hub
+      // Inject custom scoped CSS styles for diagnostics hub with low-battery animations
       if (!document.getElementById('spa-diagnostics-styles')) {
         var style = document.createElement('style');
         style.id = 'spa-diagnostics-styles';
@@ -1660,6 +1718,12 @@ function enableFocusHighlight(container) {
           '  align-items: center !important;',
           '  gap: 6px !important;',
           '  animation: spa-pulse 2s infinite !important;',
+          '}',
+          '.spa-offline-badge.warning {',
+          '  background: rgba(255, 179, 0, 0.12) !important;',
+          '  color: #ffb300 !important;',
+          '  border-color: rgba(255, 179, 0, 0.25) !important;',
+          '  animation: none !important;',
           '}',
           '@keyframes spa-pulse {',
           '  0%, 100% { box-shadow: 0 0 0 0px rgba(0, 230, 118, 0.2); }',
@@ -1746,6 +1810,37 @@ function enableFocusHighlight(container) {
           '  background: linear-gradient(90deg, var(--accent1), var(--accent2)) !important;',
           '  transition: width 0.5s ease-out !important;',
           '}',
+          '.spa-alerts-panel {',
+          '  margin-top: 14px !important;',
+          '  background: rgba(255, 255, 255, 0.02) !important;',
+          '  border: 1px dashed var(--border-light) !important;',
+          '  border-radius: 8px !important;',
+          '  padding: 12px !important;',
+          '}',
+          '[data-theme="light"] .spa-alerts-panel, [data-theme="sunrise"] .spa-alerts-panel, [data-theme="mint"] .spa-alerts-panel {',
+          '  background: rgba(0, 0, 0, 0.01) !important;',
+          '}',
+          '.spa-alert-line {',
+          '  font-size: 0.72rem !important;',
+          '  line-height: 1.4 !important;',
+          '  display: flex !important;',
+          '  align-items: flex-start !important;',
+          '  gap: 8px !important;',
+          '  margin-bottom: 8px !important;',
+          '}',
+          '.spa-alert-line:last-child {',
+          '  margin-bottom: 0 !important;',
+          '}',
+          '.spa-alert-yellow { color: #ffb300 !important; }',
+          '.spa-alert-green { color: #00e676 !important; }',
+          '.spa-alert-red {',
+          '  color: #ff5252 !important;',
+          '  animation: spa-blink 1.5s infinite !important;',
+          '}',
+          '@keyframes spa-blink {',
+          '  0%, 100% { opacity: 1; }',
+          '  50% { opacity: 0.5; }',
+          '}',
           '.spa-quote-box {',
           '  margin-top: 12px !important;',
           '  padding: 10px 14px !important;',
@@ -1773,11 +1868,85 @@ function enableFocusHighlight(container) {
     var hasCategories = state.categories && state.categories.length > 0;
     var hasTeams = state.teams && state.teams.length > 0;
 
+    // Check Audience projection window connection state
+    var isAudienceConnected = typeof _audienceWin !== 'undefined' && _audienceWin && !_audienceWin.closed;
+
+    // Online badge logic
+    var isOnlineState = typeof navigator !== 'undefined' ? navigator.onLine : true;
+    var badgClass = isOnlineState ? 'spa-offline-badge' : 'spa-offline-badge warning';
+    var badgTxt = isOnlineState ? dict.offlineBadge : dict.offlineBadgeWarning;
+
+    // Build intelligent alerts / warnings dynamically
+    var activeAlertsHtml = [];
+
+    // 1. Name Warning
+    if (!hasUniqueName) {
+      activeAlertsHtml.push(
+        '<div class="spa-alert-line spa-alert-yellow">',
+        '  <span>⚠️</span>',
+        '  <span>' + _sanitize(dict.alertNoName) + '</span>',
+        '</div>'
+      );
+    }
+
+    // 2. Questions / Categories Warning
+    if (!hasCategories) {
+      activeAlertsHtml.push(
+        '<div class="spa-alert-line spa-alert-red">',
+        '  <span>🚨</span>',
+        '  <span>' + _sanitize(dict.alertNoCats) + '</span>',
+        '</div>'
+      );
+    }
+
+    // 3. Teams Warning
+    if (!hasTeams) {
+      activeAlertsHtml.push(
+        '<div class="spa-alert-line spa-alert-red">',
+        '  <span>👥</span>',
+        '  <span>' + _sanitize(dict.alertNoTeams) + '</span>',
+        '</div>'
+      );
+    }
+
+    // 4. Audience Screen Info or Connected Success
+    if (isAudienceConnected) {
+      activeAlertsHtml.push(
+        '<div class="spa-alert-line spa-alert-green">',
+        '  <span>🖥️</span>',
+        '  <span>' + _sanitize(dict.alertAudienceConnected) + '</span>',
+        '</div>'
+      );
+    } else {
+      activeAlertsHtml.push(
+        '<div class="spa-alert-line spa-alert-yellow">',
+        '  <span>💡</span>',
+        '  <span>' + _sanitize(dict.alertNoAudience) + '</span>',
+        '</div>'
+      );
+    }
+
+    // 5. Battery warnings / tracking
+    if (batteryState.supported) {
+      var batPrefix = batteryState.charging ? dict.alertBatteryCharging : (batteryState.level < 15 ? dict.alertBatteryLow : dict.alertBatteryOk);
+      var batClass = batteryState.charging ? 'spa-alert-green' : (batteryState.level < 15 ? 'spa-alert-red' : 'spa-alert-yellow');
+      var batIcon = batteryState.charging ? '⚡' : (batteryState.level < 15 ? '⚠️🔋' : '🔋');
+      
+      var batLabel = batPrefix.replace('{level}', batteryState.level);
+      
+      activeAlertsHtml.push(
+        '<div class="spa-alert-line ' + batClass + '">',
+        '  <span>' + batIcon + '</span>',
+        '  <span>' + _sanitize(batLabel) + '</span>',
+        '</div>'
+      );
+    }
+
     // Generate inner structure
     var html = [
       '<div class="spa-hub-header">',
       '  <div class="spa-hub-title">' + _sanitize(dict.title) + '</div>',
-      '  <div class="spa-offline-badge"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e676"></span>' + _sanitize(dict.offlineBadge) + '</div>',
+      '  <div class="' + badgClass + '"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:' + (isOnlineState ? '#00e676' : '#ffb300') + '"></span>' + _sanitize(badgTxt) + '</div>',
       '</div>',
       
       '<div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:8px">' + _sanitize(dict.checklistTitle) + '</div>',
@@ -1824,6 +1993,11 @@ function enableFocusHighlight(container) {
       '  </div>',
       '</div>',
 
+      '<div class="spa-alerts-panel">',
+      '  <div style="font-size: 0.74rem; font-weight: 800; color: var(--accent2); margin-bottom: 8px">' + _sanitize(dict.alertsHubTitle) + '</div>',
+         activeAlertsHtml.join('\n'),
+      '</div>',
+
       '<div class="spa-quote-box">',
       '  <strong>' + _sanitize(dict.inspirationTitle) + ':</strong> «' + _sanitize(dict['inspirationQuote' + quoteIndex]) + '»',
       '</div>'
@@ -1861,6 +2035,19 @@ function enableFocusHighlight(container) {
       }
     };
   }
+
+  // Set up periodic update checks only when Admin tab is active
+  setInterval(function() {
+    var adminView = document.getElementById('view-admin');
+    if (adminView && !adminView.classList.contains('hidden')) {
+      var dashGroup = document.getElementById('settings-dashboard');
+      if (dashGroup && dashGroup.style.display !== 'none') {
+        try {
+          window.renderEnhancedDashboardUX();
+        } catch(e) {}
+      }
+    }
+  }, 2500);
 
   // Initial trigger after loading state
   setTimeout(function() {
