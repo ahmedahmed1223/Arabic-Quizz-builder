@@ -1504,3 +1504,370 @@ function enableFocusHighlight(container) {
     }, 500);
   }
 })();
+
+// ── V15.2: SMART SPA DIAGNOSTICS & DASHBOARD UX HELPER ──
+(function() {
+  'use strict';
+
+  var translations = {
+    ar: {
+      title: "💡 المساعد المعرفي الذكي ومؤشرات الأداء",
+      offlineBadge: "🟢 متصل محلياً ويعمل بالكامل دون إنترنت",
+      checklistTitle: "خطوات إعداد المسابقة التفاعلية",
+      stepName: "اسم ومعلومات المسابقة",
+      stepNameCompleted: "🟢 تمت تسمية المسابقة بنجاح",
+      stepNamePending: "🟡 لم يتم التسمية - تستخدم التسمية الافتراضية",
+      stepCats: "الأقسام وبنك الأسئلة",
+      stepCatsCompleted: "🟢 الأقسام والأسئلة جاهزة ومحمّلة",
+      stepCatsPending: "🟡 لا توجد أقسام أو أسئلة مدرجة بعد",
+      stepTeams: "إعداد الفرق المشاركة",
+      stepTeamsCompleted: "🟢 تم تحديد الفرق وتجهيزها بالكامل",
+      stepTeamsPending: "🟡 لم تقم بإضافة فرق للمسابقة بعد",
+      actionEdit: "تعديل",
+      actionAdd: "إضافة قسم",
+      actionAddTeams: "إضافة فريق",
+      storageTitle: "مقياس السعة والتخزين لمتصفح الـ SPA",
+      storageKB: "كيلوبايت مستخدمة من أصل 5000 كيلوبايت",
+      storageQuestions: "الأسئلة النشطة في بنك الذاكرة المحلية",
+      inspirationTitle: "حكمة اليوم التعليمية",
+      inspirationQuote0: "العلم في الصغر كالنقش على الحجر.",
+      inspirationQuote1: "العلم كنز لا يفنى، وذخر لا يبيد.",
+      inspirationQuote2: "كل إناء يضيق بما جعل فيه إلا وعاء العلم فإنه يتسع.",
+      inspirationQuote3: "من لم يذق مر التعلم سويعات، تجرع ذل الجهل طول حياته.",
+      inspirationQuote4: "رأس مالي علمي، وسلاحي عقلي وصبري ومثابرتي.",
+      inspirationQuote5: "العلم ينير الطريق للقلوب والعقول، والجهل يظلم مسيرات المجتمعات."
+    },
+    en: {
+      title: "💡 Smart Cognitive Assistant & Diagnostics Hub",
+      offlineBadge: "🟢 Connected locally & working 100% offline",
+      checklistTitle: "Setup Checklist Progress",
+      stepName: "Quiz Info & Title",
+      stepNameCompleted: "🟢 Quiz named successfully",
+      stepNamePending: "🟡 Pending - Using default name",
+      stepCats: "Categories & Question Bank",
+      stepCatsCompleted: "🟢 Categories & questions loaded",
+      stepCatsPending: "🟡 No categories or questions added yet",
+      stepTeams: "Teams & Scoreboards",
+      stepTeamsCompleted: "🟢 Teams successfully added",
+      stepTeamsPending: "🟡 No teams added to the quiz yet",
+      actionEdit: "Edit",
+      actionAdd: "Add Category",
+      actionAddTeams: "Add Team",
+      storageTitle: "Local Browser Storage Utilization (Quotas)",
+      storageKB: "KB used out of 5000 KB available",
+      storageQuestions: "Total active questions in memory core",
+      inspirationTitle: "Daily Educational Quotes",
+      inspirationQuote0: "Knowledge gained in youth is like engraving on stone.",
+      inspirationQuote1: "Knowledge is a treasure that never fades, and a storehouse that never perishes.",
+      inspirationQuote2: "Every vessel shrinks with what runs into it, except for the vessel of knowledge, which expands.",
+      inspirationQuote3: "He who has not tasted the bitterness of learning for an hour, will swallow the humiliation of ignorance for an eternity.",
+      inspirationQuote4: "My capital is my knowledge, and my weapon is my intellect and patience.",
+      inspirationQuote5: "Knowledge lights the path for hearts and minds, while ignorance darkens our journey."
+    }
+  };
+
+  // Select a random quote index that persists per session/refresh
+  var quoteIndex = Math.floor(Math.random() * 6);
+
+  function getLocalStorageSizeInKB() {
+    var total = 0;
+    try {
+      for (var x in localStorage) {
+        if (localStorage.hasOwnProperty(x)) {
+          total += (localStorage[x].length + x.length) * 2;
+        }
+      }
+    } catch(e) {}
+    return parseFloat((total / 1024).toFixed(2));
+  }
+
+  function getQuestionsCount() {
+    var total = 0;
+    if (state && state.categories) {
+      state.categories.forEach(function(c) {
+        if (c.questions) total += c.questions.length;
+      });
+    }
+    return total;
+  }
+
+  window.renderEnhancedDashboardUX = function() {
+    var dashGroup = document.getElementById('settings-dashboard');
+    if (!dashGroup) return;
+
+    // Determine Language
+    var lang = (typeof I18n !== 'undefined' && I18n.getCurrentLang() === 'en') ? 'en' : 'ar';
+    var dict = translations[lang] || translations.ar;
+
+    // Check if the hub container already exists, otherwise create it
+    var hub = document.getElementById('spa-diagnostics-hub');
+    if (!hub) {
+      hub = document.createElement('div');
+      hub.id = 'spa-diagnostics-hub';
+      hub.style.marginBottom = '20px';
+      
+      // Insert right at the top of settings-dashboard
+      if (dashGroup.firstElementChild) {
+        dashGroup.insertBefore(hub, dashGroup.firstElementChild);
+      } else {
+        dashGroup.appendChild(hub);
+      }
+
+      // Inject custom scoped CSS styles for diagnostics hub
+      if (!document.getElementById('spa-diagnostics-styles')) {
+        var style = document.createElement('style');
+        style.id = 'spa-diagnostics-styles';
+        style.textContent = [
+          '#spa-diagnostics-hub {',
+          '  background: linear-gradient(135deg, rgba(8, 12, 34, 0.6) 0%, rgba(26, 17, 51, 0.6) 100%) !important;',
+          '  border: 1px solid var(--border-light) !important;',
+          '  border-radius: var(--radius-md, 12px) !important;',
+          '  padding: 18px !important;',
+          '  box-shadow: var(--v152-shadow-lg) !important;',
+          '  backdrop-filter: blur(12px) !important;',
+          '  -webkit-backdrop-filter: blur(12px) !important;',
+          '  color: var(--text-primary) !important;',
+          '  font-family: inherit !important;',
+          '  direction: ' + (lang === 'ar' ? 'rtl' : 'ltr') + ' !important;',
+          '  transition: transform 0.3s ease, border-color 0.3s ease !important;',
+          '}',
+          '[data-theme="light"] #spa-diagnostics-hub, [data-theme="sunrise"] #spa-diagnostics-hub, [data-theme="mint"] #spa-diagnostics-hub {',
+          '  background: linear-gradient(135deg, rgba(230, 235, 255, 0.45) 0%, rgba(240, 242, 255, 0.45) 100%) !important;',
+          '  border-color: rgba(26, 86, 232, 0.15) !important;',
+          '}',
+          '.spa-hub-header {',
+          '  display: flex !important;',
+          '  justify-content: space-between !important;',
+          '  align-items: center !important;',
+          '  margin-bottom: 14px !important;',
+          '  flex-wrap: wrap !important;',
+          '  gap: 10px !important;',
+          '}',
+          '.spa-hub-title {',
+          '  font-size: 0.95rem !important;',
+          '  font-weight: 800 !important;',
+          '  color: var(--accent1) !important;',
+          '}',
+          '.spa-offline-badge {',
+          '  font-size: 0.72rem !important;',
+          '  background: rgba(0, 230, 118, 0.12) !important;',
+          '  color: var(--success) !important;',
+          '  border: 1px solid rgba(0, 230, 118, 0.25) !important;',
+          '  padding: 4px 10px !important;',
+          '  border-radius: 99px !important;',
+          '  font-weight: 700 !important;',
+          '  display: inline-flex !important;',
+          '  align-items: center !important;',
+          '  gap: 6px !important;',
+          '  animation: spa-pulse 2s infinite !important;',
+          '}',
+          '@keyframes spa-pulse {',
+          '  0%, 100% { box-shadow: 0 0 0 0px rgba(0, 230, 118, 0.2); }',
+          '  50% { box-shadow: 0 0 0 6px rgba(0, 230, 118, 0); }',
+          '}',
+          '.spa-checklist-grid {',
+          '  display: grid !important;',
+          '  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;',
+          '  gap: 12px !important;',
+          '  margin-top: 10px !important;',
+          '}',
+          '.spa-checklist-item {',
+          '  background: rgba(255, 255, 255, 0.03) !important;',
+          '  border: 1px solid rgba(255, 255, 255, 0.05) !important;',
+          '  padding: 12px !important;',
+          '  border-radius: 8px !important;',
+          '  display: flex !important;',
+          '  flex-direction: column !important;',
+          '  gap: 6px !important;',
+          '  transition: background 0.2s ease !important;',
+          '}',
+          '[data-theme="light"] .spa-checklist-item, [data-theme="sunrise"] .spa-checklist-item, [data-theme="mint"] .spa-checklist-item {',
+          '  background: rgba(0, 0, 0, 0.02) !important;',
+          '  border-color: rgba(0, 0, 0, 0.05) !important;',
+          '}',
+          '.spa-checklist-item:hover {',
+          '  background: rgba(255, 255, 255, 0.05) !important;',
+          '}',
+          '[data-theme="light"] .spa-checklist-item:hover, [data-theme="sunrise"] .spa-checklist-item:hover, [data-theme="mint"] .spa-checklist-item:hover {',
+          '  background: rgba(0, 0, 0, 0.04) !important;',
+          '}',
+          '.spa-step-header {',
+          '  display: flex !important;',
+          '  justify-content: space-between !important;',
+          '  align-items: center !important;',
+          '  font-size: 0.8rem !important;',
+          '  font-weight: 700 !important;',
+          '}',
+          '.spa-step-desc {',
+          '  font-size: 0.72rem !important;',
+          '  color: var(--text-muted) !important;',
+          '}',
+          '.spa-step-btn {',
+          '  background: transparent !important;',
+          '  border: 1px solid var(--border) !important;',
+          '  color: var(--text-primary) !important;',
+          '  padding: 3px 10px !important;',
+          '  border-radius: 6px !important;',
+          '  font-size: 0.68rem !important;',
+          '  font-weight: 700 !important;',
+          '  cursor: pointer !important;',
+          '  align-self: flex-start !important;',
+          '  transition: all 0.2s ease !important;',
+          '}',
+          '.spa-step-btn:hover {',
+          '  background: var(--accent1) !important;',
+          '  color: #000 !important;',
+          '  border-color: var(--accent1) !important;',
+          '}',
+          '.spa-storage-section {',
+          '  margin-top: 14px !important;',
+          '  border-top: 1px dashed var(--border-light) !important;',
+          '  padding-top: 14px !important;',
+          '}',
+          '.spa-storage-info {',
+          '  display: flex !important;',
+          '  justify-content: space-between !important;',
+          '  font-size: 0.75rem !important;',
+          '  color: var(--text-secondary) !important;',
+          '  margin-bottom: 6px !important;',
+          '}',
+          '.spa-progress-bg {',
+          '  background: rgba(255, 255, 255, 0.08) !important;',
+          '  height: 6px !important;',
+          '  border-radius: 99px !important;',
+          '  overflow: hidden !important;',
+          '}',
+          '[data-theme="light"] .spa-progress-bg, [data-theme="sunrise"] .spa-progress-bg, [data-theme="mint"] .spa-progress-bg {',
+          '  background: rgba(0, 0, 0, 0.08) !important;',
+          '}',
+          '.spa-progress-bar {',
+          '  height: 100% !important;',
+          '  border-radius: 99px !important;',
+          '  background: linear-gradient(90deg, var(--accent1), var(--accent2)) !important;',
+          '  transition: width 0.5s ease-out !important;',
+          '}',
+          '.spa-quote-box {',
+          '  margin-top: 12px !important;',
+          '  padding: 10px 14px !important;',
+          '  border-radius: 8px !important;',
+          '  background: rgba(245, 200, 66, 0.05) !important;',
+          '  border-inline-start: 3px solid #f5c842 !important;',
+          '  font-size: 0.74rem !important;',
+          '  line-height: 1.5 !important;',
+          '  color: var(--text-secondary) !important;',
+          '  font-style: italic !important;',
+          '}'
+        ].join('\n');
+        document.head.appendChild(style);
+      }
+    }
+
+    // Read Dynamic Metrics & States
+    var sizeKB = getLocalStorageSizeInKB();
+    var quotaProgress = Math.min((sizeKB / 5000) * 100, 100);
+    var totalQuestions = getQuestionsCount();
+
+    // Checklist Logic
+    var hasUniqueName = state.settings.name && state.settings.name.trim() !== '' && 
+                       state.settings.name !== 'المسابقة' && state.settings.name !== 'Unnamed Quiz';
+    var hasCategories = state.categories && state.categories.length > 0;
+    var hasTeams = state.teams && state.teams.length > 0;
+
+    // Generate inner structure
+    var html = [
+      '<div class="spa-hub-header">',
+      '  <div class="spa-hub-title">' + _sanitize(dict.title) + '</div>',
+      '  <div class="spa-offline-badge"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#00e676"></span>' + _sanitize(dict.offlineBadge) + '</div>',
+      '</div>',
+      
+      '<div style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:8px">' + _sanitize(dict.checklistTitle) + '</div>',
+      
+      '<div class="spa-checklist-grid">',
+      
+      '  <div class="spa-checklist-item">',
+      '    <div class="spa-step-header">',
+      '      <span>' + _sanitize(dict.stepName) + '</span>',
+      '      <button class="spa-step-btn" onclick="switchSettingsSubtab(\'general\', document.querySelectorAll(\'.settings-subtab\')[1])">' + _sanitize(dict.actionEdit) + '</button>',
+      '    </div>',
+      '    <div class="spa-step-desc">' + _sanitize(hasUniqueName ? dict.stepNameCompleted : dict.stepNamePending) + '</div>',
+      '  </div>',
+
+      '  <div class="spa-checklist-item">',
+      '    <div class="spa-step-header">',
+      '      <span>' + _sanitize(dict.stepCats) + '</span>',
+      '      <button class="spa-step-btn" onclick="switchTab(\'categories\', document.querySelectorAll(\'.nav-tab\')[2])">' + _sanitize(dict.actionAdd) + '</button>',
+      '    </div>',
+      '    <div class="spa-step-desc">' + _sanitize(hasCategories ? dict.stepCatsCompleted : dict.stepCatsPending) + '</div>',
+      '  </div>',
+
+      '  <div class="spa-checklist-item">',
+      '    <div class="spa-step-header">',
+      '      <span>' + _sanitize(dict.stepTeams) + '</span>',
+      '      <button class="spa-step-btn" onclick="switchTab(\'teams\', document.querySelectorAll(\'.nav-tab\')[3])">' + _sanitize(dict.actionAddTeams) + '</button>',
+      '    </div>',
+      '    <div class="spa-step-desc">' + _sanitize(hasTeams ? dict.stepTeamsCompleted : dict.stepTeamsPending) + '</div>',
+      '  </div>',
+      
+      '</div>',
+
+      '<div class="spa-storage-section">',
+      '  <div class="spa-storage-info">',
+      '    <span>' + _sanitize(dict.storageTitle) + '</span>',
+      '    <span>' + sizeKB + ' KB / 5000 KB ( ' + quotaProgress.toFixed(1) + '% )</span>',
+      '  </div>',
+      '  <div class="spa-progress-bg">',
+      '    <div class="spa-progress-bar" style="width:' + quotaProgress + '%"></div>',
+      '  </div>',
+      '  <div style="font-size:0.68rem;color:var(--text-muted);margin-top:6px;display:flex;justify-content:space-between">',
+      '    <span>' + _sanitize(dict.storageQuestions) + ': ' + totalQuestions + '</span>',
+      '    <span>' + (lang === 'ar' ? '💾 الحفظ التلقائي نشط وتلقائي وبكامل الأمان' : '💾 Autosave active, local & secure') + '</span>',
+      '  </div>',
+      '</div>',
+
+      '<div class="spa-quote-box">',
+      '  <strong>' + _sanitize(dict.inspirationTitle) + ':</strong> «' + _sanitize(dict['inspirationQuote' + quoteIndex]) + '»',
+      '</div>'
+    ].join('\n');
+
+    hub.innerHTML = html;
+  };
+
+  // Override switchSettingsSubtab to render enhanced diagnostics on entering 'dashboard'
+  if (typeof switchSettingsSubtab === 'function') {
+    var origSwitchSubtab = switchSettingsSubtab;
+    window.switchSettingsSubtab = function(group, btn) {
+      origSwitchSubtab(group, btn);
+      if (group === 'dashboard') {
+        try {
+          window.renderEnhancedDashboardUX();
+        } catch(e) {
+          console.warn('[UX Helper] render error:', e);
+        }
+      }
+    };
+  }
+
+  // Also catch switchTab calls when opening settings tab
+  if (typeof switchTab === 'function') {
+    var origSwitchTab = switchTab;
+    window.switchTab = function(name, btn) {
+      origSwitchTab(name, btn);
+      if (name === 'settings') {
+        setTimeout(function() {
+          try {
+            window.renderEnhancedDashboardUX();
+          } catch(e) {}
+        }, 100);
+      }
+    };
+  }
+
+  // Initial trigger after loading state
+  setTimeout(function() {
+    try {
+      window.renderEnhancedDashboardUX();
+    } catch(e) {}
+  }, 1500);
+
+})();
+
