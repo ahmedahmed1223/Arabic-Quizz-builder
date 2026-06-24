@@ -3,7 +3,7 @@
 // ════════════════════════════════════════════════════════
 
 // ═══ IndexedDB MEDIA STORAGE — V9: Enhanced with team/member/option images + audio ═══
-const MediaDB=(function(){
+const MediaDB=window.MediaDB=(function(){
   const DB_NAME='quiz_media_v1',STORE='media';let _db=null;
   function open(){return new Promise((res,rej)=>{
     if(_db){res(_db);return;}

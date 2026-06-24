@@ -13,7 +13,10 @@ function exportEncrypted(){
     for(let i=0;i<data.length;i++){encrypted+=String.fromCharCode(data.charCodeAt(i)^pwd.charCodeAt(i%pwd.length));}
     const b64=btoa(unescape(encodeURIComponent(encrypted)));
     const blob=new Blob([JSON.stringify({v:2,enc:true,data:b64})],{type:'application/json'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='quiz-encrypted.qze';a.click();
+    const a=document.createElement('a');
+    const url=URL.createObjectURL(blob);
+    a.href=url;a.download='quiz-encrypted.qze';a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 100);
     toast(I18n.t('toast.encryptedExport'),'success');
   }catch(e){toast(I18n.t('toast.encryptionError')+e.message,'danger');}
 }

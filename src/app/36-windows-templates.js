@@ -8,7 +8,12 @@ var _remotePingTimer=null;
 function initRemoteControl(){
   if(!('BroadcastChannel' in window)){toast(I18n.t('remote.browserNotSupported'),'danger');return;}
   if(_remoteChannel){try{_remoteChannel.close();}catch(e){try{ErrorBus.capture(e,"catch#44")}catch(_){}}}
-  _remoteChannel=new BroadcastChannel('quiz_remote_v1');
+  try {
+    _remoteChannel=new BroadcastChannel('quiz_remote_v1');
+  } catch(e) {
+    console.warn('[Remote] BroadcastChannel initialization failed:', e.message);
+    return;
+  }
   _remoteChannel.onmessage=function(e){
     const m=e.data;if(!m||!m.action)return;
     // Immediately push state after remote actions for near-instantaneous feedback
@@ -307,7 +312,12 @@ body{font-family:'Cairo',sans-serif;background:#09091f;color:#e0e0ff;direction:$
   function _t(k){return _isAr?(_trAr[k]||k):(_trEn[k]||k);}
   function init(){
     if(!('BroadcastChannel' in window)){document.body.innerHTML='<div style="padding:24px;color:red">'+('${t('browser.notSupported','المتصفح لا يدعم هذه الميزة')}')+'</div>';return;}
-    ch=new BroadcastChannel('quiz_remote_v1');
+    try {
+      ch=new BroadcastChannel('quiz_remote_v1');
+    } catch(e) {
+      document.body.innerHTML='<div style="padding:24px;color:red;direction:'+(_isAr?'rtl':'ltr')+'">'+(_isAr?'تعذر تشغيل قنوات المزامنة: ':'Failed to initialize sync channel: ')+e.message+'</div>';
+      return;
+    }
     ch.onmessage=function(e){
       var m=e.data;
       if(!m)return;

@@ -1,6 +1,16 @@
 // ════════════════════════════════════════════════════════
 //  THEME
 // ════════════════════════════════════════════════════════
+function applyThemeCSS(id){
+  if(typeof THEMES === 'undefined') return;
+  var theme = THEMES.find(function(t){ return t.id === id; });
+  if(!theme || !theme.vars) return;
+  Object.keys(theme.vars).forEach(function(k){
+    document.documentElement.style.setProperty('--' + k, theme.vars[k]);
+  });
+}
+window.applyThemeCSS = applyThemeCSS;
+
 function applyTheme(id, isManual){
   // Validate theme id — fall back to 'space' (the dark default) for unknown ids
   if(typeof THEMES!=='undefined' && !THEMES.find(t=>t.id===id)){

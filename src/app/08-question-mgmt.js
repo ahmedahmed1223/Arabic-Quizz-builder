@@ -224,7 +224,7 @@ function _initNamespaces(){
   QuizAudio.stopCustomMusic=stopCustomMusic;
   QuizAudio.playApplause=playApplause; QuizAudio.playChime=playChime;
   QuizAudio.playFanfare=playFanfare; QuizAudio.playBuzz=playBuzz;
-  QuizThemes.THEMES=THEMES; QuizThemes.CREDIT_CATS=CREDIT_CATS;
+  QuizThemes.THEMES=THEMES; window.THEMES=THEMES; QuizThemes.CREDIT_CATS=CREDIT_CATS;
   QuizThemes.TEAM_COLORS=TEAM_COLORS; QuizThemes.CAT_COLORS=CAT_COLORS;
   QuizThemes.applyTheme=applyTheme; QuizThemes.renderThemeGrid=renderThemeGrid;
   QuizThemes.applyFontScale=applyFontScale; QuizThemes.applyCatCardScale=applyCatCardScale;
@@ -280,3 +280,24 @@ function _initNamespaces(){
   QuizImage.loadCreditPersonImage=loadCreditPersonImage; QuizImage.clearCreditPersonImage=clearCreditPersonImage;
   QuizImage.previewMemberAddImage=previewMemberAddImage;
 }
+
+// Global exports for development mode compatibility
+window.QuizUtils = typeof QuizUtils !== 'undefined' ? QuizUtils : {};
+window.QuizStorage = typeof QuizStorage !== 'undefined' ? QuizStorage : {};
+window.QuizAdmin = typeof QuizAdmin !== 'undefined' ? QuizAdmin : {};
+window.QuizPresenter = typeof QuizPresenter !== 'undefined' ? QuizPresenter : {};
+window.QuizTimer = typeof QuizTimer !== 'undefined' ? QuizTimer : {};
+window.QuizQuestion = typeof QuizQuestion !== 'undefined' ? QuizQuestion : {};
+window.QuizAudio = typeof QuizAudio !== 'undefined' ? QuizAudio : {};
+window.QuizThemes = typeof QuizThemes !== 'undefined' ? QuizThemes : {};
+window.QuizImport = typeof QuizImport !== 'undefined' ? QuizImport : {};
+window.QuizPodium = typeof QuizPodium !== 'undefined' ? QuizPodium : {};
+window.QuizRemote = typeof QuizRemote !== 'undefined' ? QuizRemote : {};
+window.QuizWhiteboard = typeof QuizWhiteboard !== 'undefined' ? QuizWhiteboard : {};
+window.QuizTraining = typeof QuizTraining !== 'undefined' ? QuizTraining : {};
+window.QuizCertificate = typeof QuizCertificate !== 'undefined' ? QuizCertificate : {};
+window.QuizBuzzer = typeof QuizBuzzer !== 'undefined' ? QuizBuzzer : {};
+window.QuizMatch = typeof QuizMatch !== 'undefined' ? QuizMatch : {};
+window.QuizStats = typeof QuizStats !== 'undefined' ? QuizStats : {};
+window.QuizBackup = typeof QuizBackup !== 'undefined' ? QuizBackup : {};
+window.QuizImage = typeof QuizImage !== 'undefined' ? QuizImage : {};

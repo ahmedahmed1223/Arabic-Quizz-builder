@@ -1,7 +1,7 @@
 // ════════════════════════════════════════════════════════
 //  I18N — Internationalization System (Arabic / English)
 // ════════════════════════════════════════════════════════
-const I18n=(function(){
+const I18n=window.I18n=(function(){
   const _translations={
     ar:{
       // App

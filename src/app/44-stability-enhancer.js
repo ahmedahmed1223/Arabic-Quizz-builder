@@ -14,6 +14,41 @@
 (function StabilityEnhancer(){
   'use strict';
 
+  // ── 0. Global safe proxies for memory & error containment ──
+  var _trackedBlobUrls = [];
+  try {
+    var _origCreateObjectURL = URL.createObjectURL;
+    URL.createObjectURL = function(blob) {
+      var url = _origCreateObjectURL.apply(this, arguments);
+      if (blob instanceof Blob) {
+        _trackedBlobUrls.push({
+          url: url,
+          type: blob.type,
+          created: Date.now()
+        });
+      }
+      return url;
+    };
+  } catch(e) {
+    console.warn('[Stability] Failed to proxy URL.createObjectURL:', e.message);
+  }
+
+  // Prevent closed or invalid BroadcastChannels from throwing uncaught errors that freeze execution
+  if (typeof BroadcastChannel !== 'undefined') {
+    try {
+      var _origPostMessage = BroadcastChannel.prototype.postMessage;
+      BroadcastChannel.prototype.postMessage = function() {
+        try {
+          return _origPostMessage.apply(this, arguments);
+        } catch(err) {
+          console.warn('[Stability] BroadcastChannel.postMessage error caught (prevented crash):', err.message);
+        }
+      };
+    } catch(e) {
+      console.warn('[Stability] Failed to wrap BroadcastChannel.postMessage:', e.message);
+    }
+  }
+
   // ── 1. Global error handler ──
   window.addEventListener('error', function(e){
     // Don't show toast for script loading errors (likely network)
@@ -55,14 +90,16 @@
   var CLEANUP_INTERVAL = 2 * 60 * 1000; // 2 minutes
   setInterval(function(){
     try {
+      var now = Date.now();
+
       // Clear any orphaned DOM nodes from removed views
       var orphans = document.querySelectorAll('.toast.toast-removing, .modal-backdrop.modal-removing');
       orphans.forEach(function(el){
         if (el.parentNode) el.parentNode.removeChild(el);
       });
+
       // Clear any stale session storage entries (older than 24 hours)
       try {
-        var now = Date.now();
         for (var i = 0; i < sessionStorage.length; i++) {
           var key = sessionStorage.key(i);
           if (key && key.indexOf('_ts_') !== -1) {
@@ -76,6 +113,34 @@
           }
         }
       } catch(_) {}
+
+      // Auto-revoke leaked download Blobs older than 2 minutes
+      _trackedBlobUrls = _trackedBlobUrls.filter(function(item){
+        if (item.type && item.type.indexOf('image') === -1 && item.type.indexOf('audio') === -1 && item.type.indexOf('video') === -1) {
+          if (now - item.created > 2 * 60 * 1000) {
+            try {
+              URL.revokeObjectURL(item.url);
+              console.log('[Stability] Auto-revoked leaked download Blob URL:', item.url, '(' + item.type + ')');
+            } catch(_) {}
+            return false; // remove from tracking
+          }
+        }
+        return true; // keep tracking
+      });
+
+      // Emergency garbage collection if Heap memory usage is dangerously high (>85% of limit)
+      if (window.performance && performance.memory) {
+        var mem = performance.memory;
+        if (mem.usedJSHeapSize > mem.jsHeapSizeLimit * 0.85) {
+          console.warn('[Stability] Extremely high memory heap usage detected (' + Math.round(mem.usedJSHeapSize / 1024 / 1024) + 'MB). Running emergency GC...');
+          try {
+            if (typeof cleanupMemory === 'function') cleanupMemory();
+            if (typeof window.Quiz !== 'undefined' && typeof window.Quiz.cleanupMemory === 'function') window.Quiz.cleanupMemory();
+            if (typeof AudioMixer !== 'undefined' && AudioMixer.cleanup) AudioMixer.cleanup();
+          } catch(_) {}
+        }
+      }
+
     } catch(e) {
       console.warn('[Stability] Cleanup error:', e.message);
     }
@@ -165,6 +230,84 @@
     // already works offline due to single-file build with inlined assets.
     // This is a placeholder for future PWA enhancement.
   }
+
+  // ── 8. Wake Lock API (Prevent screen from sleeping during a match) ──
+  var _wakeLock = null;
+  var _noSleepVideo = null;
+
+  async function _requestWakeLock() {
+    try {
+      if ('wakeLock' in navigator && !_wakeLock) {
+        _wakeLock = await navigator.wakeLock.request('screen');
+        _wakeLock.addEventListener('release', function() {
+          console.log('[Stability] Screen Wake Lock released');
+          _wakeLock = null;
+        });
+        console.log('[Stability] Screen Wake Lock acquired');
+      }
+    } catch (err) {
+      console.warn('[Stability] Wake Lock error:', err.name, err.message);
+    }
+    
+    // Fallback for iOS / Safari: Play a silent invisible video
+    if (!_noSleepVideo) {
+      _noSleepVideo = document.createElement('video');
+      _noSleepVideo.setAttribute('playsinline', '');
+      _noSleepVideo.setAttribute('muted', '');
+      _noSleepVideo.setAttribute('loop', '');
+      _noSleepVideo.muted = true;
+      _noSleepVideo.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;z-index:-1;';
+      // 1-pixel silent mp4 base64
+      _noSleepVideo.src = 'data:video/mp4;base64,AAAAHGZ0eXBtcDQyAAAAAW1wNDFpc29tAAAAAHV1dWQiem1iAAB1cAAAAAAOBh4OAAAAAE1kYXQAAAAAABhtZGF0AAAAABxzdGNvAAAAAAAAAAEAAAAwAAAAHG1vb3YAAABsbXZoZAAAAADawd1L2sHdSwAAA+gAAAPoAAEAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAwbWV0YQAAAChoZGxyAAAAAAAAAABtZGlyYXBwbAAAAAAAAAAAAAAAAC1pbHN0AAAAJal0b28AAAAdZGF0YQAAAAEAAAAATGF2ZjU5LjE2LjEwMA==';
+      document.body.appendChild(_noSleepVideo);
+    }
+    try {
+      _noSleepVideo.play().catch(function(){});
+    } catch(e) {}
+  }
+
+  function _releaseWakeLock() {
+    if (_wakeLock !== null) {
+      _wakeLock.release().catch(function(){});
+    }
+    if (_noSleepVideo) {
+      _noSleepVideo.pause();
+    }
+  }
+
+  function _handleWakeLockVisibility() {
+    if (document.visibilityState === 'visible') {
+      var cv = window._currentView;
+      if (cv === 'question' || cv === 'match' || cv === 'podium' || cv === 'wheel') {
+        _requestWakeLock();
+      }
+    }
+  }
+
+  document.addEventListener('visibilitychange', _handleWakeLockVisibility);
+  
+  // Try to acquire wake lock when a view changes
+  var _origShowViewStability = window.showView;
+  if (typeof window.showView === 'function') {
+    window.showView = function() {
+      var res = _origShowViewStability.apply(this, arguments);
+      var cv = window._currentView;
+      if (cv === 'question' || cv === 'match' || cv === 'podium' || cv === 'wheel') {
+        _requestWakeLock();
+      } else if (cv === 'intro' || cv === 'admin') {
+         _releaseWakeLock();
+      }
+      return res;
+    };
+  }
+
+  // Also bind to user interaction to ensure iOS allows playback
+  document.addEventListener('click', function() {
+    var cv = window._currentView;
+    if (cv === 'question' || cv === 'match' || cv === 'podium' || cv === 'wheel') {
+      _requestWakeLock();
+    }
+  }, { once: false });
 
   console.log('[Stability] Production stability enhancer loaded');
 })();

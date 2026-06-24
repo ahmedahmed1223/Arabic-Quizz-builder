@@ -12,6 +12,18 @@ const APP_VERSION = '10.4.0';
 const APP_BUILD = '2026-05-05';
 const APP_DB_VERSION = 3;  // V10: IndexedDB schema version — added _primary_version tracking
 
+// Safe fallback for early theme application
+window.applyThemeCSS = window.applyThemeCSS || function(id) {
+  if (typeof THEMES !== 'undefined') {
+    var theme = THEMES.find(function(t){ return t.id === id; });
+    if (theme && theme.vars) {
+      Object.keys(theme.vars).forEach(function(k){
+        document.documentElement.style.setProperty('--' + k, theme.vars[k]);
+      });
+    }
+  }
+};
+
 //  V7 FOUNDATION — PubSub Store + Migration + SortableJS init helpers
 //  (Injected 2026-04-24 — See v7-development-plan.md for rationale)
 // ════════════════════════════════════════════════════════
@@ -23,7 +35,7 @@ const APP_DB_VERSION = 3;  // V10: IndexedDB schema version — added _primary_v
 //   Store.dispatch('SCORE_CHANGE', {teamId, delta});
 // Backward-compatible: existing code that mutates `state` directly
 // still works; new code should dispatch through Store.
-const Store=(function(){
+const Store=window.Store=(function(){
   const listeners=new Map();  // eventName → [fn, ...]
   const history=[];           // last 50 dispatched actions (debug)
   const MAX_SUBSCRIBERS_PER_EVENT=50;  // V11: Prevent memory leaks from repeated subscriptions
@@ -71,7 +83,7 @@ const Store=(function(){
 // provide a sink so Store callbacks don't crash silently.
 var _suppressStartupToasts=true;
 setTimeout(function(){_suppressStartupToasts=false;},5000);
-const ErrorBus=(function(){
+const ErrorBus=window.ErrorBus=(function(){
   const log=[];
   // Only show toast for critical contexts, not AUTO catch blocks
   function _shouldShowToast(context){
@@ -107,7 +119,7 @@ const ErrorBus=(function(){
 // Usage: catch(e){_logErr(e,'context')} instead of catch(_){}
 // For truly ignorable errors (audio autoplay, already-stopped nodes), use catch(_){} which is fine.
 // For data-critical operations (localStorage, IDB), always log.
-const _logErr=function(err,context){
+const _logErr=window._logErr=function(err,context){
   if(typeof ErrorBus!=='undefined'&&ErrorBus.capture){
     ErrorBus.capture(err instanceof Error?err:new Error(String(err)),context||'silent-catch');
   }else{
@@ -125,7 +137,7 @@ const _logErr=function(err,context){
  *  delegation on document.body for automatic cleanup and
  *  better performance than N individual listeners.
  * ════════════════════════════════════════════════════════ */
-const EventDelegate=(function(){
+const EventDelegate=window.EventDelegate=(function(){
   const _handlers=new Map();   // action → {event, handler, selector}
   const _bound=new Set();      // track bound event types
 
@@ -204,7 +216,7 @@ EventDelegate
 // ─── T-3.6: TimerRegistry (memory-leak prevention) ───
 // Wraps setInterval/setTimeout so each timer has a context and can be purged en masse.
 // Called automatically on view changes and beforeunload.
-const TimerRegistry=(function(){
+const TimerRegistry=window.TimerRegistry=(function(){
   const timers=new Map();  // id → {type, handle, context}
   let _idGen=0;
   return{
@@ -269,7 +281,7 @@ window.addEventListener('beforeunload',function(){try{TimerRegistry.clearAll();}
 // 6 channels: bgm (background music), sfx (correct/wrong), wheel (spin music),
 // question (audio question), tense (timer tension), podium (victory).
 // Rule: playing on a channel STOPS whatever was previously on that channel.
-const AudioMixer=(function(){
+const AudioMixer=window.AudioMixer=(function(){
   const channels={bgm:null,sfx:null,wheel:null,question:null,tense:null,podium:null};
   const bgmState={wasPlayingBeforeDuck:false,duckedBy:null};
   
@@ -389,7 +401,7 @@ TimerRegistry.setInterval(function(){
 // so we can resume it afterwards (T-6.2.b, T-6.4).
 
 // ─── M3: NotificationManager — Web Notifications wrapper ───
-const NotificationManager=(function(){
+const NotificationManager=window.NotificationManager=(function(){
   let permission=typeof Notification!=='undefined'?Notification.permission:'denied';
   let hasAsked=false;
   function isSupported(){return typeof Notification!=='undefined';}
@@ -477,7 +489,7 @@ Store.subscribe('TIMER_ENDED',function(payload){
   }
 });
 
-const BgmResumeTracker={
+const BgmResumeTracker=window.BgmResumeTracker={
   _wasPlaying:false,
   snapshot(){this._wasPlaying=!!(typeof state!=='undefined'&&state&&state.musicPlaying);return this._wasPlaying;},
   restore(){
@@ -492,7 +504,7 @@ window.addEventListener('beforeunload',function(){try{AudioMixer.stopAll();}catc
 
 
 // ─── T-3.1: ActionLock — prevent double-click / race conditions ───
-const ActionLock=(function(){
+const ActionLock=window.ActionLock=(function(){
   const locked=new Map();  // key → timestamp released
   return{
     isLocked(key){return locked.has(key);},
@@ -585,7 +597,7 @@ function initSortable(container,opts){
 }
 
 // ─── Q4: Migration from V4/V5/V6 keys + 7-day backup ──────
-const MigrationV7=(function(){
+const MigrationV7=window.MigrationV7=(function(){
   const BACKUP_KEY='quiz_v7_migration_backup';
   const BACKUP_TTL_DAYS=7;
   // V10-fix: Only include truly obsolete keys — NOT current keys like quiz_v4, quiz_v4_progress, etc.
@@ -667,5 +679,54 @@ const MigrationV7=(function(){
 
 // V15.2: Safe global stubs to prevent ReferenceErrors from script dependency loading orders
 window._pushRemoteState = window._pushRemoteState || function() {};
+
+// V15.3: Hyperscript-like element creator for dynamic UI generation (used in final enhancements)
+function h(tag, attrs) {
+  var children = Array.prototype.slice.call(arguments, 2);
+  var parts = tag.split(/(?=[.#])/);
+  var tagName = parts[0] || 'div';
+  var el = document.createElement(tagName);
+  for (var i = 1; i < parts.length; i++) {
+    var part = parts[i];
+    if (part.charAt(0) === '.') {
+      el.classList.add(part.substring(1));
+    } else if (part.charAt(0) === '#') {
+      el.id = part.substring(1);
+    }
+  }
+  if (attrs && typeof attrs === 'object' && !attrs.nodeType && !Array.isArray(attrs)) {
+    for (var k in attrs) {
+      if (k === 'style' && typeof attrs[k] === 'object') {
+        Object.assign(el.style, attrs[k]);
+      } else if (k === 'onclick' || k.startsWith('on')) {
+        el[k] = attrs[k];
+      } else {
+        el.setAttribute(k, attrs[k]);
+      }
+    }
+  } else if (attrs) {
+    children.unshift(attrs);
+  }
+  for (var i = 0; i < children.length; i++) {
+    var child = children[i];
+    if (child === null || child === undefined) continue;
+    if (typeof child === 'string' || typeof child === 'number') {
+      el.appendChild(document.createTextNode(child));
+    } else if (child.nodeType) {
+      el.appendChild(child);
+    } else if (Array.isArray(child)) {
+      for (var j = 0; j < child.length; j++) {
+        var subchild = child[j];
+        if (subchild.nodeType) {
+          el.appendChild(subchild);
+        } else if (typeof subchild === 'string' || typeof subchild === 'number') {
+          el.appendChild(document.createTextNode(subchild));
+        }
+      }
+    }
+  }
+  return el;
+}
+window.h = h;
 
 // ─── END V7 FOUNDATION ─────────────────────────────────────

@@ -206,3 +206,6 @@ function restoreCustomThemeVars(){
     if(hex) hex.value=v;
   });
 }
+
+window.CUSTOM_VARS=typeof CUSTOM_VARS!=="undefined"?CUSTOM_VARS:{};
+window.CUSTOM_PRESETS=typeof CUSTOM_PRESETS!=="undefined"?CUSTOM_PRESETS:{};

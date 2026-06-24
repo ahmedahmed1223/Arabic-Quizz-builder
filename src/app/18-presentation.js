@@ -501,9 +501,11 @@ function exportDataZip(){
   });
   zip.generateAsync({type:'blob'}).then(blob=>{
     const a=document.createElement('a');
-    a.href=URL.createObjectURL(blob);
+    const url=URL.createObjectURL(blob);
+    a.href=url;
     a.download='quiz-backup-'+new Date().toISOString().slice(0,10)+'.zip';
     a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 100);
     toast(I18n.t('toast.dataExported')+' (ZIP — '+mediaCount+' ملف وسائط)','success');
   }).catch(e=>{
     toast(I18n.t('toast.zipError')+e.message,'danger');
@@ -612,8 +614,11 @@ function exportData(){
       exportedAt:new Date().toISOString()
     };
     const blob=new Blob([JSON.stringify(exportObj,null,2)],{type:'application/json'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    const url=URL.createObjectURL(blob);
+    a.href=url;
     a.download='quiz-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 100);
     toast(I18n.t('toast.dataExported'),'success');
   }
   if(hasMedia){

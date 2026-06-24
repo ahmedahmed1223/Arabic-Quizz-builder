@@ -195,7 +195,12 @@ function clearSoloTimer(){
 // ═══════════════════════════════════════════════════════════════
 //  LEADERBOARD SYSTEM
 // ═══════════════════════════════════════════════════════════════
-const _lbChannel = typeof BroadcastChannel!=='undefined' ? new BroadcastChannel('quiz_leaderboard') : null;
+let _lbChannel = null;
+try {
+  _lbChannel = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('quiz_leaderboard') : null;
+} catch (e) {
+  console.warn('[Leaderboard] BroadcastChannel not supported or restricted:', e.message);
+}
 
 function _getLeaderboard(){
   try{

@@ -141,6 +141,7 @@ function _renderTiebreakerTeamsBar(teams){
 }
 
 function startTiebreakerRound(){
+  if(window._tbNextQuestionTimeout){TimerRegistry.clear(window._tbNextQuestionTimeout);window._tbNextQuestionTimeout=null;}
   _tiebreakerActive=true;
   _tiebreakerQIndex=0;
   _tiebreakerQuestions=_gatherTiebreakerQuestions();
@@ -260,10 +261,11 @@ function revealTiebreakerAnswer(selectedIdx,correctIdx){
   }
   _pushRemoteState();
   // After 2.5s, go to next question
-  setTimeout(()=>{
+  if(window._tbNextQuestionTimeout){TimerRegistry.clear(window._tbNextQuestionTimeout);window._tbNextQuestionTimeout=null;}
+  window._tbNextQuestionTimeout=TimerRegistry.setTimeout(()=>{
     _tiebreakerQIndex++;
     _showTiebreakerQuestion();
-  },2500);
+  },2500,'tb-next-question');
 }
 
 function grantTiebreakerPoint(teamId){
@@ -296,6 +298,7 @@ function nextTiebreakerQuestion(){
 
 function _endTiebreakerRound(){
   if(window._tbTimerInterval){TimerRegistry.clear(window._tbTimerInterval);window._tbTimerInterval=null;}
+  if(window._tbNextQuestionTimeout){TimerRegistry.clear(window._tbNextQuestionTimeout);window._tbNextQuestionTimeout=null;}
   _tiebreakerActive=false;
   _tiebreakerQuestions=[];
   _tiebreakerQIndex=0;
@@ -319,6 +322,7 @@ function _endTiebreakerRound(){
 
 function skipTiebreaker(){
   if(window._tbTimerInterval){TimerRegistry.clear(window._tbTimerInterval);window._tbTimerInterval=null;}
+  if(window._tbNextQuestionTimeout){TimerRegistry.clear(window._tbNextQuestionTimeout);window._tbNextQuestionTimeout=null;}
   _tiebreakerActive=false;
   _tiebreakerQuestions=[];
   _tiebreakerQIndex=0;
