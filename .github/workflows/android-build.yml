@@ -1,0 +1,110 @@
+name: Android APK Auto-Build & Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggers from GitHub Actions UI
+
+permissions:
+  contents: write # Required to commit and push changes back to repo
+
+env:
+  ANDROID_BUILD_TOOLS_VERSION: "34.0.0"
+  HUSKY: "0"  # Disable Husky hooks in CI (bot commit doesn't follow Conventional Commits)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code Repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          clean: true
+
+      - name: Set up Node.js Env
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Set up Java 21 & Cache Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install NPM Dependencies
+        run: npm ci
+
+      # تنظيف مجلدات البناء القديمة تماماً من السيرفر
+      - name: Clean Old Build and Release Directories
+        run: |
+          rm -rf dist
+          rm -rf releases
+
+      # بناء مشروع Vite لإنتاج ملف index.html المدمج بالكامل
+      - name: Compile Vite Web Application Assets
+        run: npm run build
+
+      - name: Verify Single File Build Size
+        run: |
+          echo "=== فحص حجم الملفات الناتجة في مجلد dist ==="
+          ls -lh dist/
+          echo "========================================"
+
+      - name: Synchronize Web Assets to Capacitor Android Project
+        run: npx cap sync android
+
+      - name: Build Unsigned Release Android Package (APK)
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Generate On-The-Fly KeyStore and Sign APK
+        id: sign_apk
+        run: |
+          mkdir -p ./releases
+          
+          keytool -genkey -v -keystore release.keystore -alias playkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=ArabicQuizBuilder, O=QuizApp, C=SA"
+          
+          APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" -o -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "❌ خطأ حرج: لم يتم العثور على ملف APK الناتج!"
+            exit 1
+          fi
+          
+          cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
+          BUILD_TOOLS="${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}"
+          
+          $BUILD_TOOLS/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk
+          $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-signed-release.apk ./releases/arabic-quiz-release-aligned.apk
+          $BUILD_TOOLS/apksigner verify ./releases/arabic-quiz-signed-release.apk
+          
+          rm -f ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk release.keystore
+
+      # 🚀 التعديل الجوهري: إجبار Git على إزالة حظر dist ورفع ملف index.html بالتأكيد
+      - name: Commit and Push generated files back to repository
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # إزالة مجلد dist وملف index.html من ذاكرة الحظر المؤقتة للـ Git وإضافتهما كلياً بالإجبار
+          git rm -r --cached dist/ || true
+          git add -f dist/index.html
+          git add -f releases/arabic-quiz-signed-release.apk
+          
+          # الفحص برمجياً إذا كان هناك أي تحديث في الملفات
+          if git diff --staged --quiet; then
+            echo "لا توجد تغييرات لإضافتها للمستودع."
+          else
+            git commit --no-verify -m "🤖 أتمتة: تحديث إجباري لملف الـ Single File index.html وتطبيق الـ APK [skip ci]"
+            git push --no-verify origin main
+          fi
