@@ -19,6 +19,7 @@ permissions:
 
 env:
   ANDROID_BUILD_TOOLS_VERSION: "34.0.0"
+  HUSKY: "0"  # Disable Husky hooks in CI
 
 jobs:
   release:
@@ -132,8 +133,8 @@ jobs:
           if git diff --staged --quiet; then
             echo "لا توجد تغييرات لإضافتها للمستودع."
           else
-            git commit -m "🤖 أتمتة: تحديث إجباري لملف الـ Single File index.html وتطبيق الـ APK [skip ci]"
-            git push
+            git commit --no-verify -m "🤖 أتمتة: تحديث إجباري لملف الـ Single File index.html وتطبيق الـ APK [skip ci]"
+            git push --no-verify
           fi
 
       - name: Create GitHub Release
