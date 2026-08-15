@@ -411,13 +411,31 @@ async function loadState(){
     // V9: loadAllMedia now handles team images, member images, option images, credits, wheel audio
     // IDB data takes priority over localStorage data (fills in nulls and 'true' placeholders)
     // V10-fix: Add timeout for loadAllMedia to prevent hang
+    // V15.0-fix (P1-14/T-021): Use cancellation flag so the background loadAllMedia
+    // .then() handler knows the timeout has fired and SKIPS the renderAdmin cascade
+    // (which would otherwise re-render the UI a 2nd time, causing images to "pop in"
+    // late after the timeout-then-render path already painted).
+    var _loadMediaCancelled=false;
     var _loadMediaTimeout=setTimeout(function(){
       console.warn('[loadState] loadAllMedia timeout — proceeding without full media restore');
+      _loadMediaCancelled=true;  // signal to .then() that it's too late
       _idbLoadDone=true;
       if(_pendingSaveNeeded){_pendingSaveNeeded=false;try{saveState();}catch(e2){console.warn('[loadState] Pending save failed after IDB timeout:',e2);}}
     },8000);
     try{MediaDB.loadAllMedia().then(function(){
       clearTimeout(_loadMediaTimeout);
+      // V15.0-fix (P1-14/T-021): If the 8s timeout already fired and proceeded,
+      // skip the late-arriving renderAdmin cascade. The user has already seen a
+      // (possibly image-less) UI; re-rendering now would cause a disruptive
+      // flash where images suddenly pop in seconds after the page looked ready.
+      // The cancelled flag is set by the timeout handler.
+      if(_loadMediaCancelled){
+        console.info('[loadState] loadAllMedia completed AFTER timeout — applying media in-place without full re-render');
+        // Still apply the loaded media to state (images will lazy-load on next render)
+        // but skip renderAdmin() and saveState() cascade to avoid UI disruption.
+        // The next view switch or save action will pick up the now-loaded media.
+        return;
+      }
       // V10.2-fix: Enhanced IDB fallback — also check if data appears corrupted or incomplete
       var _needsIDBRestore=!state.categories.length&&!state.teams.length;
       // Also check if categories loaded with empty questions (data corruption)

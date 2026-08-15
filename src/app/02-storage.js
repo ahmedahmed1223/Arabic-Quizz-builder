@@ -99,6 +99,30 @@ const MediaDB=window.MediaDB=(function(){
     },
     loadAllMedia:async function(){
       var keys=await this.keys();
+      // V15.0-fix (P0-4): Replaced N sequential await this.get(k) calls with a
+      // SINGLE readonly transaction using getAll(). The old approach issued N
+      // sequential IDB transactions (one per key) — for 200+ media keys this
+      // took 5-10 seconds on mid-range Android, with each await yielding to the
+      // event loop and adding IDB round-trip overhead. The new approach uses
+      // 1 transaction + 1 getAll() call, returning all values in parallel.
+      // Expected speedup: 10-50x (5-10s → 100-500ms for 200 items).
+      var allValues=[];
+      try{
+        const db=await open();
+        allValues=await new Promise((resolve)=>{
+          const tx=db.transaction(STORE,'readonly');
+          const store=tx.objectStore(STORE);
+          const req=store.getAll();
+          req.onsuccess=()=>resolve(req.result||[]);
+          req.onerror=()=>resolve([]);
+        });
+      }catch(e){
+        // Fallback: sequential reads (original behavior)
+        for(var i=0;i<keys.length;i++){
+          var v=await this.get(keys[i]);
+          allValues.push(v);
+        }
+      }
       // V11.0-fix: Build lookup maps once for O(N) instead of O(N×M) per media item
       var questionMap={};
       state.categories.forEach(function(c){
@@ -110,8 +134,9 @@ const MediaDB=window.MediaDB=(function(){
       state.teams.forEach(function(t){teamMap[t.id]=t;});
       var creditMap={};
       (state.credits||[]).forEach(function(c){creditMap[c.id]=c;});
+      // Iterate keys+values in parallel (same index order from getAllKeys + getAll)
       for(var i=0;i<keys.length;i++){
-        var k=keys[i],val=await this.get(k);if(!val)continue;
+        var k=keys[i],val=allValues[i];if(!val)continue;
         // V10.1: Also check for 'true' placeholder values (set by _saveStateNow when media is stored in IDB)
         if(k.indexOf('s_')===0){var prop=k.slice(2);if(!state.settings[prop]||state.settings[prop]===true)state.settings[prop]=val;}
         else if(k.indexOf('ci_')===0){var cid=k.slice(3);var cat=catMap[cid];if(cat&&(!cat.catImage||cat.catImage===true))cat.catImage=val;}

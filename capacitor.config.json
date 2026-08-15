@@ -6,22 +6,27 @@
   "android": {
     "allowMixedContent": true,
     "captureInput": true,
-    "webContentsDebuggingEnabled": false
+    "webContentsDebuggingEnabled": false,
+    "preferOriginalApk": true
   },
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 1500,
+      "launchShowDuration": 1200,
       "launchAutoHide": true,
       "backgroundColor": "#08091a",
       "androidScaleType": "CENTER_CROP",
       "showSpinner": false,
       "splashFullScreen": true,
-      "splashImmersive": true
+      "splashImmersive": true,
+      "fadeOutDuration": 200
     },
     "StatusBar": {
       "style": "DARK",
       "backgroundColor": "#08091a",
       "overlaysWebView": false
+    },
+    "Haptics": {
+      "style": "Medium"
     }
   },
   "server": {

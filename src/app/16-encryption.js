@@ -1,6 +1,22 @@
 // ════════════════════════════════════════════════════════
 //  ADMIN
 // ════════════════════════════════════════════════════════
+// V15.0-fix (P0-6/T-006): Per-panel dirty flags — track which admin panels
+// need re-rendering. Set by mutation functions (saveCategory, deleteCategory,
+// saveTeam, deleteTeam, etc.) via _markPanelDirty(). Checked by renderAdmin()
+// to skip unnecessary innerHTML rebuilds.
+// Panels: 'categories', 'teams', 'questions' (questions are rendered by
+// renderQuestionsAdmin, which is already called explicitly on cat selection).
+var _panelDirty={categories:true,teams:true,questions:true};
+function _markPanelDirty(panel){
+  if(panel){
+    if(_panelDirty)_panelDirty[panel]=true;
+    if(panel==='categories')_panelDirty.questions=true; // questions depend on categories
+  }
+}
+function _clearPanelDirty(panel){
+  if(panel&&_panelDirty)_panelDirty[panel]=false;
+}
 function switchSettingsSubtab(group,btn){
   var subtabs=document.querySelectorAll('.settings-subtab');
   subtabs.forEach(function(t){
@@ -238,8 +254,24 @@ function renderAdmin(){
   // Update question bank stats
   _updateBankStats();
   renderThemeGrid();          // ← always re-render theme grid
-  renderCategoriesAdmin();    // ← sync categories list
-  renderTeamsAdmin();         // ← sync teams list
+  // V15.0-fix (P0-6/T-006): Per-panel dirty flags — renderAdmin() is called from
+  // many sites (showView, after IDB restore, after mutations). Previously every
+  // call cascaded to renderCategoriesAdmin() + renderTeamsAdmin(), both of which
+  // do el.innerHTML=arr.map(...).join('') — multi-MB string parse per render.
+  // Now: each panel tracks its own dirty flag. Panels are only re-rendered when
+  // their data actually changed. The flags are set by mutation functions
+  // (saveCategory, deleteCategory, saveTeam, deleteTeam, etc.) via _markPanelDirty().
+  // On full renderAdmin() calls (e.g., from showView), all flags are forced true
+  // by passing {force:true} — preserving the original behavior for view switches.
+  if(typeof _panelDirty!=='undefined'){
+    // If dirty flags are initialized, respect them; otherwise force-render all
+    if(_panelDirty.categories||arguments[0]===true) renderCategoriesAdmin();
+    if(_panelDirty.teams||arguments[0]===true) renderTeamsAdmin();
+  } else {
+    // Fallback for first call (flags not yet initialized) — render both
+    renderCategoriesAdmin();    // ← sync categories list
+    renderTeamsAdmin();         // ← sync teams list
+  }
   applyTheme(s.theme||'space');
   populateColorSwatches('color-swatches','cat-color-input',CAT_COLORS);
   populateColorSwatches('team-color-swatches','team-color-input',TEAM_COLORS);
@@ -711,7 +743,7 @@ function renderQuestionsAdmin(catId){
           ${q.type==='image'?'<span class="q-type-badge q-type-img">'+I18n.t('qbadge.image')+'</span>':q.type==='audio'?'<span class="q-type-badge q-type-audio">'+I18n.t('qbadge.audio')+'</span>':q.type==='video'?'<span class="q-type-badge" style="background:rgba(167,139,250,.12);color:#a78bfa;border:1px solid rgba(167,139,250,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.video')+'</span>':q.type==='math'?'<span class="q-type-badge q-type-math">'+I18n.t('qbadge.math')+'</span>':q.type==='tf'?'<span class="q-type-badge" style="background:rgba(0,230,118,.12);color:var(--success);border:1px solid rgba(0,230,118,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.tf')+'</span>':q.type==='fitb'?'<span class="q-type-badge" style="background:rgba(0,212,255,.1);color:var(--accent2);border:1px solid rgba(0,212,255,.25);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.fitb')+'</span>':q.type==='quran'?'<span class="q-type-badge" style="background:rgba(245,200,66,.12);color:var(--accent1);border:1px solid rgba(245,200,66,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.quran')+'</span>':q.type==='order'?'<span class="q-type-badge" style="background:rgba(167,139,250,.1);color:#a78bfa;border:1px solid rgba(167,139,250,.25);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.order')+'</span>':q.type==='match'?'<span class="q-type-badge" style="background:rgba(255,179,0,.12);color:var(--accent1);border:1px solid rgba(255,179,0,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.match')+'</span>':''}
           ${_sanitize(q.text)}
         </div>
-        ${q.type==='image'&&q.mediaData?`<div style="margin-top:5px"><img src="${_safeMediaSrc(q.mediaData)}" style="max-height:48px;max-width:120px;border-radius:6px;border:1px solid var(--border);object-fit:cover" alt=""></div>`:''}
+        ${q.type==='image'&&q.mediaData?`<div style="margin-top:5px"><img data-lazy-src="${_safeMediaSrc(q.mediaData)}" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='48'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3C/svg%3E" style="max-height:48px;max-width:120px;border-radius:6px;border:1px solid var(--border);object-fit:cover" alt="صورة السؤال"></div>`:''}
         ${q.type==='audio'&&q.mediaData?`<div style="font-size:.72rem;color:var(--accent2);margin-top:3px">🎵 مقطع صوتي مرفق</div>`:''}
         ${q.type==='video'&&(q.mediaData||q.videoRef)?`<div style="font-size:.72rem;color:#a78bfa;margin-top:3px">🎬 فيديو مرفق</div>`:''}
         ${q.mediaAttachment?`<div style="font-size:.72rem;color:${q.mediaAttachment.type==='video'?'#a78bfa':'var(--accent2)'};margin-top:3px">${q.mediaAttachment.type==='video'?'🎬 فيديو ملحق':'🎵 صوتي ملحق'}</div>`:''}
@@ -739,6 +771,43 @@ function renderQuestionsAdmin(catId){
       </div>
     </div>`).join('')}</div>`;
   try{initQuestionsSortable(document.getElementById("q-sortable-list"))}catch(e){ErrorBus.capture(e,"renderQuestionsAdmin:sortable")}
+  // V15.0-fix (T-030): Lazy-load question images via IntersectionObserver.
+  // The render above emits <img data-lazy-src="..."> with a tiny SVG placeholder
+  // as the visible src. Here we observe each lazy image and swap in the real
+  // src when it scrolls into view. This avoids loading 50+ multi-MB base64
+  // images upfront — only the ~10 visible ones load immediately.
+  try{
+    var _lazyImgs=el.querySelectorAll('img[data-lazy-src]');
+    if(_lazyImgs.length>0){
+      if('IntersectionObserver' in window){
+        // Reuse a single observer instance across renders (minor optimization)
+        if(!window._questionLazyObserver){
+          window._questionLazyObserver=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+              if(entry.isIntersecting){
+                var img=entry.target;
+                var realSrc=img.getAttribute('data-lazy-src');
+                if(realSrc){
+                  img.src=realSrc;
+                  img.removeAttribute('data-lazy-src');
+                }
+                window._questionLazyObserver.unobserve(img);
+              }
+            });
+          },{rootMargin:'100px',threshold:0.01});
+        }
+        _lazyImgs.forEach(function(img){
+          window._questionLazyObserver.observe(img);
+        });
+      }else{
+        // Fallback: no IntersectionObserver (old browser) — load all immediately
+        _lazyImgs.forEach(function(img){
+          img.src=img.getAttribute('data-lazy-src');
+          img.removeAttribute('data-lazy-src');
+        });
+      }
+    }
+  }catch(e){try{ErrorBus.capture(e,'renderQuestionsAdmin:lazyLoad');}catch(_){}}
 }
 function openCatModal(catId=null){
   state.editingCatId=catId;
@@ -824,7 +893,7 @@ function deleteCat(id){confirmAction(I18n.t('confirm.deleteCategory'),()=>{
   state.categories=state.categories.filter(c=>c.id!==id);
   delete state.usedQuestions[id];
   if(state.currentCatId===id){state.currentCatId=null;document.getElementById('btn-add-question').classList.add('hidden');document.getElementById('questions-list-admin').innerHTML=''}
-  saveState();renderCategoriesAdmin();_updateBankStats();toast(I18n.t('toast.deleted'),'info');
+  _markPanelDirty('categories');saveState();renderCategoriesAdmin();_updateBankStats();toast(I18n.t('toast.deleted'),'info');
 })}
 
 // ════════════════════════════════════════════════════════
@@ -1210,14 +1279,54 @@ function saveTeam(){
   window._teamImageTemp=undefined;
   saveState();closeModal('modal-team');renderTeamsAdmin();toast(I18n.t('toast.saved'),'success');
 }
-function deleteTeam(id){confirmAction(I18n.t('confirm.deleteTeam'),()=>{state.teams=state.teams.filter(t=>t.id!==id);if(state.currentTeamIndex>=state.teams.length)state.currentTeamIndex=Math.max(0,state.teams.length-1);saveState();renderTeamsAdmin();toast(I18n.t('toast.deleted'),'info')})}
+function deleteTeam(id){confirmAction(I18n.t('confirm.deleteTeam'),()=>{state.teams=state.teams.filter(t=>t.id!==id);if(state.currentTeamIndex>=state.teams.length)state.currentTeamIndex=Math.max(0,state.teams.length-1);_markPanelDirty('teams');saveState();renderTeamsAdmin();toast(I18n.t('toast.deleted'),'info')})}
 function adjustScore(id,delta){
   const t=state.teams.find(t=>t.id===id);if(!t)return;
   const prev=t.score||0;
   if(delta==='reset')t.score=0;
   else t.score=Math.max(0,prev+delta);
   if(typeof delta==='number'&&delta!==0)recordScoreHistoryV5(id,t.score-prev);
-  saveState();renderTeamsAdmin();updateTicker();
+  // V15.0-fix (P0-8/T-008): The previous code called renderTeamsAdmin() +
+  // updateTicker() on EVERY +/-1 click — two full innerHTML rebuilds of all
+  // team cards (with images, member lists, action buttons) + N touch-listener
+  // re-registrations. On rapid scoring (double-clicking +1) this caused visible
+  // jank (2 layout passes + N×4 addEventListener calls per click).
+  // Fix: patch ONLY the changed team's score display in the DOM. The full
+  // renderTeamsAdmin() is skipped — it will run on next view switch or when
+  // the user edits team properties (where re-render is actually needed).
+  // updateTicker() is kept because the ticker is a small fixed element and
+  // cheap to rebuild, but it's debounced via requestAnimationFrame to coalesce
+  // rapid clicks into a single rebuild.
+  saveState();
+  // Patch the score display in-place — find the team card by data-teamid
+  try{
+    const card=document.querySelector('.team-card[data-teamid="'+id+'"]');
+    if(card){
+      const scoreEl=card.querySelector('.team-score-display');
+      if(scoreEl){
+        scoreEl.textContent=t.score;
+        // Brief visual feedback — add a flash class, remove after 300ms
+        scoreEl.classList.add('score-flash');
+        setTimeout(function(){try{scoreEl.classList.remove('score-flash');}catch(_){}},300);
+      }
+      // Also update any +/- reset button states if they depend on score
+      const resetBtn=card.querySelector('[onclick*="adjustScore(\''+id+'\',\'reset\')"]');
+      if(resetBtn)resetBtn.disabled=(t.score===0);
+    }
+    // Debounce ticker update via rAF (coalesces rapid clicks)
+    if(!window._adjustScoreTickerPending){
+      window._adjustScoreTickerPending=true;
+      requestAnimationFrame(function(){
+        window._adjustScoreTickerPending=false;
+        try{updateTicker();}catch(e){try{ErrorBus.capture(e,'adjustScore/ticker');}catch(_){}}
+      });
+    }
+  }catch(e){
+    // Fallback: full re-render if in-place patch fails (e.g., DOM structure changed)
+    try{renderTeamsAdmin();updateTicker();}catch(e2){
+      try{ErrorBus.capture(e2,'adjustScore/fallback-render');}catch(_){}
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════

@@ -1,0 +1,19 @@
+{
+  "name": "quiz-multiplayer-server",
+  "version": "15.0.0",
+  "description": "WebSocket server for Arabic Quiz Builder multiplayer mode",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "deploy": "echo 'Deploy to Railway/Render/Fly.io via their CLI'"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

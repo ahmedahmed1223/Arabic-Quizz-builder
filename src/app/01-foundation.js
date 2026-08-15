@@ -259,6 +259,19 @@ const TimerRegistry=window.TimerRegistry=(function(){
       }
       return n;
     },
+    // V15.0-fix (P1-10/T-017): Add register() method — three call sites in
+    // 07-state-mgmt.js, 21-solo-mode.js, and 30-more-i18n.js use
+    // `if(typeof TimerRegistry!=='undefined'&&TimerRegistry.register){TimerRegistry.register('context',handle);}`
+    // but register() was never defined, so the calls were silent no-ops and the
+    // raw setInterval/setTimeout handles were never tracked by clearAll().
+    // This method registers an EXISTING raw handle (returned by window.setInterval
+    // or window.setTimeout) under a context for later cleanup.
+    register(context,handle,type){
+      if(!handle)return false;
+      const id='rg_'+(++_idGen);
+      timers.set(id,{type:type||'interval',handle:handle,context:context||'unknown'});
+      return id;
+    },
     clearAll(){
       let n=0;
       for(const [id,t] of timers){

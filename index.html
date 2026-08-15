@@ -5,6 +5,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#08091a">
+  <!-- V15.0: PWA manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="المسابقات">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="description" content="منصة المسابقات التفاعلية — تطبيق ويب عربي لإنشاء واستضافة مسابقات تعليمية وترفيهية مع 64 قسم و3303 سؤال. يعمل دون اتصال بالإنترنت.">
   <meta name="keywords" content="مسابقات, أسئلة, ألغاز, ذكاء, قرآن, علوم, رياضيات, عربي, تعليم, تفاعلي">
   <meta name="author" content="Arabic Quiz Builder">
@@ -142,5 +148,15 @@
   <script src="/src/app/44-stability-enhancer.js"></script>
   <!-- V15: Solo Mode premium enhancer — XP progression, 50:50, Time Attack, and Zen mode -->
   <script src="/src/app/45-solo-enhancer.js"></script>
+  <!-- V15.0: Teacher analytics dashboard — per-student/category/question analytics + PDF/Excel export -->
+  <script src="/src/app/46-analytics-dashboard.js"></script>
+  <!-- V15.0: AI question generator — LLM-powered question creation from a topic -->
+  <script src="/src/app/47-ai-question-generator.js"></script>
+  <!-- V15.0: LMS integration — Moodle XML, Google Classroom CSV, QTI 2.1 export/import -->
+  <script src="/src/app/48-lms-integration.js"></script>
+  <!-- V15.0: i18n extensions — French (fr) + Urdu (ur) translations -->
+  <script src="/src/app/i18n-extensions.js"></script>
+  <!-- V15.0: PWA registration — Service Worker + install prompt -->
+  <script src="/src/app/pwa-register.js"></script>
 </body>
 </html>

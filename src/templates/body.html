@@ -511,7 +511,7 @@
 <div id="app" role="main"><a id="main-content" href="#" tabindex="-1" style="position:absolute;top:0"></a>
 
 <!-- ═══ LOGIN ═══ -->
-<div id="view-login" class="hidden" role="main" aria-label="تسجيل الدخول" data-i18n="aria.login" data-i18n-attr="aria-label">
+<div id="view-login" class="hidden" role="region" aria-label="تسجيل الدخول" data-i18n="aria.login" data-i18n-attr="aria-label">
   <div class="login-card" role="form" aria-label="نموذج تسجيل الدخول" data-i18n="aria.loginForm" data-i18n-attr="aria-label">
     <div class="login-icon" aria-hidden="true" style="background:linear-gradient(135deg,var(--accent2),var(--accent1));font-size:2.6rem;box-shadow:var(--glow1),var(--glow2)">⚙️</div>
     <div class="login-title" id="login-heading" data-i18n="login.heading">لوحة التحكم</div>
@@ -545,7 +545,7 @@
 </div>
 
 <!-- ═══ ADMIN ═══ -->
-<div id="view-admin" class="hidden" role="main" aria-label="لوحة التحكم" data-i18n="aria.controlPanel" data-i18n-attr="aria-label">
+<div id="view-admin" class="hidden" role="region" aria-label="لوحة التحكم" data-i18n="aria.controlPanel" data-i18n-attr="aria-label">
   <header class="admin-header" role="banner">
     <div class="admin-logo"><div class="admin-logo-icon" aria-hidden="true"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> <span class="admin-logo-brand" data-i18n="app.shortTitle">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
     <div class="admin-header-actions">
@@ -3809,7 +3809,7 @@
 <div id="crop-modal" class="modal-overlay hidden" style="position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center">
   <div style="background:var(--bg-surface,#1e1e2e);border-radius:16px;padding:24px;max-width:600px;width:90%;max-height:90vh;overflow:auto">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <h3 style="margin:0;color:var(--text-primary,#fff)">قص الصورة</h3>
+      <h2 style="margin:0;color:var(--text-primary,#fff);font-size:1.25rem;font-weight:700">قص الصورة</h2>
       <button class="btn btn-ghost btn-sm" onclick="closeCropModal()">✕</button>
     </div>
     <div style="margin-bottom:16px">

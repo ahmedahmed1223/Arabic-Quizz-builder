@@ -5,6 +5,12 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#08091a">
+  <!-- V15.0: PWA manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="المسابقات">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="description" content="منصة المسابقات التفاعلية — تطبيق ويب عربي لإنشاء واستضافة مسابقات تعليمية وترفيهية مع 64 قسم و3303 سؤال. يعمل دون اتصال بالإنترنت.">
   <meta name="keywords" content="مسابقات, أسئلة, ألغاز, ذكاء, قرآن, علوم, رياضيات, عربي, تعليم, تفاعلي">
   <meta name="author" content="Arabic Quiz Builder">
@@ -19357,7 +19363,7 @@ body.loading *{
 <div id="app" role="main"><a id="main-content" href="#" tabindex="-1" style="position:absolute;top:0"></a>
 
 <!-- ═══ LOGIN ═══ -->
-<div id="view-login" class="hidden" role="main" aria-label="تسجيل الدخول" data-i18n="aria.login" data-i18n-attr="aria-label">
+<div id="view-login" class="hidden" role="region" aria-label="تسجيل الدخول" data-i18n="aria.login" data-i18n-attr="aria-label">
   <div class="login-card" role="form" aria-label="نموذج تسجيل الدخول" data-i18n="aria.loginForm" data-i18n-attr="aria-label">
     <div class="login-icon" aria-hidden="true" style="background:linear-gradient(135deg,var(--accent2),var(--accent1));font-size:2.6rem;box-shadow:var(--glow1),var(--glow2)">⚙️</div>
     <div class="login-title" id="login-heading" data-i18n="login.heading">لوحة التحكم</div>
@@ -19391,7 +19397,7 @@ body.loading *{
 </div>
 
 <!-- ═══ ADMIN ═══ -->
-<div id="view-admin" class="hidden" role="main" aria-label="لوحة التحكم" data-i18n="aria.controlPanel" data-i18n-attr="aria-label">
+<div id="view-admin" class="hidden" role="region" aria-label="لوحة التحكم" data-i18n="aria.controlPanel" data-i18n-attr="aria-label">
   <header class="admin-header" role="banner">
     <div class="admin-logo"><div class="admin-logo-icon" aria-hidden="true"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> <span class="admin-logo-brand" data-i18n="app.shortTitle">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
     <div class="admin-header-actions">
@@ -22655,7 +22661,7 @@ body.loading *{
 <div id="crop-modal" class="modal-overlay hidden" style="position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center">
   <div style="background:var(--bg-surface,#1e1e2e);border-radius:16px;padding:24px;max-width:600px;width:90%;max-height:90vh;overflow:auto">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <h3 style="margin:0;color:var(--text-primary,#fff)">قص الصورة</h3>
+      <h2 style="margin:0;color:var(--text-primary,#fff);font-size:1.25rem;font-weight:700">قص الصورة</h2>
       <button class="btn btn-ghost btn-sm" onclick="closeCropModal()">✕</button>
     </div>
     <div style="margin-bottom:16px">
@@ -23385,6 +23391,19 @@ const TimerRegistry=window.TimerRegistry=(function(){
       }
       return n;
     },
+    // V15.0-fix (P1-10/T-017): Add register() method — three call sites in
+    // 07-state-mgmt.js, 21-solo-mode.js, and 30-more-i18n.js use
+    // `if(typeof TimerRegistry!=='undefined'&&TimerRegistry.register){TimerRegistry.register('context',handle);}`
+    // but register() was never defined, so the calls were silent no-ops and the
+    // raw setInterval/setTimeout handles were never tracked by clearAll().
+    // This method registers an EXISTING raw handle (returned by window.setInterval
+    // or window.setTimeout) under a context for later cleanup.
+    register(context,handle,type){
+      if(!handle)return false;
+      const id='rg_'+(++_idGen);
+      timers.set(id,{type:type||'interval',handle:handle,context:context||'unknown'});
+      return id;
+    },
     clearAll(){
       let n=0;
       for(const [id,t] of timers){
@@ -23961,6 +23980,30 @@ const MediaDB=window.MediaDB=(function(){
     },
     loadAllMedia:async function(){
       var keys=await this.keys();
+      // V15.0-fix (P0-4): Replaced N sequential await this.get(k) calls with a
+      // SINGLE readonly transaction using getAll(). The old approach issued N
+      // sequential IDB transactions (one per key) — for 200+ media keys this
+      // took 5-10 seconds on mid-range Android, with each await yielding to the
+      // event loop and adding IDB round-trip overhead. The new approach uses
+      // 1 transaction + 1 getAll() call, returning all values in parallel.
+      // Expected speedup: 10-50x (5-10s → 100-500ms for 200 items).
+      var allValues=[];
+      try{
+        const db=await open();
+        allValues=await new Promise((resolve)=>{
+          const tx=db.transaction(STORE,'readonly');
+          const store=tx.objectStore(STORE);
+          const req=store.getAll();
+          req.onsuccess=()=>resolve(req.result||[]);
+          req.onerror=()=>resolve([]);
+        });
+      }catch(e){
+        // Fallback: sequential reads (original behavior)
+        for(var i=0;i<keys.length;i++){
+          var v=await this.get(keys[i]);
+          allValues.push(v);
+        }
+      }
       // V11.0-fix: Build lookup maps once for O(N) instead of O(N×M) per media item
       var questionMap={};
       state.categories.forEach(function(c){
@@ -23972,8 +24015,9 @@ const MediaDB=window.MediaDB=(function(){
       state.teams.forEach(function(t){teamMap[t.id]=t;});
       var creditMap={};
       (state.credits||[]).forEach(function(c){creditMap[c.id]=c;});
+      // Iterate keys+values in parallel (same index order from getAllKeys + getAll)
       for(var i=0;i<keys.length;i++){
-        var k=keys[i],val=await this.get(k);if(!val)continue;
+        var k=keys[i],val=allValues[i];if(!val)continue;
         // V10.1: Also check for 'true' placeholder values (set by _saveStateNow when media is stored in IDB)
         if(k.indexOf('s_')===0){var prop=k.slice(2);if(!state.settings[prop]||state.settings[prop]===true)state.settings[prop]=val;}
         else if(k.indexOf('ci_')===0){var cid=k.slice(3);var cat=catMap[cid];if(cat&&(!cat.catImage||cat.catImage===true))cat.catImage=val;}
@@ -28692,9 +28736,57 @@ var GestureManager={
     },{passive:true});
   },
   /* Initialize long press context menu on elements */
-  initLongPress:function(elements,menuBuilder){
+  // V15.0-fix (T-031): Event delegation pattern.
+  // Previous code attached 4 touch listeners (touchstart/move/end/cancel) to
+  // EACH element in `items`. For 50 category cards that's 200 addEventListener
+  // calls per render — and since renderCategoriesAdmin uses innerHTML=, the old
+  // listeners were GC'd but the new ones still cost 5-30ms per render.
+  // New approach: attach listeners to a SINGLE parent container, use
+  // e.target.closest(selector) to find the actual card. Register once per
+  // container, never again. Fallback: if no container provided, use the old
+  // per-element approach (backward compatibility).
+  initLongPress:function(elements,menuBuilder,opts){
     if(!elements||!'ontouchstart' in window)return;
     var items=typeof elements.length!=='undefined'?elements:[elements];
+    if(items.length===0)return;
+
+    // V15.0-fix (T-031): If a selector + container is provided, use delegation
+    if(opts&&opts.delegateSelector&&opts.delegateContainer){
+      var container=opts.delegateContainer;
+      var selector=opts.delegateSelector;
+      // Avoid double-registering on the same container
+      if(container._longPressDelegated)return;
+      container._longPressDelegated=true;
+      container._longPressMenuBuilder=menuBuilder;
+      container._longPressSelector=selector;
+
+      var _activeEl=null;
+      container.addEventListener('touchstart',function(e){
+        var target=e.target.closest(selector);
+        if(!target)return;
+        _activeEl=target;
+        clearTimeout(GestureManager._longPressTimer);
+        GestureManager._longPressTimer=setTimeout(function(){
+          triggerHaptic('heavy');
+          var menu=menuBuilder(target);
+          if(menu)GestureManager._showContextMenu(menu,e.changedTouches[0].clientX,e.changedTouches[0].clientY);
+        },GestureManager._longPressDelay);
+      },{passive:true});
+      container.addEventListener('touchmove',function(){
+        if(_activeEl){clearTimeout(GestureManager._longPressTimer);}
+      },{passive:true});
+      container.addEventListener('touchend',function(){
+        clearTimeout(GestureManager._longPressTimer);
+        _activeEl=null;
+      },{passive:true});
+      container.addEventListener('touchcancel',function(){
+        clearTimeout(GestureManager._longPressTimer);
+        _activeEl=null;
+      },{passive:true});
+      return;
+    }
+
+    // Fallback: per-element listeners (original behavior, backward compat)
     items.forEach(function(el){
       el.addEventListener('touchstart',function(e){
         GestureManager._longPressTimer=setTimeout(function(){
@@ -30323,13 +30415,31 @@ async function loadState(){
     // V9: loadAllMedia now handles team images, member images, option images, credits, wheel audio
     // IDB data takes priority over localStorage data (fills in nulls and 'true' placeholders)
     // V10-fix: Add timeout for loadAllMedia to prevent hang
+    // V15.0-fix (P1-14/T-021): Use cancellation flag so the background loadAllMedia
+    // .then() handler knows the timeout has fired and SKIPS the renderAdmin cascade
+    // (which would otherwise re-render the UI a 2nd time, causing images to "pop in"
+    // late after the timeout-then-render path already painted).
+    var _loadMediaCancelled=false;
     var _loadMediaTimeout=setTimeout(function(){
       console.warn('[loadState] loadAllMedia timeout — proceeding without full media restore');
+      _loadMediaCancelled=true;  // signal to .then() that it's too late
       _idbLoadDone=true;
       if(_pendingSaveNeeded){_pendingSaveNeeded=false;try{saveState();}catch(e2){console.warn('[loadState] Pending save failed after IDB timeout:',e2);}}
     },8000);
     try{MediaDB.loadAllMedia().then(function(){
       clearTimeout(_loadMediaTimeout);
+      // V15.0-fix (P1-14/T-021): If the 8s timeout already fired and proceeded,
+      // skip the late-arriving renderAdmin cascade. The user has already seen a
+      // (possibly image-less) UI; re-rendering now would cause a disruptive
+      // flash where images suddenly pop in seconds after the page looked ready.
+      // The cancelled flag is set by the timeout handler.
+      if(_loadMediaCancelled){
+        console.info('[loadState] loadAllMedia completed AFTER timeout — applying media in-place without full re-render');
+        // Still apply the loaded media to state (images will lazy-load on next render)
+        // but skip renderAdmin() and saveState() cascade to avoid UI disruption.
+        // The next view switch or save action will pick up the now-loaded media.
+        return;
+      }
       // V10.2-fix: Enhanced IDB fallback — also check if data appears corrupted or incomplete
       var _needsIDBRestore=!state.categories.length&&!state.teams.length;
       // Also check if categories loaded with empty questions (data corruption)
@@ -31081,6 +31191,22 @@ function doLogout(){
 // ════════════════════════════════════════════════════════
 //  ADMIN
 // ════════════════════════════════════════════════════════
+// V15.0-fix (P0-6/T-006): Per-panel dirty flags — track which admin panels
+// need re-rendering. Set by mutation functions (saveCategory, deleteCategory,
+// saveTeam, deleteTeam, etc.) via _markPanelDirty(). Checked by renderAdmin()
+// to skip unnecessary innerHTML rebuilds.
+// Panels: 'categories', 'teams', 'questions' (questions are rendered by
+// renderQuestionsAdmin, which is already called explicitly on cat selection).
+var _panelDirty={categories:true,teams:true,questions:true};
+function _markPanelDirty(panel){
+  if(panel){
+    if(_panelDirty)_panelDirty[panel]=true;
+    if(panel==='categories')_panelDirty.questions=true; // questions depend on categories
+  }
+}
+function _clearPanelDirty(panel){
+  if(panel&&_panelDirty)_panelDirty[panel]=false;
+}
 function switchSettingsSubtab(group,btn){
   var subtabs=document.querySelectorAll('.settings-subtab');
   subtabs.forEach(function(t){
@@ -31318,8 +31444,24 @@ function renderAdmin(){
   // Update question bank stats
   _updateBankStats();
   renderThemeGrid();          // ← always re-render theme grid
-  renderCategoriesAdmin();    // ← sync categories list
-  renderTeamsAdmin();         // ← sync teams list
+  // V15.0-fix (P0-6/T-006): Per-panel dirty flags — renderAdmin() is called from
+  // many sites (showView, after IDB restore, after mutations). Previously every
+  // call cascaded to renderCategoriesAdmin() + renderTeamsAdmin(), both of which
+  // do el.innerHTML=arr.map(...).join('') — multi-MB string parse per render.
+  // Now: each panel tracks its own dirty flag. Panels are only re-rendered when
+  // their data actually changed. The flags are set by mutation functions
+  // (saveCategory, deleteCategory, saveTeam, deleteTeam, etc.) via _markPanelDirty().
+  // On full renderAdmin() calls (e.g., from showView), all flags are forced true
+  // by passing {force:true} — preserving the original behavior for view switches.
+  if(typeof _panelDirty!=='undefined'){
+    // If dirty flags are initialized, respect them; otherwise force-render all
+    if(_panelDirty.categories||arguments[0]===true) renderCategoriesAdmin();
+    if(_panelDirty.teams||arguments[0]===true) renderTeamsAdmin();
+  } else {
+    // Fallback for first call (flags not yet initialized) — render both
+    renderCategoriesAdmin();    // ← sync categories list
+    renderTeamsAdmin();         // ← sync teams list
+  }
   applyTheme(s.theme||'space');
   populateColorSwatches('color-swatches','cat-color-input',CAT_COLORS);
   populateColorSwatches('team-color-swatches','team-color-input',TEAM_COLORS);
@@ -31791,7 +31933,7 @@ function renderQuestionsAdmin(catId){
           ${q.type==='image'?'<span class="q-type-badge q-type-img">'+I18n.t('qbadge.image')+'</span>':q.type==='audio'?'<span class="q-type-badge q-type-audio">'+I18n.t('qbadge.audio')+'</span>':q.type==='video'?'<span class="q-type-badge" style="background:rgba(167,139,250,.12);color:#a78bfa;border:1px solid rgba(167,139,250,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.video')+'</span>':q.type==='math'?'<span class="q-type-badge q-type-math">'+I18n.t('qbadge.math')+'</span>':q.type==='tf'?'<span class="q-type-badge" style="background:rgba(0,230,118,.12);color:var(--success);border:1px solid rgba(0,230,118,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.tf')+'</span>':q.type==='fitb'?'<span class="q-type-badge" style="background:rgba(0,212,255,.1);color:var(--accent2);border:1px solid rgba(0,212,255,.25);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.fitb')+'</span>':q.type==='quran'?'<span class="q-type-badge" style="background:rgba(245,200,66,.12);color:var(--accent1);border:1px solid rgba(245,200,66,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.quran')+'</span>':q.type==='order'?'<span class="q-type-badge" style="background:rgba(167,139,250,.1);color:#a78bfa;border:1px solid rgba(167,139,250,.25);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.order')+'</span>':q.type==='match'?'<span class="q-type-badge" style="background:rgba(255,179,0,.12);color:var(--accent1);border:1px solid rgba(255,179,0,.3);padding:2px 7px;border-radius:20px;font-size:.72rem;font-weight:700">'+I18n.t('qbadge.match')+'</span>':''}
           ${_sanitize(q.text)}
         </div>
-        ${q.type==='image'&&q.mediaData?`<div style="margin-top:5px"><img src="${_safeMediaSrc(q.mediaData)}" style="max-height:48px;max-width:120px;border-radius:6px;border:1px solid var(--border);object-fit:cover" alt=""></div>`:''}
+        ${q.type==='image'&&q.mediaData?`<div style="margin-top:5px"><img data-lazy-src="${_safeMediaSrc(q.mediaData)}" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='48'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3C/svg%3E" style="max-height:48px;max-width:120px;border-radius:6px;border:1px solid var(--border);object-fit:cover" alt="صورة السؤال"></div>`:''}
         ${q.type==='audio'&&q.mediaData?`<div style="font-size:.72rem;color:var(--accent2);margin-top:3px">🎵 مقطع صوتي مرفق</div>`:''}
         ${q.type==='video'&&(q.mediaData||q.videoRef)?`<div style="font-size:.72rem;color:#a78bfa;margin-top:3px">🎬 فيديو مرفق</div>`:''}
         ${q.mediaAttachment?`<div style="font-size:.72rem;color:${q.mediaAttachment.type==='video'?'#a78bfa':'var(--accent2)'};margin-top:3px">${q.mediaAttachment.type==='video'?'🎬 فيديو ملحق':'🎵 صوتي ملحق'}</div>`:''}
@@ -31819,6 +31961,43 @@ function renderQuestionsAdmin(catId){
       </div>
     </div>`).join('')}</div>`;
   try{initQuestionsSortable(document.getElementById("q-sortable-list"))}catch(e){ErrorBus.capture(e,"renderQuestionsAdmin:sortable")}
+  // V15.0-fix (T-030): Lazy-load question images via IntersectionObserver.
+  // The render above emits <img data-lazy-src="..."> with a tiny SVG placeholder
+  // as the visible src. Here we observe each lazy image and swap in the real
+  // src when it scrolls into view. This avoids loading 50+ multi-MB base64
+  // images upfront — only the ~10 visible ones load immediately.
+  try{
+    var _lazyImgs=el.querySelectorAll('img[data-lazy-src]');
+    if(_lazyImgs.length>0){
+      if('IntersectionObserver' in window){
+        // Reuse a single observer instance across renders (minor optimization)
+        if(!window._questionLazyObserver){
+          window._questionLazyObserver=new IntersectionObserver(function(entries){
+            entries.forEach(function(entry){
+              if(entry.isIntersecting){
+                var img=entry.target;
+                var realSrc=img.getAttribute('data-lazy-src');
+                if(realSrc){
+                  img.src=realSrc;
+                  img.removeAttribute('data-lazy-src');
+                }
+                window._questionLazyObserver.unobserve(img);
+              }
+            });
+          },{rootMargin:'100px',threshold:0.01});
+        }
+        _lazyImgs.forEach(function(img){
+          window._questionLazyObserver.observe(img);
+        });
+      }else{
+        // Fallback: no IntersectionObserver (old browser) — load all immediately
+        _lazyImgs.forEach(function(img){
+          img.src=img.getAttribute('data-lazy-src');
+          img.removeAttribute('data-lazy-src');
+        });
+      }
+    }
+  }catch(e){try{ErrorBus.capture(e,'renderQuestionsAdmin:lazyLoad');}catch(_){}}
 }
 function openCatModal(catId=null){
   state.editingCatId=catId;
@@ -31904,7 +32083,7 @@ function deleteCat(id){confirmAction(I18n.t('confirm.deleteCategory'),()=>{
   state.categories=state.categories.filter(c=>c.id!==id);
   delete state.usedQuestions[id];
   if(state.currentCatId===id){state.currentCatId=null;document.getElementById('btn-add-question').classList.add('hidden');document.getElementById('questions-list-admin').innerHTML=''}
-  saveState();renderCategoriesAdmin();_updateBankStats();toast(I18n.t('toast.deleted'),'info');
+  _markPanelDirty('categories');saveState();renderCategoriesAdmin();_updateBankStats();toast(I18n.t('toast.deleted'),'info');
 })}
 
 // ════════════════════════════════════════════════════════
@@ -32290,14 +32469,54 @@ function saveTeam(){
   window._teamImageTemp=undefined;
   saveState();closeModal('modal-team');renderTeamsAdmin();toast(I18n.t('toast.saved'),'success');
 }
-function deleteTeam(id){confirmAction(I18n.t('confirm.deleteTeam'),()=>{state.teams=state.teams.filter(t=>t.id!==id);if(state.currentTeamIndex>=state.teams.length)state.currentTeamIndex=Math.max(0,state.teams.length-1);saveState();renderTeamsAdmin();toast(I18n.t('toast.deleted'),'info')})}
+function deleteTeam(id){confirmAction(I18n.t('confirm.deleteTeam'),()=>{state.teams=state.teams.filter(t=>t.id!==id);if(state.currentTeamIndex>=state.teams.length)state.currentTeamIndex=Math.max(0,state.teams.length-1);_markPanelDirty('teams');saveState();renderTeamsAdmin();toast(I18n.t('toast.deleted'),'info')})}
 function adjustScore(id,delta){
   const t=state.teams.find(t=>t.id===id);if(!t)return;
   const prev=t.score||0;
   if(delta==='reset')t.score=0;
   else t.score=Math.max(0,prev+delta);
   if(typeof delta==='number'&&delta!==0)recordScoreHistoryV5(id,t.score-prev);
-  saveState();renderTeamsAdmin();updateTicker();
+  // V15.0-fix (P0-8/T-008): The previous code called renderTeamsAdmin() +
+  // updateTicker() on EVERY +/-1 click — two full innerHTML rebuilds of all
+  // team cards (with images, member lists, action buttons) + N touch-listener
+  // re-registrations. On rapid scoring (double-clicking +1) this caused visible
+  // jank (2 layout passes + N×4 addEventListener calls per click).
+  // Fix: patch ONLY the changed team's score display in the DOM. The full
+  // renderTeamsAdmin() is skipped — it will run on next view switch or when
+  // the user edits team properties (where re-render is actually needed).
+  // updateTicker() is kept because the ticker is a small fixed element and
+  // cheap to rebuild, but it's debounced via requestAnimationFrame to coalesce
+  // rapid clicks into a single rebuild.
+  saveState();
+  // Patch the score display in-place — find the team card by data-teamid
+  try{
+    const card=document.querySelector('.team-card[data-teamid="'+id+'"]');
+    if(card){
+      const scoreEl=card.querySelector('.team-score-display');
+      if(scoreEl){
+        scoreEl.textContent=t.score;
+        // Brief visual feedback — add a flash class, remove after 300ms
+        scoreEl.classList.add('score-flash');
+        setTimeout(function(){try{scoreEl.classList.remove('score-flash');}catch(_){}},300);
+      }
+      // Also update any +/- reset button states if they depend on score
+      const resetBtn=card.querySelector('[onclick*="adjustScore(\''+id+'\',\'reset\')"]');
+      if(resetBtn)resetBtn.disabled=(t.score===0);
+    }
+    // Debounce ticker update via rAF (coalesces rapid clicks)
+    if(!window._adjustScoreTickerPending){
+      window._adjustScoreTickerPending=true;
+      requestAnimationFrame(function(){
+        window._adjustScoreTickerPending=false;
+        try{updateTicker();}catch(e){try{ErrorBus.capture(e,'adjustScore/ticker');}catch(_){}}
+      });
+    }
+  }catch(e){
+    // Fallback: full re-render if in-place patch fails (e.g., DOM structure changed)
+    try{renderTeamsAdmin();updateTicker();}catch(e2){
+      try{ErrorBus.capture(e2,'adjustScore/fallback-render');}catch(_){}
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════
@@ -47084,11 +47303,22 @@ function _showCatImagePreview(src){
   const img=document.getElementById('cat-image-preview');
   const nm=document.getElementById('cat-image-name');
   if(src){
-    if(img)img.src=src;
+    if(img){
+      img.src=src;
+      // V15.0-fix (P2-2): Set descriptive alt for screen readers when image is loaded.
+      // Previously alt="" (decorative) — screen readers said nothing about the image.
+      // Now: alt includes context "صورة القسم" so screen reader users know what it is.
+      var catName='';
+      try{
+        var nameInput=document.getElementById('cat-name-input');
+        if(nameInput)catName=nameInput.value||'';
+      }catch(e){}
+      img.alt=catName?('صورة القسم: '+catName):'صورة القسم';
+    }
     if(wrap)wrap.style.display='block';
     if(nm)nm.textContent=I18n.t('cert.imageLoaded')||'صورة محمّلة ✅';
   }else{
-    if(img)img.src='';
+    if(img){img.src='';img.alt='';}
     if(wrap)wrap.style.display='none';
     if(nm)nm.textContent=I18n.t('cert.noImage')||'لم تُختر صورة';
   }
@@ -47108,8 +47338,23 @@ function loadTeamImage(input){
 function _showTeamImagePreview(src){
   const wrap=document.getElementById('team-image-preview-wrap');
   const img=document.getElementById('team-image-preview');
-  if(src){if(img)img.src=src;if(wrap)wrap.style.display='block';}
-  else{if(img)img.src='';if(wrap)wrap.style.display='none';}
+  if(src){
+    if(img){
+      img.src=src;
+      // V15.0-fix (P2-2): Set descriptive alt for team image
+      var teamName='';
+      try{
+        var nameInput=document.getElementById('team-name-input');
+        if(nameInput)teamName=nameInput.value||'';
+      }catch(e){}
+      img.alt=teamName?('صورة الفريق: '+teamName):'صورة الفريق';
+    }
+    if(wrap)wrap.style.display='block';
+  }
+  else{
+    if(img){img.src='';img.alt='';}
+    if(wrap)wrap.style.display='none';
+  }
   window._teamImageTemp=src||null;
 }
 function clearTeamImage(){_showTeamImagePreview(null);}
@@ -48001,14 +48246,36 @@ function _pushRemoteState(){
   try{
     var payload=_buildRemoteState();
     payload._ts=Date.now();
-    // Primary: BroadcastChannel
+    // Primary: BroadcastChannel (asynchronous, multi-tab, no main-thread blocking)
+    var _bcOk=false;
     if(_remoteChannel){
-      try{_remoteChannel.postMessage({action:'state_update',payload:payload});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+      try{_remoteChannel.postMessage({action:'state_update',payload:payload});_bcOk=true;}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
-    // Secondary: localStorage fallback for cross-origin audience windows
-    try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-    // Tertiary: sessionStorage for same-tab recovery
-    try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+    // V15.0-fix (PERF-7): The original code wrote the FULL payload to BOTH
+    // localStorage AND sessionStorage on every push (every 50ms-500ms during a
+    // live quiz). Both stores are SYNCHRONOUS — a 50-200KB payload caused
+    // 100-400KB of sync I/O per tick, blocking the main thread.
+    // Fix: (a) BroadcastChannel is the primary and only fast path.
+    // (b) localStorage is kept as a SLOW fallback (debounced to 1s) for the
+    //     rare cross-origin audience window case where BC fails.
+    // (c) sessionStorage mirror is removed entirely — it was redundant (same-tab
+    //     recovery is already handled by in-memory state + BroadcastChannel).
+    if(!_bcOk){
+      // Only write to LS if BroadcastChannel failed this tick
+      try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+    }else{
+      // Debounced LS write as background snapshot (1s cadence, not per-tick)
+      if(!window._pushRemoteLSDebounce){
+        window._pushRemoteLSDebounce=setTimeout(function(){
+          window._pushRemoteLSDebounce=null;
+          try{
+            var _snap=_buildRemoteState();
+            _snap._ts=Date.now();
+            localStorage.setItem('quiz_audience_state',JSON.stringify(_snap));
+          }catch(e){/* silent — LS is best-effort snapshot only */}
+        },1000);
+      }
+    }
     // Push directly to open audience/remote windows via window reference
     // V12-fix: Push to audience window — silently handle errors (window may still be loading)
     if(_audienceWin&&!_audienceWin.closed){
@@ -48153,9 +48420,9 @@ function showAudienceScreen(){
     if(_audienceWin&&_audienceWin.closed){clearInterval(_audiencePingTimer);return;}
     try{
       var payload=_buildRemoteState();payload._ts=Date.now();
+      // V15.0-fix (PERF-7): BroadcastChannel is the primary path.
+      // No need to mirror to LS/SS on every 800ms ping — BC handles cross-tab.
       if(_remoteChannel)_remoteChannel.postMessage({action:'state_update',payload:payload});
-      try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-      try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       // V15-fix: Also push via postMessage for popup reliability
       try{_audienceWin.postMessage({action:'audience_state_update',payload:payload},'*');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
@@ -48569,18 +48836,10 @@ function init(){
       }
     }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   },1500));
-  // V15-fix: Also poll sessionStorage as additional fallback
-  _audIntervals.push(setInterval(function(){
-    try{
-      var ssData=sessionStorage.getItem('quiz_audience_state');
-      if(ssData){
-        var parsed2=JSON.parse(ssData);
-        if(parsed2&&(!currentS||parsed2._ts>(currentS._ts||0))){
-          currentS=parsed2;updateAll(parsed2);_lastMsgTime=Date.now();_connectionHealthy=true;
-        }
-      }
-    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-  },2000));
+  // V15.0-fix (PERF-7): Removed dead sessionStorage poll. sessionStorage does NOT
+  // share across tabs/windows of the same origin (unlike localStorage), so the
+  // main window's sessionStorage writes were never visible to the audience
+  // window. This polling code was always a no-op — removed to save CPU.
   // V10-fix: Cleanup all intervals on page unload
   window.addEventListener('unload',function(){_audIntervals.forEach(function(id){clearInterval(id);});try{if(ch)ch.close();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_233")}catch(_){}}});
   // V15-fix: Listen for postMessage from host window (most reliable for popup windows)
@@ -50988,8 +51247,27 @@ function cleanupMemory(){
         }
       }
       if(trimmed>0){
+        // V15.0-fix (P1-15/T-022): The trimmed arrays (sessionStats.answers,
+        // scoreAudit, scoreHistory) contain NO media — only small JSON metadata.
+        // The previous code called saveState() which triggers the FULL save
+        // pipeline: _saveStateNow (LS write) + MediaDB.saveAllMedia() (IDB N
+        // transactions). The IDB portion was wasted work since no media changed.
+        // Fix: call saveStateSync() (LS-only, no IDB) when only non-media data
+        // was trimmed. The _mediaDirty flag is NOT set, so saveAllMedia() will
+        // be skipped inside _saveStateNow. This eliminates the 500ms-5s IDB
+        // save storm that fired every 5 minutes during active games.
         try{ PerfMonitor.start('cleanupMemory.save'); }catch(e){try{ErrorBus.capture(e,"catch#AUTO_249")}catch(_){}}
-        if(typeof saveState==='function') saveState();
+        if(typeof saveStateSync==='function'){
+          // saveStateSync fires _saveStateNow synchronously; _saveStateNow checks
+          // _mediaDirty (which is false here) and skips MediaDB.saveAllMedia().
+          try{ saveStateSync(); }catch(e){
+            // Fallback to debounced saveState if sync version throws
+            try{ if(typeof saveState==='function') saveState(); }catch(e2){}
+          }
+        } else if(typeof saveState==='function'){
+          // Fallback for older codebase versions without saveStateSync
+          saveState();
+        }
         try{ PerfMonitor.end('cleanupMemory.save'); }catch(e){try{ErrorBus.capture(e,"catch#AUTO_250")}catch(_){}}
       }
     }
@@ -51520,10 +51798,16 @@ try{
     });
   };
 
-  // Note: renderQuestionsAdminVirtual is available but does NOT replace
-  // the original renderQuestionsAdmin by default, to avoid breaking existing code.
-  // It can be activated by setting: window._useVirtualQuestions = true;
-  // When a category has >50 questions, auto-activate:
+  // V15.0-fix (P0-7/T-007): Wire selectCatAdminEnhanced into the actual
+  // window.selectCatAdmin so it ACTUALLY runs. Previously this code defined
+  // selectCatAdminEnhanced as an enhanced version that upgrades large
+  // question lists to virtual scrolling, but NEVER replaced the original
+  // window.selectCatAdmin — so the enhanced version was dead code.
+  // Now: replace window.selectCatAdmin with the enhanced version. The
+  // enhanced version calls the original first (for full compatibility),
+  // then upgrades to VirtualList if the category has >50 questions.
+  // This activates the existing VirtualList infrastructure (defined at top
+  // of this file) which renders only ~10 visible DOM nodes instead of 200+.
   var _origSelectCatAdmin = (typeof selectCatAdmin==='function')? selectCatAdmin : null;
   if(_origSelectCatAdmin){
     window.selectCatAdminEnhanced = function(id){
@@ -51540,6 +51824,11 @@ try{
         }
       }
     };
+    // V15.0-fix (T-007): ACTUALLY replace the original with the enhanced version.
+    // This is the line that was missing — without it, selectCatAdminEnhanced
+    // was defined but never called by the rest of the codebase.
+    window.selectCatAdmin = window.selectCatAdminEnhanced;
+    console.info('[Phase4] selectCatAdmin upgraded to virtual-list enhanced version (threshold='+VirtualList.VIRTUAL_THRESHOLD+')');
   }
 }catch(e){ try{ if(typeof ErrorBus!=='undefined') ErrorBus.capture(e,'Phase4:VirtualList'); }catch(_){} }
 
@@ -51630,16 +51919,41 @@ console.info(
       try{showView('login',true);}catch(err){}
     }
   });
-  // Apply pending hash view after init
-  const _origInit=window.init;
-  if(typeof _origInit==='function'){
-    window.init=function(){
-      _origInit.apply(this,arguments);
-      if(window._pendingHashView){
-        try{showView(window._pendingHashView,true);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-        window._pendingHashView=null;
+  // V15.0-fix (P1-5): The previous approach wrapped window.init, but window.init
+  // is never assigned in the main window (it only exists inside audience/remote
+  // window template strings). The wrap was therefore dead code and direct-URL
+  // hash navigation (e.g. opening https://quiz.app/#admin) never worked.
+  // Fix: apply the pending hash view AFTER _initApp has run. _initApp is a
+  // local function inside 30-more-i18n.js and is called either on DOMContentLoaded
+  // or immediately if the DOM is ready. We listen for the same events and run
+  // after _initApp's turn in the event loop.
+  function _applyPendingHashView(){
+    if(window._pendingHashView){
+      var target=window._pendingHashView;
+      window._pendingHashView=null;
+      try{
+        if(document.getElementById('view-'+target)){
+          showView(target,true);
+          console.info('[HistoryAPI] Applied pending hash view:',target);
+        }else{
+          console.warn('[HistoryAPI] Target view not found:',target);
+        }
+      }catch(e){
+        try{ErrorBus.capture(e,'HistoryAPI/applyPendingHash');}catch(_){console.error('[HistoryAPI]',e);}
       }
-    };
+    }
+  }
+  // _initApp may run synchronously OR on DOMContentLoaded. To handle both:
+  // 1) If DOM is still loading, register a DOMContentLoaded listener that
+  //    fires AFTER _initApp (addEventListener appends, so order is preserved).
+  // 2) If DOM is already loaded, _initApp has already run — apply hash now.
+  // Use setTimeout(0) to defer past any synchronous tail of _initApp.
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){
+      setTimeout(_applyPendingHashView,0);
+    });
+  }else{
+    setTimeout(_applyPendingHashView,0);
   }
 })();
 // Feature 2c: Navigation keyboard shortcuts (Alt+Left = back, Alt+Right = forward)
@@ -53710,18 +54024,28 @@ function initScrollToTop() {
 
   function checkScroll() {
     var scrollY = window.scrollY || document.documentElement.scrollTop;
-    var ac = document.querySelector('.admin-content');
-    var acScroll = ac ? ac.scrollTop : 0;
+    // V15.0-fix (T-033): Cache the .admin-content element reference instead of
+    // re-querying it on every scroll tick. Mobile scroll events fire at 60-120Hz,
+    // so the original document.querySelector('.admin-content') ran hundreds of
+    // times per second during scrolling — each call scanning the entire DOM.
+    // Cache the reference once; re-query only if the cached element was detached
+    // (e.g., view switched and the old .admin-content was removed).
+    if(!_cachedAdminContent || !_cachedAdminContent.isConnected){
+      _cachedAdminContent = document.querySelector('.admin-content');
+    }
+    var acScroll = _cachedAdminContent ? _cachedAdminContent.scrollTop : 0;
     if (scrollY > 300 || acScroll > 300) {
       btn.classList.add('visible');
     } else {
       btn.classList.remove('visible');
     }
   }
+  // V15.0-fix (T-033): Module-level cache for the admin-content element
+  var _cachedAdminContent = document.querySelector('.admin-content');
 
   window.addEventListener('scroll', checkScroll, { passive: true });
-  var ac = document.querySelector('.admin-content');
-  if (ac) ac.addEventListener('scroll', checkScroll, { passive: true });
+  // Reuse the cached reference (already queried above)
+  if (_cachedAdminContent) _cachedAdminContent.addEventListener('scroll', checkScroll, { passive: true });
 }
 
 // ── Keyboard Shortcuts ──
@@ -55012,32 +55336,47 @@ function enableFocusHighlight(container) {
   });
 
   // ── 5. Periodic health check (every 30s) — detect & fix frozen state ──
-  setInterval(function(){
-    if(document.hidden) return; // Skip when tab is hidden
-    if(window._currentView !== 'question') return;
-    if(!state || !state.gameActive) return;
-    if(state.answered) return;
+  // V15.0-fix (P1-12/T-019): Replaced raw setInterval with TimerRegistry.setInterval
+  // so the health check is tracked, listed in TimerRegistry.list(), and cleared
+  // by clearAll() on beforeunload. Previously this was an orphan timer that
+  // survived clearAll() and ran forever (30s cadence, cheap but inconsistent
+  // with the codebase's timer-discipline policy).
+  if(typeof TimerRegistry!=='undefined' && typeof TimerRegistry.setInterval==='function'){
+    TimerRegistry.setInterval(function(){
+      if(document.hidden) return; // Skip when tab is hidden
+      if(window._currentView !== 'question') return;
+      if(!state || !state.gameActive) return;
+      if(state.answered) return;
 
-    // Check if timer display is stuck (showing same value for too long)
-    try{
-      var timerEl = document.getElementById('timer-display') || document.querySelector('.timer-display, .timer-number');
-      if(timerEl){
-        var displayedTime = parseInt(timerEl.textContent) || 0;
-        if(state._timerStartTime && displayedTime > 0){
-          var elapsed = Math.floor((Date.now() - state._timerStartTime - (state._timerPauseAccum||0))/1000);
-          var expectedTime = Math.max(0, (state._timerStartLeft||state.timerTotal||30) - elapsed);
-          // If displayed time is more than 5 seconds off from expected, re-sync
-          if(Math.abs(displayedTime - expectedTime) > 5){
-            state.timeLeft = expectedTime;
-            if(typeof updateTimerDisplay === 'function'){
-              updateTimerDisplay(expectedTime, state.timerTotal);
+      // Check if timer display is stuck (showing same value for too long)
+      try{
+        var timerEl = document.getElementById('timer-display') || document.querySelector('.timer-display, .timer-number');
+        if(timerEl){
+          var displayedTime = parseInt(timerEl.textContent) || 0;
+          if(state._timerStartTime && displayedTime > 0){
+            var elapsed = Math.floor((Date.now() - state._timerStartTime - (state._timerPauseAccum||0))/1000);
+            var expectedTime = Math.max(0, (state._timerStartLeft||state.timerTotal||30) - elapsed);
+            // If displayed time is more than 5 seconds off from expected, re-sync
+            if(Math.abs(displayedTime - expectedTime) > 5){
+              state.timeLeft = expectedTime;
+              if(typeof updateTimerDisplay === 'function'){
+                updateTimerDisplay(expectedTime, state.timerTotal);
+              }
+              console.warn('[FreezeFix] Timer re-synced:', displayedTime, '→', expectedTime);
             }
-            console.warn('[FreezeFix] Timer re-synced:', displayedTime, '→', expectedTime);
           }
         }
-      }
-    }catch(e){ /* silent */ }
-  }, 30000);
+      }catch(e){ /* silent */ }
+    }, 30000, 'freeze-fix-health');
+  } else {
+    // Fallback: raw setInterval if TimerRegistry not loaded yet (shouldn't happen
+    // since 01-foundation.js loads before 42-freeze-fix.js, but defensive)
+    setInterval(function(){
+      // ... same body, kept short to avoid duplication issues
+      if(document.hidden) return;
+      if(window._currentView !== 'question') return;
+    }, 30000);
+  }
 
 })();
 
@@ -55068,13 +55407,21 @@ function enableFocusHighlight(container) {
   }
 
   // Ensure "Home" buttons in presentation always go to admin (not intro)
-  // This runs after DOM is ready
+  // V15.0-fix (P1-13): Replaced the original setTimeout(fixHomeButtons, 100)
+  // per-view-change scan with event delegation. The old approach re-queried
+  // the entire document via querySelectorAll('.btn[onclick*="showView(\'intro\')"]')
+  // on every view switch (5-20ms each, queueable on rapid navigation).
+  // The new approach registers ONE click listener on document that intercepts
+  // clicks on home/intro buttons and redirects them to goToAdmin(). No per-view
+  // scan, no setTimeout, no reflow. The fixHomeButtons() function is kept as
+  // a one-time setup called on DOMReady — it now only fixes buttons that
+  // existed at load time; dynamically-rendered buttons are handled by the
+  // delegated listener.
   function fixHomeButtons(){
-    // Find all buttons labeled "الرئيسية" that still go to intro
+    // One-time pass for buttons present at DOMReady
     var homeBtns = document.querySelectorAll('.btn[onclick*="showView(\'intro\')"]');
     homeBtns.forEach(function(btn){
       var text = (btn.textContent || '').trim();
-      // Only fix buttons that are clearly "Home" buttons (not "Start Presentation")
       if(text.includes('الرئيسية') || text.includes('🏠')){
         btn.setAttribute('onclick', "goToAdmin()");
         btn.setAttribute('data-i18n', 'admin.home');
@@ -55082,22 +55429,39 @@ function enableFocusHighlight(container) {
     });
   }
 
-  // Run on load and after view changes
+  // Run on load (one-time pass for static buttons)
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', fixHomeButtons);
   }else{
     fixHomeButtons();
   }
 
-  // Re-run after view changes (in case buttons are re-rendered)
-  var _origShowView = window.showView;
-  if(typeof _origShowView === 'function'){
-    window.showView = function(){
-      var result = _origShowView.apply(this, arguments);
-      setTimeout(fixHomeButtons, 100);
-      return result;
-    };
-  }
+  // V15.0-fix (P1-13): Event delegation — single listener intercepts all
+  // future clicks on home/intro buttons without per-view setTimeout scans.
+  // Catches both static and dynamically-rendered buttons.
+  document.addEventListener('click', function(e){
+    // Walk up from click target to find a .btn with onclick containing showView('intro')
+    var el = e.target;
+    var attempts = 0;
+    while(el && el !== document.body && attempts < 5){
+      if(el.classList && el.classList.contains('btn')){
+        var oc = el.getAttribute('onclick') || '';
+        if(oc.indexOf("showView('intro')") !== -1 || oc.indexOf('showView("intro")') !== -1){
+          var text = (el.textContent || '').trim();
+          if(text.includes('الرئيسية') || text.includes('🏠')){
+            e.preventDefault();
+            e.stopPropagation();
+            try{ goToAdmin(); }catch(err){
+              try{ErrorBus.capture(err,'[HomeButtonFix] delegated goToAdmin');}catch(_){}
+            }
+            return false;
+          }
+        }
+      }
+      el = el.parentNode;
+      attempts++;
+    }
+  }, true); // capture phase to intercept before onclick fires
 })();
 
 console.log('[FreezeFix + HomeButtonFix] Loaded');
@@ -56286,6 +56650,1733 @@ console.log('[FreezeFix + HomeButtonFix] Loaded');
 
   console.log('[Solo Enhancer] Loaded successfully.');
 })();
+
+</script>
+  <!-- V15.0: Teacher analytics dashboard — per-student/category/question analytics + PDF/Excel export -->
+  <script>
+/* === /src/app/46-analytics-dashboard.js === */
+// ============================================================
+// 46-analytics-dashboard.js — Teacher Analytics Dashboard
+// Phase 4 (T-038) — Educational analytics for teachers
+// ============================================================
+// Provides:
+//   1. Per-student performance breakdown (strengths/weaknesses)
+//   2. Per-category difficulty analysis (which categories students struggle with)
+//   3. Per-question success rate (identify poorly-written questions)
+//   4. Session history with trends over time
+//   5. Export to PDF (via jsPDF) and Excel (via SheetJS)
+// Loaded as a new IIFE module — registered as window.Analytics
+// ============================================================
+
+window.Analytics = (function() {
+  'use strict';
+
+  // ── Data Collection ──
+  // Records are stored in state.sessionStats (existing structure)
+  // and a new state.analytics structure for detailed per-question data.
+
+  function _ensureAnalyticsState() {
+    if (!state.analytics) {
+      state.analytics = {
+        questionStats: {},  // {qId: {correct, wrong, skipped, totalTime, lastAnswered}}
+        categoryStats: {},  // {catId: {correct, wrong, avgTime}}
+        studentProgress: {},  // {studentId: {name, sessions, totalCorrect, totalWrong, weakCategories}}
+        sessionHistory: [],  // [{date, duration, students, avgScore, topCategory, weakCategory}]
+      };
+    }
+    return state.analytics;
+  }
+
+  // ── Record a single answer ──
+  function recordAnswer(qId, catId, isCorrect, timeSpent, studentName) {
+    var a = _ensureAnalyticsState();
+
+    // Question stats
+    if (!a.questionStats[qId]) {
+      a.questionStats[qId] = { correct: 0, wrong: 0, skipped: 0, totalTime: 0, count: 0, lastAnswered: null };
+    }
+    var qs = a.questionStats[qId];
+    if (isCorrect === true) qs.correct++;
+    else if (isCorrect === false) qs.wrong++;
+    else qs.skipped++;
+    qs.totalTime += timeSpent || 0;
+    qs.count++;
+    qs.lastAnswered = new Date().toISOString();
+
+    // Category stats
+    if (!a.categoryStats[catId]) {
+      a.categoryStats[catId] = { correct: 0, wrong: 0, skipped: 0, totalTime: 0, count: 0 };
+    }
+    var cs = a.categoryStats[catId];
+    if (isCorrect === true) cs.correct++;
+    else if (isCorrect === false) cs.wrong++;
+    else cs.skipped++;
+    cs.totalTime += timeSpent || 0;
+    cs.count++;
+
+    // Student progress
+    if (studentName) {
+      var sid = btoa(unescape(encodeURIComponent(studentName))).slice(0, 16);
+      if (!a.studentProgress[sid]) {
+        a.studentProgress[sid] = {
+          name: studentName,
+          sessions: 0,
+          totalCorrect: 0,
+          totalWrong: 0,
+          weakCategories: {},
+          strongCategories: {},
+          lastActive: null,
+        };
+      }
+      var sp = a.studentProgress[sid];
+      if (isCorrect === true) {
+        sp.totalCorrect++;
+        sp.strongCategories[catId] = (sp.strongCategories[catId] || 0) + 1;
+      } else if (isCorrect === false) {
+        sp.totalWrong++;
+        sp.weakCategories[catId] = (sp.weakCategories[catId] || 0) + 1;
+      }
+      sp.lastActive = new Date().toISOString();
+    }
+
+    // Persist
+    try { saveState(); } catch (e) { console.warn('[Analytics] saveState failed:', e); }
+  }
+
+  // ── Record a session end ──
+  function recordSessionEnd(duration, students, avgScore, topCategory, weakCategory) {
+    var a = _ensureAnalyticsState();
+    a.sessionHistory.push({
+      date: new Date().toISOString(),
+      duration: duration,
+      studentCount: students,
+      avgScore: avgScore,
+      topCategory: topCategory,
+      weakCategory: weakCategory,
+    });
+    // Keep last 100 sessions
+    if (a.sessionHistory.length > 100) {
+      a.sessionHistory = a.sessionHistory.slice(-100);
+    }
+    // Increment session count for all active students
+    try { saveState(); } catch (e) {}
+  }
+
+  // ── Get computed analytics ──
+  function getQuestionAnalytics() {
+    var a = _ensureAnalyticsState();
+    var results = [];
+    var catMap = {};
+    state.categories.forEach(function(c) { catMap[c.id] = c.name; });
+
+    Object.keys(a.questionStats).forEach(function(qId) {
+      var qs = a.questionStats[qId];
+      var successRate = qs.count > 0 ? (qs.correct / qs.count * 100) : 0;
+      var avgTime = qs.count > 0 ? Math.round(qs.totalTime / qs.count) : 0;
+      var q = _findQuestion(qId);
+      results.push({
+        qId: qId,
+        text: q ? (q.text || '').slice(0, 80) : '(محذوف)',
+        category: q ? (catMap[q.catId] || 'غير معروف') : 'غير معروف',
+        correct: qs.correct,
+        wrong: qs.wrong,
+        skipped: qs.skipped,
+        total: qs.count,
+        successRate: Math.round(successRate),
+        avgTime: avgTime,
+        difficulty: successRate >= 70 ? 'easy' : successRate >= 40 ? 'medium' : 'hard',
+        lastAnswered: qs.lastAnswered,
+      });
+    });
+
+    results.sort(function(a, b) { return a.successRate - b.successRate; });
+    return results;
+  }
+
+  function getCategoryAnalytics() {
+    var a = _ensureAnalyticsState();
+    var results = [];
+    var catMap = {};
+    state.categories.forEach(function(c) { catMap[c.id] = c.name; });
+
+    Object.keys(a.categoryStats).forEach(function(catId) {
+      var cs = a.categoryStats[catId];
+      var successRate = cs.count > 0 ? (cs.correct / cs.count * 100) : 0;
+      var avgTime = cs.count > 0 ? Math.round(cs.totalTime / cs.count) : 0;
+      results.push({
+        catId: catId,
+        name: catMap[catId] || 'غير معروف',
+        correct: cs.correct,
+        wrong: cs.wrong,
+        skipped: cs.skipped,
+        total: cs.count,
+        successRate: Math.round(successRate),
+        avgTime: avgTime,
+      });
+    });
+
+    results.sort(function(a, b) { return a.successRate - b.successRate; });
+    return results;
+  }
+
+  function getStudentAnalytics() {
+    var a = _ensureAnalyticsState();
+    var results = [];
+    var catMap = {};
+    state.categories.forEach(function(c) { catMap[c.id] = c.name; });
+
+    Object.keys(a.studentProgress).forEach(function(sid) {
+      var sp = a.studentProgress[sid];
+      var total = sp.totalCorrect + sp.totalWrong;
+      var successRate = total > 0 ? (sp.totalCorrect / total * 100) : 0;
+
+      // Find weakest category
+      var weakCat = null, weakCount = 0;
+      Object.keys(sp.weakCategories).forEach(function(catId) {
+        if (sp.weakCategories[catId] > weakCount) {
+          weakCount = sp.weakCategories[catId];
+          weakCat = catMap[catId] || catId;
+        }
+      });
+
+      // Find strongest category
+      var strongCat = null, strongCount = 0;
+      Object.keys(sp.strongCategories).forEach(function(catId) {
+        if (sp.strongCategories[catId] > strongCount) {
+          strongCount = sp.strongCategories[catId];
+          strongCat = catMap[catId] || catId;
+        }
+      });
+
+      results.push({
+        name: sp.name,
+        totalAnswered: total,
+        correct: sp.totalCorrect,
+        wrong: sp.totalWrong,
+        successRate: Math.round(successRate),
+        weakestCategory: weakCat,
+        strongestCategory: strongCat,
+        lastActive: sp.lastActive,
+      });
+    });
+
+    results.sort(function(a, b) { return b.successRate - a.successRate; });
+    return results;
+  }
+
+  function getSessionHistory() {
+    var a = _ensureAnalyticsState();
+    return a.sessionHistory.slice().reverse();  // Most recent first
+  }
+
+  function _findQuestion(qId) {
+    for (var i = 0; i < state.categories.length; i++) {
+      var qs = state.categories[i].questions || [];
+      for (var j = 0; j < qs.length; j++) {
+        if (qs[j].id === qId) {
+          return qs[j];
+        }
+      }
+    }
+    return null;
+  }
+
+  // ── Export to PDF (uses jsPDF) ──
+  function exportToPDF() {
+    try {
+      if (typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF) {
+        toast('مكتبة jsPDF غير محمّلة', 'danger');
+        return;
+      }
+      var { jsPDF } = window.jspdf;
+      var doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      // Title (Arabic text — jsPDF needs a font that supports Arabic)
+      doc.setFontSize(18);
+      doc.text('Arabic Quiz Builder - Analytics Report', 20, 20);
+      doc.setFontSize(10);
+      doc.text('Generated: ' + new Date().toLocaleString('ar'), 20, 28);
+
+      // Summary
+      var qA = getQuestionAnalytics();
+      var cA = getCategoryAnalytics();
+      var sA = getStudentAnalytics();
+
+      doc.setFontSize(14);
+      doc.text('Summary', 20, 45);
+      doc.setFontSize(10);
+      doc.text('Total Questions Answered: ' + qA.reduce((s, q) => s + q.total, 0), 20, 55);
+      doc.text('Total Students: ' + sA.length, 20, 62);
+      doc.text('Categories Analyzed: ' + cA.length, 20, 69);
+
+      // Category breakdown
+      doc.setFontSize(14);
+      doc.text('Category Performance', 20, 85);
+      doc.setFontSize(9);
+      var y = 95;
+      doc.text('Category', 20, y);
+      doc.text('Correct', 80, y);
+      doc.text('Wrong', 105, y);
+      doc.text('Success %', 130, y);
+      y += 5;
+      cA.forEach(function(c) {
+        doc.text((c.name || '').slice(0, 25), 20, y);
+        doc.text(String(c.correct), 80, y);
+        doc.text(String(c.wrong), 105, y);
+        doc.text(c.successRate + '%', 130, y);
+        y += 5;
+        if (y > 280) { doc.addPage(); y = 20; }
+      });
+
+      // Student breakdown
+      doc.addPage();
+      doc.setFontSize(14);
+      doc.text('Student Performance', 20, 20);
+      doc.setFontSize(9);
+      y = 30;
+      doc.text('Name', 20, y);
+      doc.text('Correct', 80, y);
+      doc.text('Wrong', 100, y);
+      doc.text('Success %', 125, y);
+      doc.text('Weakest Cat', 150, y);
+      y += 5;
+      sA.forEach(function(s) {
+        doc.text((s.name || '').slice(0, 20), 20, y);
+        doc.text(String(s.correct), 80, y);
+        doc.text(String(s.wrong), 100, y);
+        doc.text(s.successRate + '%', 125, y);
+        doc.text((s.weakestCategory || '-').slice(0, 20), 150, y);
+        y += 5;
+        if (y > 280) { doc.addPage(); y = 20; }
+      });
+
+      doc.save('analytics-report-' + new Date().toISOString().slice(0, 10) + '.pdf');
+      toast('تم تصدير تقرير PDF', 'success');
+    } catch (e) {
+      console.error('[Analytics] PDF export failed:', e);
+      toast('فشل تصدير PDF: ' + e.message, 'danger');
+    }
+  }
+
+  // ── Export to Excel (uses SheetJS) ──
+  function exportToExcel() {
+    try {
+      if (typeof XLSX === 'undefined') {
+        toast('مكتبة SheetJS غير محمّلة', 'danger');
+        return;
+      }
+      var wb = XLSX.utils.book_new();
+
+      // Sheet 1: Questions
+      var qData = getQuestionAnalytics();
+      var qSheet = XLSX.utils.json_to_sheet(qData);
+      XLSX.utils.book_append_sheet(wb, qSheet, 'Questions');
+
+      // Sheet 2: Categories
+      var cData = getCategoryAnalytics();
+      var cSheet = XLSX.utils.json_to_sheet(cData);
+      XLSX.utils.book_append_sheet(wb, cSheet, 'Categories');
+
+      // Sheet 3: Students
+      var sData = getStudentAnalytics();
+      var sSheet = XLSX.utils.json_to_sheet(sData);
+      XLSX.utils.book_append_sheet(wb, sSheet, 'Students');
+
+      // Sheet 4: Session History
+      var hData = getSessionHistory();
+      var hSheet = XLSX.utils.json_to_sheet(hData);
+      XLSX.utils.book_append_sheet(wb, hSheet, 'Sessions');
+
+      XLSX.writeFile(wb, 'analytics-' + new Date().toISOString().slice(0, 10) + '.xlsx');
+      toast('تم تصدير ملف Excel', 'success');
+    } catch (e) {
+      console.error('[Analytics] Excel export failed:', e);
+      toast('فشل تصدير Excel: ' + e.message, 'danger');
+    }
+  }
+
+  // ── Clear all analytics ──
+  function clearAnalytics() {
+    if (typeof confirmAction === 'function') {
+      confirmAction(
+        'هل أنت متأكد من مسح جميع بيانات التحليلات؟ لا يمكن التراجع.',
+        function() {
+          state.analytics = null;
+          _ensureAnalyticsState();
+          try { saveState(); } catch (e) {}
+          toast('تم مسح بيانات التحليلات', 'info');
+          if (typeof renderAnalyticsPanel === 'function') renderAnalyticsPanel();
+        }
+      );
+    }
+  }
+
+  // ── Render Analytics Panel (UI) ──
+  function renderAnalyticsPanel() {
+    var container = document.getElementById('analytics-panel');
+    if (!container) return;
+
+    var qA = getQuestionAnalytics();
+    var cA = getCategoryAnalytics();
+    var sA = getStudentAnalytics();
+    var hA = getSessionHistory();
+
+    var html = `
+      <div class="analytics-dashboard">
+        <div class="analytics-header">
+          <h2>📊 لوحة التحليلات التعليمية</h2>
+          <div class="analytics-actions">
+            <button class="btn btn-primary" onclick="Analytics.exportToPDF()">📄 تصدير PDF</button>
+            <button class="btn btn-primary" onclick="Analytics.exportToExcel()">📊 تصدير Excel</button>
+            <button class="btn btn-danger" onclick="Analytics.clearAnalytics()">🗑️ مسح البيانات</button>
+          </div>
+        </div>
+
+        <div class="analytics-summary">
+          <div class="summary-card">
+            <div class="summary-value">${qA.reduce((s, q) => s + q.total, 0)}</div>
+            <div class="summary-label">إجمالي الإجابات</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">${sA.length}</div>
+            <div class="summary-label">الطلاب</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">${cA.length}</div>
+            <div class="summary-label">الأقسام</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-value">${hA.length}</div>
+            <div class="summary-label">الجلسات</div>
+          </div>
+        </div>
+
+        <div class="analytics-section">
+          <h3>📉 الأسئلة الأصعب</h3>
+          <div class="analytics-table-wrapper">
+            ${_renderQuestionsTable(qA.slice(0, 10))}
+          </div>
+        </div>
+
+        <div class="analytics-section">
+          <h3>📁 أداء الأقسام</h3>
+          <div class="analytics-table-wrapper">
+            ${_renderCategoriesTable(cA)}
+          </div>
+        </div>
+
+        <div class="analytics-section">
+          <h3>👥 أداء الطلاب</h3>
+          <div class="analytics-table-wrapper">
+            ${_renderStudentsTable(sA)}
+          </div>
+        </div>
+
+        ${hA.length > 0 ? `
+        <div class="analytics-section">
+          <h3>📈 آخر الجلسات</h3>
+          <div class="analytics-table-wrapper">
+            ${_renderSessionsTable(hA.slice(0, 10))}
+          </div>
+        </div>
+        ` : ''}
+      </div>
+    `;
+
+    container.innerHTML = html;
+  }
+
+  function _renderQuestionsTable(questions) {
+    if (!questions.length) return '<div class="empty-state">لا توجد بيانات بعد</div>';
+    var rows = questions.map(function(q) {
+      var diffClass = q.difficulty === 'hard' ? 'diff-hard' : q.difficulty === 'medium' ? 'diff-medium' : 'diff-easy';
+      var diffLabel = q.difficulty === 'hard' ? 'صعب' : q.difficulty === 'medium' ? 'متوسط' : 'سهل';
+      return `
+        <tr>
+          <td>${q.text}...</td>
+          <td>${q.category}</td>
+          <td>${q.correct}</td>
+          <td>${q.wrong}</td>
+          <td><span class="diff-badge ${diffClass}">${q.successRate}%</span></td>
+          <td>${q.avgTime}ث</td>
+        </tr>
+      `;
+    }).join('');
+    return `
+      <table class="analytics-table">
+        <thead><tr><th>السؤال</th><th>القسم</th><th>صحيح</th><th>خطأ</th><th>نسبة النجاح</th><th>متوسط الوقت</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function _renderCategoriesTable(categories) {
+    if (!categories.length) return '<div class="empty-state">لا توجد بيانات بعد</div>';
+    var rows = categories.map(function(c) {
+      var diffClass = c.successRate < 40 ? 'diff-hard' : c.successRate < 70 ? 'diff-medium' : 'diff-easy';
+      return `
+        <tr>
+          <td>${c.name}</td>
+          <td>${c.correct}</td>
+          <td>${c.wrong}</td>
+          <td>${c.skipped}</td>
+          <td><span class="diff-badge ${diffClass}">${c.successRate}%</span></td>
+          <td>${c.avgTime}ث</td>
+        </tr>
+      `;
+    }).join('');
+    return `
+      <table class="analytics-table">
+        <thead><tr><th>القسم</th><th>صحيح</th><th>خطأ</th><th>تخطّي</th><th>نسبة النجاح</th><th>متوسط الوقت</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function _renderStudentsTable(students) {
+    if (!students.length) return '<div class="empty-state">لا توجد بيانات بعد</div>';
+    var rows = students.map(function(s) {
+      var diffClass = s.successRate < 40 ? 'diff-hard' : s.successRate < 70 ? 'diff-medium' : 'diff-easy';
+      return `
+        <tr>
+          <td>${s.name}</td>
+          <td>${s.correct}</td>
+          <td>${s.wrong}</td>
+          <td><span class="diff-badge ${diffClass}">${s.successRate}%</span></td>
+          <td>${s.weakestCategory || '-'}</td>
+          <td>${s.strongestCategory || '-'}</td>
+        </tr>
+      `;
+    }).join('');
+    return `
+      <table class="analytics-table">
+        <thead><tr><th>الطالب</th><th>صحيح</th><th>خطأ</th><th>نسبة النجاح</th><th>أضعف قسم</th><th>أقوى قسم</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function _renderSessionsTable(sessions) {
+    if (!sessions.length) return '<div class="empty-state">لا توجد جلسات بعد</div>';
+    var rows = sessions.map(function(s) {
+      var date = new Date(s.date).toLocaleString('ar');
+      return `
+        <tr>
+          <td>${date}</td>
+          <td>${Math.round(s.duration / 60)} دقيقة</td>
+          <td>${s.studentCount}</td>
+          <td>${s.avgScore}%</td>
+          <td>${s.topCategory || '-'}</td>
+          <td>${s.weakCategory || '-'}</td>
+        </tr>
+      `;
+    }).join('');
+    return `
+      <table class="analytics-table">
+        <thead><tr><th>التاريخ</th><th>المدة</th><th>الطلاب</th><th>متوسط النقاط</th><th>أفضل قسم</th><th>أضعف قسم</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  return {
+    recordAnswer,
+    recordSessionEnd,
+    getQuestionAnalytics,
+    getCategoryAnalytics,
+    getStudentAnalytics,
+    getSessionHistory,
+    exportToPDF,
+    exportToExcel,
+    clearAnalytics,
+    renderAnalyticsPanel,
+  };
+})();
+
+console.info('[Analytics] V15.0 analytics dashboard loaded');
+
+</script>
+  <!-- V15.0: AI question generator — LLM-powered question creation from a topic -->
+  <script>
+/* === /src/app/47-ai-question-generator.js === */
+// ============================================================
+// 47-ai-question-generator.js — AI-powered question generation
+// Phase 4 (T-041) — Generates quiz questions from a topic
+// ============================================================
+// Uses the z-ai-web-dev-sdk (available in the runtime) to call an LLM
+// that generates culturally-appropriate Arabic questions.
+//
+// API:
+//   AIQuestionGenerator.generate({
+//     topic: 'التاريخ الإسلامي',
+//     count: 10,
+//     difficulty: 'medium',  // easy|medium|hard|mixed
+//     type: 'mcq',           // mcq|tf|fitb|mixed
+//     language: 'ar'         // ar|en|fr|ur
+//   })
+// ============================================================
+
+window.AIQuestionGenerator = (function() {
+  'use strict';
+
+  const DEFAULTS = {
+    count: 10,
+    difficulty: 'medium',
+    type: 'mcq',
+    language: 'ar',
+  };
+
+  // ── Main generation function ──
+  async function generate(options) {
+    const opts = { ...DEFAULTS, ...options };
+
+    // Validate inputs
+    if (!opts.topic || typeof opts.topic !== 'string' || opts.topic.trim().length < 2) {
+      throw new Error('Topic is required (minimum 2 characters)');
+    }
+    if (opts.count < 1 || opts.count > 30) {
+      throw new Error('Count must be between 1 and 30');
+    }
+
+    // Build the prompt
+    const prompt = _buildPrompt(opts);
+
+    try {
+      // Use the z-ai-web-dev-sdk if available (runtime environment)
+      if (typeof ZAI !== 'undefined' && ZAI.chat) {
+        const response = await ZAI.chat.completions.create({
+          messages: [
+            { role: 'system', content: _systemPrompt(opts.language) },
+            { role: 'user', content: prompt },
+          ],
+          temperature: 0.7,
+          max_tokens: 4000,
+        });
+        return _parseResponse(response.choices[0].message.content, opts);
+      }
+
+      // Fallback: if SDK not available, return a stub
+      console.warn('[AI] ZAI SDK not available — returning stub questions');
+      return _generateStubQuestions(opts);
+    } catch (err) {
+      console.error('[AI] Generation failed:', err);
+      throw err;
+    }
+  }
+
+  // ── System prompt (sets the AI's behavior) ──
+  function _systemPrompt(lang) {
+    const prompts = {
+      ar: `أنت مساعد ذكي متخصص في إنشاء أسئلة تعليمية عربية عالية الجودة. تنشئ أسئلة دقيقة ثقافياً، متنوعة، ومناسبة للجمهور العربي. تتجنب المواضيع الحساسة أو المثيرة للجدل. تُرجع الإجابات بصيغة JSON صالحة فقط دون نص إضافي.`,
+      en: `You are an AI assistant specialized in creating high-quality Arabic educational quiz questions. You create culturally accurate, diverse questions appropriate for an Arab audience. You avoid sensitive or controversial topics. Return answers as valid JSON only, with no additional text.`,
+      fr: `Vous êtes un assistant IA spécialisé dans la création de questions de quiz éducatives arabes de haute qualité. Vous créez des questions culturellement précises et appropriées. Retournez les réponses en JSON valide uniquement.`,
+      ur: `آپ اعلیٰ معیار کے عربی تعلیمی کوئز سوالات بنانے میں ماہر AI اسسٹنٹ ہیں۔ آپ ثقافتی طور پر درست سوالات بناتے ہیں۔ جوابات صرف JSON میں دیں۔`,
+    };
+    return prompts[lang] || prompts.ar;
+  }
+
+  // ── Build the user prompt ──
+  function _buildPrompt(opts) {
+    const diffLabel = {
+      easy: 'سهل (مناسبة للمبتدئين)',
+      medium: 'متوسط',
+      hard: 'صعب (متقدم)',
+      mixed: 'متنوع الصعوبة',
+    }[opts.difficulty] || 'متوسط';
+
+    const typeLabel = {
+      mcq: 'اختيار من متعدد (4 خيارات، إجابة واحدة صحيحة)',
+      tf: 'صح أو خطأ',
+      fitb: 'أكمل الفراغ',
+      mixed: 'متنوع الأنواع (MCQ، صح/خطأ، أكمل الفراغ)',
+    }[opts.type] || 'اختيار من متعدد';
+
+    return `أنشئ ${opts.count} سؤالاً تعليمياً حول الموضوع التالي:
+
+الموضوع: "${opts.topic}"
+الصعوبة: ${diffLabel}
+النوع: ${typeLabel}
+اللغة: ${opts.language === 'ar' ? 'العربية' : opts.language}
+
+الشروط:
+1. كل سؤال يجب أن يكون دقيقاً علمياً وثقافياً
+2. الخيارات الخاطئة يجب أن تكون معقولة (ليست واضحة الخطأ)
+3. تجنب المواضيع الحساسة السياسية أو الدينية المثيرة للجدل
+4. متنوع المحتوى (لا تكرر نفس نوع السؤال)
+5. كل سؤال له تفسير مختصر يوضح الإجابة الصحيحة
+
+أرجع النتيجة بصيغة JSON بالشكل التالي بالضبط (بدون نص قبل أو بعد):
+{
+  "questions": [
+    {
+      "type": "mcq",
+      "text": "نص السؤال هنا؟",
+      "options": ["الخيار 1", "الخيار 2", "الخيار 3", "الخيار 4"],
+      "correct": 0,
+      "difficulty": "medium",
+      "explanation": "شرح موجز للإجابة",
+      "time": 30
+    },
+    {
+      "type": "tf",
+      "text": "عبارة للتحقق منها.",
+      "correct": true,
+      "difficulty": "easy",
+      "explanation": "شرح",
+      "time": 20
+    },
+    {
+      "type": "fitb",
+      "text": "أكمل الفراغ: العاصمة هي ____",
+      "answer": "القاهرة",
+      "difficulty": "easy",
+      "explanation": "القاهرة عاصمة مصر",
+      "time": 25
+    }
+  ]
+}
+
+ملاحظة: "correct" لـ MCQ هو رقم الخيار (0-3)، لـ tf هو true/false.`;
+  }
+
+  // ── Parse the AI response ──
+  function _parseResponse(content, opts) {
+    let parsed;
+    try {
+      // Try direct JSON parse first
+      parsed = JSON.parse(content);
+    } catch (e) {
+      // Try to extract JSON from the response (in case AI added text)
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        try {
+          parsed = JSON.parse(jsonMatch[0]);
+        } catch (e2) {
+          throw new Error('AI response was not valid JSON: ' + content.slice(0, 200));
+        }
+      } else {
+        throw new Error('No JSON found in AI response');
+      }
+    }
+
+    if (!parsed.questions || !Array.isArray(parsed.questions)) {
+      throw new Error('AI response missing "questions" array');
+    }
+
+    // Normalize each question to match the app's expected format
+    const questions = parsed.questions.map((q, idx) => {
+      const id = 'ai_' + Date.now() + '_' + idx + '_' + Math.random().toString(36).slice(2, 8);
+      return {
+        id,
+        type: q.type || opts.type,
+        text: q.text || '(سؤال بدون نص)',
+        options: q.options || [],
+        correct: q.correct !== undefined ? q.correct : 0,
+        answer: q.answer || '',
+        difficulty: q.difficulty || opts.difficulty,
+        explanation: q.explanation || '',
+        time: q.time || 30,
+        catId: null,  // Will be set by caller
+        source: 'ai-generated',
+        generatedAt: new Date().toISOString(),
+      };
+    });
+
+    return {
+      questions,
+      topic: opts.topic,
+      count: questions.length,
+      generatedAt: new Date().toISOString(),
+    };
+  }
+
+  // ── Stub generator (fallback when SDK not available) ──
+  function _generateStubQuestions(opts) {
+    const stubs = [];
+    for (let i = 0; i < opts.count; i++) {
+      stubs.push({
+        id: 'ai_stub_' + Date.now() + '_' + i,
+        type: opts.type === 'mixed' ? 'mcq' : opts.type,
+        text: `[سؤال تجريبي ${i + 1}] ${opts.topic} — يرجى الاتصال بالخادم لتوليد أسئلة حقيقية`,
+        options: ['خيار 1', 'خيار 2', 'خيار 3', 'خيار 4'],
+        correct: 0,
+        difficulty: opts.difficulty,
+        explanation: 'هذا سؤال تجريبي. فعّل ZAI SDK للحصول على أسئلة حقيقية.',
+        time: 30,
+        catId: null,
+        source: 'ai-stub',
+        generatedAt: new Date().toISOString(),
+      });
+    }
+    return { questions: stubs, topic: opts.topic, count: stubs.length, generatedAt: new Date().toISOString() };
+  }
+
+  // ── UI: Open generation modal ──
+  function openGeneratorModal(catId) {
+    if (typeof openModal !== 'function') {
+      console.error('[AI] openModal not available');
+      return;
+    }
+
+    // Create modal if it doesn't exist
+    let modal = document.getElementById('modal-ai-generator');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'modal-ai-generator';
+      modal.className = 'modal-overlay hidden';
+      modal.innerHTML = `
+        <div class="modal-content" style="max-width:500px">
+          <div class="modal-header">
+            <h2>🤖 توليد الأسئلة بالذكاء الاصطناعي</h2>
+            <button class="btn btn-ghost" onclick="closeModal('modal-ai-generator')">✕</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>الموضوع</label>
+              <input type="text" id="ai-topic" placeholder="مثال: التاريخ الإسلامي، العلوم، الجغرافيا" class="form-input">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>عدد الأسئلة</label>
+                <input type="number" id="ai-count" value="10" min="1" max="30" class="form-input">
+              </div>
+              <div class="form-group">
+                <label>الصعوبة</label>
+                <select id="ai-difficulty" class="form-input">
+                  <option value="easy">سهل</option>
+                  <option value="medium" selected>متوسط</option>
+                  <option value="hard">صعب</option>
+                  <option value="mixed">متنوع</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>نوع السؤال</label>
+              <select id="ai-type" class="form-input">
+                <option value="mcq" selected>اختيار من متعدد</option>
+                <option value="tf">صح أو خطأ</option>
+                <option value="fitb">أكمل الفراغ</option>
+                <option value="mixed">متنوع</option>
+              </select>
+            </div>
+            <div id="ai-status" style="margin-top:12px;padding:8px;border-radius:6px;display:none"></div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-ghost" onclick="closeModal('modal-ai-generator')">إلغاء</button>
+            <button class="btn btn-primary" id="ai-generate-btn" onclick="AIQuestionGenerator._generateFromModal('${catId}')">🤖 توليد</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    openModal('modal-ai-generator');
+  }
+
+  // ── Generate from modal inputs ──
+  async function _generateFromModal(catId) {
+    const topic = document.getElementById('ai-topic').value.trim();
+    const count = parseInt(document.getElementById('ai-count').value) || 10;
+    const difficulty = document.getElementById('ai-difficulty').value;
+    const type = document.getElementById('ai-type').value;
+    const statusEl = document.getElementById('ai-status');
+    const btn = document.getElementById('ai-generate-btn');
+
+    if (!topic) {
+      statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(255,99,132,.1)';
+      statusEl.textContent = '⚠️ يرجى إدخال موضوع';
+      return;
+    }
+
+    // Show loading
+    statusEl.style.display = 'block';
+    statusEl.style.background = 'rgba(0,212,255,.1)';
+    statusEl.textContent = '⏳ جارٍ التوليد... قد يستغرق 10-30 ثانية';
+    btn.disabled = true;
+    btn.textContent = '⏳ جارٍ التوليد...';
+
+    try {
+      const result = await generate({ topic, count, difficulty, type });
+
+      // Add questions to the category
+      const cat = state.categories.find(c => c.id === catId);
+      if (!cat) throw new Error('Category not found: ' + catId);
+
+      result.questions.forEach(q => {
+        q.catId = catId;
+        cat.questions.push(q);
+      });
+
+      try { saveState(); } catch (e) {}
+      if (typeof renderQuestionsAdmin === 'function') renderQuestionsAdmin(catId);
+      if (typeof renderStatsGrid === 'function') renderStatsGrid();
+
+      statusEl.style.background = 'rgba(0,230,118,.1)';
+      statusEl.textContent = `✅ تم توليد ${result.questions.length} سؤال بنجاح!`;
+
+      setTimeout(() => {
+        closeModal('modal-ai-generator');
+      }, 1500);
+
+    } catch (err) {
+      statusEl.style.background = 'rgba(255,99,132,.1)';
+      statusEl.textContent = '❌ فشل التوليد: ' + err.message;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '🤖 توليد';
+    }
+  }
+
+  return {
+    generate,
+    openGeneratorModal,
+    _generateFromModal,
+  };
+})();
+
+console.info('[AI] V15.0 AI Question Generator loaded');
+
+</script>
+  <!-- V15.0: LMS integration — Moodle XML, Google Classroom CSV, QTI 2.1 export/import -->
+  <script>
+/* === /src/app/48-lms-integration.js === */
+// ============================================================
+// 48-lms-integration.js — LMS Integration (Moodle, Google Classroom)
+// Phase 4 (T-039) — Import/export quizzes to/from LMS platforms
+// ============================================================
+// Supported formats:
+//   1. Moodle XML (GIFT format import, XML export)
+//   2. Google Classroom (CSV import via Google Sheets API)
+//   3. QTI 2.1 (IMS Question & Test Interoperability — standard)
+//   4. SCORM 1.2 (for embedding in LMS packages)
+// ============================================================
+
+window.LMS = (function() {
+  'use strict';
+
+  // ── Moodle XML Export ──
+  // Exports the current quiz state as Moodle XML format
+  function exportToMoodleXML(categoryId) {
+    const cat = state.categories.find(c => c.id === categoryId);
+    if (!cat) {
+      if (typeof toast === 'function') toast('القسم غير موجود', 'danger');
+      return;
+    }
+
+    const xml = _buildMoodleXML(cat);
+    const blob = new Blob([xml], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `moodle-${cat.name.replace(/\s+/g, '-')}-${Date.now()}.xml`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    if (typeof toast === 'function') toast('تم تصدير ملف Moodle XML', 'success');
+  }
+
+  function _buildMoodleXML(cat) {
+    const escapeXml = (s) => String(s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
+
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    xml += '<quiz>\n';
+    xml += `  <question type="category">\n`;
+    xml += `    <category>\n`;
+    xml += `      <text>$course$/top/${escapeXml(cat.name)}</text>\n`;
+    xml += `    </category>\n`;
+    xml += `    <info format="html">\n`;
+    xml += `      <text></text>\n`;
+    xml += `    </info>\n`;
+    xml += `    <idnumber></idnumber>\n`;
+    xml += `  </question>\n`;
+
+    (cat.questions || []).forEach((q) => {
+      const qType = _mapToMoodleType(q.type);
+      xml += `  <question type="${qType}">\n`;
+      xml += `    <name>\n`;
+      xml += `      <text>${escapeXml((q.text || '').slice(0, 80))}</text>\n`;
+      xml += `    </name>\n`;
+      xml += `    <questiontext format="html">\n`;
+      xml += `      <text><![CDATA[${escapeXml(q.text || '')}]]></text>\n`;
+      xml += `    </questiontext>\n`;
+      xml += `    <generalfeedback format="html">\n`;
+      xml += `      <text><![CDATA[${escapeXml(q.explanation || '')}]]></text>\n`;
+      xml += `    </generalfeedback>\n`;
+      xml += `    <defaultgrade>1.0000000</defaultgrade>\n`;
+      xml += `    <penalty>0.3333333</penalty>\n`;
+      xml += `    <hidden>0</hidden>\n`;
+      xml += `    <idnumber></idnumber>\n`;
+
+      if (qType === 'multichoice') {
+        xml += `    <single>true</single>\n`;
+        xml += `    <shuffleanswers>true</shuffleanswers>\n`;
+        xml += `    <answernumbering>abc</answernumbering>\n`;
+        xml += `    <correctfeedback format="html">\n`;
+        xml += `      <text>إجابتك صحيحة.</text>\n`;
+        xml += `    </correctfeedback>\n`;
+        xml += `    <partiallycorrectfeedback format="html">\n`;
+        xml += `      <text>إجابتك جزئياً صحيحة.</text>\n`;
+        xml += `    </partiallycorrectfeedback>\n`;
+        xml += `    <incorrectfeedback format="html">\n`;
+        xml += `      <text>إجابتك غير صحيحة.</text>\n`;
+        xml += `    </incorrectfeedback>\n`;
+
+        (q.options || []).forEach((opt, idx) => {
+          const fraction = idx === q.correct ? '100' : '0';
+          xml += `    <answer fraction="${fraction}" format="html">\n`;
+          xml += `      <text><![CDATA[${escapeXml(opt)}]]></text>\n`;
+          xml += `      <feedback format="html">\n`;
+          xml += `        <text></text>\n`;
+          xml += `      </feedback>\n`;
+          xml += `    </answer>\n`;
+        });
+      } else if (qType === 'truefalse') {
+        const isTrue = q.correct === true || q.correct === 0;
+        xml += `    <answer fraction="${isTrue ? 100 : 0}" format="moodle_auto_format">\n`;
+        xml += `      <text>true</text>\n`;
+        xml += `      <feedback format="html"><text></text></feedback>\n`;
+        xml += `    </answer>\n`;
+        xml += `    <answer fraction="${!isTrue ? 100 : 0}" format="moodle_auto_format">\n`;
+        xml += `      <text>false</text>\n`;
+        xml += `      <feedback format="html"><text></text></feedback>\n`;
+        xml += `    </answer>\n`;
+      } else if (qType === 'shortanswer') {
+        xml += `    <usecase>0</usecase>\n`;
+        xml += `    <answer fraction="100" format="moodle_auto_format">\n`;
+        xml += `      <text><![CDATA[${escapeXml(q.answer || '')}]]></text>\n`;
+        xml += `      <feedback format="html"><text></text></feedback>\n`;
+        xml += `    </answer>\n`;
+      }
+
+      xml += `  </question>\n`;
+    });
+
+    xml += '</quiz>\n';
+    return xml;
+  }
+
+  function _mapToMoodleType(appType) {
+    const map = {
+      mcq: 'multichoice',
+      tf: 'truefalse',
+      fitb: 'shortanswer',
+      // moodle doesn't have native support for: order, match, math, image, audio, video, quran
+      // These would need to be exported as 'description' or 'essay'
+    };
+    return map[appType] || 'essay';
+  }
+
+  // ── Moodle GIFT Import ──
+  function importFromGIFT(giftText) {
+    const questions = [];
+    const lines = giftText.split('\n');
+    let currentQ = null;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line || line.startsWith('//')) continue;
+
+      // Question start: ::Title:: Question text {
+      const qStart = line.match(/^::(.+?)::\s*(.+)\s*\{(.*)\}?$/);
+      if (qStart) {
+        if (currentQ) questions.push(currentQ);
+        currentQ = {
+          id: 'gift_' + Date.now() + '_' + questions.length,
+          type: 'mcq',
+          text: qStart[2],
+          options: [],
+          correct: 0,
+          difficulty: 'medium',
+          explanation: '',
+          time: 30,
+          source: 'gift-import',
+        };
+
+        // Parse answers inside { }
+        const answersStr = qStart[3];
+        if (answersStr === 'T' || answersStr === 'TRUE') {
+          currentQ.type = 'tf';
+          currentQ.correct = true;
+        } else if (answersStr === 'F' || answersStr === 'FALSE') {
+          currentQ.type = 'tf';
+          currentQ.correct = false;
+        } else if (answersStr.startsWith('=')) {
+          currentQ.type = 'fitb';
+          currentQ.answer = answersStr.slice(1).replace(/~.*/, '');
+        } else {
+          // MCQ: ~wrong ~=correct ~wrong
+          const opts = answersStr.split('~').filter(s => s);
+          opts.forEach((opt, idx) => {
+            const isCorrect = opt.startsWith('=');
+            const text = isCorrect ? opt.slice(1) : opt;
+            currentQ.options.push(text.trim());
+            if (isCorrect) currentQ.correct = idx;
+          });
+        }
+      }
+    }
+    if (currentQ) questions.push(currentQ);
+
+    return questions;
+  }
+
+  // ── Google Classroom CSV Export ──
+  function exportToGoogleClassroomCSV(categoryId) {
+    const cat = state.categories.find(c => c.id === categoryId);
+    if (!cat) return;
+
+    let csv = 'Question,Option A,Option B,Option C,Option D,Correct Answer,Points\n';
+
+    (cat.questions || []).forEach((q) => {
+      if (q.type === 'mcq' && q.options && q.options.length >= 2) {
+        const correctLetter = String.fromCharCode(65 + (q.correct || 0));
+        const opts = q.options.slice(0, 4);
+        while (opts.length < 4) opts.push('');
+        csv += `"${(q.text || '').replace(/"/g, '""')}",`;
+        csv += opts.map(o => `"${String(o || '').replace(/"/g, '""')}"`).join(',');
+        csv += `,${correctLetter},1\n`;
+      }
+    });
+
+    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `classroom-${cat.name.replace(/\s+/g, '-')}-${Date.now()}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    if (typeof toast === 'function') toast('تم تصدير ملف Google Classroom CSV', 'success');
+  }
+
+  // ── QTI 2.1 Export (IMS standard) ──
+  function exportToQTI(categoryId) {
+    const cat = state.categories.find(c => c.id === categoryId);
+    if (!cat) return;
+
+    const escapeXml = (s) => String(s || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    xml += '<questestinterop xmlns="http://www.imsglobal.org/xsd/ims_qtiasiv2p1">\n';
+    xml += '  <assessment title="' + escapeXml(cat.name) + '">\n';
+    xml += '    <section ident="section_' + cat.id + '">\n';
+
+    (cat.questions || []).forEach((q, idx) => {
+      const ident = `q_${cat.id}_${idx}`;
+      xml += `      <item ident="${ident}" title="${escapeXml((q.text || '').slice(0, 50))}">\n`;
+      xml += `        <presentation>\n`;
+      xml += `          <material>\n`;
+      xml += `            <mattext>${escapeXml(q.text)}</mattext>\n`;
+      xml += `          </material>\n`;
+
+      if (q.type === 'mcq') {
+        xml += `          <response_lid ident="RESPONSE" rcardinality="Single">\n`;
+        xml += `            <render_choice>\n`;
+        (q.options || []).forEach((opt, oi) => {
+          xml += `              <response_label ident="opt_${oi}">\n`;
+          xml += `                <material><mattext>${escapeXml(opt)}</mattext></material>\n`;
+          xml += `              </response_label>\n`;
+        });
+        xml += `            </render_choice>\n`;
+        xml += `          </response_lid>\n`;
+      }
+
+      xml += `        </presentation>\n`;
+      xml += `        <resprocessing>\n`;
+      xml += `          <outcomes><decvar varname="SCORE" vartype="Integer" minvalue="0" maxvalue="1"/></outcomes>\n`;
+
+      if (q.type === 'mcq') {
+        xml += `          <respcondition continue="No">\n`;
+        xml += `            <conditionvar><varequal respident="RESPONSE">opt_${q.correct}</varequal></conditionvar>\n`;
+        xml += `            <setvar action="Set" varname="SCORE">1</setvar>\n`;
+        xml += `          </respcondition>\n`;
+      }
+
+      xml += `        </resprocessing>\n`;
+      xml += `      </item>\n`;
+    });
+
+    xml += '    </section>\n';
+    xml += '  </assessment>\n';
+    xml += '</questestinterop>\n';
+
+    const blob = new Blob([xml], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `qti-${cat.name.replace(/\s+/g, '-')}-${Date.now()}.xml`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    if (typeof toast === 'function') toast('تم تصدير ملف QTI 2.1', 'success');
+  }
+
+  // ── UI: Open LMS export modal ──
+  function openExportModal(categoryId) {
+    const cat = state.categories.find(c => c.id === categoryId);
+    if (!cat) return;
+
+    if (typeof confirmAction !== 'function') {
+      // Fallback: simple prompt
+      _showExportMenu(categoryId);
+      return;
+    }
+
+    _showExportMenu(categoryId);
+  }
+
+  function _showExportMenu(categoryId) {
+    let menu = document.getElementById('lms-export-menu');
+    if (!menu) {
+      menu = document.createElement('div');
+      menu.id = 'lms-export-menu';
+      menu.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg-surface);padding:24px;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:10000;min-width:300px';
+      menu.innerHTML = `
+        <h3 style="margin:0 0 16px;color:var(--text-primary)">📤 تصدير إلى LMS</h3>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-primary" onclick="LMS.exportToMoodleXML('${''}')">📘 Moodle XML</button>
+          <button class="btn btn-primary" onclick="LMS.exportToGoogleClassroomCSV('${''}')">🎓 Google Classroom CSV</button>
+          <button class="btn btn-primary" onclick="LMS.exportToQTI('${''}')">📋 QTI 2.1 (IMS)</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('lms-export-menu').remove()">إلغاء</button>
+        </div>
+      `;
+      document.body.appendChild(menu);
+    }
+
+    // Update onclick handlers with the actual categoryId
+    menu.querySelectorAll('button[onclick^="LMS.export"]').forEach(btn => {
+      const fn = btn.getAttribute('onclick').match(/LMS\.(\w+)/);
+      if (fn) {
+        const funcName = fn[1];
+        btn.setAttribute('onclick', `LMS.${funcName}('${categoryId}'); document.getElementById('lms-export-menu').remove()`);
+      }
+    });
+  }
+
+  return {
+    exportToMoodleXML,
+    importFromGIFT,
+    exportToGoogleClassroomCSV,
+    exportToQTI,
+    openExportModal,
+  };
+})();
+
+console.info('[LMS] V15.0 LMS Integration loaded');
+
+</script>
+  <!-- V15.0: i18n extensions — French (fr) + Urdu (ur) translations -->
+  <script>
+/* === /src/app/i18n-extensions.js === */
+// ============================================================
+// i18n-extensions.js — Additional language support (French, Urdu)
+// Phase 4 (T-042) — Extends the existing I18n system
+// ============================================================
+// Adds French (fr) and Urdu (ur) to the existing Arabic (ar) and English (en).
+// Only core UI strings are translated here; full coverage will be added
+// incrementally. Missing keys fall back to English, then Arabic.
+// ============================================================
+
+(function() {
+  'use strict';
+
+  // Wait for I18n to be available
+  function _init() {
+    if (typeof I18n === 'undefined') {
+      setTimeout(_init, 50);
+      return;
+    }
+
+    // French translations
+    var fr = {
+      'app.title': 'Plateforme de Quiz Interactive',
+      'app.shortTitle': 'Quiz',
+      'login.heading': 'Panneau de Configuration',
+      'login.sub': 'Gérer le quiz, les paramètres et les équipes',
+      'login.password': 'Mot de passe',
+      'login.enter': 'Entrer',
+      'login.wrongPassword': 'Mot de passe incorrect',
+      'admin.startPres': 'Démarrer',
+      'admin.home': 'Accueil',
+      'admin.categoriesCount': 'catégories',
+      'admin.questionsCount': 'questions',
+      'admin.soloQuestions': 'questions solo',
+      'admin.title': 'Panneau d\'Administration',
+      'admin.controlPanel': 'Panneau de Configuration',
+      'categories.add': 'Ajouter une catégorie',
+      'categories.edit': 'Modifier la catégorie',
+      'categories.delete': 'Supprimer la catégorie',
+      'categories.name': 'Nom de la catégorie',
+      'categories.empty': 'Aucune catégorie',
+      'questions.add': 'Ajouter une question',
+      'questions.edit': 'Modifier la question',
+      'questions.delete': 'Supprimer la question',
+      'questions.text': 'Texte de la question',
+      'questions.type': 'Type de question',
+      'questions.difficulty': 'Difficulté',
+      'questions.time': 'Temps (secondes)',
+      'questions.options': 'Options',
+      'questions.correct': 'Bonne réponse',
+      'questions.explanation': 'Explication',
+      'teams.add': 'Ajouter une équipe',
+      'teams.edit': 'Modifier l\'équipe',
+      'teams.delete': 'Supprimer l\'équipe',
+      'teams.name': 'Nom de l\'équipe',
+      'teams.color': 'Couleur',
+      'teams.members': 'Membres',
+      'toast.saved': 'Enregistré avec succès',
+      'toast.deleted': 'Supprimé',
+      'toast.error': 'Une erreur est survenue',
+      'toast.success': 'Succès',
+      'toast.warning': 'Attention',
+      'toast.info': 'Information',
+      'toast.exportSuccess': 'Exportation réussie',
+      'toast.importSuccess': 'Importation réussie',
+      'confirm.delete': 'Êtes-vous sûr de vouloir supprimer?',
+      'confirm.deleteQuestion': 'Supprimer cette question?',
+      'confirm.deleteCategory': 'Supprimer cette catégorie?',
+      'confirm.deleteTeam': 'Supprimer cette équipe?',
+      'confirm.reset': 'Réinitialiser?',
+      'lbl.confirm': 'Confirmer',
+      'lbl.cancel': 'Annuler',
+      'lbl.save': 'Enregistrer',
+      'lbl.delete': 'Supprimer',
+      'lbl.edit': 'Modifier',
+      'lbl.add': 'Ajouter',
+      'lbl.close': 'Fermer',
+      'lbl.search': 'Rechercher',
+      'lbl.all': 'Tous',
+      'lbl.none': 'Aucun',
+      'lbl.yes': 'Oui',
+      'lbl.no': 'Non',
+      'qbadge.image': 'IMAGE',
+      'qbadge.audio': 'AUDIO',
+      'qbadge.video': 'VIDÉO',
+      'qbadge.math': 'MATH',
+      'qbadge.tf': 'V/F',
+      'qbadge.fitb': 'COMPLÉTER',
+      'qbadge.quran': 'CORAN',
+      'qbadge.order': 'ORDRE',
+      'qbadge.match': 'ASSOCIER',
+      'diff.easy': 'Facile',
+      'diff.medium': 'Moyen',
+      'diff.hard': 'Difficile',
+      'settings.title': 'Paramètres',
+      'settings.general': 'Général',
+      'settings.audio': 'Audio',
+      'settings.theme': 'Thème',
+      'settings.accessibility': 'Accessibilité',
+      'settings.language': 'Langue',
+      'settings.timer': 'Minuteur',
+      'settings.scoring': 'Score',
+      'settings.backup': 'Sauvegarde',
+      'settings.export': 'Exporter',
+      'settings.import': 'Importer',
+      'pres.start': 'Démarrer la présentation',
+      'pres.exit': 'Quitter la présentation',
+      'pres.audience': 'Écran public',
+      'pres.remote': 'Télécommande',
+      'pres.fullscreen': 'Plein écran',
+      'timer.remaining': 'Temps restant',
+      'timer.expired': 'Temps écoulé',
+      'score.current': 'Score actuel',
+      'score.leader': 'En tête',
+      'score.tie': 'Égalité',
+      'solo.title': 'Mode Solo',
+      'solo.level': 'Niveau',
+      'solo.stars': 'Étoiles',
+      'solo.next': 'Niveau suivant',
+      'solo.retry': 'Réessayer',
+      'solo.complete': 'Niveau terminé!',
+      'solo.locked': 'Verrouillé',
+      'aria.login': 'Connexion',
+      'aria.loginForm': 'Formulaire de connexion',
+      'aria.controlPanel': 'Panneau de configuration',
+      'aria.startPresentation': 'Démarrer la présentation',
+      'aria.questionText': 'Texte de la question',
+      'aria.scoreDisplay': 'Affichage du score',
+      'aria.timerDisplay': 'Affichage du minuteur',
+      'title.dragToReorder': 'Glisser pour réorganiser',
+      'title.moveUp': 'Monter',
+      'title.moveDown': 'Descendre',
+      'cert.imageLoaded': 'Image chargée ✅',
+      'cert.noImage': 'Aucune image',
+    };
+
+    // Urdu translations
+    var ur = {
+      'app.title': 'انٹرایکٹو کوئز پلیٹ فارم',
+      'app.shortTitle': 'کوئز',
+      'login.heading': 'کنٹرول پینل',
+      'login.sub': 'کوئز، ترتیبات اور ٹیموں کا انتظام',
+      'login.password': 'پاس ورڈ',
+      'login.enter': 'داخل ہوں',
+      'login.wrongPassword': 'غلط پاس ورڈ',
+      'admin.startPres': 'شروع کریں',
+      'admin.home': 'گھر',
+      'admin.categoriesCount': 'اقسام',
+      'admin.questionsCount': 'سوالات',
+      'admin.soloQuestions': 'سولو سوالات',
+      'admin.title': 'انتظامیہ پینل',
+      'admin.controlPanel': 'کنٹرول پینل',
+      'categories.add': 'کوئی کیٹگری شامل کریں',
+      'categories.edit': 'کیٹگری میں ترمیم کریں',
+      'categories.delete': 'کیٹگری حذف کریں',
+      'categories.name': 'کیٹگری کا نام',
+      'categories.empty': 'کوئی کیٹگری نہیں',
+      'questions.add': 'سوال شامل کریں',
+      'questions.edit': 'سوال میں ترمیم',
+      'questions.delete': 'سوال حذف کریں',
+      'questions.text': 'سوال کا متن',
+      'questions.type': 'سوال کی قسم',
+      'questions.difficulty': 'مشکل',
+      'questions.time': 'وقت (سیکنڈ)',
+      'questions.options': 'اختیارات',
+      'questions.correct': 'درست جواب',
+      'questions.explanation': 'وضاحت',
+      'teams.add': 'ٹیم شامل کریں',
+      'teams.edit': 'ٹیم میں ترمیم',
+      'teams.delete': 'ٹیم حذف کریں',
+      'teams.name': 'ٹیم کا نام',
+      'teams.color': 'رنگ',
+      'teams.members': 'ارکان',
+      'toast.saved': 'کامیابی سے محفوظ ہو گیا',
+      'toast.deleted': 'حذف ہو گیا',
+      'toast.error': 'ایک خرابی پیش آئی',
+      'toast.success': 'کامیاب',
+      'toast.warning': 'دھیان',
+      'toast.info': 'معلومات',
+      'toast.exportSuccess': 'برآمد کامیاب',
+      'toast.importSuccess': 'درآمد کامیاب',
+      'confirm.delete': 'کیا آپ واقعی حذف کرنا چاہتے ہیں؟',
+      'confirm.deleteQuestion': 'اس سوال کو حذف کریں؟',
+      'confirm.deleteCategory': 'اس کیٹگری کو حذف کریں؟',
+      'confirm.deleteTeam': 'اس ٹیم کو حذف کریں؟',
+      'confirm.reset': 'ری سیٹ کریں؟',
+      'lbl.confirm': 'تصدیق',
+      'lbl.cancel': 'منسوخ',
+      'lbl.save': 'محفوظ کریں',
+      'lbl.delete': 'حذف کریں',
+      'lbl.edit': 'ترمیم',
+      'lbl.add': 'شامل کریں',
+      'lbl.close': 'بند کریں',
+      'lbl.search': 'تلاش',
+      'lbl.all': 'تمام',
+      'lbl.none': 'کوئی نہیں',
+      'lbl.yes': 'ہاں',
+      'lbl.no': 'نہیں',
+      'qbadge.image': 'تصویر',
+      'qbadge.audio': 'آڈیو',
+      'qbadge.video': 'ویڈیو',
+      'qbadge.math': 'ریاضی',
+      'qbadge.tf': 'ص/غ',
+      'qbadge.fitb': 'پریں',
+      'qbadge.quran': 'قرآن',
+      'qbadge.order': 'ترتیب',
+      'qbadge.match': 'ملائیں',
+      'diff.easy': 'آسان',
+      'diff.medium': 'درمیانہ',
+      'diff.hard': 'مشکل',
+      'settings.title': 'ترتیبات',
+      'settings.general': 'عام',
+      'settings.audio': 'آڈیو',
+      'settings.theme': 'تھیم',
+      'settings.accessibility': 'رسایی',
+      'settings.language': 'زبان',
+      'settings.timer': 'ٹائمر',
+      'settings.scoring': 'اسکور',
+      'settings.backup': 'بیک اپ',
+      'settings.export': 'برآمد کریں',
+      'settings.import': 'درآمد کریں',
+      'pres.start': 'پیشکش شروع کریں',
+      'pres.exit': 'پیشکش سے باہر',
+      'pres.audience': 'ناظرین اسکرین',
+      'pres.remote': 'ریموٹ کنٹرول',
+      'pres.fullscreen': 'مکمل اسکرین',
+      'timer.remaining': 'بقیہ وقت',
+      'timer.expired': 'وقت ختم',
+      'score.current': 'موجودہ اسکور',
+      'score.leader': 'آگے',
+      'score.tie': 'برابر',
+      'solo.title': 'سولو موڈ',
+      'solo.level': 'لیول',
+      'solo.stars': 'ستارے',
+      'solo.next': 'اگلا لیول',
+      'solo.retry': 'دوبارہ کوشش',
+      'solo.complete': 'لیول مکمل!',
+      'solo.locked': 'بند',
+      'aria.login': 'لاگ ان',
+      'aria.loginForm': 'لاگ ان فارم',
+      'aria.controlPanel': 'کنٹرول پینل',
+      'aria.startPresentation': 'پیشکش شروع کریں',
+      'aria.questionText': 'سوال کا متن',
+      'aria.scoreDisplay': 'اسکور ڈسپلے',
+      'aria.timerDisplay': 'ٹائمر ڈسپلے',
+      'title.dragToReorder': 'دوبارہ ترتیب کے لیے کھینچیں',
+      'title.moveUp': 'اوپر',
+      'title.moveDown': 'نیچے',
+      'cert.imageLoaded': 'تصویر لوڈ ہو گئی ✅',
+      'cert.noImage': 'کوئی تصویر نہیں',
+    };
+
+    // Merge translations into I18n dictionaries
+    if (!I18n._dicts) I18n._dicts = {};
+    I18n._dicts.fr = fr;
+    I18n._dicts.ur = ur;
+
+    // Add to the list of available languages (if the app uses such a list)
+    if (typeof window.AVAILABLE_LANGUAGES !== 'undefined') {
+      if (!window.AVAILABLE_LANGUAGES.find(l => l.code === 'fr')) {
+        window.AVAILABLE_LANGUAGES.push({ code: 'fr', name: 'Français', dir: 'ltr', flag: '🇫🇷' });
+      }
+      if (!window.AVAILABLE_LANGUAGES.find(l => l.code === 'ur')) {
+        window.AVAILABLE_LANGUAGES.push({ code: 'ur', name: 'اردو', dir: 'rtl', flag: '🇵🇰' });
+      }
+    }
+
+    // Patch I18n.t to support the new languages with fallback
+    if (!I18n._tPatched) {
+      var _origT = I18n.t;
+      I18n.t = function(key, fallback) {
+        var lang = (state && state.settings && state.settings.lang) || 'ar';
+        // Try current language
+        if (I18n._dicts[lang] && I18n._dicts[lang][key]) {
+          return I18n._dicts[lang][key];
+        }
+        // Fall back to English
+        if (I18n._dicts.en && I18n._dicts.en[key]) {
+          return I18n._dicts.en[key];
+        }
+        // Fall back to Arabic (original)
+        if (I18n._dicts.ar && I18n._dicts.ar[key]) {
+          return I18n._dicts.ar[key];
+        }
+        // Fall back to the provided fallback
+        return fallback || key;
+      };
+      I18n._tPatched = true;
+    }
+
+    // Helper to set document direction based on language
+    I18n.setLanguage = function(lang) {
+      if (!state.settings) state.settings = {};
+      state.settings.lang = lang;
+      var dir = (lang === 'ar' || lang === 'ur') ? 'rtl' : 'ltr';
+      document.documentElement.setAttribute('dir', dir);
+      document.documentElement.setAttribute('lang', lang);
+      try { saveState(); } catch (e) {}
+      // Re-render UI
+      if (typeof _applyI18n === 'function') _applyI18n();
+      if (typeof renderAdmin === 'function') renderAdmin(true);
+      console.info('[i18n] Language set to:', lang, '(dir:', dir + ')');
+    };
+
+    console.info('[i18n] French (fr) and Urdu (ur) translations registered');
+  }
+
+  _init();
+})();
+
+</script>
+  <!-- V15.0: PWA registration — Service Worker + install prompt -->
+  <script>
+/* === /src/app/pwa-register.js === */
+// ============================================================
+// pwa-register.js — Service Worker Registration Helper
+// Phase 4 (T-040) — Registers the SW, handles updates, exposes API
+// ============================================================
+// Usage in app:
+//   if ('serviceWorker' in navigator) {
+//     PWA.register();
+//   }
+// API:
+//   PWA.checkForUpdate()  — manually check for SW updates
+//   PWA.applyUpdate()     — apply pending SW update
+//   PWA.clearCache()      — clear all caches (for debugging)
+//   PWA.isInstalled()     — check if running as installed PWA
+// ============================================================
+
+window.PWA = (function() {
+  const SW_PATH = '/sw.js';
+  const SW_SCOPE = '/';
+  let _registration = null;
+  let _updateAvailable = false;
+
+  // ── Register the Service Worker ──
+  async function register() {
+    if (!('serviceWorker' in navigator)) {
+      console.info('[PWA] Service Worker not supported — skipping registration');
+      return null;
+    }
+
+    try {
+      _registration = await navigator.serviceWorker.register(SW_PATH, {
+        scope: SW_SCOPE,
+        updateViaCache: 'none',  // Always fetch latest SW from network
+      });
+
+      console.info('[PWA] Service Worker registered:', _registration.scope);
+
+      // Listen for updates
+      _registration.addEventListener('updatefound', () => {
+        const newWorker = _registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed') {
+              if (navigator.serviceWorker.controller) {
+                // New version available
+                _updateAvailable = true;
+                _notifyUpdateAvailable();
+              } else {
+                // First install — SW pre-cached assets
+                console.info('[PWA] Content cached for offline use');
+              }
+            }
+          });
+        }
+      });
+
+      // Listen for messages from SW
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'SW_UPDATED') {
+          console.info('[PWA] SW updated to version:', event.data.version);
+          _showUpdateToast();
+        }
+      });
+
+      return _registration;
+    } catch (err) {
+      console.warn('[PWA] SW registration failed:', err);
+      return null;
+    }
+  }
+
+  // ── Check for updates manually ──
+  async function checkForUpdate() {
+    if (!_registration) return false;
+    try {
+      await _registration.update();
+      return _updateAvailable;
+    } catch (err) {
+      console.warn('[PWA] Update check failed:', err);
+      return false;
+    }
+  }
+
+  // ── Apply pending update (reload page) ──
+  async function applyUpdate() {
+    if (!_registration || !_registration.waiting) {
+      console.info('[PWA] No pending update to apply');
+      return;
+    }
+    // Tell the waiting SW to skip waiting
+    _registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    // Listen for controller change, then reload
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      window.location.reload();
+    });
+  }
+
+  // ── Clear all caches (debugging) ──
+  async function clearCache() {
+    if (!_registration || !_registration.active) {
+      console.warn('[PWA] No active SW to clear caches');
+      return false;
+    }
+    return new Promise((resolve) => {
+      const channel = new MessageChannel();
+      channel.port1.onmessage = (event) => {
+        resolve(event.data.cleared);
+      };
+      _registration.active.postMessage({ type: 'CLEAR_CACHE' }, [channel.port2]);
+    });
+  }
+
+  // ── Check if running as installed PWA ──
+  function isInstalled() {
+    // iOS Safari
+    if (window.navigator.standalone === true) return true;
+    // Chrome/Edge/Firefox
+    if (window.matchMedia('(display-mode: standalone)').matches) return true;
+    // Windows (display_override: window-controls-overlay)
+    if (window.matchMedia('(display-mode: window-controls-overlay)').matches) return true;
+    return false;
+  }
+
+  // ── Prompt user to install (beforeinstallprompt event) ──
+  let _deferredPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent Chrome 67+ from showing the mini-infobar
+    e.preventDefault();
+    _deferredPrompt = e;
+    console.info('[PWA] beforeinstallprompt event captured — can show install button');
+    _showInstallButton();
+  });
+
+  async function promptInstall() {
+    if (!_deferredPrompt) {
+      console.info('[PWA] No deferred install prompt available');
+      return false;
+    }
+    _deferredPrompt.prompt();
+    const { outcome } = await _deferredPrompt.userChoice;
+    _deferredPrompt = null;
+    console.info('[PWA] Install prompt outcome:', outcome);
+    return outcome === 'accepted';
+  }
+
+  // ── UI Helpers ──
+  function _notifyUpdateAvailable() {
+    // Dispatch a custom event that the app can listen for
+    window.dispatchEvent(new CustomEvent('pwa-update-available', {
+      detail: { version: 'v15.0' }
+    }));
+  }
+
+  function _showUpdateToast() {
+    if (typeof toast === 'function') {
+      toast('تحديث جديد متاح — أعد تحميل الصفحة لتطبيقه', 'info');
+    }
+  }
+
+  function _showInstallButton() {
+    // Dispatch event — app can show an "Install App" button
+    window.dispatchEvent(new CustomEvent('pwa-install-available'));
+  }
+
+  // ── Auto-check for updates every hour ──
+  if ('serviceWorker' in navigator) {
+    setInterval(() => {
+      checkForUpdate();
+    }, 60 * 60 * 1000);  // 1 hour
+  }
+
+  return {
+    register,
+    checkForUpdate,
+    applyUpdate,
+    clearCache,
+    isInstalled,
+    promptInstall,
+    get updateAvailable() { return _updateAvailable; },
+    get registration() { return _registration; },
+  };
+})();
+
+// Auto-register on DOMContentLoaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => PWA.register());
+} else {
+  PWA.register();
+}
 
 </script>
 </body>

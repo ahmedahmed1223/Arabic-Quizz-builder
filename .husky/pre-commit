@@ -1,0 +1,53 @@
+#!/bin/sh
+# ============================================================
+# pre-commit — Husky hook
+# V15.0 — Phase 2 (T-025)
+# ============================================================
+# Runs before each commit. Validates:
+#   1. ESLint on staged .js files
+#   2. Prettier formatting check
+#   3. Quick syntax check on all source files
+# ============================================================
+
+. "$(dirname "$0")/_/husky.sh"
+
+echo "📋 Running pre-commit checks..."
+
+# ── 1. ESLint on staged JS files ──
+STAGED_JS=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|cjs|mjs)$' | grep -v 'vendor/' || true)
+if [ -n "$STAGED_JS" ]; then
+  echo "🔍 Running ESLint..."
+  echo "$STAGED_JS" | xargs npx eslint --max-warnings=0
+  if [ $? -ne 0 ]; then
+    echo "❌ ESLint failed. Fix the errors above or run 'npx eslint --fix' to auto-fix."
+    exit 1
+  fi
+  echo "✓ ESLint passed"
+fi
+
+# ── 2. Prettier formatting check ──
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|cjs|mjs|css|html|json)$' || true)
+if [ -n "$STAGED_FILES" ]; then
+  echo "🎨 Checking Prettier formatting..."
+  echo "$STAGED_FILES" | xargs npx prettier --check
+  if [ $? -ne 0 ]; then
+    echo "❌ Prettier check failed. Run 'npx prettier --write' on the affected files."
+    exit 1
+  fi
+  echo "✓ Prettier formatting OK"
+fi
+
+# ── 3. Quick syntax check on all source files ──
+echo "🔧 Running syntax check..."
+for f in src/app/*.js; do
+  if [ -f "$f" ]; then
+    node --check "$f" 2>/dev/null
+    if [ $? -ne 0 ]; then
+      echo "❌ Syntax error in $f"
+      exit 1
+    fi
+  fi
+done
+echo "✓ Syntax check passed"
+
+echo "✅ All pre-commit checks passed!"

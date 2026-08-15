@@ -44,11 +44,22 @@ function _showCatImagePreview(src){
   const img=document.getElementById('cat-image-preview');
   const nm=document.getElementById('cat-image-name');
   if(src){
-    if(img)img.src=src;
+    if(img){
+      img.src=src;
+      // V15.0-fix (P2-2): Set descriptive alt for screen readers when image is loaded.
+      // Previously alt="" (decorative) — screen readers said nothing about the image.
+      // Now: alt includes context "صورة القسم" so screen reader users know what it is.
+      var catName='';
+      try{
+        var nameInput=document.getElementById('cat-name-input');
+        if(nameInput)catName=nameInput.value||'';
+      }catch(e){}
+      img.alt=catName?('صورة القسم: '+catName):'صورة القسم';
+    }
     if(wrap)wrap.style.display='block';
     if(nm)nm.textContent=I18n.t('cert.imageLoaded')||'صورة محمّلة ✅';
   }else{
-    if(img)img.src='';
+    if(img){img.src='';img.alt='';}
     if(wrap)wrap.style.display='none';
     if(nm)nm.textContent=I18n.t('cert.noImage')||'لم تُختر صورة';
   }
@@ -68,8 +79,23 @@ function loadTeamImage(input){
 function _showTeamImagePreview(src){
   const wrap=document.getElementById('team-image-preview-wrap');
   const img=document.getElementById('team-image-preview');
-  if(src){if(img)img.src=src;if(wrap)wrap.style.display='block';}
-  else{if(img)img.src='';if(wrap)wrap.style.display='none';}
+  if(src){
+    if(img){
+      img.src=src;
+      // V15.0-fix (P2-2): Set descriptive alt for team image
+      var teamName='';
+      try{
+        var nameInput=document.getElementById('team-name-input');
+        if(nameInput)teamName=nameInput.value||'';
+      }catch(e){}
+      img.alt=teamName?('صورة الفريق: '+teamName):'صورة الفريق';
+    }
+    if(wrap)wrap.style.display='block';
+  }
+  else{
+    if(img){img.src='';img.alt='';}
+    if(wrap)wrap.style.display='none';
+  }
   window._teamImageTemp=src||null;
 }
 function clearTeamImage(){_showTeamImagePreview(null);}

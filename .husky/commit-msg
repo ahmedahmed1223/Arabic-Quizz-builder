@@ -1,0 +1,73 @@
+#!/bin/sh
+# ============================================================
+# commit-msg — Husky hook
+# V15.0 — Phase 2 (T-025)
+# ============================================================
+# Enforces Conventional Commits format on commit messages.
+# Format: type(scope): subject
+#   type:    feat|fix|refactor|perf|docs|test|chore|ci|style|build
+#   scope:   optional (e.g., storage, ui, timer, security)
+#   subject: imperative mood, lowercase, ≤72 chars
+# Examples:
+#   feat(storage): add IDB batching for saveAllMedia
+#   fix(timer): correct TimerRegistry.register signature
+#   perf(render): patch adjustScore DOM in-place
+# ============================================================
+
+. "$(dirname "$0")/_/husky.sh"
+
+commit_msg_file="$1"
+commit_msg=$(cat "$commit_msg_file")
+
+# Allow merge commits and revert commits to bypass the format check
+if echo "$commit_msg" | grep -qE '^(Merge|Revert|fixup!|squash!)'; then
+  exit 0
+fi
+
+# Conventional commit regex
+# - type: feat|fix|refactor|perf|docs|test|chore|ci|style|build|hotfix
+# - scope: optional, in parentheses, alphanumeric + dash
+# - breaking: optional "!" before colon
+# - subject: any non-empty text
+# - body/footer: optional, separated by blank line
+pattern='^(feat|fix|refactor|perf|docs|test|chore|ci|style|build|hotfix)(\([a-z0-9-]+\))?(!)?: .{1,72}(\n\n.*)?$'
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo "❌ Commit message does not follow Conventional Commits format."
+  echo ""
+  echo "Expected format: type(scope): subject"
+  echo ""
+  echo "Types:"
+  echo "  feat      A new feature"
+  echo "  fix       A bug fix"
+  echo "  refactor  Code restructuring without behavior change"
+  echo "  perf      Performance improvement"
+  echo "  docs      Documentation only"
+  echo "  test      Test additions or corrections"
+  echo "  chore     Build process, tooling, dependencies"
+  echo "  ci        CI/CD changes"
+  echo "  style     Formatting only (no code change)"
+  echo "  build     Build system or dependencies"
+  echo "  hotfix    Critical production fix"
+  echo ""
+  echo "Examples:"
+  echo "  feat(storage): add IDB batching for saveAllMedia"
+  echo "  fix(timer): correct TimerRegistry.register signature"
+  echo "  perf(render): patch adjustScore DOM in-place"
+  echo "  docs(readme): document V15.0 changes"
+  echo ""
+  echo "Your message was:"
+  echo "  $commit_msg"
+  exit 1
+fi
+
+# Check subject line length (≤72 chars after the colon)
+subject_line=$(echo "$commit_msg" | head -1)
+subject_part=$(echo "$subject_line" | sed -E 's/^[a-z]+(\([a-z0-9-]+\))?(!)?: //')
+subject_len=${#subject_part}
+if [ $subject_len -gt 72 ]; then
+  echo "⚠️  Commit subject is $subject_len chars (recommended ≤ 72)."
+  echo "    Consider shortening: $subject_part"
+fi
+
+exit 0
