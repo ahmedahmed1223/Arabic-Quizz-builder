@@ -22,16 +22,41 @@
       try{showView('login',true);}catch(err){}
     }
   });
-  // Apply pending hash view after init
-  const _origInit=window.init;
-  if(typeof _origInit==='function'){
-    window.init=function(){
-      _origInit.apply(this,arguments);
-      if(window._pendingHashView){
-        try{showView(window._pendingHashView,true);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-        window._pendingHashView=null;
+  // V15.0-fix (P1-5): The previous approach wrapped window.init, but window.init
+  // is never assigned in the main window (it only exists inside audience/remote
+  // window template strings). The wrap was therefore dead code and direct-URL
+  // hash navigation (e.g. opening https://quiz.app/#admin) never worked.
+  // Fix: apply the pending hash view AFTER _initApp has run. _initApp is a
+  // local function inside 30-more-i18n.js and is called either on DOMContentLoaded
+  // or immediately if the DOM is ready. We listen for the same events and run
+  // after _initApp's turn in the event loop.
+  function _applyPendingHashView(){
+    if(window._pendingHashView){
+      var target=window._pendingHashView;
+      window._pendingHashView=null;
+      try{
+        if(document.getElementById('view-'+target)){
+          showView(target,true);
+          console.info('[HistoryAPI] Applied pending hash view:',target);
+        }else{
+          console.warn('[HistoryAPI] Target view not found:',target);
+        }
+      }catch(e){
+        try{ErrorBus.capture(e,'HistoryAPI/applyPendingHash');}catch(_){console.error('[HistoryAPI]',e);}
       }
-    };
+    }
+  }
+  // _initApp may run synchronously OR on DOMContentLoaded. To handle both:
+  // 1) If DOM is still loading, register a DOMContentLoaded listener that
+  //    fires AFTER _initApp (addEventListener appends, so order is preserved).
+  // 2) If DOM is already loaded, _initApp has already run — apply hash now.
+  // Use setTimeout(0) to defer past any synchronous tail of _initApp.
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){
+      setTimeout(_applyPendingHashView,0);
+    });
+  }else{
+    setTimeout(_applyPendingHashView,0);
   }
 })();
 // Feature 2c: Navigation keyboard shortcuts (Alt+Left = back, Alt+Right = forward)

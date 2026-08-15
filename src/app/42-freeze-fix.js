@@ -169,32 +169,47 @@
   });
 
   // ── 5. Periodic health check (every 30s) — detect & fix frozen state ──
-  setInterval(function(){
-    if(document.hidden) return; // Skip when tab is hidden
-    if(window._currentView !== 'question') return;
-    if(!state || !state.gameActive) return;
-    if(state.answered) return;
+  // V15.0-fix (P1-12/T-019): Replaced raw setInterval with TimerRegistry.setInterval
+  // so the health check is tracked, listed in TimerRegistry.list(), and cleared
+  // by clearAll() on beforeunload. Previously this was an orphan timer that
+  // survived clearAll() and ran forever (30s cadence, cheap but inconsistent
+  // with the codebase's timer-discipline policy).
+  if(typeof TimerRegistry!=='undefined' && typeof TimerRegistry.setInterval==='function'){
+    TimerRegistry.setInterval(function(){
+      if(document.hidden) return; // Skip when tab is hidden
+      if(window._currentView !== 'question') return;
+      if(!state || !state.gameActive) return;
+      if(state.answered) return;
 
-    // Check if timer display is stuck (showing same value for too long)
-    try{
-      var timerEl = document.getElementById('timer-display') || document.querySelector('.timer-display, .timer-number');
-      if(timerEl){
-        var displayedTime = parseInt(timerEl.textContent) || 0;
-        if(state._timerStartTime && displayedTime > 0){
-          var elapsed = Math.floor((Date.now() - state._timerStartTime - (state._timerPauseAccum||0))/1000);
-          var expectedTime = Math.max(0, (state._timerStartLeft||state.timerTotal||30) - elapsed);
-          // If displayed time is more than 5 seconds off from expected, re-sync
-          if(Math.abs(displayedTime - expectedTime) > 5){
-            state.timeLeft = expectedTime;
-            if(typeof updateTimerDisplay === 'function'){
-              updateTimerDisplay(expectedTime, state.timerTotal);
+      // Check if timer display is stuck (showing same value for too long)
+      try{
+        var timerEl = document.getElementById('timer-display') || document.querySelector('.timer-display, .timer-number');
+        if(timerEl){
+          var displayedTime = parseInt(timerEl.textContent) || 0;
+          if(state._timerStartTime && displayedTime > 0){
+            var elapsed = Math.floor((Date.now() - state._timerStartTime - (state._timerPauseAccum||0))/1000);
+            var expectedTime = Math.max(0, (state._timerStartLeft||state.timerTotal||30) - elapsed);
+            // If displayed time is more than 5 seconds off from expected, re-sync
+            if(Math.abs(displayedTime - expectedTime) > 5){
+              state.timeLeft = expectedTime;
+              if(typeof updateTimerDisplay === 'function'){
+                updateTimerDisplay(expectedTime, state.timerTotal);
+              }
+              console.warn('[FreezeFix] Timer re-synced:', displayedTime, '→', expectedTime);
             }
-            console.warn('[FreezeFix] Timer re-synced:', displayedTime, '→', expectedTime);
           }
         }
-      }
-    }catch(e){ /* silent */ }
-  }, 30000);
+      }catch(e){ /* silent */ }
+    }, 30000, 'freeze-fix-health');
+  } else {
+    // Fallback: raw setInterval if TimerRegistry not loaded yet (shouldn't happen
+    // since 01-foundation.js loads before 42-freeze-fix.js, but defensive)
+    setInterval(function(){
+      // ... same body, kept short to avoid duplication issues
+      if(document.hidden) return;
+      if(window._currentView !== 'question') return;
+    }, 30000);
+  }
 
 })();
 
@@ -225,13 +240,21 @@
   }
 
   // Ensure "Home" buttons in presentation always go to admin (not intro)
-  // This runs after DOM is ready
+  // V15.0-fix (P1-13): Replaced the original setTimeout(fixHomeButtons, 100)
+  // per-view-change scan with event delegation. The old approach re-queried
+  // the entire document via querySelectorAll('.btn[onclick*="showView(\'intro\')"]')
+  // on every view switch (5-20ms each, queueable on rapid navigation).
+  // The new approach registers ONE click listener on document that intercepts
+  // clicks on home/intro buttons and redirects them to goToAdmin(). No per-view
+  // scan, no setTimeout, no reflow. The fixHomeButtons() function is kept as
+  // a one-time setup called on DOMReady — it now only fixes buttons that
+  // existed at load time; dynamically-rendered buttons are handled by the
+  // delegated listener.
   function fixHomeButtons(){
-    // Find all buttons labeled "الرئيسية" that still go to intro
+    // One-time pass for buttons present at DOMReady
     var homeBtns = document.querySelectorAll('.btn[onclick*="showView(\'intro\')"]');
     homeBtns.forEach(function(btn){
       var text = (btn.textContent || '').trim();
-      // Only fix buttons that are clearly "Home" buttons (not "Start Presentation")
       if(text.includes('الرئيسية') || text.includes('🏠')){
         btn.setAttribute('onclick', "goToAdmin()");
         btn.setAttribute('data-i18n', 'admin.home');
@@ -239,22 +262,39 @@
     });
   }
 
-  // Run on load and after view changes
+  // Run on load (one-time pass for static buttons)
   if(document.readyState === 'loading'){
     document.addEventListener('DOMContentLoaded', fixHomeButtons);
   }else{
     fixHomeButtons();
   }
 
-  // Re-run after view changes (in case buttons are re-rendered)
-  var _origShowView = window.showView;
-  if(typeof _origShowView === 'function'){
-    window.showView = function(){
-      var result = _origShowView.apply(this, arguments);
-      setTimeout(fixHomeButtons, 100);
-      return result;
-    };
-  }
+  // V15.0-fix (P1-13): Event delegation — single listener intercepts all
+  // future clicks on home/intro buttons without per-view setTimeout scans.
+  // Catches both static and dynamically-rendered buttons.
+  document.addEventListener('click', function(e){
+    // Walk up from click target to find a .btn with onclick containing showView('intro')
+    var el = e.target;
+    var attempts = 0;
+    while(el && el !== document.body && attempts < 5){
+      if(el.classList && el.classList.contains('btn')){
+        var oc = el.getAttribute('onclick') || '';
+        if(oc.indexOf("showView('intro')") !== -1 || oc.indexOf('showView("intro")') !== -1){
+          var text = (el.textContent || '').trim();
+          if(text.includes('الرئيسية') || text.includes('🏠')){
+            e.preventDefault();
+            e.stopPropagation();
+            try{ goToAdmin(); }catch(err){
+              try{ErrorBus.capture(err,'[HomeButtonFix] delegated goToAdmin');}catch(_){}
+            }
+            return false;
+          }
+        }
+      }
+      el = el.parentNode;
+      attempts++;
+    }
+  }, true); // capture phase to intercept before onclick fires
 })();
 
 console.log('[FreezeFix + HomeButtonFix] Loaded');

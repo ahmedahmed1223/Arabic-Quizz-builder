@@ -931,18 +931,28 @@ function initScrollToTop() {
 
   function checkScroll() {
     var scrollY = window.scrollY || document.documentElement.scrollTop;
-    var ac = document.querySelector('.admin-content');
-    var acScroll = ac ? ac.scrollTop : 0;
+    // V15.0-fix (T-033): Cache the .admin-content element reference instead of
+    // re-querying it on every scroll tick. Mobile scroll events fire at 60-120Hz,
+    // so the original document.querySelector('.admin-content') ran hundreds of
+    // times per second during scrolling — each call scanning the entire DOM.
+    // Cache the reference once; re-query only if the cached element was detached
+    // (e.g., view switched and the old .admin-content was removed).
+    if(!_cachedAdminContent || !_cachedAdminContent.isConnected){
+      _cachedAdminContent = document.querySelector('.admin-content');
+    }
+    var acScroll = _cachedAdminContent ? _cachedAdminContent.scrollTop : 0;
     if (scrollY > 300 || acScroll > 300) {
       btn.classList.add('visible');
     } else {
       btn.classList.remove('visible');
     }
   }
+  // V15.0-fix (T-033): Module-level cache for the admin-content element
+  var _cachedAdminContent = document.querySelector('.admin-content');
 
   window.addEventListener('scroll', checkScroll, { passive: true });
-  var ac = document.querySelector('.admin-content');
-  if (ac) ac.addEventListener('scroll', checkScroll, { passive: true });
+  // Reuse the cached reference (already queried above)
+  if (_cachedAdminContent) _cachedAdminContent.addEventListener('scroll', checkScroll, { passive: true });
 }
 
 // ── Keyboard Shortcuts ──

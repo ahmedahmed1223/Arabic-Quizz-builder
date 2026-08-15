@@ -511,14 +511,36 @@ function _pushRemoteState(){
   try{
     var payload=_buildRemoteState();
     payload._ts=Date.now();
-    // Primary: BroadcastChannel
+    // Primary: BroadcastChannel (asynchronous, multi-tab, no main-thread blocking)
+    var _bcOk=false;
     if(_remoteChannel){
-      try{_remoteChannel.postMessage({action:'state_update',payload:payload});}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+      try{_remoteChannel.postMessage({action:'state_update',payload:payload});_bcOk=true;}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }
-    // Secondary: localStorage fallback for cross-origin audience windows
-    try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-    // Tertiary: sessionStorage for same-tab recovery
-    try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+    // V15.0-fix (PERF-7): The original code wrote the FULL payload to BOTH
+    // localStorage AND sessionStorage on every push (every 50ms-500ms during a
+    // live quiz). Both stores are SYNCHRONOUS — a 50-200KB payload caused
+    // 100-400KB of sync I/O per tick, blocking the main thread.
+    // Fix: (a) BroadcastChannel is the primary and only fast path.
+    // (b) localStorage is kept as a SLOW fallback (debounced to 1s) for the
+    //     rare cross-origin audience window case where BC fails.
+    // (c) sessionStorage mirror is removed entirely — it was redundant (same-tab
+    //     recovery is already handled by in-memory state + BroadcastChannel).
+    if(!_bcOk){
+      // Only write to LS if BroadcastChannel failed this tick
+      try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
+    }else{
+      // Debounced LS write as background snapshot (1s cadence, not per-tick)
+      if(!window._pushRemoteLSDebounce){
+        window._pushRemoteLSDebounce=setTimeout(function(){
+          window._pushRemoteLSDebounce=null;
+          try{
+            var _snap=_buildRemoteState();
+            _snap._ts=Date.now();
+            localStorage.setItem('quiz_audience_state',JSON.stringify(_snap));
+          }catch(e){/* silent — LS is best-effort snapshot only */}
+        },1000);
+      }
+    }
     // Push directly to open audience/remote windows via window reference
     // V12-fix: Push to audience window — silently handle errors (window may still be loading)
     if(_audienceWin&&!_audienceWin.closed){
@@ -663,9 +685,9 @@ function showAudienceScreen(){
     if(_audienceWin&&_audienceWin.closed){clearInterval(_audiencePingTimer);return;}
     try{
       var payload=_buildRemoteState();payload._ts=Date.now();
+      // V15.0-fix (PERF-7): BroadcastChannel is the primary path.
+      // No need to mirror to LS/SS on every 800ms ping — BC handles cross-tab.
       if(_remoteChannel)_remoteChannel.postMessage({action:'state_update',payload:payload});
-      try{localStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-      try{sessionStorage.setItem('quiz_audience_state',JSON.stringify(payload));}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
       // V15-fix: Also push via postMessage for popup reliability
       try{_audienceWin.postMessage({action:'audience_state_update',payload:payload},'*');}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
     }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
@@ -1079,18 +1101,10 @@ function init(){
       }
     }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
   },1500));
-  // V15-fix: Also poll sessionStorage as additional fallback
-  _audIntervals.push(setInterval(function(){
-    try{
-      var ssData=sessionStorage.getItem('quiz_audience_state');
-      if(ssData){
-        var parsed2=JSON.parse(ssData);
-        if(parsed2&&(!currentS||parsed2._ts>(currentS._ts||0))){
-          currentS=parsed2;updateAll(parsed2);_lastMsgTime=Date.now();_connectionHealthy=true;
-        }
-      }
-    }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
-  },2000));
+  // V15.0-fix (PERF-7): Removed dead sessionStorage poll. sessionStorage does NOT
+  // share across tabs/windows of the same origin (unlike localStorage), so the
+  // main window's sessionStorage writes were never visible to the audience
+  // window. This polling code was always a no-op — removed to save CPU.
   // V10-fix: Cleanup all intervals on page unload
   window.addEventListener('unload',function(){_audIntervals.forEach(function(id){clearInterval(id);});try{if(ch)ch.close();}catch(e){try{ErrorBus.capture(e,"catch#AUTO_233")}catch(_){}}});
   // V15-fix: Listen for postMessage from host window (most reliable for popup windows)

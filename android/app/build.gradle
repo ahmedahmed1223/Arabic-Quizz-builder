@@ -7,8 +7,8 @@ android {
         applicationId "com.ahmedahmed1223.arabicquizzbuilder"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 15  // V15.0
+        versionName "15.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -18,9 +18,29 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // V15.0-fix (T-035): Enable R8 minification + resource shrinking
+            // for smaller APK. Previous: minifyEnabled false (no shrinking).
+            // Now: R8 removes unused Java/Kotlin code, shrinks resources.
+            // Capacitor rules in proguard-rules.pro keep the WebView bridge.
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // V15.0-fix (T-035): Compress resources more aggressively
+            zipAlignEnabled true
+            // V15.0-fix: Reduce APK size — split per ABI is optional (disable for universal APK)
+            // ndk { abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64' }
         }
+        debug {
+            // Debug: keep minify off for fast builds
+            minifyEnabled false
+            debuggable true
+        }
+    }
+    // V15.0-fix (T-035): Bundle build for smaller Play Store delivery
+    bundle {
+        density { enableSplit = true }
+        abi { enableSplit = true }
+        language { enableSplit = true }
     }
 }
 

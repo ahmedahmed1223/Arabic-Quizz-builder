@@ -1,7 +1,7 @@
 {
   "name": "quiz-platform",
-  "version": "14.0.0",
-  "description": "منصة المسابقات التفاعلية V14 - Interactive Quiz Platform with Capacitor Android support",
+  "version": "15.0.0",
+  "description": "منصة المسابقات التفاعلية V15.0 - Interactive Quiz Platform with Capacitor Android/iOS support",
   "type": "module",
   "private": true,
   "scripts": {
@@ -15,7 +15,22 @@
     "android:build": "npm run build && npx cap sync android && npx cap open android",
     "android:release": "npm run build && npx cap sync android && cd android && ./gradlew assembleRelease",
     "android:debug": "npm run build && npx cap sync android && cd android && ./gradlew assembleDebug",
-    "lint": "eslint src"
+    "ios:sync": "npm run build && npx cap sync ios",
+    "ios:open": "npx cap open ios",
+    "ios:build": "npm run build && npx cap sync ios && npx cap open ios",
+    "ios:debug": "npm run build && npx cap sync ios && npx cap run ios",
+    "ios:release": "npm run build && npx cap sync ios && npx cap build ios --scheme=Release",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.{js,css,html}\" \"tests/**/*.{js,js}\"",
+    "format:check": "prettier --check \"src/**/*.{js,css,html}\" \"tests/**/*.{js,js}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "server:start": "cd server && node server.js",
+    "server:dev": "cd server && node --watch server.js",
+    "prepare": "husky install"
   },
   "keywords": [
     "quiz",
@@ -25,16 +40,28 @@
     "katex",
     "quill",
     "vite",
-    "single-file"
+    "single-file",
+    "pwa",
+    "capacitor",
+    "ios",
+    "android"
   ],
   "author": "Quiz Platform Team",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@vitest/ui": "^2.1.8",
     "eslint": "^9.39.4",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "husky": "^9.1.7",
+    "jsdom": "^25.0.1",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
     "vite": "^5.4.10",
-    "vite-plugin-singlefile": "^2.0.3"
+    "vite-plugin-singlefile": "^2.0.3",
+    "vitest": "^2.1.8"
   },
   "dependencies": {
     "@capacitor/android": "^7.6.7",
@@ -42,7 +69,18 @@
     "@capacitor/cli": "^7.6.7",
     "@capacitor/core": "^7.6.7",
     "@capacitor/haptics": "^7.0.5",
+    "@capacitor/ios": "^7.6.7",
+    "@capacitor/keyboard": "^7.0.6",
     "@capacitor/splash-screen": "^7.0.5",
     "@capacitor/status-bar": "^7.0.6"
+  },
+  "lint-staged": {
+    "src/**/*.{js,cjs,mjs}": [
+      "eslint --max-warnings=0 --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{css,html,json}": [
+      "prettier --write"
+    ]
   }
 }

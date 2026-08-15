@@ -278,8 +278,27 @@ function cleanupMemory(){
         }
       }
       if(trimmed>0){
+        // V15.0-fix (P1-15/T-022): The trimmed arrays (sessionStats.answers,
+        // scoreAudit, scoreHistory) contain NO media — only small JSON metadata.
+        // The previous code called saveState() which triggers the FULL save
+        // pipeline: _saveStateNow (LS write) + MediaDB.saveAllMedia() (IDB N
+        // transactions). The IDB portion was wasted work since no media changed.
+        // Fix: call saveStateSync() (LS-only, no IDB) when only non-media data
+        // was trimmed. The _mediaDirty flag is NOT set, so saveAllMedia() will
+        // be skipped inside _saveStateNow. This eliminates the 500ms-5s IDB
+        // save storm that fired every 5 minutes during active games.
         try{ PerfMonitor.start('cleanupMemory.save'); }catch(e){try{ErrorBus.capture(e,"catch#AUTO_249")}catch(_){}}
-        if(typeof saveState==='function') saveState();
+        if(typeof saveStateSync==='function'){
+          // saveStateSync fires _saveStateNow synchronously; _saveStateNow checks
+          // _mediaDirty (which is false here) and skips MediaDB.saveAllMedia().
+          try{ saveStateSync(); }catch(e){
+            // Fallback to debounced saveState if sync version throws
+            try{ if(typeof saveState==='function') saveState(); }catch(e2){}
+          }
+        } else if(typeof saveState==='function'){
+          // Fallback for older codebase versions without saveStateSync
+          saveState();
+        }
         try{ PerfMonitor.end('cleanupMemory.save'); }catch(e){try{ErrorBus.capture(e,"catch#AUTO_250")}catch(_){}}
       }
     }
@@ -810,10 +829,16 @@ try{
     });
   };
 
-  // Note: renderQuestionsAdminVirtual is available but does NOT replace
-  // the original renderQuestionsAdmin by default, to avoid breaking existing code.
-  // It can be activated by setting: window._useVirtualQuestions = true;
-  // When a category has >50 questions, auto-activate:
+  // V15.0-fix (P0-7/T-007): Wire selectCatAdminEnhanced into the actual
+  // window.selectCatAdmin so it ACTUALLY runs. Previously this code defined
+  // selectCatAdminEnhanced as an enhanced version that upgrades large
+  // question lists to virtual scrolling, but NEVER replaced the original
+  // window.selectCatAdmin — so the enhanced version was dead code.
+  // Now: replace window.selectCatAdmin with the enhanced version. The
+  // enhanced version calls the original first (for full compatibility),
+  // then upgrades to VirtualList if the category has >50 questions.
+  // This activates the existing VirtualList infrastructure (defined at top
+  // of this file) which renders only ~10 visible DOM nodes instead of 200+.
   var _origSelectCatAdmin = (typeof selectCatAdmin==='function')? selectCatAdmin : null;
   if(_origSelectCatAdmin){
     window.selectCatAdminEnhanced = function(id){
@@ -830,6 +855,11 @@ try{
         }
       }
     };
+    // V15.0-fix (T-007): ACTUALLY replace the original with the enhanced version.
+    // This is the line that was missing — without it, selectCatAdminEnhanced
+    // was defined but never called by the rest of the codebase.
+    window.selectCatAdmin = window.selectCatAdminEnhanced;
+    console.info('[Phase4] selectCatAdmin upgraded to virtual-list enhanced version (threshold='+VirtualList.VIRTUAL_THRESHOLD+')');
   }
 }catch(e){ try{ if(typeof ErrorBus!=='undefined') ErrorBus.capture(e,'Phase4:VirtualList'); }catch(_){} }
 

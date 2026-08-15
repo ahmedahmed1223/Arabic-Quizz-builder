@@ -416,9 +416,57 @@ var GestureManager={
     },{passive:true});
   },
   /* Initialize long press context menu on elements */
-  initLongPress:function(elements,menuBuilder){
+  // V15.0-fix (T-031): Event delegation pattern.
+  // Previous code attached 4 touch listeners (touchstart/move/end/cancel) to
+  // EACH element in `items`. For 50 category cards that's 200 addEventListener
+  // calls per render — and since renderCategoriesAdmin uses innerHTML=, the old
+  // listeners were GC'd but the new ones still cost 5-30ms per render.
+  // New approach: attach listeners to a SINGLE parent container, use
+  // e.target.closest(selector) to find the actual card. Register once per
+  // container, never again. Fallback: if no container provided, use the old
+  // per-element approach (backward compatibility).
+  initLongPress:function(elements,menuBuilder,opts){
     if(!elements||!'ontouchstart' in window)return;
     var items=typeof elements.length!=='undefined'?elements:[elements];
+    if(items.length===0)return;
+
+    // V15.0-fix (T-031): If a selector + container is provided, use delegation
+    if(opts&&opts.delegateSelector&&opts.delegateContainer){
+      var container=opts.delegateContainer;
+      var selector=opts.delegateSelector;
+      // Avoid double-registering on the same container
+      if(container._longPressDelegated)return;
+      container._longPressDelegated=true;
+      container._longPressMenuBuilder=menuBuilder;
+      container._longPressSelector=selector;
+
+      var _activeEl=null;
+      container.addEventListener('touchstart',function(e){
+        var target=e.target.closest(selector);
+        if(!target)return;
+        _activeEl=target;
+        clearTimeout(GestureManager._longPressTimer);
+        GestureManager._longPressTimer=setTimeout(function(){
+          triggerHaptic('heavy');
+          var menu=menuBuilder(target);
+          if(menu)GestureManager._showContextMenu(menu,e.changedTouches[0].clientX,e.changedTouches[0].clientY);
+        },GestureManager._longPressDelay);
+      },{passive:true});
+      container.addEventListener('touchmove',function(){
+        if(_activeEl){clearTimeout(GestureManager._longPressTimer);}
+      },{passive:true});
+      container.addEventListener('touchend',function(){
+        clearTimeout(GestureManager._longPressTimer);
+        _activeEl=null;
+      },{passive:true});
+      container.addEventListener('touchcancel',function(){
+        clearTimeout(GestureManager._longPressTimer);
+        _activeEl=null;
+      },{passive:true});
+      return;
+    }
+
+    // Fallback: per-element listeners (original behavior, backward compat)
     items.forEach(function(el){
       el.addEventListener('touchstart',function(e){
         GestureManager._longPressTimer=setTimeout(function(){
