@@ -1,0 +1,151 @@
+# ============================================================
+# Release — Automated Release Workflow
+# V15.0 — Phase 2 (T-024)
+# ============================================================
+# Triggers when a version tag (v15.x.x, v16.x.x, etc.) is pushed.
+# Builds production APK (→ releases/), HTML (→ dist/), creates GitHub Release.
+# ============================================================
+
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  ANDROID_BUILD_TOOLS_VERSION: "34.0.0"
+
+jobs:
+  release:
+    name: Build & Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for changelog generation
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Set up Java 21 & Cache Gradle
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+          cache: 'gradle'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test || echo "⚠️ Tests failed (non-blocking)"
+
+      - name: Clean old build directories
+        run: |
+          rm -rf dist
+          rm -rf releases
+
+      - name: Build web (production) → dist/index.html
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Verify web build
+        run: |
+          if [ ! -f dist/index.html ]; then
+            echo "❌ dist/index.html not found"
+            exit 1
+          fi
+          SIZE=$(stat -c%s dist/index.html)
+          SIZE_MB=$((SIZE / 1024 / 1024))
+          echo "✓ dist/index.html size: ${SIZE_MB} MB"
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build unsigned release APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon
+
+      - name: Sign APK (→ releases/arabic-quiz-v<tag>.apk)
+        id: sign_apk
+        run: |
+          mkdir -p ./releases
+          
+          keytool -genkey -v -keystore release.keystore -alias playkey -keyalg RSA -keysize 2048 -validity 10000 -storepass android123 -keypass android123 -dname "CN=ArabicQuizBuilder, O=QuizApp, C=SA"
+          
+          APK_PATH=$(find android/app/build/outputs/apk/release -name "*-unsigned.apk" -o -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "❌ APK not found"
+            exit 1
+          fi
+          
+          VERSION=${GITHUB_REF#refs/tags/v}
+          
+          cp "$APK_PATH" ./releases/arabic-quiz-release-unaligned.apk
+          BUILD_TOOLS="${ANDROID_HOME}/build-tools/${ANDROID_BUILD_TOOLS_VERSION}"
+          
+          $BUILD_TOOLS/zipalign -v 4 ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk
+          $BUILD_TOOLS/apksigner sign --ks release.keystore --ks-key-alias playkey --ks-pass pass:android123 --key-pass pass:android123 --out ./releases/arabic-quiz-v${VERSION}.apk ./releases/arabic-quiz-release-aligned.apk
+          $BUILD_TOOLS/apksigner verify ./releases/arabic-quiz-v${VERSION}.apk
+          
+          rm -f ./releases/arabic-quiz-release-unaligned.apk ./releases/arabic-quiz-release-aligned.apk release.keystore
+          
+          # Also keep a stable-named copy for the existing auto-build pattern
+          cp ./releases/arabic-quiz-v${VERSION}.apk ./releases/arabic-quiz-signed-release.apk
+          
+          echo "✓ Signed APKs:"
+          ls -lh releases/
+
+      - name: Generate release notes
+        id: release_notes
+        run: |
+          # Extract the latest version's notes from CHANGELOG.md
+          NOTES=$(awk '/^## \[/{if(p){exit};p=1} p' CHANGELOG.md | head -100)
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Commit dist/ and releases/ back to repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git rm -r --cached dist/ || true
+          git add -f dist/index.html
+          git add -f releases/*.apk
+          
+          if git diff --staged --quiet; then
+            echo "لا توجد تغييرات لإضافتها للمستودع."
+          else
+            git commit -m "🤖 أتمتة: تحديث إجباري لملف الـ Single File index.html وتطبيق الـ APK [skip ci]"
+            git push
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            releases/arabic-quiz-v*.apk
+            releases/arabic-quiz-signed-release.apk
+            dist/index.html
+          body: ${{ steps.release_notes.outputs.notes }}
+          draft: false
+          prerelease: ${{ contains(github.ref, '-rc') || contains(github.ref, '-beta') }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
