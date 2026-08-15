@@ -66,7 +66,6 @@ export default defineConfig({
       mangle: {
         // Keep V15.0-fix comment markers readable in production
         keep_classnames: true,
-        keep_fargs: true,
       },
       format: {
         // Preserve comments starting with V15.0-fix for maintainability
