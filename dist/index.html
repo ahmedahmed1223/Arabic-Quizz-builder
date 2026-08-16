@@ -18846,6 +18846,44 @@ body.loading *{
 }
 
 </style>
+
+  <!-- V16.0: Schema.org structured data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "منصة المسابقات التفاعلية",
+    "alternateName": "Arabic Quiz Builder",
+    "description": "تطبيق ويب تفاعلي عربي بالكامل لإنشاء واستضافة مسابقات تعليمية وترفيهية ممتعة. يعمل دون اتصال بالإنترنت.",
+    "url": "https://github.com/ahmedahmed1223/Arabic-Quizz-builder",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web, Android, iOS",
+    "inLanguage": ["ar", "en", "fr", "ur"],
+    "softwareVersion": "16.0",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "ahmedahmed1223"
+    },
+    "license": "https://opensource.org/licenses/MIT",
+    "featureList": [
+      "70+ categories, 3400+ questions",
+      "10 question types (MCQ, TF, FITB, Math, Quran, etc.)",
+      "5 display modes (Grid, List, Hidden, Jeopardy, Wheel)",
+      "Offline-first (works without internet)",
+      "4 languages (Arabic, English, French, Urdu)",
+      "PWA support (installable)",
+      "Multiplayer mode (WebSocket)",
+      "AI question generator",
+      "LMS integration (Moodle, Google Classroom, QTI)",
+      "Analytics dashboard with PDF/Excel export"
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- The full body markup from the original app (ARIA regions, loading spinner,
@@ -19401,6 +19439,7 @@ body.loading *{
   <header class="admin-header" role="banner">
     <div class="admin-logo"><div class="admin-logo-icon" aria-hidden="true"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg></div> <span class="admin-logo-brand" data-i18n="app.shortTitle">منصة المسابقات</span> <span id="admin-comp-name-header" style="color:var(--accent2)">المسابقة</span></div>
     <div class="admin-header-actions">
+      <button class="btn btn-ghost btn-sm" id="v16-theme-toggle" onclick="v16_toggleThemeQuick()" title="تبديل السمة (داكن/فاتح)" aria-label="تبديل السمة" style="margin-left:4px">🌙</button>
       <button class="btn btn-success btn-sm" onclick="showView('intro')" aria-label="بدء العرض التقديمي" data-i18n="aria.startPresentation" data-i18n-attr="aria-label"><svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor" style="width:14px;height:14px"><path d="M8 5v14l11-7z"/></svg> <span data-i18n="admin.startPres">بدء العرض</span></button>
       <button class="btn btn-sm" id="admin-solo-btn" onclick="startSoloGame()" style="display:none;background:linear-gradient(135deg,#7c5cfc,#e040fb);color:#fff;border:none" title="الوضع الفردي"><svg class="svg-icon" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z" fill="#f5c842"/></svg> <span data-i18n="solo.playBtn">اللعب الفردي</span></button>
       <button class="btn btn-ghost btn-sm" onclick="openTrainingMode()" title="وضع التدريب">🎓</button>
@@ -23884,6 +23923,20 @@ window.h = h;
 // ════════════════════════════════════════════════════════
 
 // ═══ IndexedDB MEDIA STORAGE — V9: Enhanced with team/member/option images + audio ═══
+/**
+ * MediaDB — IndexedDB wrapper for media storage (images, audio, video).
+ * Uses a single object store 'media' with key-prefixed naming:
+ *   s_<setting>      — settings (customMusic, customCorrect, etc.)
+ *   ci_<catId>       — category image
+ *   qm_<qId>         — question mediaData
+ *   qma_<qId>        — question mediaAttachment
+ *   qo_<qId>_<idx>   — question option image
+ *   ti_<teamId>      — team image
+ *   mi_<teamId>_<idx> — team member image
+ *   cr_<creditId>    — credit image
+ * @namespace MediaDB
+ * @since V9, optimized V15.0 (getAll batching)
+ */
 const MediaDB=window.MediaDB=(function(){
   const DB_NAME='quiz_media_v1',STORE='media';let _db=null;
   function open(){return new Promise((res,rej)=>{
@@ -23912,6 +23965,12 @@ const MediaDB=window.MediaDB=(function(){
     keys:async function(){try{const db=await open();return new Promise((r,j)=>{const tx=db.transaction(STORE,'readonly');const req=tx.objectStore(STORE).getAllKeys();req.onsuccess=()=>r(req.result||[]);req.onerror=()=>j(tx.error);});}catch(e){return [];}},
     /** SAFETY: On failure, individual items are skipped — never cascades to deletion.
      *  V10.2-fix: Returns {saved, total, failed} for caller to verify success */
+    /**
+     * Save all media items to IndexedDB in a single batched transaction.
+     * V11-PERF: Uses one readwrite transaction instead of N sequential awaits.
+     * V15.0-fix: Replaced N sequential puts with single transaction (10-50x faster).
+     * @returns {Promise<{saved:number, total:number, failed:number}>}
+     */
     saveAllMedia:async function(){
       var items=[];
       ['customMusicData','customCorrectData','customWrongData','customTenseData','podiumMusicData','wheelMusicData','certBgImage'].forEach(function(k){
@@ -23978,6 +24037,12 @@ const MediaDB=window.MediaDB=(function(){
       // V10.2-fix: Return object with details for caller verification
       return{saved:saved,total:items.length,failed:failed};
     },
+    /**
+     * Load all media from IndexedDB and populate state.categories/teams/credits.
+     * V15.0-fix: Uses single getAll() call instead of N sequential get() calls.
+     * Expected speedup: 10-50x (5-10s → 100-500ms for 200 items).
+     * @returns {Promise<void>}
+     */
     loadAllMedia:async function(){
       var keys=await this.keys();
       // V15.0-fix (P0-4): Replaced N sequential await this.get(k) calls with a
@@ -24635,6 +24700,9 @@ const I18n=window.I18n=(function(){
       'confirm.deleteCredit':'حذف هذا الشخص؟',
       // Toast messages
       'toast.deleted':'تم الحذف',
+      'toast.catNotFound':'القسم غير موجود',
+      'toast.qNotFound':'السؤال غير موجود',
+      'bugReport.reportError':'الإبلاغ عن خطأ',
       'toast.importedQuestions':'تم استيراد {count} سؤال',
       'toast.encryptedImport':'✅ تم الاستيراد المشفر',
       'toast.encryptedExport':'✅ تم التصدير المشفر',
@@ -30632,6 +30700,15 @@ function applyThemeCSS(id){
 }
 window.applyThemeCSS = applyThemeCSS;
 
+/**
+ * Apply a theme by id. Updates CSS variables, persists to state, and optionally
+ * marks as manual choice (to prevent system theme auto-detect from overriding).
+ * V15.0-fix: Added isManual parameter — only set manual flag when user explicitly
+ * picked a theme, not during auto-detection.
+ * @param {string} id - Theme id from THEMES[] (e.g., 'space', 'light', 'custom')
+ * @param {boolean} [isManual=false] - True if user explicitly chose this theme
+ * @returns {void}
+ */
 function applyTheme(id, isManual){
   // Validate theme id — fall back to 'space' (the dark default) for unknown ids
   if(typeof THEMES!=='undefined' && !THEMES.find(t=>t.id===id)){
@@ -53259,7 +53336,11 @@ const NotificationCenter={
     this._renderPanelItems();
   },
   clearAll(){
-    this._items=[];
+    this._items=[  // V16.0 shortcuts
+  { key: 'f', label: 'ملء الشاشة (V16)', action: 'toggleFullscreen' },
+  { key: 't', label: 'تبديل السمة (V16)', action: 'toggleTheme' },
+  { key: 's', label: 'مزامنة (V16)', action: 'syncState' }
+];
     this._save();
     this._updateBadge();
     this._renderPanelItems();
@@ -54049,6 +54130,14 @@ function initScrollToTop() {
 }
 
 // ── Keyboard Shortcuts ──
+// V16.0: Additional keyboard shortcuts
+var V16_KEYBOARD_SHORTCUTS = [
+  { key: 'f', label: 'ملء الشاشة', action: 'toggleFullscreen', alt: false, ctrl: false },
+  { key: 't', label: 'تبديل السمة (داكن/فاتح)', action: 'toggleTheme', alt: false, ctrl: false },
+  { key: 's', label: 'مزامنة الحالة', action: 'syncState', alt: false, ctrl: false },
+  { key: '?', label: 'عرض الاختصارات', action: 'toggleShortcuts', alt: false, ctrl: false }
+];
+
 var KEYBOARD_SHORTCUTS = [
   { key: '?', label: 'عرض الاختصارات', action: 'toggleShortcuts' },
   { key: 'Escape', label: 'إغلاق/رجوع', action: 'closeOverlay' },
@@ -58009,6 +58098,102 @@ console.info('[LMS] V15.0 LMS Integration loaded');
       'title.moveDown': 'Descendre',
       'cert.imageLoaded': 'Image chargée ✅',
       'cert.noImage': 'Aucune image',
+
+    // V16.0: Expanded French translations
+    'admin.categories': 'Catégories',
+    'admin.questions': 'Questions',
+    'admin.teams': 'Équipes',
+    'admin.settings': 'Paramètres',
+    'admin.import': 'Importer',
+    'admin.export': 'Exporter',
+    'admin.analytics': 'Analytique',
+    'admin.newCategory': 'Nouvelle catégorie',
+    'admin.newQuestion': 'Nouvelle question',
+    'admin.newTeam': 'Nouvelle équipe',
+    'admin.editCategory': 'Modifier la catégorie',
+    'admin.editQuestion': 'Modifier la question',
+    'admin.editTeam': 'Modifier l\'équipe',
+    'admin.deleteCategory': 'Supprimer la catégorie',
+    'admin.deleteQuestion': 'Supprimer la question',
+    'admin.deleteTeam': 'Supprimer l\'équipe',
+    'admin.questionCount': 'Nombre de questions',
+    'admin.teamCount': 'Nombre d\'équipes',
+    'admin.totalScore': 'Score total',
+    'admin.sessionHistory': 'Historique des sessions',
+    'admin.clearData': 'Effacer les données',
+    'admin.exportPDF': 'Exporter PDF',
+    'admin.exportExcel': 'Exporter Excel',
+    'admin.aiGenerate': 'Générer avec IA',
+    'admin.multiplayer': 'Multijoueur',
+    'admin.createRoom': 'Créer une salle',
+    'admin.joinRoom': 'Rejoindre une salle',
+    'admin.roomCode': 'Code de salle',
+    'admin.startQuiz': 'Démarrer le quiz',
+    'admin.endQuiz': 'Terminer le quiz',
+    'admin.nextQuestion': 'Question suivante',
+    'admin.prevQuestion': 'Question précédente',
+    'admin.revealAnswer': 'Révéler la réponse',
+    'admin.resetScores': 'Réinitialiser les scores',
+    'admin.adjustScore': 'Ajuster le score',
+    'admin.useLifeline': 'Utiliser un indice',
+    'admin.fiftyFifty': '50/50',
+    'admin.skip': 'Passer',
+    'admin.extraTime': 'Temps supplémentaire',
+    'admin.timeFreeze': 'Geler le temps',
+    'admin.doubleChance': 'Double chance',
+    'admin.buzzer': 'Buzzer',
+    'admin.audience': 'Écran public',
+    'admin.remote': 'Télécommande',
+    'admin.fullscreen': 'Plein écran',
+    'admin.certificates': 'Certificats',
+    'admin.themes': 'Thèmes',
+    'admin.languages': 'Langues',
+    'admin.accessibility': 'Accessibilité',
+    'admin.security': 'Sécurité',
+    'admin.password': 'Mot de passe',
+    'admin.changePassword': 'Changer le mot de passe',
+    'admin.backup': 'Sauvegarde',
+    'admin.restore': 'Restaurer',
+    'admin.about': 'À propos',
+    'admin.help': 'Aide',
+    'question.text': 'Texte de la question',
+    'question.type': 'Type',
+    'question.difficulty': 'Difficulté',
+    'question.time': 'Temps (secondes)',
+    'question.options': 'Options',
+    'question.correct': 'Bonne réponse',
+    'question.explanation': 'Explication',
+    'question.image': 'Image',
+    'question.audio': 'Audio',
+    'question.video': 'Vidéo',
+    'question.math': 'Mathématiques',
+    'difficulty.easy': 'Facile',
+    'difficulty.medium': 'Moyen',
+    'difficulty.hard': 'Difficile',
+    'type.mcq': 'Choix multiple',
+    'type.tf': 'Vrai/Faux',
+    'type.fitb': 'Compléter',
+    'type.order': 'Ordonner',
+    'type.match': 'Associer',
+    'type.quran': 'Coran',
+    'timer.start': 'Démarrer',
+    'timer.pause': 'Pause',
+    'timer.reset': 'Réinitialiser',
+    'timer.remaining': 'Temps restant',
+    'timer.expired': 'Temps écoulé',
+    'score.team': 'Équipe',
+    'score.points': 'Points',
+    'score.correct': 'Correct',
+    'score.wrong': 'Faux',
+    'score.skipped': 'Passé',
+    'onboarding.welcome': 'Bienvenue',
+    'onboarding.step1': 'Créez des catégories',
+    'onboarding.step2': 'Ajoutez des questions',
+    'onboarding.step3': 'Préparez les équipes',
+    'onboarding.step4': 'Commencez le quiz',
+    'onboarding.skip': 'Passer',
+    'onboarding.next': 'Suivant',
+    'onboarding.done': 'Terminé',
     };
 
     // Urdu translations
@@ -58125,6 +58310,102 @@ console.info('[LMS] V15.0 LMS Integration loaded');
       'title.moveDown': 'نیچے',
       'cert.imageLoaded': 'تصویر لوڈ ہو گئی ✅',
       'cert.noImage': 'کوئی تصویر نہیں',
+
+    // V16.0: Expanded Urdu translations
+    'admin.categories': 'اقسام',
+    'admin.questions': 'سوالات',
+    'admin.teams': 'ٹیمیں',
+    'admin.settings': 'ترتیبات',
+    'admin.import': 'درآمد',
+    'admin.export': 'برآمد',
+    'admin.analytics': 'تجزیات',
+    'admin.newCategory': 'نیا قسم',
+    'admin.newQuestion': 'نیا سوال',
+    'admin.newTeam': 'نئی ٹیم',
+    'admin.editCategory': 'قسم میں ترمیم',
+    'admin.editQuestion': 'سوال میں ترمیم',
+    'admin.editTeam': 'ٹیم میں ترمیم',
+    'admin.deleteCategory': 'قسم حذف کریں',
+    'admin.deleteQuestion': 'سوال حذف کریں',
+    'admin.deleteTeam': 'ٹیم حذف کریں',
+    'admin.questionCount': 'سوالات کی تعداد',
+    'admin.teamCount': 'ٹیموں کی تعداد',
+    'admin.totalScore': 'کل اسکور',
+    'admin.sessionHistory': 'سیشن ہسٹری',
+    'admin.clearData': 'ڈیٹا صاف کریں',
+    'admin.exportPDF': 'PDF برآمد کریں',
+    'admin.exportExcel': 'ایکسل برآمد کریں',
+    'admin.aiGenerate': 'AI سے بنائیں',
+    'admin.multiplayer': 'ملٹی پلیئر',
+    'admin.createRoom': 'کمرہ بنائیں',
+    'admin.joinRoom': 'کمرہ میں شامل ہوں',
+    'admin.roomCode': 'کمرہ کوڈ',
+    'admin.startQuiz': 'کوئز شروع کریں',
+    'admin.endQuiz': 'کوئز ختم کریں',
+    'admin.nextQuestion': 'اگلا سوال',
+    'admin.prevQuestion': 'پچھلا سوال',
+    'admin.revealAnswer': 'جواب ظاہر کریں',
+    'admin.resetScores': 'اسکور ری سیٹ کریں',
+    'admin.adjustScore': 'اسکور ایڈجسٹ کریں',
+    'admin.useLifeline': 'لائف لائن استعمال کریں',
+    'admin.fiftyFifty': '50/50',
+    'admin.skip': 'چھوڑیں',
+    'admin.extraTime': 'اضافی وقت',
+    'admin.timeFreeze': 'وقت منجمد',
+    'admin.doubleChance': 'دہرا موقع',
+    'admin.buzzer': 'بزر',
+    'admin.audience': 'ناظرین اسکرین',
+    'admin.remote': 'ریموٹ کنٹرول',
+    'admin.fullscreen': 'مکمل اسکرین',
+    'admin.certificates': 'سرٹیفکیٹس',
+    'admin.themes': 'تھیمز',
+    'admin.languages': 'زبانیں',
+    'admin.accessibility': 'رسایی',
+    'admin.security': 'سیکیورٹی',
+    'admin.password': 'پاس ورڈ',
+    'admin.changePassword': 'پاس ورڈ تبدیل کریں',
+    'admin.backup': 'بیک اپ',
+    'admin.restore': 'بحال کریں',
+    'admin.about': 'بارے میں',
+    'admin.help': 'مدد',
+    'question.text': 'سوال کا متن',
+    'question.type': 'قسم',
+    'question.difficulty': 'مشکل',
+    'question.time': 'وقت (سیکنڈ)',
+    'question.options': 'اختیارات',
+    'question.correct': 'درست جواب',
+    'question.explanation': 'وضاحت',
+    'question.image': 'تصویر',
+    'question.audio': 'آڈیو',
+    'question.video': 'ویڈیو',
+    'question.math': 'ریاضی',
+    'difficulty.easy': 'آسان',
+    'difficulty.medium': 'درمیانہ',
+    'difficulty.hard': 'مشکل',
+    'type.mcq': 'متعدد انتخاب',
+    'type.tf': 'صحیح/غلط',
+    'type.fitb': 'خالی جگہ بھریں',
+    'type.order': 'ترتیب دیں',
+    'type.match': 'ملائیں',
+    'type.quran': 'قرآن',
+    'timer.start': 'شروع',
+    'timer.pause': 'روکیں',
+    'timer.reset': 'ری سیٹ',
+    'timer.remaining': 'بقیہ وقت',
+    'timer.expired': 'وقت ختم',
+    'score.team': 'ٹیم',
+    'score.points': 'پوائنٹس',
+    'score.correct': 'درست',
+    'score.wrong': 'غلط',
+    'score.skipped': 'چھوڑا',
+    'onboarding.welcome': 'خوش آمدید',
+    'onboarding.step1': 'اقسام بنائیں',
+    'onboarding.step2': 'سوالات شامل کریں',
+    'onboarding.step3': 'ٹیمیں تیار کریں',
+    'onboarding.step4': 'کوئز شروع کریں',
+    'onboarding.skip': 'چھوڑیں',
+    'onboarding.next': 'اگلا',
+    'onboarding.done': 'مکمل',
     };
 
     // Merge translations into I18n dictionaries
@@ -58166,10 +58447,14 @@ console.info('[LMS] V15.0 LMS Integration loaded');
     }
 
     // Helper to set document direction based on language
-    I18n.setLanguage = function(lang) {
+    // V16.0: Added optional RTL for French (for Maghreb users)
+    I18n.setLanguage = function(lang, useRTL) {
       if (!state.settings) state.settings = {};
       state.settings.lang = lang;
-      var dir = (lang === 'ar' || lang === 'ur') ? 'rtl' : 'ltr';
+      // V16.0: French can use RTL if user prefers (Maghreb)
+      var rtlLangs = ['ar', 'ur'];
+      if (useRTL && lang === 'fr') rtlLangs.push('fr');
+      var dir = rtlLangs.includes(lang) ? 'rtl' : 'ltr';
       document.documentElement.setAttribute('dir', dir);
       document.documentElement.setAttribute('lang', lang);
       try { saveState(); } catch (e) {}
@@ -58379,5 +58664,188 @@ if (document.readyState === 'loading') {
 }
 
 </script>
+  <!-- V16.0: Interactive onboarding for first-time users -->
+  <script>
+/* === /src/app/49-onboarding.js === */
+// ════════════════════════════════════════════════════════
+//  V16.0: Interactive Onboarding — first-time user guide
+// ════════════════════════════════════════════════════════
+/**
+ * Onboarding system for first-time users.
+ * Shows a 4-step interactive walkthrough on first login.
+ * Tracks completion in localStorage('v16_onboarding_done').
+ */
+window.Onboarding = (function() {
+  'use strict';
+
+  var _steps = [
+    {
+      icon: '📝',
+      title: 'أنشئ أقساماً',
+      text: 'ابدأ بإنشاء أقسام لمسابقتك (مثلاً: تاريخ، علوم، قرآن). كل قسم يحتوي أسئلتك.',
+      action: 'إدارة الأقسام',
+      target: 'categories'
+    },
+    {
+      icon: '❓',
+      title: 'أضف أسئلة',
+      text: 'لكل قسم، أضف أسئلة من 10 أنواع: اختيار من متعدد، صح/خطأ، رياضيات، صور، صوت، وأكثر.',
+      action: 'إضافة أسئلة',
+      target: 'questions'
+    },
+    {
+      icon: '👥',
+      title: 'أعدّ الفرق',
+      text: 'أنشئ فرقاً بأسماء وألوان وأعضاء. حتى 10 فرق لكل مسابقة.',
+      action: 'إدارة الفرق',
+      target: 'teams'
+    },
+    {
+      icon: '▶️',
+      title: 'ابدأ العرض',
+      text: 'انقر "بدء العرض" لتشغيل المسابقة على البروجكتر مع شاشة تحكم عن بُعد.',
+      action: 'بدء المسابقة',
+      target: 'intro'
+    }
+  ];
+
+  var _currentStep = 0;
+  var _overlay = null;
+
+  /**
+   * Check if onboarding should be shown (first-time users only).
+   * @returns {boolean}
+   */
+  function shouldShow() {
+    try {
+      return !localStorage.getItem('v16_onboarding_done');
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Start the onboarding walkthrough.
+   */
+  function start() {
+    if (!shouldShow()) return;
+    _currentStep = 0;
+    _showStep();
+  }
+
+  function _showStep() {
+    _dismiss();
+    if (_currentStep >= _steps.length) {
+      _complete();
+      return;
+    }
+
+    var step = _steps[_currentStep];
+    _overlay = document.createElement('div');
+    _overlay.id = 'v16-onboarding-overlay';
+    _overlay.style.cssText = 'position:fixed;inset:0;z-index:10000;background:rgba(8,9,26,.85);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px';
+
+    var card = document.createElement('div');
+    card.style.cssText = 'background:var(--bg-surface,#12152e);border:1px solid var(--border,#1e2240);border-radius:16px;padding:32px;max-width:440px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)';
+
+    var progress = (_currentStep + 1) + ' / ' + _steps.length;
+
+    card.innerHTML =
+      '<div style="font-size:3rem;margin-bottom:16px">' + step.icon + '</div>' +
+      '<div style="color:var(--accent1,#00f5d4);font-size:.8rem;font-weight:700;margin-bottom:8px">' + progress + '</div>' +
+      '<h2 style="color:var(--text-primary,#e8f4ff);font-size:1.4rem;margin-bottom:12px">' + step.title + '</h2>' +
+      '<p style="color:var(--text-secondary,#8aa0bd);font-size:.95rem;line-height:1.6;margin-bottom:24px">' + step.text + '</p>' +
+      '<div style="display:flex;gap:8px;justify-content:center">' +
+        '<button id="v16-ob-skip" style="padding:10px 20px;border:1px solid var(--border,#1e2240);background:transparent;color:var(--text-secondary,#8aa0bd);border-radius:8px;cursor:pointer;font-family:inherit">تخطّي</button>' +
+        '<button id="v16-ob-next" style="padding:10px 24px;background:linear-gradient(135deg,var(--accent1,#00f5d4),var(--accent2,#7b61ff));color:#000;border:none;border-radius:8px;cursor:pointer;font-weight:700;font-family:inherit">' + step.action + '</button>' +
+      '</div>';
+
+    _overlay.appendChild(card);
+    document.body.appendChild(_overlay);
+
+    document.getElementById('v16-ob-skip').addEventListener('click', _dismiss);
+    document.getElementById('v16-ob-next').addEventListener('click', function() {
+      _currentStep++;
+      _showStep();
+    });
+  }
+
+  function _dismiss() {
+    if (_overlay && _overlay.parentNode) {
+      _overlay.parentNode.removeChild(_overlay);
+      _overlay = null;
+    }
+  }
+
+  function _complete() {
+    try {
+      localStorage.setItem('v16_onboarding_done', '1');
+    } catch (e) {}
+    if (typeof toast === 'function') {
+      toast('🎉 مرحباً بك! أنت جاهز لإنشاء مسابقتك الأولى', 'success');
+    }
+  }
+
+  /**
+   * Reset onboarding (show again on next login).
+   */
+  function reset() {
+    try {
+      localStorage.removeItem('v16_onboarding_done');
+    } catch (e) {}
+    if (typeof toast === 'function') {
+      toast('سيظهر الدليل التفاعلي في المرة القادمة', 'info');
+    }
+  }
+
+  return {
+    shouldShow: shouldShow,
+    start: start,
+    reset: reset
+  };
+})();
+
+console.info('[Onboarding] V16.0 interactive onboarding loaded');
+
+// V16-018: Quick theme toggle function
+window.v16_toggleThemeQuick = function() {
+  try {
+    var currentTheme = (typeof state !== 'undefined' && state.settings && state.settings.theme) || 'space';
+    var newTheme = (currentTheme === 'space' || currentTheme === 'dark') ? 'light' : 'space';
+    if (typeof applyTheme === 'function') {
+      applyTheme(newTheme, true);
+      if (typeof toast === 'function') {
+        toast(newTheme === 'light' ? '☀️ الوضع الفاتح' : '🌙 الوضع الداكن', 'info');
+      }
+      // Update button icon
+      var btn = document.getElementById('v16-theme-toggle');
+      if (btn) btn.textContent = (newTheme === 'light') ? '☀️' : '🌙';
+    }
+  } catch (e) {
+    console.error('[V16] Theme toggle failed:', e);
+  }
+};
+
+
+</script>
+  <script>
+    // V16.0: Auto-start onboarding for first-time users after login
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        if (typeof Onboarding !== 'undefined' && Onboarding.shouldShow()) {
+          // Wait for login to complete, then show
+          var checkLogin = setInterval(function() {
+            var adminView = document.getElementById('view-admin');
+            if (adminView && !adminView.classList.contains('hidden')) {
+              clearInterval(checkLogin);
+              setTimeout(function() { Onboarding.start(); }, 500);
+            }
+          }, 1000);
+          // Stop checking after 60 seconds
+          setTimeout(function() { clearInterval(checkLogin); }, 60000);
+        }
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
