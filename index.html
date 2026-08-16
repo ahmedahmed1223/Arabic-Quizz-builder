@@ -68,6 +68,44 @@
   <link rel="stylesheet" href="/src/styles/modern-ui-v15.css">
   <!-- V15.2: Professional polish layer — micro-interactions, skeletons, animations -->
   <link rel="stylesheet" href="/src/styles/modern-ui-v15.2-polish.css">
+
+  <!-- V16.0: Schema.org structured data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "منصة المسابقات التفاعلية",
+    "alternateName": "Arabic Quiz Builder",
+    "description": "تطبيق ويب تفاعلي عربي بالكامل لإنشاء واستضافة مسابقات تعليمية وترفيهية ممتعة. يعمل دون اتصال بالإنترنت.",
+    "url": "https://github.com/ahmedahmed1223/Arabic-Quizz-builder",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "Web, Android, iOS",
+    "inLanguage": ["ar", "en", "fr", "ur"],
+    "softwareVersion": "16.0",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "ahmedahmed1223"
+    },
+    "license": "https://opensource.org/licenses/MIT",
+    "featureList": [
+      "70+ categories, 3400+ questions",
+      "10 question types (MCQ, TF, FITB, Math, Quran, etc.)",
+      "5 display modes (Grid, List, Hidden, Jeopardy, Wheel)",
+      "Offline-first (works without internet)",
+      "4 languages (Arabic, English, French, Urdu)",
+      "PWA support (installable)",
+      "Multiplayer mode (WebSocket)",
+      "AI question generator",
+      "LMS integration (Moodle, Google Classroom, QTI)",
+      "Analytics dashboard with PDF/Excel export"
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- The full body markup from the original app (ARIA regions, loading spinner,
@@ -158,5 +196,26 @@
   <script src="/src/app/i18n-extensions.js"></script>
   <!-- V15.0: PWA registration — Service Worker + install prompt -->
   <script src="/src/app/pwa-register.js"></script>
+  <!-- V16.0: Interactive onboarding for first-time users -->
+  <script src="/src/app/49-onboarding.js"></script>
+  <script>
+    // V16.0: Auto-start onboarding for first-time users after login
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        if (typeof Onboarding !== 'undefined' && Onboarding.shouldShow()) {
+          // Wait for login to complete, then show
+          var checkLogin = setInterval(function() {
+            var adminView = document.getElementById('view-admin');
+            if (adminView && !adminView.classList.contains('hidden')) {
+              clearInterval(checkLogin);
+              setTimeout(function() { Onboarding.start(); }, 500);
+            }
+          }, 1000);
+          // Stop checking after 60 seconds
+          setTimeout(function() { clearInterval(checkLogin); }, 60000);
+        }
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
