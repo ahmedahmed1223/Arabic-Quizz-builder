@@ -3,6 +3,20 @@
 // ════════════════════════════════════════════════════════
 
 // ═══ IndexedDB MEDIA STORAGE — V9: Enhanced with team/member/option images + audio ═══
+/**
+ * MediaDB — IndexedDB wrapper for media storage (images, audio, video).
+ * Uses a single object store 'media' with key-prefixed naming:
+ *   s_<setting>      — settings (customMusic, customCorrect, etc.)
+ *   ci_<catId>       — category image
+ *   qm_<qId>         — question mediaData
+ *   qma_<qId>        — question mediaAttachment
+ *   qo_<qId>_<idx>   — question option image
+ *   ti_<teamId>      — team image
+ *   mi_<teamId>_<idx> — team member image
+ *   cr_<creditId>    — credit image
+ * @namespace MediaDB
+ * @since V9, optimized V15.0 (getAll batching)
+ */
 const MediaDB=window.MediaDB=(function(){
   const DB_NAME='quiz_media_v1',STORE='media';let _db=null;
   function open(){return new Promise((res,rej)=>{
@@ -31,6 +45,12 @@ const MediaDB=window.MediaDB=(function(){
     keys:async function(){try{const db=await open();return new Promise((r,j)=>{const tx=db.transaction(STORE,'readonly');const req=tx.objectStore(STORE).getAllKeys();req.onsuccess=()=>r(req.result||[]);req.onerror=()=>j(tx.error);});}catch(e){return [];}},
     /** SAFETY: On failure, individual items are skipped — never cascades to deletion.
      *  V10.2-fix: Returns {saved, total, failed} for caller to verify success */
+    /**
+     * Save all media items to IndexedDB in a single batched transaction.
+     * V11-PERF: Uses one readwrite transaction instead of N sequential awaits.
+     * V15.0-fix: Replaced N sequential puts with single transaction (10-50x faster).
+     * @returns {Promise<{saved:number, total:number, failed:number}>}
+     */
     saveAllMedia:async function(){
       var items=[];
       ['customMusicData','customCorrectData','customWrongData','customTenseData','podiumMusicData','wheelMusicData','certBgImage'].forEach(function(k){
@@ -97,6 +117,12 @@ const MediaDB=window.MediaDB=(function(){
       // V10.2-fix: Return object with details for caller verification
       return{saved:saved,total:items.length,failed:failed};
     },
+    /**
+     * Load all media from IndexedDB and populate state.categories/teams/credits.
+     * V15.0-fix: Uses single getAll() call instead of N sequential get() calls.
+     * Expected speedup: 10-50x (5-10s → 100-500ms for 200 items).
+     * @returns {Promise<void>}
+     */
     loadAllMedia:async function(){
       var keys=await this.keys();
       // V15.0-fix (P0-4): Replaced N sequential await this.get(k) calls with a

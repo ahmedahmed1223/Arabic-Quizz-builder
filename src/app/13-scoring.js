@@ -11,6 +11,15 @@ function applyThemeCSS(id){
 }
 window.applyThemeCSS = applyThemeCSS;
 
+/**
+ * Apply a theme by id. Updates CSS variables, persists to state, and optionally
+ * marks as manual choice (to prevent system theme auto-detect from overriding).
+ * V15.0-fix: Added isManual parameter — only set manual flag when user explicitly
+ * picked a theme, not during auto-detection.
+ * @param {string} id - Theme id from THEMES[] (e.g., 'space', 'light', 'custom')
+ * @param {boolean} [isManual=false] - True if user explicitly chose this theme
+ * @returns {void}
+ */
 function applyTheme(id, isManual){
   // Validate theme id — fall back to 'space' (the dark default) for unknown ids
   if(typeof THEMES!=='undefined' && !THEMES.find(t=>t.id===id)){

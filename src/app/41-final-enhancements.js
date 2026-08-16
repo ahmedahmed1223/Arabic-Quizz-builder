@@ -166,7 +166,11 @@ const NotificationCenter={
     this._renderPanelItems();
   },
   clearAll(){
-    this._items=[];
+    this._items=[  // V16.0 shortcuts
+  { key: 'f', label: 'ملء الشاشة (V16)', action: 'toggleFullscreen' },
+  { key: 't', label: 'تبديل السمة (V16)', action: 'toggleTheme' },
+  { key: 's', label: 'مزامنة (V16)', action: 'syncState' }
+];
     this._save();
     this._updateBadge();
     this._renderPanelItems();
@@ -956,6 +960,14 @@ function initScrollToTop() {
 }
 
 // ── Keyboard Shortcuts ──
+// V16.0: Additional keyboard shortcuts
+var V16_KEYBOARD_SHORTCUTS = [
+  { key: 'f', label: 'ملء الشاشة', action: 'toggleFullscreen', alt: false, ctrl: false },
+  { key: 't', label: 'تبديل السمة (داكن/فاتح)', action: 'toggleTheme', alt: false, ctrl: false },
+  { key: 's', label: 'مزامنة الحالة', action: 'syncState', alt: false, ctrl: false },
+  { key: '?', label: 'عرض الاختصارات', action: 'toggleShortcuts', alt: false, ctrl: false }
+];
+
 var KEYBOARD_SHORTCUTS = [
   { key: '?', label: 'عرض الاختصارات', action: 'toggleShortcuts' },
   { key: 'Escape', label: 'إغلاق/رجوع', action: 'closeOverlay' },

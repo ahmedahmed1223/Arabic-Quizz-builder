@@ -216,6 +216,9 @@ const I18n=window.I18n=(function(){
       'confirm.deleteCredit':'حذف هذا الشخص؟',
       // Toast messages
       'toast.deleted':'تم الحذف',
+      'toast.catNotFound':'القسم غير موجود',
+      'toast.qNotFound':'السؤال غير موجود',
+      'bugReport.reportError':'الإبلاغ عن خطأ',
       'toast.importedQuestions':'تم استيراد {count} سؤال',
       'toast.encryptedImport':'✅ تم الاستيراد المشفر',
       'toast.encryptedExport':'✅ تم التصدير المشفر',
