@@ -27158,6 +27158,12 @@ const I18n=window.I18n=(function(){
     // Control panel / toolbar buttons
     'title.musicVolume':'مستوى الموسيقى','title.remoteControl':'التحكم عن بُعد',
     'title.audienceScreen':'شاشة الجمهور','title.help':'تعليمات',
+      'aria.remoteControl':'التحكم عن بُعد',
+      'aria.audienceScreen':'شاشة الجمهور',
+      'aria.help':'تعليمات',
+      'aria.fullscreen':'ملء الشاشة',
+      'aria.mute':'كتم الصوت',
+      'aria.music':'الموسيقى',
     'title.controlPanel':'لوحة التحكم','title.back':'رجوع',
     'title.teams':'الفرق','title.buzzerMode':'وضع الباز','title.scores':'النتائج',
     'title.bigClock':'عرض العداد الكبير','title.hostHint':'تلميح المضيف',
@@ -27734,6 +27740,12 @@ const I18n=window.I18n=(function(){
     // Control panel / toolbar buttons
     'title.musicVolume':'Music Volume','title.remoteControl':'Remote Control',
     'title.audienceScreen':'Audience Screen','title.help':'Help',
+      'aria.remoteControl':'Remote Control',
+      'aria.audienceScreen':'Audience Screen',
+      'aria.help':'Help',
+      'aria.fullscreen':'Fullscreen',
+      'aria.mute':'Mute',
+      'aria.music':'Music',
     'title.controlPanel':'Control Panel','title.back':'Back',
     'title.teams':'Teams','title.buzzerMode':'Buzzer Mode','title.scores':'Scores',
     'title.bigClock':'Big Clock View','title.hostHint':'Host Hint',
@@ -36686,6 +36698,8 @@ function submitSoloAnswer(answer){
   const cat=state.categories.find(c=>c.id===_soloCurrentCat);
   if(!cat){_soloTransitioning=false;return;}
   const q=cat.questions[_soloCurrentQIdx];
+    if(!q){try{toast(I18n.t('toast.qNotFound')||'السؤال غير موجود','danger');}catch(e){}showView('categories');return;}
+
   if(!q){_soloTransitioning=false;return;}
   
   const timeUsed=(Date.now()-_soloTimerStart)/1000;
@@ -38994,8 +39008,15 @@ function selectCatAndStart(catId){
     showView('question');
     loadQuestionFromQueue();
   }else{
+    if(!avail || avail.length === 0){
+      try{toast(I18n.t('toast.qNotFound')||'لا توجد أسئلة متاحة','warning');}catch(e){}
+      showView('categories');
+      return;
+    }
     const qIdx=avail[Math.floor(Math.random()*avail.length)];
     state.currentQIndex=qIdx;
+    // V16.0-fix: Guard against undefined currentTeamIndex
+    if(state.currentTeamIndex==null) state.currentTeamIndex=0;
     showView('question');
     showTurnOverlay(state.currentTeamIndex,()=>loadQuestion(catId,qIdx,state.currentTeamIndex));
   }
