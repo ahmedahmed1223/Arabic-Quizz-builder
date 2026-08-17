@@ -43,7 +43,12 @@
       const timeoutId=setTimeout(()=>controller.abort(),30000);
       const resp=await fetch(url,{cache:'no-cache',signal:controller.signal,mode:'cors'});
       clearTimeout(timeoutId);
-      if(!resp.ok)throw new Error('HTTP '+resp.status+' '+resp.statusText);
+      if(!resp.ok){
+        if(resp.status===429){
+          throw new Error('تم تجاوز حد الطلبات من GitHub — انتظر دقيقة ثم أعد المحاولة');
+        }
+        throw new Error('HTTP '+resp.status+' '+resp.statusText);
+      }
       const data=await resp.json();
       if(!data||typeof data!=='object')throw new Error('ملف غير صالح — يجب أن يكون JSON يحتوي على أقسام');
       // Validate structure
