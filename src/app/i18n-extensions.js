@@ -481,7 +481,15 @@
         }
         // Call the ORIGINAL I18n.t() which checks _translations (full dictionary)
         // This handles ar, en, and all keys that exist in _translations
-        var result = _origT.call(I18n, key, vars, fallback);
+        // V16.0-fix: Guard against _origT being undefined (double-patch prevention)
+        var result = key;
+        try {
+          if (typeof _origT === 'function') {
+            result = _origT.call(I18n, key, vars, fallback);
+          }
+        } catch(e) {
+          console.warn('[i18n-ext] _origT call failed:', e.message);
+        }
         // If the original returned the key itself (not found), try _dicts
         if (result === key) {
           if (I18n._dicts[lang] && I18n._dicts[lang][key]) return I18n._dicts[lang][key];
