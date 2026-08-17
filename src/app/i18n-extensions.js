@@ -457,24 +457,38 @@
     }
 
     // Patch I18n.t to support the new languages with fallback
+    // V16.0-fix: The previous patch ONLY checked I18n._dicts (small dictionary
+    // with ~100 keys from this file). When a key wasn't found there (e.g.,
+    // 'wizard.quickTitle' which lives in I18n._translations in 04-i18n.js),
+    // it returned the KEY ITSELF as text — causing "wizard.quickTitle" to
+    // appear as literal text in the UI instead of the translated text.
+    // Fix: Call the ORIGINAL I18n.t() (_origT) as the primary lookup — it
+    // checks I18n._translations which has the full ~1700 key dictionary.
+    // Only for fr/ur (not in _translations) do we check _dicts.
     if (!I18n._tPatched) {
       var _origT = I18n.t;
-      I18n.t = function(key, fallback) {
-        var lang = (state && state.settings && state.settings.lang) || 'ar';
-        // Try current language
-        if (I18n._dicts[lang] && I18n._dicts[lang][key]) {
+      I18n.t = function(key, vars, fallback) {
+        // V16.0-fix: Determine the effective language
+        var lang = 'ar';
+        try {
+          if (state && state.settings) {
+            lang = state.settings.lang || state.settings.language || 'ar';
+          }
+        } catch(e) {}
+        // For fr/ur (new languages not in _translations), check _dicts first
+        if ((lang === 'fr' || lang === 'ur') && I18n._dicts[lang] && I18n._dicts[lang][key]) {
           return I18n._dicts[lang][key];
         }
-        // Fall back to English
-        if (I18n._dicts.en && I18n._dicts.en[key]) {
-          return I18n._dicts.en[key];
+        // Call the ORIGINAL I18n.t() which checks _translations (full dictionary)
+        // This handles ar, en, and all keys that exist in _translations
+        var result = _origT.call(I18n, key, vars, fallback);
+        // If the original returned the key itself (not found), try _dicts
+        if (result === key) {
+          if (I18n._dicts[lang] && I18n._dicts[lang][key]) return I18n._dicts[lang][key];
+          if (I18n._dicts.en && I18n._dicts.en[key]) return I18n._dicts.en[key];
+          if (I18n._dicts.ar && I18n._dicts.ar[key]) return I18n._dicts.ar[key];
         }
-        // Fall back to Arabic (original)
-        if (I18n._dicts.ar && I18n._dicts.ar[key]) {
-          return I18n._dicts.ar[key];
-        }
-        // Fall back to the provided fallback
-        return fallback || key;
+        return result;
       };
       I18n._tPatched = true;
     }
