@@ -515,6 +515,8 @@ function submitSoloAnswer(answer){
   const cat=state.categories.find(c=>c.id===_soloCurrentCat);
   if(!cat){_soloTransitioning=false;return;}
   const q=cat.questions[_soloCurrentQIdx];
+    if(!q){try{toast(I18n.t('toast.qNotFound')||'السؤال غير موجود','danger');}catch(e){}showView('categories');return;}
+
   if(!q){_soloTransitioning=false;return;}
   
   const timeUsed=(Date.now()-_soloTimerStart)/1000;
@@ -2823,8 +2825,15 @@ function selectCatAndStart(catId){
     showView('question');
     loadQuestionFromQueue();
   }else{
+    if(!avail || avail.length === 0){
+      try{toast(I18n.t('toast.qNotFound')||'لا توجد أسئلة متاحة','warning');}catch(e){}
+      showView('categories');
+      return;
+    }
     const qIdx=avail[Math.floor(Math.random()*avail.length)];
     state.currentQIndex=qIdx;
+    // V16.0-fix: Guard against undefined currentTeamIndex
+    if(state.currentTeamIndex==null) state.currentTeamIndex=0;
     showView('question');
     showTurnOverlay(state.currentTeamIndex,()=>loadQuestion(catId,qIdx,state.currentTeamIndex));
   }
