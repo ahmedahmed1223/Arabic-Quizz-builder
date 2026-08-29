@@ -5002,8 +5002,10 @@ function renderScoresSlide(){
 // ════════════════════════════════════════════════════════
 function renderCreditsSlide(){
   document.getElementById('credits-comp-name-display').textContent=state.settings.name;
+  // V16.1-fix: Filter out credits with empty names
+  const validCredits = (state.credits||[]).filter(p=>p&&p.name&&String(p.name).trim());
   const grouped={};Object.keys(CREDIT_CATS).forEach(k=>grouped[k]=[]);
-  state.credits.forEach(p=>{if(grouped[p.category])grouped[p.category].push(p)});
+  validCredits.forEach(p=>{if(grouped[p.category])grouped[p.category].push(p)});
   const style=state.settings.creditsStyle||'normal';
   const empty='<div class="empty-state"><div class="empty-icon">🌟</div><p>'+t('empty.noNamesYet')+'</p></div>';
   const footer=`<strong>🌟</strong><br>${state.settings.closingMessage||'شكراً للجميع'}<br><br><span style="font-size:.76rem">🏆 منصة المسابقات التفاعلية</span>`;
@@ -5037,7 +5039,7 @@ function renderCreditsSlide(){
       if(item.isCat)return`<div style="font-size:1.1rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:${item.color};padding:36px 0 16px;border-bottom:1px solid ${item.color}44;margin-bottom:20px">${item.label}</div>`;
       const p=item.p,info=item.info;
       return`<div style="display:flex;align-items:center;gap:16px;justify-content:center;padding:10px 0">
-        <div style="width:48px;height:48px;border-radius:50%;background:${(p.color||info.color)}22;color:${p.color||info.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;overflow:hidden;flex-shrink:0">${p.image?'<img src="'+_safeMediaSrc(p.image)+'" alt="'+_sanitizeUser(p.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':p.name[0]}</div>
+        <div style="width:48px;height:48px;border-radius:50%;background:${(p.color||info.color)}22;color:${p.color||info.color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;overflow:hidden;flex-shrink:0">${p.image?'<img src="'+_safeMediaSrc(p.image)+'" alt="'+_sanitizeUser(p.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':(p.name||'?')[0]||'?'}</div>
         <div style="text-align:right"><div style="font-weight:700;font-size:1.05rem">${p.name}</div><div style="font-size:.82rem;color:${p.color||info.color}">${p.role||''}</div></div>
       </div>`;
     }).join('') + `<div style="padding:48px 0 12px;color:var(--text-muted);font-size:.85rem">🏆 منصة المسابقات التفاعلية</div>`;
@@ -5053,7 +5055,7 @@ function renderCreditsSlide(){
           <div class="cred-flip-card" style="animation:float-up .6s ease ${.2+si*.15+pi*.07}s both">
             <div class="cred-flip-inner">
               <div class="cred-flip-front" style="border-top:3px solid ${p.color||info.color}">
-                <div class="cred-avatar" style="background:${(p.color||info.color)}22;color:${p.color||info.color};overflow:hidden">${p.image?'<img src="'+_safeMediaSrc(p.image)+'" alt="'+_sanitizeUser(p.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':p.name[0]}</div>
+                <div class="cred-avatar" style="background:${(p.color||info.color)}22;color:${p.color||info.color};overflow:hidden">${p.image?'<img src="'+_safeMediaSrc(p.image)+'" alt="'+_sanitizeUser(p.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':(p.name||'?')[0]||'?'}</div>
                 <div class="cred-name">${p.name}</div>
                 <div class="cred-role" style="color:${p.color||info.color}">${p.role||''}</div>
               </div>
@@ -5078,7 +5080,7 @@ function renderCreditsSlide(){
         <div class="credits-section-label" style="color:${info.color}">${info.label}</div>
         <div class="credits-people">${grouped[key].map((p,pi)=>`
           <div class="cred-card" style="animation:float-up .6s ease ${.2+si*.15+pi*.08}s both;border-top:3px solid ${p.color||info.color}">
-            <div class="cred-avatar" style="background:${(p.color||info.color)}22;color:${p.color||info.color};overflow:hidden">${p.image?'<img src="'+_safeMediaSrc(p.image)+'" alt="'+_sanitizeUser(p.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':p.name[0]}</div>
+            <div class="cred-avatar" style="background:${(p.color||info.color)}22;color:${p.color||info.color};overflow:hidden">${p.image?'<img src="'+_safeMediaSrc(p.image)+'" alt="'+_sanitizeUser(p.name)+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">':(p.name||'?')[0]||'?'}</div>
             <div class="cred-name">${p.name}</div>
             <div class="cred-role" style="color:${p.color||info.color}">${p.role||''}</div>
           </div>`).join('')}

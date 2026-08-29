@@ -1353,16 +1353,21 @@ function adjustScore(id,delta){
 //  CREDITS ADMIN
 // ════════════════════════════════════════════════════════
 function renderCreditsAdmin(){
+  // V16.1-fix: Filter out credits with empty names
+  const validCredits = (state.credits||[]).filter(c=>c&&c.name&&String(c.name).trim());
   const grouped={};Object.keys(CREDIT_CATS).forEach(k=>grouped[k]=[]);
-  state.credits.forEach(p=>{if(grouped[p.category])grouped[p.category].push(p)});
-  document.getElementById('credits-admin-sections').innerHTML=Object.entries(CREDIT_CATS).map(([key,info])=>`
+  validCredits.forEach(p=>{if(grouped[p.category])grouped[p.category].push(p)});
+  // V16.1-fix: Hide categories with NO people at all (don't show empty categories)
+  document.getElementById('credits-admin-sections').innerHTML=Object.entries(CREDIT_CATS)
+    .filter(([key])=>grouped[key].length>0) // Only show non-empty categories
+    .map(([key,info])=>`
     <div style="margin-bottom:20px">
       <div style="font-size:.85rem;font-weight:700;color:${info.color};margin-bottom:8px">${info.label}</div>
       ${grouped[key].map((p,i,arr)=>`
         <div style="background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
           <div style="display:flex;align-items:center;gap:10px">
-            ${p.image?`<img src="${_safeMediaSrc(p.image)}" alt="${_sanitizeUser(p.name)}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid ${p.color||info.color}66">`:`<div style="width:32px;height:32px;border-radius:50%;background:${(p.color||info.color)}22;color:${p.color||info.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:900">${p.name[0]}</div>`}
-            <div><div style="font-weight:700;font-size:.88rem">${p.name}</div><div style="font-size:.76rem;color:var(--text-secondary)">${p.role||''}</div></div>
+            ${p.image?`<img src="${_safeMediaSrc(p.image)}" alt="${_sanitizeUser(p.name)}" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid ${p.color||info.color}66">`:`<div style="width:32px;height:32px;border-radius:50%;background:${(p.color||info.color)}22;color:${p.color||info.color};display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:900">${(p.name||'?')[0]||'?'}</div>`}
+            <div><div style="font-weight:700;font-size:.88rem">${_sanitizeUser(p.name)}</div><div style="font-size:.76rem;color:var(--text-secondary)">${p.role||''}</div></div>
           </div>
           <div style="display:flex;gap:4px">
             <button class="btn btn-ghost btn-sm btn-icon" onclick="moveCreditPerson('${p.id}','${key}',-1)" title="تحريك للأعلى" data-i18n="title.moveUp" data-i18n-attr="title" style="padding:2px 5px;font-size:.72rem${i===0?';opacity:.3;pointer-events:none':''}">▲</button>
@@ -1370,8 +1375,8 @@ function renderCreditsAdmin(){
             <button class="btn btn-ghost btn-sm btn-icon" onclick="openCreditPersonModal('${p.id}')">✏️</button>
             <button class="btn btn-danger btn-sm btn-icon" onclick="deleteCreditPerson('${p.id}')">🗑️</button>
           </div>
-        </div>`).join('')||`<div class="text-sm text-muted" style="padding:6px 0">${t('empty.noOneYet')}</div>`}
-    </div>`).join('');
+        </div>`).join('')}
+    </div>`).join('')||`<div class="text-sm text-muted" style="padding:20px 0;text-align:center">${I18n.t('empty.noOneYet')||'لا يوجد أحد بعد — أضف شخصاً للبدء'}</div>`;
 }
 function openCreditPersonModal(pid=null){
   state.editingCreditId=pid;
@@ -1393,13 +1398,20 @@ function _showCreditImagePreview(src){
   if(src){wrap.style.display='';img.src=src}else{wrap.style.display='none';img.src=''}
 }
 function saveCreditPerson(){
-  const name=document.getElementById('cp-name-input').value.trim();if(!name){toast(I18n.t('credits.name')||'أدخل الاسم','danger');return}
+  const name=document.getElementById('cp-name-input').value.trim();
+  if(!name){toast(I18n.t('credits.nameRequired')||'أدخل الاسم على الأقل','danger');return}
+  // V16.1-fix: Role is optional — a single person can be credited without a role
   const role=document.getElementById('cp-role-input').value.trim();
-  const category=document.getElementById('cp-category-input').value;
-  const color=document.getElementById('cp-color-input').value;
+  // V16.1-fix: Category defaults to 'producers' if not selected
+  const category=document.getElementById('cp-category-input').value||'producers';
+  const color=document.getElementById('cp-color-input').value||'#f5c842';
   const image=window._creditImageTemp!==undefined?window._creditImageTemp:undefined;
-  if(state.editingCreditId){const p=state.credits.find(c=>c.id===state.editingCreditId);p.name=name;p.role=role;p.category=category;p.color=color;if(image!==undefined)p.image=image}
-  else state.credits.push({id:uid(),name,role,category,color,image:image||null});
+  if(state.editingCreditId){
+    const p=state.credits.find(c=>c.id===state.editingCreditId);
+    if(p){p.name=name;p.role=role;p.category=category;p.color=color;if(image!==undefined)p.image=image}
+  } else {
+    state.credits.push({id:uid(),name,role,category,color,image:image||null});
+  }
   window._creditImageTemp=undefined;
   saveState();closeModal('modal-credit-person');renderCreditsAdmin();renderStatsGrid();toast(I18n.t('toast.saved'),'success');
 }
