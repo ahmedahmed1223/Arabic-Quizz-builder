@@ -1,7 +1,27 @@
-// ════════════════════════════════════════════════════════
-//  ADMIN
-// ════════════════════════════════════════════════════════
-// V15.0-fix (P0-6/T-006): Per-panel dirty flags — track which admin panels
+// V16.1-fix: Define CREDIT_CATS — was referenced but never defined (pre-existing V15.2 bug)
+// Caused 'CREDIT_CATS is not defined' error when switching to Credits tab
+// Must be on window because it's referenced from other IIFE modules (22-features-v7.js)
+window.CREDIT_CATS = {
+  producers: { label: 'الإنتاج', color: '#00f5d4' },
+  directors: { label: 'الإخراج', color: '#7b61ff' },
+  writers: { label: 'الكتابة', color: '#fb923c' },
+  presenters: { label: 'التقديم', color: '#00e676' },
+  technical: { label: 'الفني', color: '#ff4060' },
+  special: { label: 'شكر خاص', color: '#a78bfa' },
+};
+
+// V16.1-fix: Define CREDIT_CATS — was referenced but never defined (pre-existing V15.2 bug)
+// Caused 'CREDIT_CATS is not defined' error when switching to Credits tab
+const CREDIT_CATS = {
+  producers: { label: 'الإنتاج', color: '#00f5d4' },
+  directors: { label: 'الإخراج', color: '#7b61ff' },
+  writers: { label: 'الكتابة', color: '#fb923c' },
+  presenters: { label: 'التقديم', color: '#00e676' },
+  technical: { label: 'الفني', color: '#ff4060' },
+  special: { label: 'شكر خاص', color: '#a78bfa' },
+};
+
+// V15.0-fix (P0-6/T-006): Per-panel dirty flags// V15.0-fix (P0-6/T-006): Per-panel dirty flags — track which admin panels
 // need re-rendering. Set by mutation functions (saveCategory, deleteCategory,
 // saveTeam, deleteTeam, etc.) via _markPanelDirty(). Checked by renderAdmin()
 // to skip unnecessary innerHTML rebuilds.
