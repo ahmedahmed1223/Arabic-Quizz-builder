@@ -3328,7 +3328,9 @@ function loadQuestion(catId,qIdx,teamIdx){
   state.currentCatId=catId;state.currentQIndex=qIdx;
   // Difficulty badge
   // V12-fix: Normalize legacy question types ('mcq' → 'text') for backward compatibility
-  if(q.type==='mcq'||!q.type) q.type='text';
+  // V16.1-fix: Don't convert 'mcq' to 'text' — keep original type for proper rendering
+  // Both 'mcq' and 'text' are handled by the MCQ renderer, but 'mcq' is the canonical type
+  if(!q.type) q.type='text';
   const diff=q.difficulty||'medium';
   // Phase 4.2: Use DOM builder instead of innerHTML for diff badge
   const _diffBadge=qEl('q-diff-badge');
@@ -3353,6 +3355,8 @@ function loadQuestion(catId,qIdx,teamIdx){
     ?`السؤال ${state.fullCatQueuePos+1} من ${state.fullCatQueue.length} (${cat.name})`
     :`السؤال ${qIdx+1} من ${cat.questions.length}`;
   qEl('q-number-label').textContent=qLabel;
+  // V16.1-fix: Ensure options array exists for types that need it
+  if(!q.options) q.options = [];
   // (text content is set below in media/math block)
   // ── Media area ──
   const mediaArea=qEl('q-media-area');
@@ -3538,7 +3542,10 @@ function loadQuestion(catId,qIdx,teamIdx){
   // ── Progressive reveal ──
   state.optionsRevealed=0;
   const optImgsCount=q.optionImages||[];
-  state.totalOptionsToReveal=[0,1,2,3].filter(i=>q.options[i]||(optImgsCount[i])).length;
+  // V16.1-fix: Only count options for types that actually have options
+  // TF, FITB, Quran don't use options array — skip progressive reveal for them
+  var _hasOpts = (q.type==='mcq'||q.type==='text'||q.type==='order'||q.type==='image'||!q.type);
+  state.totalOptionsToReveal=_hasOpts ? [0,1,2,3].filter(i=>q.options[i]||(optImgsCount[i])).length : 0;
   const revBar=qEl('reveal-options-bar');
   const _revMode=state.settings.progressiveRevealMode||(state.settings.progressiveReveal?'manual':'off');
   if(state.settings.progressiveReveal&&!state.answered){
@@ -3573,6 +3580,8 @@ function loadQuestion(catId,qIdx,teamIdx){
   // Shuffle options if enabled (store mapping for correct answer)
   let optOrder=[0,1,2,3];
   if(state.settings.shuffleOptions){
+    // V16.1-fix: Only render options for types that have them
+    if(!_hasOpts){ return; }
     optOrder=shuffleArray([0,1,2,3].filter(i=>q.options[i]||((q.optionImages||[])[i])));
     // pad remaining
     [0,1,2,3].forEach(i=>{if(!optOrder.includes(i))optOrder.push(i)});
