@@ -8,7 +8,7 @@
 // ════════════════════════════════════════════════════════
 //  APPLICATION VERSION & BUILD INFO
 // ════════════════════════════════════════════════════════
-const APP_VERSION = '10.4.0';
+const APP_VERSION = '16.0.0';
 const APP_BUILD = '2026-05-05';
 const APP_DB_VERSION = 3;  // V10: IndexedDB schema version — added _primary_version tracking
 
