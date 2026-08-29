@@ -3,7 +3,7 @@
 > **تطبيق ويب تفاعلي عربي بالكامل لإنشاء واستضافة مسابقات تعليمية وترفيهية ممتعة.**
 > يعمل بالكامل دون اتصال بالإنترنت، ومبني باستخدام Vite، ويُبنى كملف HTML واحد مستقل للتوزيع السهل.
 
-[![البناء: ملف واحد](https://img.shields.io/badge/البناء-ملف%20واحد-success)](#-البناء) [![الرخصة: MIT](https://img.shields.io/badge/الرخصة-MIT-blue)](#-الرخصة) [![Vite](https://img.shields.io/badge/Vite-5.x-646cff)](https://vitejs.dev/) [![متوافق مع الجوال](https://img.shields.io/badge/الجوال-متوافق-green)](#-التصميم-المتجاوب) [![إمكانية الوصول](https://img.shields.io/badge/إمكانية%20الوصول-WCAG%20AA-orange)](#-إمكانية-الوصول) [![الإصدار V14](https://img.shields.io/badge/الإصدار-V14-ff9100)](#-v14--إصدار-جديد)
+[![البناء: ملف واحد](https://img.shields.io/badge/البناء-ملف%20واحد-success)](#-البناء) [![الرخصة: MIT](https://img.shields.io/badge/الرخصة-MIT-blue)](#-الرخصة) [![Vite](https://img.shields.io/badge/Vite-5.x-646cff)](https://vitejs.dev/) [![متوافق مع الجوال](https://img.shields.io/badge/الجوال-متوافق-green)](#-التصميم-المتجاوب) [![إمكانية الوصول](https://img.shields.io/badge/إمكانية%20الوصول-WCAG%20AA-orange)](#-إمكانية-الوصول) [![الإصدار V16](https://img.shields.io/badge/الإصدار-V16-ff9100)](#-v14--إصدار-جديد)
 
 ---
 
