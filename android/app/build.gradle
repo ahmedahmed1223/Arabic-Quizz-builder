@@ -7,8 +7,8 @@ android {
         applicationId "com.ahmedahmed1223.arabicquizzbuilder"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15  // V15.0
-        versionName "15.0"
+        versionCode 16  // V16.0
+        versionName "16.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
