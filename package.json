@@ -1,6 +1,6 @@
 {
   "name": "quiz-platform",
-  "version": "15.0.0",
+  "version": "16.0.0",
   "description": "منصة المسابقات التفاعلية V15.0 - Interactive Quiz Platform with Capacitor Android/iOS support",
   "type": "module",
   "private": true,
