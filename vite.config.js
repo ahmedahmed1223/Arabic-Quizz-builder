@@ -54,7 +54,7 @@ export default defineConfig({
     terserOptions: {
       compress: {
         // Drop console.log but keep console.warn/error/info (per development plan §9.3)
-        drop_console: false,        // Set true in production releases after V15.0
+        drop_console: true,        // Set true in production releases after V15.0
         drop_debugger: true,
         // Keep function names for stack traces in production
         keep_fnames: true,
