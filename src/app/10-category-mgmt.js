@@ -202,6 +202,11 @@ function _checkStorageBeforeSave(){
   }catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}
 }
 
+/**
+ * Immediately save state to LocalStorage + IndexedDB.
+ * Uses dirty-check to skip if unchanged. Debounced by saveState().
+ * @returns {Promise<void>}
+ */
 async function _saveStateNow(){
   if(!_idbLoadDone){_pendingSaveNeeded=true;return;}
   // V11: Check storage space before saving

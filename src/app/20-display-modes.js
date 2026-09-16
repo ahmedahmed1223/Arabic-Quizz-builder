@@ -96,6 +96,12 @@ function setCatDisplayMode(mode, el){
 }
 
 // ─── MODE 1: GRID (classic) ───────────────────────────────────────
+/**
+ * Render the category grid (default display mode).
+ * Shows category cards in a responsive grid layout.
+ * Supports container sections and sequential mode.
+ * @returns {void}
+ */
 function renderCatsGrid(){
   const grid=document.getElementById('cats-pres-grid');
   grid.className='categories-pres-grid';grid.style.display='grid';grid.style.flex='1';grid.style.alignContent='center';
@@ -296,6 +302,11 @@ function _advanceToNextContainer(){
 }
 
 // ─── MODE 2: LIST ─────────────────────────────────────────────────
+/**
+ * Render categories as an improved vertical list.
+ * Shows category name, question count, and progress bar.
+ * @returns {void}
+ */
 function renderCatsListImproved(){
   const grid=document.getElementById('cats-pres-grid');
   grid.className='';grid.style.display='block';grid.style.width='100%';grid.style.maxWidth='700px';
@@ -419,6 +430,11 @@ function renderCatsList(){
 }
 
 // ─── MODE 3: HIDDEN / MYSTERY FLIP CARDS ─────────────────────────
+/**
+ * Render categories as hidden cards (mystery mode).
+ * Cards show a question mark, revealed on click.
+ * @returns {void}
+ */
 function renderCatsHidden(){
   const grid=document.getElementById('cats-pres-grid');
   grid.className='';grid.style.display='block';grid.style.width='100%';
