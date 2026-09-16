@@ -32,6 +32,13 @@ function goToAdmin(){
   try{var _bnav=document.getElementById('bottom-nav');if(_bnav&&window.innerWidth<=768){_bnav.classList.add('nav-visible');}}catch(e){}
 }
 
+/**
+ * Switch to a named view (login, admin, intro, categories, question, etc.)
+ * Handles navigation history, timer cleanup, and view-specific setup.
+ * @param {string} name - View name (e.g., 'admin', 'question', 'intro')
+ * @param {boolean} [_noHistory] - If true, don't push to browser history
+ * @returns {void}
+ */
 function showView(name,_noHistory){
   // History API support: push state unless navigating via popstate
   if(!_noHistory){try{history.pushState({view:name},'','#'+name);}catch(e){(typeof ErrorBus !== "undefined" ? ErrorBus.capture(e, "[Error]") : console.error("[Error]", e));}}
